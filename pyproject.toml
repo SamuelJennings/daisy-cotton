@@ -1,0 +1,140 @@
+[project]
+name = "daisy-cotton"
+version = "0.0.1"
+description = "Base daisyUI-styled django-cotton components: buttons, inputs, cards, alerts and the rest of an application's furniture"
+authors = [
+    { name = "Samuel Jennings", email = "samuel.scott.jennings@gmail.com" },
+]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.12,<4.0"
+# The host supplies daisyUI and its active theme, by whatever means it likes.
+# This package renders daisyUI markup, so the only code dependency is Cotton
+# itself.
+dependencies = ["django>=5.2", "django-cotton>=2.6"]
+keywords = ["django", "tailwind", "daisyui", "components", "cotton"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 5.2",
+    "Framework :: Django :: 6.0",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+]
+
+[project.urls]
+Homepage = "https://github.com/SamuelJennings/daisy-cotton"
+Repository = "https://github.com/SamuelJennings/daisy-cotton"
+Issues = "https://github.com/SamuelJennings/daisy-cotton/issues"
+
+[tool.poetry]
+packages = [{ include = "daisy_cotton" }]
+requires-poetry = '>=2.0,<3.0'
+
+[tool.poetry.group.dev.dependencies]
+# Family toolchain bundle; the pin tag is the family-standard version. Ships
+# ruff, mypy, deptry, pre-commit, pytest, pytest-django, coverage, django-stubs.
+mvp-shared = { git = "https://github.com/django-mvp/shared.git", tag = "v0.4.1", extras = [
+    "dev",
+    "test",
+] }
+
+# A host for the demo project: django-mvp is one ready-made daisyUI and Cotton
+# host, which is all the demo needs it to be.
+django-mvp = ">=0.23.0"
+
+# The component gallery, which reads a component's annotations and gives back
+# a live playground and a linter. A development dependency, and its URLs are
+# mounted under DEBUG only: it serves component source and evaluates URL
+# parameters through the template engine.
+django-cotton-gallery = "^1.0.0"
+
+[build-system]
+requires = ['poetry-core (>=2.0,<3.0)']
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.settings"
+pythonpath = [".", "tests"]
+testpaths = ["tests"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--verbose",
+    "--tb=short",
+    "-ra",
+]
+
+[tool.coverage.report]
+skip_empty = true
+show_missing = true
+
+[tool.coverage.run]
+branch = true
+source = ["daisy_cotton"]
+
+[tool.djlint]
+profile = "django"
+indent = 2
+preserve_leading_space = true
+preserve_blank_lines = true
+format_attribute_template_tags = true
+format_css = true
+format_js = true
+max_line_length = 120
+max_attribute_length = 70
+include = "H006,H013,H020,H021,H023,H025,H030,H031"
+ignore = "H017"
+extension = "html"
+
+# Lint and format are both ruff's: it replaces black (formatting), isort (the I
+# rules) and pyupgrade (the UP rules), so those three no longer appear here.
+# The family rule set lives in ruff-base.toml, which is copied in rather than
+# referenced remotely — `extend` only accepts a local path.
+[tool.ruff]
+extend = "ruff-base.toml"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101", "S105", "S106", "B017", "A001", "RUF059"]
+# The demo project is a demonstration target, never deployed: its settings
+# carry a literal SECRET_KEY on purpose.
+"demo/*" = ["S101", "S105", "S106"]
+
+[tool.mypy]
+files = ["daisy_cotton"]
+disallow_untyped_defs = "False"
+disallow_any_unimported = "False"
+ignore_missing_imports = "True"
+no_implicit_optional = "True"
+check_untyped_defs = "False"
+warn_return_any = "True"
+warn_unused_ignores = "True"
+show_error_codes = "True"
+exclude = ["docs/", "migrations/", "tests/settings.py"]
+mypy_path = "daisy_cotton/"
+plugins = ["mypy_django_plugin.main"]
+
+[tool.django-stubs]
+django_settings_module = "tests.settings"
+ignore_missing_model_attributes = "True"
+
+[tool.forge.conformance]
+# test_app.py has no source module to mirror, and none should exist purely to
+# give it one: it asserts on the Django app registry and the installed
+# package's own layout, not on a unit of code inside daisy_cotton.
+non-mirror-paths = ["tests/test_app.py"]
+
+[tool.deptry]
+extend_exclude = ["tests/", "demo/", "docs/"]
+
+[tool.deptry.per_rule_ignores]
+# django-cotton is a real runtime dependency that no Python module here imports.
+# Every component is a Cotton component, so the dependence is at the template
+# layer: without Cotton installed and in INSTALLED_APPS, a `<c-...>` tag renders
+# as literal text while every Python import still resolves.
+DEP002 = ["django-cotton"]

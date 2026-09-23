@@ -1,0 +1,13 @@
+{% extends "mvp/base.html" %}
+
+{% comment %}
+  The demo's project base.
+
+  django-mvp ships a `base.html` of its own that forwards to `mvp/base.html`
+  and deliberately defines nothing, so that its packaged view templates always
+  reach the shell. "demo" sits above "mvp" in INSTALLED_APPS, so this file
+  takes that name instead and every page goes through it.
+
+  No package stylesheet is linked here yet: daisy_cotton ships no components
+  and no built CSS to link until the first one migrates in.
+{% endcomment %}
