@@ -1,0 +1,16 @@
+{% comment %}
+  A basic icon primitive: `name` is treated as a literal CSS class string
+  (e.g. an icon font's own class, such as "bi bi-house"), merged with any
+  caller-supplied `class`. This package resolves nothing itself — no icon
+  pack, no name-to-glyph lookup.
+
+  A project wanting name-based resolution (an icon font pack, an SVG sprite,
+  a component library like django-easy-icons) provides its own
+  `cotton/icon.html`, which shadows this one wherever it sits above
+  daisy_cotton in INSTALLED_APPS. Every other component in this package calls
+  <c-icon name="..." /> exactly as it would call that richer version, so a
+  project's override is a drop-in replacement rather than a fork of every
+  caller.
+{% endcomment %}
+<c-vars name class />
+<i class="{{ name }} {{ class }}" {{ attrs }}></i>

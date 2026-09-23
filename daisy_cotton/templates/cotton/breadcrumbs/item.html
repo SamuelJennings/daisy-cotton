@@ -1,0 +1,8 @@
+<c-vars text class href />
+{% if href %}
+  <li class="{{ class }}">
+    <a href="{{ href }}" {{ attrs }}><span class="daisy-cotton-breadcrumb-text">{{ text }}</span>{{ slot }}</a>
+  </li>
+{% else %}
+  <li class="{{ class }}"><span class="daisy-cotton-breadcrumb-text">{{ text }}</span>{{ slot }}</li>
+{% endif %}
