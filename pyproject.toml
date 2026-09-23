@@ -124,10 +124,25 @@ django_settings_module = "tests.settings"
 ignore_missing_model_attributes = "True"
 
 [tool.forge.conformance]
-# test_app.py has no source module to mirror, and none should exist purely to
-# give it one: it asserts on the Django app registry and the installed
-# package's own layout, not on a unit of code inside daisy_cotton.
-non-mirror-paths = ["tests/test_app.py"]
+# None of these test modules has a source module to mirror, and none should:
+# every one exercises a Cotton component template (markup, not Python) or the
+# package/app registry as a whole. Inventing a Python module purely to give a
+# test something to point at would defeat the mirror rule rather than satisfy it.
+non-mirror-paths = [
+    "tests/test_app.py",
+    "tests/test_render_all.py",
+    "tests/test_declared_attributes.py",
+    "tests/test_class_attribute_merge.py",
+    "tests/test_button.py",
+    "tests/test_dropdown.py",
+    "tests/test_group.py",
+    "tests/test_icon.py",
+    "tests/test_link.py",
+    "tests/test_mockup_code.py",
+    "tests/test_modal.py",
+    "tests/test_breadcrumbs_href_attribute.py",
+    "tests/test_form_field.py",
+]
 
 [tool.deptry]
 extend_exclude = ["tests/", "demo/", "docs/"]

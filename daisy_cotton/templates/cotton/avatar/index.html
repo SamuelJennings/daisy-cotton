@@ -1,0 +1,55 @@
+{# ============================================================ #}
+{# <c-avatar> — daisyUI avatar component                       #}
+{#                                                              #}
+{# Props:                                                       #}
+{#   src         – URL for a profile photo. Falls back to a    #}
+{#                 placeholder, then the bare silhouette. This  #}
+{#                 package resolves no URL of its own — a       #}
+{#                 project wiring up its own user-avatar        #}
+{#                 lookup passes the resolved URL in as `src`.  #}
+{#   alt         – <img /> alt text (default: "User avatar")     #}
+{#   size        – xs|sm|md|lg|xl|xxl (default: md), or any   #}
+{#                 Tailwind w-* class (e.g. "w-16")            #}
+{#   shape       – rounded|rounded-xl|rounded-full             #}
+{#                 (default: rounded-full)                     #}
+{#   status      – online|offline|"" (default: no indicator)  #}
+{#   placeholder – Initials/text shown when no image           #}
+{#   variant     – primary|secondary|accent|neutral for the   #}
+{#                 initials background (default: primary). The #}
+{#                 bare silhouette fallback is always muted.   #}
+{#   class       – extra classes on the .avatar wrapper        #}
+{#                                                              #}
+{# Examples:                                                    #}
+{#   <c-avatar />                                              #}
+{#   <c-avatar src="{{ user.photo.url }}" status="online" />  #}
+{#   <c-avatar placeholder="AB" size="sm" />                  #}
+{# ============================================================ #}
+{% load cotton %}
+<c-vars src
+        alt="User avatar"
+        size="md"
+        :size_options="{'xs': 'w-6', 'sm': 'w-8', 'md': 'w-12', 'lg': 'w-16', 'xl': 'w-24', 'xxl': 'w-32'}"
+        shape="rounded-full"
+        variant="primary"
+        status
+        placeholder
+        class />
+<div class="avatar{% if not src %} avatar-placeholder{% endif %}{% if status %} avatar-{{ status }}{% endif %}{% if class %} {{ class }}{% endif %}"
+     {{ attrs }}>
+  <div class="{% firstof size_options|get_item:size size %} {{ shape }}{% if src %}{% elif placeholder %} bg-{{ variant }} text-{{ variant }}-content{% else %} bg-base-300 text-base-content/40{% endif %}">
+    {% if src %}
+      <img src="{{ src }}" alt="{{ alt }}" />
+    {% elif placeholder %}
+      <span>{{ placeholder }}</span>
+    {% else %}
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="80%"
+           height="80%"
+           fill="currentColor"
+           class="bi bi-person-fill"
+           viewBox="0 0 16 16">
+        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+      </svg>
+    {% endif %}
+  </div>
+</div>

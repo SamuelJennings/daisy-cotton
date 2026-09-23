@@ -6,7 +6,11 @@ These components currently live inside [django-mvp](https://github.com/django-mv
 
 ## Status
 
-Version 0.0.1. This is the scaffold: build pipeline, demo project and test harness, no components migrated in yet. The [CHANGELOG](CHANGELOG.md) is how a project finds out what has landed.
+Version 0.0.1, pre-1.0: names, attributes and the set of classes a component emits can change between minor versions. The [CHANGELOG](CHANGELOG.md) is how a project finds out what has landed.
+
+Thirty components are built so far — the base primitives most projects reach for first: `alert`, `avatar`, `badge`, `breadcrumbs`, `button`, `card`, `container`, `divider`, `dock`, `dropdown`, `form.field`, `grid`, `group`, `icon`, `link`, `modal`, `mockup.*`, `placeholder.card`, `rule`, `text` and `toolbar`. Each one is documented live in the component gallery (`python manage.py runserver` from a checkout). More migrate in from django-mvp as the need arises.
+
+`<c-icon>` renders `name` as a literal CSS class string and resolves nothing itself — a project wanting name-based icon resolution provides its own override (see [docs/adr/0001](docs/adr/0001-icon-is-an-extension-point.md)).
 
 ## Requirements
 
