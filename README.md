@@ -15,7 +15,7 @@ Thirty components are built so far — the base primitives most projects reach f
 ## Requirements
 
 - Python 3.12+
-- Django 5.2 or 6.0
+- Django 5.2, 6.0 or 6.1
 - django-cotton 2.6+
 - daisyUI 5, loaded by the project
 
