@@ -14,8 +14,8 @@
 # build lands alongside the first migrated component.
 version: 2
 updates:
-  # Python dependencies (Poetry)
-  - package-ecosystem: "pip"
+  # Python dependencies (uv)
+  - package-ecosystem: "uv"
     directory: "/"
     schedule:
       interval: "weekly"
@@ -28,8 +28,8 @@ updates:
     commit-message:
       prefix: "chore"
       include: "scope"
-    # mvp-shared is a git dependency pinned to a tag. Dependabot's Poetry
-    # updater raises `mvp-shared | unknown_error` on it and aborts the whole
+    # mvp-shared is a git dependency pinned to a tag. Dependabot's
+    # updater has raised `mvp-shared | unknown_error` on it and aborts the whole
     # job, which silently stalls every OTHER Python update in this repo,
     # security ones included. Ignoring it keeps the rest of the group
     # flowing; bump the tag by hand when a shared release lands.
