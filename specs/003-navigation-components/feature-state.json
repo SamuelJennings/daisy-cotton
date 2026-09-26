@@ -2,7 +2,7 @@
   "feature": "003-navigation-components",
   "branch": "003-navigation-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "REVIEW",
+  "state": "PR_READY",
   "state_history": [
     {
       "state": "QUEUED",
@@ -48,6 +48,11 @@
       "state": "REVIEW",
       "at": "2026-09-26T21:16:24Z",
       "note": "review recorded: 1 medium + 3 low fixed in one cycle, 1 low accepted"
+    },
+    {
+      "state": "PR_READY",
+      "at": "2026-09-26T21:17:57Z",
+      "note": "walkthrough pending with the maintainer; pull request left as a draft"
     }
   ],
   "gates": {
