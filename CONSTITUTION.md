@@ -63,18 +63,59 @@ template tag) or the function is genuinely standalone with no siblings.
 
 ## Project articles
 
-### Article XII — No runtime dependency on django-mvp
-`daisy_cotton` depends only on Django and django-cotton at runtime. django-mvp appears solely as
-a demo/dev dependency, hosting the browsable `demo/` project — never imported from inside
-`daisy_cotton/` itself. This is the whole reason the package exists: any project running Cotton
-and daisyUI can use these components without adopting django-mvp's application shell. Enforced by
-`deptry`'s scoping (`demo/` excluded from the check) and by review.
+### Article XII — Agnostic of every adopter
+`daisy_cotton` depends only on Django and django-cotton at runtime, and nothing in this
+repository names, depends on, or is shaped for a particular project that uses it. That covers
+the package, its tests, the demo, the docs and the dependency list. A component exists because
+daisyUI has it (see `GOALS.md` G1), never because one adopter needed it. An adopter that needs
+something extra overrides the component in its own project. Enforced by `deptry` and by review.
 
 ### Article XIII — Components take colour from the semantic palette, never a literal value
 A component's colour comes from daisyUI's semantic roles (`primary`, `base-100` and the rest),
 never a literal Tailwind colour or a hard-coded hex value. This is what lets a component dropped
-into any project pick up that project's active theme automatically, and it is the same rule
-daisy-cotton-blocks runs on for the same reason.
+into any project pick up that project's active theme automatically.
+
+### Article XIV — One attribute vocabulary, taken from daisyUI
+Every component names its attributes the same way, so learning one teaches all of them:
+
+- **`variant`** selects daisyUI's colour modifier (`variant="primary"` gives `btn-primary`).
+- **`size`** selects daisyUI's size modifier, using daisyUI's own scale (`xs`, `sm`, `md`,
+  `lg`, `xl`).
+- **Style modifiers** are boolean attributes named exactly as daisyUI names them: `outline`,
+  `ghost`, `soft`, `dash` and the rest.
+- **`class`** is declared in `<c-vars>` and merged into the root element's own class list, so a
+  caller's classes are never written as a second, ignored `class` attribute.
+- **Everything else** a component does not need to decide passes through `{{ attrs }}` to its
+  root element.
+
+A new attribute uses daisyUI's name for the thing it controls. Where daisyUI has no name for it,
+the attribute reuses a name another component in this package already uses for the same idea
+before a new one is coined.
+
+### Article XV — Components compose through Cotton components
+A component that needs another component's output calls it as a Cotton component (`<c-icon>`,
+`<c-button>`), never by copying that component's markup inline. A project overrides a component
+by providing its own template at the same path, and only this rule makes such an override reach
+every place the component is used.
+
+### Article XVI — Every component documents itself for the component gallery
+Each component template carries the annotations django-cotton-gallery reads, in the format its
+[annotation reference](https://velezanthony.github.io/django-cotton-gallery/users/annotations/)
+defines:
+
+- one `@description`, a single-line summary of the component
+- one `@prop` for every name declared in `<c-vars>`, with its type, a default matching the
+  `<c-vars>` value (or `required`), and a `description`
+- one `@slot` for the default slot and one `@slot:name` for every named slot the template
+  renders, each with a description
+- `@trigger` on any component opened by another element (a modal, a drawer)
+
+Each annotation is one Django comment on one line: a `{# … #}` that runs onto a second line is
+not a comment and renders as page text. Explanations too long for an annotation go in a
+`{% comment %}` block below them.
+
+`uv run python manage.py cotton_lint --warnings-as-errors` must pass. Its errors and warnings
+both fail. Its hints are heuristics by the tool's own definition and do not.
 
 ## Quality bar
 
@@ -83,6 +124,7 @@ Read at planning and review; applies to every change.
   small tolerance — floors, not a 100% ratchet.
 - Every public API change updates README + CHANGELOG in the same PR.
 - Lint, type-check (`mypy`), and `deptry` pass.
+- `cotton_lint --warnings-as-errors` passes (Article XVI).
 - The package builds and its metadata is valid; the README renders on the package index (absolute
   URLs).
 
@@ -97,4 +139,4 @@ Read at planning and review; applies to every change.
 
 ---
 
-**Version**: 1.0.0 | **Ratified**: 2026-09-23 | **Last Amended**: 2026-09-23
+**Version**: 2.0.0 | **Ratified**: 2026-09-23 | **Last Amended**: 2026-09-26
