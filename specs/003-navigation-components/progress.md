@@ -33,3 +33,10 @@ Did: dock root is a `<nav class="dock …">` with `size`, merged `class`, pass-t
 Verified: `tests/test_dock.py` and `tests/test_class_attribute_merge.py` 12 passed; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T005.
 Watch: none.
+
+## 2026-09-26T21:30Z · Implementer US3+US5 · T005
+
+Did: dock item marks the active link with `dock-active` and `aria-current="page"`, the active button or toggle with `dock-active` only; icons go through `<c-icon … aria-hidden="true" only>`; the button branch is `type="button"`; the toggle drops `role="button" tabindex="0"` (D9) and writes `aria-label` only when `label` is given.
+Verified: `tests/test_dock.py` and `tests/test_class_attribute_merge.py` 29 passed; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T006.
+Watch: none.

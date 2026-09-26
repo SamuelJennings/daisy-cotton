@@ -206,8 +206,19 @@
         },
         {
           "id": "T005",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_dock.py tests/test_class_attribute_merge.py -q: 29 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_dock.py::TestDockItemLink",
+              "tests/test_dock.py::TestDockItemButton",
+              "tests/test_dock.py::TestDockItemToggle"
+            ]
+          }
         },
         {
           "id": "T006",
