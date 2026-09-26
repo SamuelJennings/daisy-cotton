@@ -16,3 +16,9 @@ Did: Added @description, one @prop per <c-vars> name (including badge's :size_op
 Verified: `uv run python manage.py cotton_lint`: button, link, badge each had missing-annotation warnings before (see base run); after, none listed with any error or warning. Each has one `{# @description`, one default `{# @slot`, no unterminated `{#` line. Renders at base d04b053 vs after (button with all attributes, plain, condition false; link full and bare; badge full and size lg) identical with whitespace collapsed. `uv run pytest tests -q -k 'button or link or badge or alert or icon'`: 32 passed.
 Next: continue with the next task in the brief.
 Watch: rendered output compared with whitespace collapsed and ends stripped, using a throwaway script outside the repo.
+
+## 2026-09-26T16:50:03Z · Implementer US2 · T003
+Did: Added @description and @prop lines to alert.html and icon.html, plus a default @slot on alert. The icon description says a project may shadow it with its own cotton/icon.html.
+Verified: `uv run python manage.py cotton_lint`: alert and icon each had missing-annotation warnings before; after, none. Each has one `{# @description`; alert has one default `{# @slot`, icon has none. Renders at base d04b053 vs after (alert with all attributes, variant only, bare; icon with name, class, attrs) identical with whitespace collapsed. `uv run pytest tests -q -k 'button or link or badge or alert or icon'`: 32 passed.
+Next: continue with the next task in the brief.
+Watch: rendered output compared with whitespace collapsed and ends stripped, using a throwaway script outside the repo.

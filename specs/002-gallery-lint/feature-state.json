@@ -87,8 +87,9 @@
         },
         {
           "id": "T003",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": "`uv run python manage.py cotton_lint`: alert and icon each had missing-annotation warnings before; after, none. Each has one `{# @description`; alert has one default `{# @slot`, icon has none. Renders at base d04b053 vs after (alert with all attributes, variant only, bare; icon with name, class, attrs) identical with whitespace collapsed. `uv run pytest tests -q -k 'button or link or badge or alert or icon'`: 32 passed."
         }
       ]
     },
