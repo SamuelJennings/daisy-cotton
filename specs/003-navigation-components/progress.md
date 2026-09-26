@@ -138,3 +138,10 @@ Did: `megamenu/index.html`: a required `id`, a Menu toggle rendered through `<c-
 Verified: `tests/test_megamenu.py` 11 passed (11 failed before the template existed); probed: dropping `only` from the toggle makes the full/size and page-context `href` tests fail; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T020.
 Watch: none.
+
+## 2026-09-26T23:55Z · Implementer US7 · T020
+
+Did: `megamenu/item.html`: `<button type="button" popovertarget="<megamenu>-<key>">` followed by `<div id="<megamenu>-<key>" popover>` holding the slot. `megamenu` (the megamenu's id) and `key` are required, since an item cannot read the id of the megamenu around it. `class` and attributes land on the panel, and no `aria-expanded` is written: the browser exposes the popover's state. Annotations landed with the template.
+Verified: `tests/test_megamenu.py` 17 passed (6 new ones failed before the template existed); three items each target the id of their own following panel, and two megamenus with different ids on one page repeat no id. `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T021.
+Watch: none.

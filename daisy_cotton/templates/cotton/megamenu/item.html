@@ -1,0 +1,9 @@
+{# @description One entry of a megamenu, used inside megamenu. A button opens the panel that follows it, and the default slot is the panel's content. #}
+{# @prop megamenu:text | required | description:"Id of the megamenu this item belongs to." #}
+{# @prop key:text | required | description:"Name of this item, unique within the megamenu. The panel's id is the megamenu id, a hyphen and this key." #}
+{# @prop text:text | description:"The button's label." #}
+{# @prop class:text | description:"Extra classes added to the panel." #}
+{# @slot <c-menu><c-menu.item href="#" text="Overview" /><c-menu.item href="#" text="Pricing" /></c-menu> — The content of the panel the button opens. #}
+<c-vars megamenu key text class />
+<button type="button" popovertarget="{{ megamenu }}-{{ key }}">{{ text }}</button>
+<div id="{{ megamenu }}-{{ key }}" popover class="{{ class }}" {{ attrs }}>{{ slot }}</div>
