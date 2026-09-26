@@ -76,20 +76,28 @@
       "priority": "P1",
       "issue": 36,
       "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/002-gallery-lint",
-      "status": "todo",
+      "status": "done",
       "replans": 0,
       "tasks": [
         {
           "id": "T002",
           "status": "done",
           "attempts": 1,
-          "evidence": "`uv run python manage.py cotton_lint`: button, link, badge each had missing-annotation warnings before (see base run); after, none listed with any error or warning. Each has one `{# @description`, one default `{# @slot`, no unterminated `{#` line. Renders at base d04b053 vs after (button with all attributes, plain, condition false; link full and bare; badge full and size lg) identical with whitespace collapsed. `uv run pytest tests -q -k 'button or link or badge or alert or icon'`: 32 passed."
+          "evidence": {
+            "commands": [
+              "`uv run python manage.py cotton_lint`: button, link, badge each had missing-annotation warnings before (see base run); after, none listed with any error or warning. Each has one `{# @description`, one default `{# @slot`, no unterminated `{#` line. Renders at base d04b053 vs after (button with all attributes, plain, condition false; link full and bare; badge full and size lg) identical with whitespace collapsed. `uv run pytest tests -q -k 'button or link or badge or alert or icon'`: 32 passed."
+            ]
+          }
         },
         {
           "id": "T003",
           "status": "done",
           "attempts": 1,
-          "evidence": "`uv run python manage.py cotton_lint`: alert and icon each had missing-annotation warnings before; after, none. Each has one `{# @description`; alert has one default `{# @slot`, icon has none. Renders at base d04b053 vs after (alert with all attributes, variant only, bare; icon with name, class, attrs) identical with whitespace collapsed. `uv run pytest tests -q -k 'button or link or badge or alert or icon'`: 32 passed."
+          "evidence": {
+            "commands": [
+              "`uv run python manage.py cotton_lint`: alert and icon each had missing-annotation warnings before; after, none. Each has one `{# @description`; alert has one default `{# @slot`, icon has none. Renders at base d04b053 vs after (alert with all attributes, variant only, bare; icon with name, class, attrs) identical with whitespace collapsed. `uv run pytest tests -q -k 'button or link or badge or alert or icon'`: 32 passed."
+            ]
+          }
         }
       ]
     },
@@ -98,14 +106,18 @@
       "priority": "P1",
       "issue": 37,
       "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/002-gallery-lint",
-      "status": "todo",
+      "status": "done",
       "replans": 0,
       "tasks": [
         {
           "id": "T001",
           "status": "done",
           "attempts": 1,
-          "evidence": "`uv run python manage.py cotton_lint`: form/field had 1 error (unknown-component form.render) and 9 missing-annotation warnings before; after, 0 errors, 0 warnings, 3 hints. One `{# @description`, one default `{# @slot`, no unterminated `{#` line. Render of 8 attribute combinations (text input, bare, textarea, select, checkbox, toggle with list errors, file, radio) at base d04b053 and after: identical with whitespace collapsed. `uv run pytest tests/test_form_field.py -q`: 25 passed."
+          "evidence": {
+            "commands": [
+              "`uv run python manage.py cotton_lint`: form/field had 1 error (unknown-component form.render) and 9 missing-annotation warnings before; after, 0 errors, 0 warnings, 3 hints. One `{# @description`, one default `{# @slot`, no unterminated `{#` line. Render of 8 attribute combinations (text input, bare, textarea, select, checkbox, toggle with list errors, file, radio) at base d04b053 and after: identical with whitespace collapsed. `uv run pytest tests/test_form_field.py -q`: 25 passed."
+            ]
+          }
         }
       ]
     },
