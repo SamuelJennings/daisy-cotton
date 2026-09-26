@@ -134,18 +134,46 @@
         },
         {
           "id": "T023",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_link.py tests/test_menu.py tests/test_tabs.py tests/test_steps.py tests/test_dock.py -q: 137 passed (14 new failed first)",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "TestLinkPageContext",
+              "TestMenuPageContext",
+              "TestTabsPageContext",
+              "TestStepPageContext",
+              "TestDockItemPageContext"
+            ]
+          }
         },
         {
           "id": "T024",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_menu.py tests/test_dock.py -q: 71 passed; probes removing only / aria-hidden each failed a test"
+            ],
+            "tests": [
+              "TestMenuSubmenuIconIsolation",
+              "TestDockItemToggleIcon"
+            ]
+          }
         },
         {
           "id": "T025",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": []
+          }
         }
       ]
     },
