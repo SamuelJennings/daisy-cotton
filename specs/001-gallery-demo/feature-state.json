@@ -2,12 +2,22 @@
   "feature": "001-gallery-demo",
   "branch": "001-gallery-demo",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "QUEUED",
+  "state": "DESIGN_REVIEW",
   "state_history": [
     {
       "state": "QUEUED",
       "at": "2026-09-26T14:36:56Z",
       "note": "specification merged in PR #24 (merge commit 86fc6dca6951ba38e04b2682e92bfe2c44b21b58), wording correction in PR #30; epic #10, stories #31-#34"
+    },
+    {
+      "state": "PLAN",
+      "at": "2026-09-26T14:59:47Z",
+      "note": "planning off main at merged spec PR #24; draft PR #95"
+    },
+    {
+      "state": "DESIGN_REVIEW",
+      "at": "2026-09-26T15:00:12Z",
+      "note": "plan, research and tasks written; design reviewer dispatched"
     }
   ],
   "gates": {
@@ -17,6 +27,10 @@
       "self_resolved": []
     },
     "merge": {
+      "approved_by": null,
+      "at": null
+    },
+    "plan": {
       "approved_by": null,
       "at": null
     }
@@ -163,7 +177,7 @@
       "max": 1
     },
     "design_review_cycles": {
-      "used": 0,
+      "used": 1,
       "max": 1
     },
     "tokens": {
