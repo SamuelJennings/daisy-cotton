@@ -18,7 +18,7 @@ This installs the package, its development tools and the component gallery into 
 uv run python manage.py runserver
 ```
 
-Then open <http://127.0.0.1:8000/django-cotton-gallery/>. Every component is listed there with its description, attributes and slots, all read from the annotations at the top of its template. The gallery is a development tool and only runs with `DEBUG` on, which the demo project sets.
+Then open <http://127.0.0.1:8000/django-cotton-gallery/>. Every component is listed there with its description, attributes and slots, all read from the annotations at the top of its template. The gallery is a development tool and only runs with `DEBUG` on, which the demo project sets. Previews load the Bootstrap Icons font, so any icon attribute can be tried with a class such as `bi bi-house`.
 
 ## Run the checks
 
@@ -44,11 +44,12 @@ uv run pre-commit run --all-files
 
 Errors and warnings fail. Hints do not: a hint is advice the linter cannot be sure about, such as a template variable it can't see declared. The test suite applies the same rule, so `tests/test_gallery_lint.py` fails on any error or warning in any component, and the failure lists each finding as `<component> L<line> <rule>: <message>`.
 
-`tests/test_gallery_annotations.py` adds three checks the linter does not make. Every template must have:
+`tests/test_gallery_annotations.py` adds four checks the linter does not make. Every template must have:
 
 - exactly one `{# @description … #}`
 - a default `{# @slot … #}` if it renders `{{ slot }}`
 - every `{#` closed with `#}` on the same line
+- every `variant`, `align`, `position` or `placement` prop typed `select['…']` with its values listed, so the gallery offers a dropdown
 
 The annotation format is described in the gallery's [annotation reference](https://velezanthony.github.io/django-cotton-gallery/users/annotations/).
 
