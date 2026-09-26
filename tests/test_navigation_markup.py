@@ -80,7 +80,9 @@ class TestNavigationTemplatesRunNoScript:
     """No template in the navigation group ships a script (SC-005)."""
 
     def test_the_group_is_all_here(self):
-        names = {path.relative_to(COTTON_DIR).as_posix() for path in NAVIGATION_TEMPLATES}
+        names = {
+            path.relative_to(COTTON_DIR).as_posix() for path in NAVIGATION_TEMPLATES
+        }
         assert {
             "link.html",
             "navbar.html",
