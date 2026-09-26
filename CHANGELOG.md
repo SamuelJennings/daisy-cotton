@@ -41,3 +41,12 @@ decision.
 - Django 6.1 is supported and tested.
 - The demo project is the component gallery alone: a plain Cotton and daisyUI page with a theme
   switcher, needing no other package behind it.
+- `link` no longer defaults `href` to `#`: without an `href` it renders an anchor with no `href` attribute.
+  Write `href="#"` to keep the old result. Its `variant` accepts daisyUI's eight link colours
+  (`neutral`, `primary`, `secondary`, `accent`, `info`, `success`, `warning`, `error`) and adds no class for any other value.
+- `breadcrumbs` no longer adds `text-sm` to its root; pass `class="text-sm"` to keep it. The root is named
+  `Breadcrumbs` by default (translated), and an `aria-label` passed by the caller replaces that name.
+- A `breadcrumbs.item` puts its `class` and any other attributes on its `<li>`, where they used to land on
+  the inner `<a>`. To set `target`, `hx-*` or similar on the link, write your own `<a>` in the item's slot.
+  An item without `href` renders `<span aria-current="page">`, and the text span no longer carries the
+  `daisy-cotton-breadcrumb-text` class.

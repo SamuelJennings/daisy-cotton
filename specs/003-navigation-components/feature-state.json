@@ -141,8 +141,14 @@
         },
         {
           "id": "T003",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "git diff: CHANGELOG.md [Unreleased] Changed entries for link and breadcrumbs added"
+            ],
+            "tests": []
+          }
         }
       ]
     },

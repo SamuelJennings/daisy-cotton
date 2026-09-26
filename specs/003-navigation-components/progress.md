@@ -19,3 +19,10 @@ Did: breadcrumbs root drops `text-sm` and takes an overridable translated `aria-
 Verified: `tests/test_breadcrumbs_href_attribute.py` 17 passed; class-merge, declared-attributes and gallery tests green; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T003.
 Watch: none.
+
+## 2026-09-26T21:15Z · Implementer US3+US5 · T003
+
+Did: CHANGELOG `Changed` entries for the link and breadcrumbs breaking changes, each with what a project writes to keep the old result. No page under `docs/` or the README describes their attributes, so no other page changed.
+Verified: read back the diff; documentation only.
+Next: T004.
+Watch: none.
