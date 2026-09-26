@@ -226,5 +226,9 @@
       "used": 0,
       "max": 120
     }
+  },
+  "pr": {
+    "number": 101,
+    "draft": true
   }
 }
