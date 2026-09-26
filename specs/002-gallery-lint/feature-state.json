@@ -74,8 +74,18 @@
         },
         {
           "id": "T015",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_gallery_lint.py -q: 27 passed (5 scratch tests, 21 components, discovery check)",
+              "uv run pytest tests/test_gallery_lint.py -q -s | grep -ci \"MOUNTED AND SERVING\": 0 matches"
+            ],
+            "tests_added": [
+              "tests/test_gallery_lint.py::TestPackageComponentsLintClean",
+              "tests/test_gallery_lint.py::test_components_were_discovered"
+            ]
+          }
         }
       ]
     },

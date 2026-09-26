@@ -88,3 +88,9 @@ Did: Wrote tests/test_gallery_lint.py: a GalleryLint helper (scan + CatalogConfi
 Verified: `uv run pytest tests/test_gallery_lint.py -q`: 5 passed. The tests and helper were written together, so the red step was shown by mutating the helper: BLOCKING limited to errors: 1 failed, 4 passed; discovery pointed at the parent directory: 5 failed. Both mutations reverted.
 Next: T015, the package catalog test.
 Watch: none.
+
+## 2026-09-26T16:57:54Z · Implementer US1 · T015
+Did: Added the catalog-wide test, parametrised by component path, reading every report from one module-level lint_catalog call and listing each blocking finding as `<component> L<line> <rule>: <message>`.
+Verified: `uv run pytest tests/test_gallery_lint.py -q`: 27 passed (arrived green on the real templates); the same run with -s piped through `grep -ci "MOUNTED AND SERVING"`: 0.
+Next: US8, T016.
+Watch: none.

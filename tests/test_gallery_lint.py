@@ -141,3 +141,21 @@ class TestGalleryLintRules:
 
         assert before == {"first"}
         assert after == {"first", "nested/second"}
+
+
+# One lint over the whole catalog: `lint_component` on its own skips the
+# unknown-component rule unless it is handed the catalog's known tags.
+PACKAGE_FINDINGS = GalleryLint.blocking_by_component(GalleryLint.report(COTTON_DIR))
+
+
+@pytest.mark.parametrize("component", sorted(PACKAGE_FINDINGS))
+class TestPackageComponentsLintClean:
+    """Every component the package ships has no errors or warnings."""
+
+    def test_has_no_blocking_findings(self, component):
+        findings = [GalleryLint.describe(i) for i in PACKAGE_FINDINGS[component]]
+        assert not findings, "\n".join(findings)
+
+
+def test_components_were_discovered():
+    assert PACKAGE_FINDINGS, f"no components found under {COTTON_DIR}"
