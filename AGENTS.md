@@ -7,7 +7,7 @@ alerts and the rest of an application's furniture, one Cotton component per unit
 defines these terms. Use them.
 
 Presentation only. No models, no views, no forms, no URLs, no migrations, and no runtime
-dependency on django-mvp — see `CONSTITUTION.md` Article XII.
+dependency on any host project — see `CONSTITUTION.md` Article XII.
 
 ## Stack & commands
 

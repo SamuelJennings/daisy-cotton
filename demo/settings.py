@@ -23,9 +23,11 @@ ALLOWED_HOSTS = ["*"]
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 
-# Order matters twice over. "demo" sits above "mvp" so the demo's own templates
-# win against the shell's, and "mvp" sits above "crispy_tailwind" so its
-# help-text override wins against crispy's.
+# "daisy_cotton" sits above "demo" for the gallery's benefit, not for template
+# resolution. The gallery scans exactly one cotton/ directory: the first
+# template root that has one, in this order. Below "demo" it would index the
+# demo's own scaffolding components (there are none) and never see the
+# package's own.
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -33,10 +35,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Above "demo" for the gallery's benefit, not for template resolution. The
-    # gallery scans exactly one cotton/ directory: the first template root
-    # that has one, in this order. Below "demo" it would index the demo's own
-    # scaffolding components and never see the package's own.
     "daisy_cotton",
     "demo",
     "django_cotton",
@@ -47,11 +45,6 @@ INSTALLED_APPS = [
     # It arrives with the shared development bundle rather than a pin of its
     # own, and its middleware removes itself from the chain unless DEBUG is on.
     "django_browser_reload",
-    "easy_icons",
-    "flex_menu",
-    "mvp",
-    "crispy_forms",
-    "crispy_tailwind",
 ]
 
 MIDDLEWARE = [
@@ -80,7 +73,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "mvp.context_processors.mvp_config",
             ],
         },
     },
@@ -93,61 +85,6 @@ DATABASES = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "demo.sqlite3",
     }
-}
-
-CRISPY_ALLOWED_TEMPLATE_PACKS = ["tailwind"]
-CRISPY_TEMPLATE_PACK = "tailwind"
-
-FLEX_MENUS = {
-    "renderers": {
-        "sidebar": "mvp.renderers.SidebarRenderer",
-        "dock": "mvp.renderers.MobileFooterNavRenderer",
-    }
-}
-
-EASY_ICONS = {
-    "default": {
-        "renderer": "easy_icons.renderers.ProviderRenderer",
-        "config": {"tag": "i"},
-        "packs": ["mvp.utils.BS5_ICONS"],
-        "icons": {
-            "home": "bi bi-house",
-            "component": "bi bi-square",
-            "gallery": "bi bi-grid-3x3-gap",
-        },
-    }
-}
-
-# The theme menu is the point of the demo shell, not decoration. A component
-# is supposed to take its colours from whatever theme the project runs, and
-# the only way to see whether that is true is to change the theme and watch.
-# These are daisyUI's own themes, deliberately spanning light, dark and
-# heavily tinted, because a component that only looks right on two of them is
-# not finished.
-MVP_CONFIG = {
-    "theme": {
-        "default": "light",
-        "choices": [
-            "light",
-            "dark",
-            "cupcake",
-            "emerald",
-            "corporate",
-            "synthwave",
-            "dracula",
-            "business",
-            "night",
-            "winter",
-        ],
-    },
-    "layout": {
-        "sidebar": {
-            "title": "daisy-cotton",
-            "breakpoint": "lg",
-            "collapse": "icons",
-        },
-        "navbar": {"desktop": {"end": ["actions.theme-controller"]}},
-    },
 }
 
 STATIC_URL = "/static/"

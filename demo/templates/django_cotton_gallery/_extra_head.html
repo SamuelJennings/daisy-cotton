@@ -1,0 +1,36 @@
+{% comment %}
+  Loaded into every gallery document: the interface page itself, the raw
+  page, and — via the gallery's inert `#cg-frame-head` template — every
+  isolated preview iframe. daisyUI, Tailwind's browser build and Alpine only
+  belong in a document that actually renders a component, so this script
+  tells the two kinds of document apart and does nothing in the interface
+  page (D1).
+
+  A preview document is anything that is NOT the top-level interface page:
+  the raw page and the isolated preview iframe both load this partial as
+  the whole of their <head>, with no sidebar, no chrome, nothing else that
+  would identify them — so "not the interface page" is exactly "a preview
+  document" here, this partial's only two possibilities.
+{% endcomment %}
+<script>
+  (() => {
+    // Inside an isolated preview iframe (window.top !== window), or the
+    // raw page loaded at the top level: both are preview documents. The
+    // interface page is the only top-level document whose path doesn't
+    // end in one of these three suffixes.
+    const isPreviewDocument = window.top !== window
+      || /\/(raw|preview|thumb)\/$/.test(window.location.pathname);
+    if (!isPreviewDocument) return;
+
+    document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5">');
+    document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css">');
+    document.write('<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></' + 'script>');
+    document.write('<script src="https://cdn.jsdelivr.net/npm/alpinejs@3" defer></' + 'script>');
+
+    let theme = 'light';
+    try {
+      theme = localStorage.getItem('daisy-cotton-theme') || 'light';
+    } catch (_) { /* storage disabled */ }
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
