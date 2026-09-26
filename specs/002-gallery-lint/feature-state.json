@@ -135,7 +135,7 @@
           "attempts": 1,
           "evidence": {
             "commands": [
-              "`uv run python manage.py cotton_lint` at base 85a252e: Annotated card and divider: one @description, one @prop per <c-vars> name, a default @slot and a @slot:name for each named slot (card badges, actions, footer, footer_end; divider label). Trimmed card's banner, which the annotations now repeat.",
+              "`uv run python manage.py cotton_lint` at base 85a252e: card 5 warnings + 4 undeclared-var hints, divider 4 warnings + 1 hint",
               "`uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone",
               "rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK",
               "render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical",
@@ -149,7 +149,7 @@
           "attempts": 1,
           "evidence": {
             "commands": [
-              "`uv run python manage.py cotton_lint` at base 85a252e: Annotated dropdown: description, six props, default slot and @slot:button. The banner's trigger and positioning prose moved into a {% comment %} block.",
+              "`uv run python manage.py cotton_lint` at base 85a252e: 6 warnings + 1 hint (button)",
               "`uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone",
               "rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK",
               "render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical",
@@ -163,7 +163,7 @@
           "attempts": 1,
           "evidence": {
             "commands": [
-              "`uv run python manage.py cotton_lint` at base 85a252e: Annotated modal: description saying title, icon and other attributes reach the inner card, five props, default slot, @slot:actions/footer/footer_end and a @trigger for showModal(). Removed the banner, now covered by the annotations.",
+              "`uv run python manage.py cotton_lint` at base 85a252e: 5 warnings + 3 hints (actions, footer, footer_end)",
               "`uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone",
               "rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK",
               "render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical",
@@ -187,7 +187,7 @@
           "attempts": 1,
           "evidence": {
             "commands": [
-              "`uv run python manage.py cotton_lint` at base 85a252e: Annotated breadcrumbs and its item; each description names the other. Left the existing comment about `only` in place.",
+              "`uv run python manage.py cotton_lint` at base 85a252e: breadcrumbs 2 warnings, breadcrumbs/item 3 warnings",
               "`uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone",
               "rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK",
               "render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical",
@@ -201,7 +201,7 @@
           "attempts": 1,
           "evidence": {
             "commands": [
-              "`uv run python manage.py cotton_lint` at base 85a252e: Annotated dock and its item; each description names the other. dock.item has no default slot. Removed the item banner now covered by the annotations.",
+              "`uv run python manage.py cotton_lint` at base 85a252e: dock 1 warning, dock/item 6 warnings",
               "`uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone",
               "rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK",
               "render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical",
@@ -215,7 +215,7 @@
           "attempts": 1,
           "evidence": {
             "commands": [
-              "`uv run python manage.py cotton_lint` at base 85a252e: Annotated avatar and avatar.group, keeping the dynamic ':size_options' and ':space_options' names as declared and describing what they do today. avatar has no default slot. Removed the avatar banner now covered by the annotations.",
+              "`uv run python manage.py cotton_lint` at base 85a252e: avatar 9 warnings, avatar/group 2 warnings",
               "`uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone",
               "rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK",
               "render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical",
@@ -239,7 +239,7 @@
           "attempts": 1,
           "evidence": {
             "commands": [
-              "`uv run python manage.py cotton_lint` at base 85a252e: Annotated the three mockup frames: description, browser's props, default slot each.",
+              "`uv run python manage.py cotton_lint` at base 85a252e: browser 2 warnings; window and phone had no findings but no annotations",
               "`uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone",
               "rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK",
               "render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical",
@@ -253,7 +253,7 @@
           "attempts": 1,
           "evidence": {
             "commands": [
-              "`uv run python manage.py cotton_lint` at base 85a252e: Annotated mockup.code and its line, annotations above line 1 only; the rendered <pre> is byte-identical. `uv run python manage.py cotton_lint --warnings-as-errors` exits 0: 21/21 components, 0 errors, 0 warnings (form.field keeps 3 undeclared-variable hints).",
+              "`uv run python manage.py cotton_lint` at base 85a252e: line 2 warnings; code index had no findings but no annotations",
               "`uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone",
               "rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK",
               "render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical",
