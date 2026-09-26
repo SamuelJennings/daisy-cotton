@@ -10,3 +10,9 @@ Did: Reworded the field.html comment so it names no component outside this packa
 Verified: `uv run python manage.py cotton_lint`: form/field had 1 error (unknown-component form.render) and 9 missing-annotation warnings before; after, 0 errors, 0 warnings, 3 hints. One `{# @description`, one default `{# @slot`, no unterminated `{#` line. Render of 8 attribute combinations (text input, bare, textarea, select, checkbox, toggle with list errors, file, radio) at base d04b053 and after: identical with whitespace collapsed. `uv run pytest tests/test_form_field.py -q`: 25 passed.
 Next: continue with the next task in the brief.
 Watch: rendered output compared with whitespace collapsed and ends stripped, using a throwaway script outside the repo.
+
+## 2026-09-26T16:50:03Z · Implementer US2 · T002
+Did: Added @description, one @prop per <c-vars> name (including badge's :size_opts) and a default @slot to button.html, link.html and badge.html.
+Verified: `uv run python manage.py cotton_lint`: button, link, badge each had missing-annotation warnings before (see base run); after, none listed with any error or warning. Each has one `{# @description`, one default `{# @slot`, no unterminated `{#` line. Renders at base d04b053 vs after (button with all attributes, plain, condition false; link full and bare; badge full and size lg) identical with whitespace collapsed. `uv run pytest tests -q -k 'button or link or badge or alert or icon'`: 32 passed.
+Next: continue with the next task in the brief.
+Watch: rendered output compared with whitespace collapsed and ends stripped, using a throwaway script outside the repo.
