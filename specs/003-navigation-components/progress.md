@@ -82,3 +82,10 @@ Did: `navbar.html`, a `<nav class="navbar …">` named `Main` by default (a call
 Verified: `tests/test_navbar.py` 12 passed (12 failed before the template existed); `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T012.
 Watch: none.
+
+## 2026-09-26T22:40Z · Implementer US2 · T012
+
+Did: the navbar's annotations (`@description`, a `@prop` per `<c-vars>` name, `@slot` and `@slot:start`, `:center`, `:end` with example content) were written with the template in T011. This task adds `navbar` to the README component list (count now twenty-six) and a CHANGELOG `Added` entry. No page under `docs/` describes the navbar.
+Verified: `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: full verify.
+Watch: none.

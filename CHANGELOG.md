@@ -27,6 +27,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `horizontal` (or a breakpoint such as `lg`) and `paged`. `menu.item` is a link when given `href` and a
   button otherwise, and takes `active`, `disabled`, `icon` and an `aria-label` for an icon-only entry.
   `menu.title` is a heading row, and `menu.submenu` is a collapsible group that nests and takes `open`.
+- `navbar`, a top bar rendered as a `<nav>` named `Main` unless given an `aria-label`. Its `start`, `center`
+  and `end` slots each become a `navbar-start`, `navbar-center` or `navbar-end` section only when given,
+  and the default slot sits directly inside the bar.
 - `responsive` and `variation`, the two generic Cotton-attribute helper tags several of the
   above components use, in a small `daisy_cotton` templatetag library.
 
