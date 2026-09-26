@@ -82,3 +82,9 @@ Did: Added catalog-wide tests over every template under cotton/ (parametrised by
 Verified: `uv run pytest tests/test_gallery_annotations.py -q`: 82 passed (arrived green on the real templates, as expected).
 Next: US1, T014.
 Watch: none.
+
+## 2026-09-26T16:57:43Z · Implementer US1 · T014
+Did: Wrote tests/test_gallery_lint.py: a GalleryLint helper (scan + CatalogConfig discovery, one lint_catalog call, blocking filter, finding formatter) and 5 tests against scratch cotton directories under tmp_path.
+Verified: `uv run pytest tests/test_gallery_lint.py -q`: 5 passed. The tests and helper were written together, so the red step was shown by mutating the helper: BLOCKING limited to errors: 1 failed, 4 passed; discovery pointed at the parent directory: 5 failed. Both mutations reverted.
+Next: T015, the package catalog test.
+Watch: none.

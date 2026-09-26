@@ -61,8 +61,16 @@
       "tasks": [
         {
           "id": "T014",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_gallery_lint.py -q: 5 passed. Probes: treating only errors as blocking made the undocumented-name test fail (1 failed, 4 passed); pointing discovery at the wrong directory failed all 5."
+            ],
+            "tests_added": [
+              "tests/test_gallery_lint.py::TestGalleryLintRules"
+            ]
+          }
         },
         {
           "id": "T015",
