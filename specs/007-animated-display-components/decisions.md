@@ -42,9 +42,9 @@ These are daisyUI's part names. `before` and `after` would read better in the co
 
 A hover gallery's images need `alt`, and sometimes `width`, `height` and `loading`. A text rotate's lines often carry their own colours. A list attribute would have to reinvent each of those, and slots already carry them.
 
-## `inner_class` on the text rotate
+## `content_class` on the text rotate
 
-daisyUI centres the lines with a class on the inner element, which the caller cannot reach through `class` (Article XIV sends that to the root). The action components spec uses `content_class` for a named inner surface such as a panel or a box. The text rotate's inner element is a bare wrapper, not a content surface, so `inner_class` names it more plainly.
+daisyUI centres the lines with a class on the inner element, which the caller cannot reach through `class` (Article XIV sends that to the root). Every other component with one inner element a caller styles names that attribute `content_class`, so the text rotate uses the same name rather than a second one for the same idea.
 
 ## Pointer-only effects
 

@@ -172,7 +172,7 @@ A developer writing a headline wants one word or phrase in it to cycle through u
 1. **Given** `<c-text-rotate>` with three `<span>` lines in its slot, **When** it renders, **Then** it is a `<span>` with `text-rotate` wrapping one inner `<span>` that holds the three lines in order.
 2. **Given** a rendered text rotate in a browser, **When** it is on screen, **Then** the lines show one at a time in a loop, and the loop pauses while the pointer is over it.
 3. **Given** a rendered text rotate, **When** a screen reader reads it, **Then** every line is read in order.
-4. **Given** `class="text-7xl"` and `inner_class="justify-items-center"`, **When** it renders, **Then** the first lands on the root and the second on the inner element, which is how daisyUI centres the lines.
+4. **Given** `class="text-7xl"` and `content_class="justify-items-center"`, **When** it renders, **Then** the first lands on the root and the second on the inner element, which is how daisyUI centres the lines.
 5. **Given** the text rotate's documentation, **When** a developer reads it, **Then** it states daisyUI's limit of six lines, how to change the ten-second loop with a duration class, and that the rotation cannot be paused without a pointer, so rotating text should never be the only place information appears.
 6. **Given** the text rotate's gallery entry, **When** a developer opens it, **Then** a rotating word inside a sentence, lines coloured from the semantic palette, and a large centred heading are shown.
 
@@ -244,7 +244,7 @@ A developer writing a headline wants one word or phrase in it to cycle through u
 
 **Text rotate**
 
-- **FR-026**: `<c-text-rotate>` MUST render a `<span>` with `text-rotate` wrapping one inner `<span>` that holds the default slot. `inner_class` MUST add classes to the inner element. *(US7)*
+- **FR-026**: `<c-text-rotate>` MUST render a `<span>` with `text-rotate` wrapping one inner `<span>` that holds the default slot. `content_class` MUST add classes to the inner element. *(US7)*
 - **FR-027**: The text rotate's documentation MUST state daisyUI's limit of six lines, how to change the loop's duration with a class, and that the rotation pauses only under a pointer. *(US7)*
 
 ### Key Entities
