@@ -3,7 +3,7 @@
 {# @prop horizontal:boolean | description:"Lay the entries out in a row. Pass a breakpoint such as lg to do so from that width up." #}
 {# @prop paged:boolean | description:"Style the menu as a page-level list." #}
 {# @prop class:text | description:"Extra classes added to the menu." #}
-{# @slot — The menu's entries. #}
+{# @slot <c-menu.title text="Docs" /><c-menu.item href="#" text="Overview" active /><c-menu.item text="Archived" disabled /><c-menu.submenu text="More" open><c-menu.item href="#" text="Guides" /><c-menu.submenu text="Deeper" open><c-menu.item href="#" text="Reference" /></c-menu.submenu></c-menu.submenu> — The menu's entries, as menu.item, menu.title and menu.submenu components. #}
 {% load daisy_cotton %}
 <c-vars size horizontal paged class />
 <ul class="menu {% variation size "menu" "xs,sm,md,lg,xl" %} {% responsive horizontal "menu-horizontal" %}{% if paged %} menu-paged{% endif %} {{ class }}"

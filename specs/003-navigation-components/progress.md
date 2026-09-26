@@ -68,3 +68,10 @@ Did: `menu/title.html` (a `<li class="menu-title">` with no interactive element)
 Verified: `tests/test_menu.py` 36 passed (10 failed before the templates existed); `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T010.
 Watch: none.
+
+## 2026-09-26T22:25Z · Implementer US1 · T010
+
+Did: `menu/index.html` default `@slot` carries a one-line example (title, active link, disabled item, open two-level submenu); README lists `menu`, fixes the count to twenty-five, and says pagination has no component and why; CHANGELOG `Added` entry for the four menu templates. No page under `docs/` describes the menu.
+Verified: `cotton_lint --warnings-as-errors` 0 errors 0 warnings; `tests/test_gallery_annotations.py`, `test_gallery_lint.py`, `test_render_all.py`, `test_gallery_links.py` 173 passed, 7 skipped (the menu joins the folder-index skips for #96); gallery page `/django-cotton-gallery/menu/index/` returns 200.
+Next: T011.
+Watch: the README component count assumes navbar (T012) brings it to twenty-six.
