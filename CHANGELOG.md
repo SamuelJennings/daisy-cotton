@@ -14,12 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- The first 30 components, migrated from django-mvp's own Cotton component library:
-  `alert`, `avatar` + `avatar.group`, `backdrop`, `badge`, `breadcrumbs` + `breadcrumbs.item`,
-  `button`, `card` + `card.wrapper`, `container`, `divider`, `dock` + `dock.item`, `dropdown`,
-  `form.field`, `grid`, `group`, `icon`, `link`, `modal`, `mockup.browser` + `mockup.window` +
-  `mockup.phone` + `mockup.code` + `mockup.code.line`, `placeholder.card`, `rule`, `text` and
-  `toolbar`.
+- The first 21 components, migrated from django-mvp's own Cotton component library:
+  `alert`, `avatar` + `avatar.group`, `badge`, `breadcrumbs` + `breadcrumbs.item`, `button`,
+  `card`, `divider`, `dock` + `dock.item`, `dropdown`, `form.field`, `icon`, `link`, `modal`,
+  `mockup.browser` + `mockup.window` + `mockup.phone` + `mockup.code` + `mockup.code.line`.
 - `<c-icon>`: a basic primitive that treats `name` as a literal CSS class string
   (`<i class="{{ name }} {{ class }}">`). This package resolves no icon pack of its own — a
   project wanting name-based resolution (an icon font, an SVG sprite, django-easy-icons) provides
@@ -43,3 +41,9 @@ Not migrated in this pass, and deliberately out of scope: anything coupled to Dj
 framework or `Paginator` (kept out for now, not because it's app-specific), a generic
 content-section wrapper, and Django form/formset rendering beyond the single presentational
 `form.field`. See `docs/adr/0001-icon-is-an-extension-point.md` for the icon decision.
+
+### Removed
+
+- Nine components migrated alongside those, which have no daisyUI counterpart: `backdrop`,
+  `container`, `grid`, `group`, `rule`, `text`, `toolbar`, `placeholder.card` and `card.wrapper`.
+  `card` now renders its `.card` surface directly. None of them was ever released.

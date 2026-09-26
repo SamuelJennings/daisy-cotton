@@ -29,7 +29,9 @@ class TestComponentRenderSmoke:
     """Every packaged Cotton component template renders."""
 
     def test_inventory_is_nonempty(self):
-        assert len(TEMPLATES) > 25, "cotton template discovery looks broken"
+        assert {"button.html", "card/index.html", "mockup/code/line.html"} <= set(
+            TEMPLATES
+        ), "cotton template discovery looks broken"
 
     @pytest.mark.django_db
     @pytest.mark.parametrize("relpath", TEMPLATES)
