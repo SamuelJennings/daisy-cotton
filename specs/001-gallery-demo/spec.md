@@ -21,7 +21,7 @@ Issue #11 owns the gallery annotations on each component, the linter in the test
 ### Session 2026-09-26
 
 - Q: Why do the sidebar links for `card`, `dock` and the other folder components return 404: this repository's configuration, or the gallery? → A: The gallery. django-cotton-gallery 1.0.0, the latest release, lists `card/index.html` under the name `card` and links to `/django-cotton-gallery/card/`, but the page behind that link looks only for `card.html` and never falls back to `card/index.html` the way Cotton does. The defect is still on the gallery's main branch, and no setting here changes either side. Six links are affected today: `avatar`, `breadcrumbs`, `card`, `dock`, `dropdown` and `mockup/code`.
-- Q: What does this repository do about those six links? → A: It doesn't work around the defect. Moving templates out of their folders would reshape the package to suit a development tool. A test checks that every sidebar link opens its component, and for folder components that test is skipped with a reason naming the upstream issue. The implementation files that issue with django-cotton-gallery. When a gallery release carries the fix, the dev dependency's minimum goes up and the skip comes out.
+- Q: What does this repository do about those six links? → A: It doesn't work around the defect. Moving templates out of their folders would reshape the package to suit a development tool. A test checks that every sidebar link opens its component, and for folder components that test is skipped with a reason naming the tracking issue. The implementation files that issue in this repository, and the maintainer decides whether it goes to django-cotton-gallery. When a gallery release carries the fix, the dev dependency's minimum goes up and the skip comes out.
 - Q: Does "a bare Cotton and daisyUI page" rule out Alpine in the demo? → A: No. Alpine is a script, not a host package. The demo loads it so `alert`'s dismiss button works in the gallery, which is exactly what a project using the component does. The package itself still ships no JavaScript.
 - Q: Which themes does the switcher offer? → A: The ten the demo offers today: light, dark, cupcake, emerald, corporate, synthwave, dracula, business, night and winter. Between them they cover light, dark and heavily tinted palettes.
 - Q: Does "name no other project as its host or consumer" cover the shared CI and toolchain repository, `django-mvp/shared`? → A: No. It supplies the CI workflows, the pre-commit configuration and the development toolchain. It neither hosts nor consumes this package, so references to it stay.
@@ -51,16 +51,16 @@ A contributor starts the demo and lands in the component gallery. There is no ho
 
 ### User Story 2 - Every sidebar link opens its component (Priority: P2)
 
-Every link in the gallery sidebar opens its component's page, including components whose template is a folder (`avatar`, `breadcrumbs`, `card`, `dock`, `dropdown`, `mockup.code`). The cause is a defect in the gallery package, so this repository reports it upstream and records exactly which links wait on the fix, rather than reshaping its templates around it.
+Every link in the gallery sidebar opens its component's page, including components whose template is a folder (`avatar`, `breadcrumbs`, `card`, `dock`, `dropdown`, `mockup.code`). The cause is a defect in the gallery package, so this repository tracks it in its own issue and records exactly which links wait on the fix, rather than reshaping its templates around it.
 
-**Why this priority**: A broken link hides a component from the gallery, which works against G2. Stories 1 and 3 still deliver their value before the upstream fix ships.
+**Why this priority**: A broken link hides a component from the gallery, which works against G2. Stories 1 and 3 still deliver their value before the gallery fix ships.
 
-**Independent Test**: Run the sidebar-link test. It opens every link the sidebar renders: flat components pass, and each folder component either passes (once a fixed gallery release is installed) or is skipped with a reason naming the upstream issue.
+**Independent Test**: Run the sidebar-link test. It opens every link the sidebar renders: flat components pass, and each folder component either passes (once a fixed gallery release is installed) or is skipped with a reason naming the tracking issue.
 
 **Acceptance Scenarios**:
 
 1. **Given** the gallery sidebar, **When** the test opens every component link in it, **Then** each link to a single-file component returns that component's page.
-2. **Given** the installed gallery release still has the index-file defect, **When** the test reaches a folder component, **Then** that case is skipped and the skip reason names the upstream issue.
+2. **Given** the installed gallery release still has the index-file defect, **When** the test reaches a folder component, **Then** that case is skipped and the skip reason names the tracking issue.
 3. **Given** a gallery release that fixes the defect, **When** the dev dependency's minimum is raised to it and the skip removed, **Then** every sidebar link returns its component's page.
 4. **Given** a folder component added later, **When** the test runs, **Then** its link is covered without editing the test.
 
@@ -115,7 +115,7 @@ An adopter setting `dismissible` on `alert` learns from the README that the dism
 - **FR-005**: The test suite and its settings MUST run and pass without django-mvp installed. *(US1)*
 - **FR-006**: The demo MUST load Alpine.js on the preview page so `alert`'s dismiss button works in the gallery. The package itself MUST NOT ship or load JavaScript. *(US1)*
 - **FR-007**: A test MUST open every component link the gallery sidebar renders and assert each returns its component's page. The cases come from the sidebar itself, so new components are covered automatically. *(US2)*
-- **FR-008**: While the installed gallery release has the index-file defect, folder-component cases MUST be skipped, not marked as expected failures, with a reason naming the upstream issue. No component template may be moved, renamed or duplicated to get around the defect. *(US2)*
+- **FR-008**: While the installed gallery release has the index-file defect, folder-component cases MUST be skipped, not marked as expected failures, with a reason naming the tracking issue in this repository. No component template may be moved, renamed or duplicated to get around the defect. *(US2)*
 - **FR-009**: The defect MUST be reported to django-cotton-gallery with its reproduction during implementation, and this repository's dependency on the fix MUST be recorded. *(US2)*
 - **FR-010**: README.md, CONTEXT.md, AGENTS.md, `docs/brainstorm.md`, `docs/adr/0001-icon-is-an-extension-point.md` and CHANGELOG.md MUST NOT name django-mvp or daisy-cotton-blocks as a host, source or consumer of this package. References to the shared CI and toolchain repository (`django-mvp/shared`, `mvp-shared`) MAY remain. *(US3)*
 - **FR-011**: `demo/`, `tests/` and the comments in `pyproject.toml` MUST NOT name django-mvp or daisy-cotton-blocks. *(US3)*
@@ -135,13 +135,13 @@ An adopter setting `dismissible` on `alert` learns from the README that the dism
 
 - **SC-001**: With the dev dependencies installed, the resolved dependency tree contains none of django-mvp, django-flex-menus, django-easy-icons, django-crispy-forms or crispy-tailwind.
 - **SC-002**: The full test suite passes in CI on every supported Python and Django combination with django-mvp absent.
-- **SC-003**: The sidebar-link test runs one case per sidebar link, and every case either passes or is one of the six folder-component skips naming the upstream issue.
+- **SC-003**: The sidebar-link test runs one case per sidebar link, and every case either passes or is one of the six folder-component skips naming the tracking issue.
 - **SC-004**: A case-insensitive search for `mvp` and `daisy-cotton-blocks` across the six documents, `demo/`, `tests/` and `pyproject.toml` finds nothing except references to `django-mvp/shared` or `mvp-shared`.
 - **SC-005**: The demo's root URL reaches the gallery in one request or one redirect, and choosing any of the ten themes applies that theme to the preview.
 
 ## Assumptions
 
 - Loading daisyUI and Alpine into the demo from a public CDN is acceptable for a development target that is never deployed. The package's requirement that the project supplies daisyUI doesn't change. How the demo loads them is a planning decision.
-- The gallery's existing extension points (its extra CSS and JavaScript settings, and its head and body partials) can host the theme switcher. If they can't, the gap goes upstream like the index-file defect.
+- The gallery's existing extension points (its extra CSS and JavaScript settings, and its head and body partials) can host the theme switcher. If they can't, the gap is filed as an issue in this repository like the index-file defect.
 - The demo's live browser reload comes from the shared development toolchain, not a host package, and stays.
 - Issue #11 adds the gallery annotations and the linter gate. Neither feature depends on the other.
