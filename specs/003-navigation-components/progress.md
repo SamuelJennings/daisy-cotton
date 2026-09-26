@@ -159,3 +159,10 @@ Did: `link`, `menu.item`, `menu.submenu`, `tabs`, `tabs.tab`, `steps.step` and `
 Verified: 14 new tests all failed before the template edits; `uv run pytest tests/test_link.py tests/test_menu.py tests/test_tabs.py tests/test_steps.py tests/test_dock.py -q` 137 passed; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T024.
 Watch: none.
+
+## 2026-09-26T23:40Z · Implementer US1 · T024
+
+Did: tests that the submenu's icon does not receive the item's class and that the dock toggle's icon carries `aria-hidden="true"` and not the item's class. No template change: both behaviours already held.
+Verified: `uv run pytest tests/test_menu.py tests/test_dock.py -q` 71 passed. Probed each: removing `only` from the submenu icon fails the isolation test, removing `aria-hidden="true"` from the toggle icon fails the aria test, removing `only` from the toggle icon fails its class test; templates restored afterwards.
+Next: T025.
+Watch: none.

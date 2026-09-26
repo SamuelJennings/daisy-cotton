@@ -292,3 +292,15 @@ class TestMenuPageContext:
     def test_page_open_does_not_expand_a_submenu(self, cotton_render_string):
         soup = parse(cotton_render_string('<c-menu.submenu text="M" />', {"open": True}))
         assert soup.details.get("open") is None
+
+
+class TestMenuSubmenuIconIsolation:
+    """The caller's class belongs to the list item, not to the icon."""
+
+    def test_the_callers_class_does_not_reach_the_icon(self, cotton_render_string):
+        html = cotton_render_string(
+            '<c-menu.submenu text="M" icon="x" class="mine">x</c-menu.submenu>'
+        )
+        soup = parse(html)
+        assert "mine" in soup.li["class"]
+        assert "mine" not in soup.summary.find("i")["class"]

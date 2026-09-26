@@ -196,3 +196,21 @@ class TestDockItemPageContext:
         )
         assert soup.label is None
         assert soup.button is not None
+
+
+class TestDockItemToggleIcon:
+    """The toggle's icon is decorative and does not inherit the item's class."""
+
+    def test_icon_is_hidden_from_assistive_technology(self, cotton_render_string):
+        html = cotton_render_string(
+            '<c-dock.item toggle="drawer" icon="i-menu" aria-label="Open menu" />'
+        )
+        assert parse(html).label.find("i")["aria-hidden"] == "true"
+
+    def test_the_items_class_does_not_reach_the_icon(self, cotton_render_string):
+        html = cotton_render_string(
+            '<c-dock.item toggle="drawer" icon="i-menu" class="mine" label="Menu" />'
+        )
+        label = parse(html).label
+        assert "mine" in label["class"]
+        assert "mine" not in label.find("i")["class"]
