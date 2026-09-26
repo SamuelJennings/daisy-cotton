@@ -96,3 +96,10 @@ Did: `tabs/index.html`, a `<div class="tabs …">` with `role="tablist"` unless 
 Verified: `tests/test_tabs.py` 10 passed (10 failed before the template existed); `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T014.
 Watch: none.
+
+## 2026-09-26T23:15Z · Implementer US4 · T014
+
+Did: `tabs/tab.html` link and button shapes. A link tab with `active` gets `tab-active` and `aria-current="page"`; a disabled one drops `href` and carries `tab-disabled`, `role="link"` and `aria-disabled="true"`, with no `tabindex`. A tab with no `href` is `<button type="button" role="tab">` with `aria-selected` true or false from `active`, and native `disabled` plus `tab-disabled`. `class` and attributes land on the tab element. Annotations landed with the template.
+Verified: `tests/test_tabs.py` 22 passed (12 new ones failed before the template existed); `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T015 (radio shape and the `name` c-var).
+Watch: none.

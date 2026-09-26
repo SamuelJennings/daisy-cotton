@@ -66,3 +66,91 @@ class TestTabsRoot:
     def test_the_slot_is_rendered_inside(self, cotton_render_string):
         root = parse(cotton_render_string("<c-tabs><b>marker</b></c-tabs>")).div
         assert root.b.get_text() == "marker"
+
+
+class TestTabLink:
+    """A tab given an ``href`` is a link."""
+
+    def test_link_tab_carries_href_and_the_tab_class(self, cotton_render_string):
+        a = parse(cotton_render_string('<c-tabs.tab href="/a" text="A" />')).a
+        assert a["href"] == "/a"
+        assert a["class"] == ["tab"]
+        assert a.get_text(strip=True) == "A"
+
+    def test_active_link_is_marked_current(self, cotton_render_string):
+        a = parse(cotton_render_string('<c-tabs.tab href="/a" text="A" active />')).a
+        assert "tab-active" in a["class"]
+        assert a["aria-current"] == "page"
+
+    def test_inactive_link_has_neither_marker(self, cotton_render_string):
+        a = parse(cotton_render_string('<c-tabs.tab href="/a" text="A" />')).a
+        assert "tab-active" not in a["class"]
+        assert not a.has_attr("aria-current")
+
+    def test_disabled_link_is_an_announced_disabled_link_without_href(
+        self, cotton_render_string
+    ):
+        a = parse(
+            cotton_render_string('<c-tabs.tab href="/a" text="A" disabled />')
+        ).a
+        assert "tab-disabled" in a["class"]
+        assert a["role"] == "link"
+        assert a["aria-disabled"] == "true"
+        assert not a.has_attr("href")
+        assert not a.has_attr("tabindex")
+
+    def test_enabled_link_has_no_role_or_aria_disabled(self, cotton_render_string):
+        a = parse(cotton_render_string('<c-tabs.tab href="/a" text="A" />')).a
+        assert not a.has_attr("role")
+        assert not a.has_attr("aria-disabled")
+
+    def test_class_and_attributes_reach_the_link(self, cotton_render_string):
+        a = parse(
+            cotton_render_string(
+                '<c-tabs.tab href="/a" text="A" class="mine" data-x="1" />'
+            )
+        ).a
+        assert a["class"] == ["tab", "mine"]
+        assert a["data-x"] == "1"
+
+    def test_the_slot_follows_the_text(self, cotton_render_string):
+        a = parse(
+            cotton_render_string('<c-tabs.tab href="/a" text="A"><b>m</b></c-tabs.tab>')
+        ).a
+        assert a.b.get_text() == "m"
+
+
+class TestTabButton:
+    """A tab with neither ``href`` nor ``name`` is a button with the tab role."""
+
+    def test_button_tab_shape(self, cotton_render_string):
+        b = parse(cotton_render_string('<c-tabs.tab text="A" />')).button
+        assert b["type"] == "button"
+        assert b["role"] == "tab"
+        assert b["class"] == ["tab"]
+        assert b.get_text(strip=True) == "A"
+
+    def test_selected_state_follows_active(self, cotton_render_string):
+        on = parse(cotton_render_string('<c-tabs.tab text="A" active />')).button
+        off = parse(cotton_render_string('<c-tabs.tab text="A" />')).button
+        assert on["aria-selected"] == "true"
+        assert "tab-active" in on["class"]
+        assert off["aria-selected"] == "false"
+        assert "tab-active" not in off["class"]
+
+    def test_disabled_button_is_natively_disabled(self, cotton_render_string):
+        b = parse(cotton_render_string('<c-tabs.tab text="A" disabled />')).button
+        assert b.has_attr("disabled")
+        assert "tab-disabled" in b["class"]
+
+    def test_enabled_button_is_not_disabled(self, cotton_render_string):
+        b = parse(cotton_render_string('<c-tabs.tab text="A" />')).button
+        assert not b.has_attr("disabled")
+        assert "tab-disabled" not in b["class"]
+
+    def test_class_and_attributes_reach_the_button(self, cotton_render_string):
+        b = parse(
+            cotton_render_string('<c-tabs.tab text="A" class="mine" data-x="1" />')
+        ).button
+        assert b["class"] == ["tab", "mine"]
+        assert b["data-x"] == "1"
