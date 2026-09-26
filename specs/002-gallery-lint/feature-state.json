@@ -2,7 +2,7 @@
   "feature": "002-gallery-lint",
   "branch": "002-gallery-lint",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "REVIEW",
+  "state": "IMPLEMENT",
   "state_history": [
     {
       "state": "QUEUED",
@@ -33,6 +33,11 @@
       "state": "REVIEW",
       "at": "2026-09-26T17:01:38Z",
       "note": "converge green; no ADR graduated"
+    },
+    {
+      "state": "IMPLEMENT",
+      "at": "2026-09-26T17:07:02Z",
+      "note": "review fix cycle: two verified high findings (slot descriptions unread by the gallery; help-text slot name)"
     }
   ],
   "gates": {
