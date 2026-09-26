@@ -70,3 +70,9 @@ Did: Annotated mockup.code and its line, annotations above line 1 only; the rend
 Verified: `uv run python manage.py cotton_lint` at base 85a252e: line 2 warnings; code index had no findings but no annotations; `uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone; rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK; render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical; `uv run pytest tests -q -k 'mockup or code'`: ====================== 11 passed, 138 deselected in 0.27s ======================
 Next: continue with the next task in the brief.
 Watch: rendered output compared with whitespace collapsed and ends stripped, using a throwaway script outside the repo.
+
+## 2026-09-26T16:56:48Z · Implementer US7 · T012
+Did: Wrote tests/test_gallery_annotations.py rule tests against scratch sources (18 cases) first, then the three rule helpers (AnnotationRules: description, default slot, single-line comments).
+Verified: red first: `uv run pytest tests/test_gallery_annotations.py -q`: 18 failed (helper class not defined); after implementing: 18 passed.
+Next: T013, the catalog-wide tests and the pyproject registration.
+Watch: the helpers live in the test module, since only test files are in scope.
