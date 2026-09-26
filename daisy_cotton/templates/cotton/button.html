@@ -1,9 +1,9 @@
 {# @description A button, or a link styled as one when an href is passed. Shows an optional icon and text, then the default slot. #}
 {# @prop size:select['sm','md','lg'] | description:"Button size." #}
 {# @prop text:text | description:"Button label, shown in a span before the default slot." #}
-{# @prop variant:text | description:"Colour variant, such as primary, secondary, accent, neutral, info, success, warning or error." #}
+{# @prop variant:select['neutral','primary','secondary','accent','info','success','warning','error'] | description:"Colour variant. Leave empty for the default colour." #}
 {# @prop outline:boolean | description:"Draw the button as an outline." #}
-{# @prop align:text | default:"center" | description:"Horizontal alignment of the content inside the button: start, center or end." #}
+{# @prop align:select['start','center','end'] | default:"center" | description:"Horizontal alignment of the content inside the button." #}
 {# @prop icon:text | description:"Icon shown before the text, passed as the name of the icon component." #}
 {# @prop class:text | description:"Extra classes added to the button." #}
 {# @prop ghost:boolean | description:"Draw the button without a background." #}

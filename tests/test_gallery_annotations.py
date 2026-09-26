@@ -7,11 +7,13 @@ see are easy to get wrong and silent when they are: a component with no
 slot with no ``@slot``, or with one the gallery reads no description from,
 documents a slot nobody is told about, and a ``{#`` that
 does not close on its own line is not a Django comment at all, so its text is
-printed into the page.
+printed into the page. A prop that takes one of a fixed set of values and is
+typed ``text`` shows a free-text box where the gallery could offer a dropdown
+of the values that work.
 
 The rules are read out of the template source, not a rendered page: a missing
 annotation leaves nothing in the output to assert against. Named slots and
-``@trigger`` are left to review; only these three things are checked.
+``@trigger`` are left to review; only these four things are checked.
 """
 
 import re
@@ -32,9 +34,12 @@ DESCRIPTION = re.compile(r"\{#\s*@description\b")
 DEFAULT_SLOT_ANNOTATION = re.compile(r"\{#\s*@slot(?!:)")
 DEFAULT_SLOT_EXPRESSION = re.compile(r"\{\{\s*slot\s*(?:\|[^}]*)?\}\}")
 
+# Props whose value is always one of a fixed set of daisyUI modifier names.
+FIXED_CHOICE_PROPS = frozenset({"variant", "align", "position", "placement"})
+
 
 class AnnotationRules:
-    """The three checks, each returning a list of problems (empty when it passes)."""
+    """The four checks, each returning a list of problems (empty when it passes)."""
 
     @staticmethod
     def description_problems(source):
@@ -68,6 +73,20 @@ class AnnotationRules:
         ]
 
     @staticmethod
+    def choice_problems(source):
+        """A fixed-choice prop is a ``select`` listing its values."""
+        problems = []
+        for prop in AnnotationParser().parse(source).props:
+            if prop.clean_name not in FIXED_CHOICE_PROPS:
+                continue
+            if prop.type != "select" or not prop.options:
+                problems.append(
+                    f"@prop {prop.clean_name} takes a fixed set of values; "
+                    "type it select['…'] listing them"
+                )
+        return problems
+
+    @staticmethod
     def comment_problems(source):
         problems = []
         for number, line in enumerate(source.splitlines(), start=1):
@@ -79,7 +98,7 @@ class AnnotationRules:
 
 
 class TestAnnotationRules:
-    """The three rules, proven against scratch sources."""
+    """The four rules, proven against scratch sources."""
 
     def test_one_description_passes(self):
         source = "{# @description A thing. #}\n<div></div>\n"
@@ -159,6 +178,25 @@ class TestAnnotationRules:
         source = "{# note #}<div>{{ slot }}</div>\n"
         assert AnnotationRules.slot_problems(source) != []
 
+    def test_fixed_choice_prop_typed_select_passes(self):
+        source = "{# @prop variant:select['primary','error'] #}\n"
+        assert AnnotationRules.choice_problems(source) == []
+
+    @pytest.mark.parametrize("name", sorted(FIXED_CHOICE_PROPS))
+    def test_fixed_choice_prop_typed_text_fails(self, name):
+        source = f"{{# @prop {name}:text | description:\"x\" #}}\n"
+        assert AnnotationRules.choice_problems(source) == [
+            f"@prop {name} takes a fixed set of values; type it select['…'] listing them"
+        ]
+
+    def test_select_without_options_fails(self):
+        source = "{# @prop variant:select #}\n"
+        assert AnnotationRules.choice_problems(source) != []
+
+    def test_other_text_props_are_not_checked(self):
+        source = "{# @prop href:text | description:\"x\" #}\n"
+        assert AnnotationRules.choice_problems(source) == []
+
     def test_single_line_annotations_pass(self):
         source = "{# @description A. #}\n{# @prop a:text #}\n"
         assert AnnotationRules.comment_problems(source) == []
@@ -180,7 +218,7 @@ def template_id(path):
 
 @pytest.mark.parametrize("path", TEMPLATES, ids=template_id)
 class TestPackageTemplateAnnotations:
-    """Every template the package ships passes all three rules."""
+    """Every template the package ships passes all four rules."""
 
     def test_has_exactly_one_description(self, path):
         problems = AnnotationRules.description_problems(path.read_text())
@@ -188,6 +226,10 @@ class TestPackageTemplateAnnotations:
 
     def test_documents_the_default_slot_it_renders(self, path):
         problems = AnnotationRules.slot_problems(path.read_text())
+        assert not problems, f"{template_id(path)}: {problems}"
+
+    def test_fixed_choice_props_list_their_values(self, path):
+        problems = AnnotationRules.choice_problems(path.read_text())
         assert not problems, f"{template_id(path)}: {problems}"
 
     def test_annotations_close_on_their_own_line(self, path):

@@ -106,6 +106,9 @@ defines:
 - one `@description`, a single-line summary of the component
 - one `@prop` for every name declared in `<c-vars>`, with its type, a default matching the
   `<c-vars>` value (or `required`), and a `description`
+- a prop whose value is one of a fixed set, such as a colour `variant`, an alignment or a
+  placement, typed `select['…']` listing those values, so the gallery offers them as a dropdown
+  instead of a text box
 - one `@slot` for the default slot and one `@slot:name` for every named slot the template
   renders, each with a description
 - `@trigger` on any component opened by another element (a modal, a drawer)
@@ -139,4 +142,4 @@ Read at planning and review; applies to every change.
 
 ---
 
-**Version**: 2.0.0 | **Ratified**: 2026-09-23 | **Last Amended**: 2026-09-26
+**Version**: 2.1.0 | **Ratified**: 2026-09-23 | **Last Amended**: 2026-09-26
