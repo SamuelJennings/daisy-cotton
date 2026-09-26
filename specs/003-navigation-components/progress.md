@@ -89,3 +89,10 @@ Did: the navbar's annotations (`@description`, a `@prop` per `<c-vars>` name, `@
 Verified: `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: full verify.
 Watch: none.
+
+## 2026-09-26T23:10Z · Implementer US4 · T013
+
+Did: `tabs/index.html`, a `<div class="tabs …">` with `role="tablist"` unless `links`; `box`, `border`, `lift` booleans, `size` and `placement` (`top`/`bottom`) through `variation` so an unknown value adds nothing; class and attributes on the root. Annotations landed with the template; the example slot is a plain description until `tabs.tab` exists (T016 adds the real example). New `tests/test_tabs.py`, listed in `non-mirror-paths`.
+Verified: `tests/test_tabs.py` 10 passed (10 failed before the template existed); `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T014.
+Watch: none.
