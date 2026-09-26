@@ -4,10 +4,10 @@
 {# @prop position:select['top','bottom','start','end'] | description:"Where the dialog sits on screen; by default daisyUI centres it." #}
 {# @prop closable:boolean | description:"Show a close button in the top corner." #}
 {# @prop class:text | description:"Extra classes added to the inner card surface." #}
-{# @slot The dialog body, shown in the inner card. #}
-{# @slot:actions Card header, end-aligned: buttons, a dropdown. #}
-{# @slot:footer Card footer, start-aligned. #}
-{# @slot:footer_end Card footer, end-aligned. #}
+{# @slot — The dialog body, shown in the inner card. #}
+{# @slot:actions — Card header, end-aligned: buttons, a dropdown. #}
+{# @slot:footer — Card footer, start-aligned. #}
+{# @slot:footer_end — Card footer, end-aligned. #}
 {# @trigger <button onclick="myModal.showModal()">Open</button> — a modal starts closed; any element opens it by calling showModal() on the dialog whose id matches the modal's id prop, and close() or a form with method="dialog" closes it. #}
 {% load i18n daisy_cotton %}
 <c-vars id size="md" position closable class />

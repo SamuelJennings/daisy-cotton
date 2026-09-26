@@ -106,3 +106,9 @@ Did: Linked CONTRIBUTING.md from the README Status section; added the [Unrelease
 Verified: read back with git diff; the final verify below covers formatting.
 Next: full verify and reports.
 Watch: none.
+
+## 2026-09-26T17:20:00Z · FIX-1 · TC01
+Did: Rewrote all 27 slot annotations (default and named, 18 templates) to the `sample — description` form the gallery parser splits on. Every slot leads with `— ` (no sample) except alert's default slot, which carries the sample message "Your changes were saved.". Comment text only; no `<c-vars>` or markup touched.
+Verified: AnnotationParser over every template: 27 slots, 0 empty descriptions (was 27 empty); `uv run python manage.py cotton_lint --warnings-as-errors`: exit 0, 0 errors, 0 warnings; `uv run pytest tests/test_render_all.py tests/test_gallery_annotations.py -q`: 104 passed.
+Next: TC02, make the slot rule require a description.
+Watch: none.

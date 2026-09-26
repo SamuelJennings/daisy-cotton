@@ -4,11 +4,11 @@
 {# @prop tight:boolean | description:"Remove the body padding, for full-bleed tables and lists." #}
 {# @prop class:text | description:"Extra classes added to the card surface." #}
 {# @prop body_class:text | description:"Extra classes added to the card body." #}
-{# @slot The card body. #}
-{# @slot:badges Header, just after the title: status badges, counts. #}
-{# @slot:actions Header, end-aligned: buttons, a dropdown. #}
-{# @slot:footer Footer, start-aligned. #}
-{# @slot:footer_end Footer, end-aligned. #}
+{# @slot — The card body. #}
+{# @slot:badges — Header, just after the title: status badges, counts. #}
+{# @slot:actions — Header, end-aligned: buttons, a dropdown. #}
+{# @slot:footer — Footer, start-aligned. #}
+{# @slot:footer_end — Footer, end-aligned. #}
 <c-vars title="" icon="" tight class body_class />
 <div class="card bg-base-100 shadow-sm {{ class }}" {{ attrs }}>
   <div class="card-body {% if tight %}p-0{% endif %} {{ body_class }}">
