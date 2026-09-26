@@ -65,3 +65,9 @@ Tests render through the Cotton compiler as a caller's template would (`tests/te
 - Phases 1–7 touch disjoint templates and test modules. They share `README.md`, `CHANGELOG.md` and `pyproject.toml`'s `non-mirror-paths`, so batches run one after another on one branch.
 - Phase 3 before Phase 7: the megamenu's gallery example holds a `<c-menu>`.
 - Phase 8 needs every story done and the demo running.
+
+## Review fixes
+
+- [ ] T023 Default to `""` in `<c-vars>` every name that decides which markup or state is emitted and that a page variable could supply: `active`, `disabled`, `href` on `menu.item`, `tabs.tab` and `dock.item`, `toggle` on `dock.item`, `links` on `tabs`, `current` and `content` on `steps.step`, `open` on `menu.submenu`, `href` on `link`. One page-context test per component (RVW-001).
+- [ ] T024 Tests that fail when `only` is dropped from `menu.submenu`'s icon, and when the dock toggle's icon loses `aria-hidden="true" only` (RVW-002).
+- [ ] T025 README count to thirty-two. CHANGELOG `breadcrumbs.item` bullet: linked items render their text directly in the `<a>` with no span, the current item's span has no class, and a project that styled `.daisy-cotton-breadcrumb-text` targets `.breadcrumbs li > a` and `.breadcrumbs li > span` or writes its own span in the item's slot. `tabs.tab`'s `text` annotation says a radio tab needs it for its name (RVW-003, RVW-004, review note).
