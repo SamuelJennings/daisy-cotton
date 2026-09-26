@@ -131,3 +131,10 @@ Did: the steps annotations were written with the templates (T017); this task add
 Verified: `cotton_lint --warnings-as-errors` 0 errors 0 warnings; `tests/test_steps.py`, `test_gallery_annotations.py`, `test_gallery_lint.py`, `test_render_all.py`, `test_gallery_links.py` 220 passed, 9 skipped (steps joins the folder-index skips for #96).
 Next: T019.
 Watch: none.
+
+## 2026-09-26T23:50Z · Implementer US7 · T019
+
+Did: `megamenu/index.html`: a required `id`, a Menu toggle rendered through `<c-button class="sm:hidden" type="button" popovertarget="{{ id }}" … only />`, then `<nav id popover class="megamenu max-sm:megamenu-vertical …">` holding `<span class="megamenu-active">` and the slot. `wide`, `full` and `size` add `megamenu-wide`, `megamenu-full` and `megamenu-<size>`; the name is a translated `Site` unless the caller gives an `aria-label`, which replaces it once. Annotations landed with the template; the description gives daisyUI's ten-item limit and says to set `id` in the playground. New `tests/test_megamenu.py`, listed in `non-mirror-paths`.
+Verified: `tests/test_megamenu.py` 11 passed (11 failed before the template existed); probed: dropping `only` from the toggle makes the full/size and page-context `href` tests fail; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T020.
+Watch: none.
