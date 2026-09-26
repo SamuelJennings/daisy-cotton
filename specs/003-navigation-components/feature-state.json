@@ -112,8 +112,17 @@
       "tasks": [
         {
           "id": "T001",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_link.py -q: 14 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_link.py"
+            ]
+          }
         },
         {
           "id": "T002",

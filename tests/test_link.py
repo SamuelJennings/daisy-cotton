@@ -49,10 +49,15 @@ class TestLinkDefaults:
         assert attrs["class"].split()[0] == "link"
         assert "Sign in" in html
 
-    def test_default_href_falls_back_to_hash(self):
+    def test_no_href_given_emits_no_href_attribute(self):
         html = render('<c-link text="Sign in" />')
         attrs = first_tag_attrs(html, "a")
-        assert attrs["href"] == "#"
+        assert "href" not in attrs
+
+    def test_href_given_is_written_once(self):
+        html = render('<c-link href="/x" text="Sign in" />')
+        assert html.count("href=") == 1
+        assert first_tag_attrs(html, "a")["href"] == "/x"
 
 
 class TestLinkVariant:
@@ -62,6 +67,25 @@ class TestLinkVariant:
         html = render('<c-link text="Sign in" variant="primary" />')
         attrs = first_tag_attrs(html, "a")
         assert "link-primary" in attrs["class"].split()
+
+    def test_variant_with_href_is_a_coloured_link(self):
+        html = render('<c-link href="/x" variant="primary" hover />')
+        attrs = first_tag_attrs(html, "a")
+        assert attrs["href"] == "/x"
+        assert attrs["class"].split()[:2] == ["link", "link-primary"]
+        assert "link-hover" in attrs["class"].split()
+
+    def test_unknown_variant_adds_no_link_class(self):
+        html = render('<c-link text="Sign in" variant="bogus" />')
+        attrs = first_tag_attrs(html, "a")
+        assert not any(c.startswith("link-") for c in attrs["class"].split())
+
+    def test_every_daisyui_link_colour_is_accepted(self):
+        for colour in (
+            "neutral primary secondary accent info success warning error"
+        ).split():
+            html = render(f'<c-link text="x" variant="{colour}" />')
+            assert f"link-{colour}" in first_tag_attrs(html, "a")["class"].split()
 
     def test_no_variant_omits_variant_class(self):
         html = render('<c-link text="Sign in" />')
