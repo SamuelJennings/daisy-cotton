@@ -176,7 +176,9 @@ class TestTheTrailShapes:
 
     def test_only_the_last_item_of_a_built_trail_is_current(self):
         html = render('<c-breadcrumbs :items="items" />', items=self.ITEMS)
-        current = BeautifulSoup(html, "html.parser").find_all(attrs={"aria-current": "page"})
+        current = BeautifulSoup(html, "html.parser").find_all(
+            attrs={"aria-current": "page"}
+        )
         assert len(current) == 1
         assert current[0].get_text(strip=True) == "Widget"
 

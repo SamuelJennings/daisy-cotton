@@ -19,7 +19,9 @@ class TestDockRoot:
         assert nav is not None
         assert nav["class"] == ["dock"]
 
-    def test_size_and_caller_class_are_the_only_extra_classes(self, cotton_render_string):
+    def test_size_and_caller_class_are_the_only_extra_classes(
+        self, cotton_render_string
+    ):
         nav = parse(
             cotton_render_string('<c-dock size="sm" class="mine">x</c-dock>')
         ).nav
@@ -75,7 +77,9 @@ class TestDockItemLink:
 
     def test_no_label_emits_no_dock_label(self, cotton_render_string):
         a = parse(
-            cotton_render_string('<c-dock.item href="/" icon="i-home" aria-label="Home" />')
+            cotton_render_string(
+                '<c-dock.item href="/" icon="i-home" aria-label="Home" />'
+            )
         ).a
         assert a.find(class_="dock-label") is None
 
@@ -94,8 +98,12 @@ class TestDockItemLink:
         ).i
         assert "mine" not in i["class"]
 
-    def test_icon_only_item_is_named_by_the_callers_aria_label(self, cotton_render_string):
-        html = cotton_render_string('<c-dock.item href="/" icon="i-home" aria-label="Home" />')
+    def test_icon_only_item_is_named_by_the_callers_aria_label(
+        self, cotton_render_string
+    ):
+        html = cotton_render_string(
+            '<c-dock.item href="/" icon="i-home" aria-label="Home" />'
+        )
         assert html.count("aria-label=") == 1
         assert parse(html).a["aria-label"] == "Home"
 
@@ -107,8 +115,12 @@ class TestDockItemButton:
         button = parse(cotton_render_string('<c-dock.item label="Add" />')).button
         assert button["type"] == "button"
 
-    def test_active_button_has_dock_active_and_no_aria_current(self, cotton_render_string):
-        button = parse(cotton_render_string('<c-dock.item label="Add" active />')).button
+    def test_active_button_has_dock_active_and_no_aria_current(
+        self, cotton_render_string
+    ):
+        button = parse(
+            cotton_render_string('<c-dock.item label="Add" active />')
+        ).button
         assert "dock-active" in button["class"]
         assert not button.has_attr("aria-current")
 
@@ -154,7 +166,9 @@ class TestDockItemToggle:
         assert html.count("aria-label=") == 1
         assert parse(html).label["aria-label"] == "Open menu"
 
-    def test_active_toggle_has_dock_active_and_no_aria_current(self, cotton_render_string):
+    def test_active_toggle_has_dock_active_and_no_aria_current(
+        self, cotton_render_string
+    ):
         label = parse(
             cotton_render_string('<c-dock.item toggle="drawer" label="Menu" active />')
         ).label

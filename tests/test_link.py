@@ -81,9 +81,16 @@ class TestLinkVariant:
         assert not any(c.startswith("link-") for c in attrs["class"].split())
 
     def test_every_daisyui_link_colour_is_accepted(self):
-        for colour in (
-            "neutral primary secondary accent info success warning error"
-        ).split():
+        for colour in [
+            "neutral",
+            "primary",
+            "secondary",
+            "accent",
+            "info",
+            "success",
+            "warning",
+            "error",
+        ]:
             html = render(f'<c-link text="x" variant="{colour}" />')
             assert f"link-{colour}" in first_tag_attrs(html, "a")["class"].split()
 
