@@ -3,9 +3,9 @@
 {# @prop alt:text | default:"User avatar" | description:"Alt text of the photo." #}
 {# @prop size:text | default:"md" | description:"One of xs, sm, md, lg, xl or xxl, or any Tailwind width class such as w-16." #}
 {# @prop :size_options:text | description:"Dynamic attribute: the map from each size name to its width class. Set on the component itself; the caller normally leaves it alone." #}
-{# @prop shape:text | default:"rounded-full" | description:"Corner shape: rounded, rounded-xl or rounded-full." #}
-{# @prop variant:text | default:"primary" | description:"Background colour of the initials: primary, secondary, accent or neutral. The silhouette is always muted." #}
-{# @prop status:text | description:"Presence indicator: online or offline. Empty shows none." #}
+{# @prop shape:select['rounded','rounded-xl','rounded-full'] | default:"rounded-full" | description:"Corner shape." #}
+{# @prop variant:select['neutral','primary','secondary','accent','info','success','warning','error'] | default:"primary" | description:"Background colour of the initials. The silhouette is always muted." #}
+{# @prop status:select['online','offline'] | description:"Presence indicator. Leave empty to show none." #}
 {# @prop placeholder:text | description:"Initials or short text shown when there is no photo." #}
 {# @prop class:text | description:"Extra classes added to the avatar wrapper." #}
 {% load cotton %}

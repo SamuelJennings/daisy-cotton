@@ -43,6 +43,12 @@ class TestPreviewAssetsScopedToRawPage:
         assert '<script src="https://cdn.jsdelivr.net/npm/daisyui' not in html
         assert "cdn.jsdelivr.net/npm/@tailwindcss/browser@4" in html
         assert "cdn.jsdelivr.net/npm/alpinejs@3" in html
+        # An icon font, so a class such as `bi bi-house` typed into an icon
+        # attribute in the gallery renders a real glyph.
+        assert (
+            '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/'
+            'bootstrap-icons@1/font/bootstrap-icons.min.css">' in html
+        )
         # The theme bootstrap runs before paint so a saved theme applies
         # without a flash of the default theme.
         assert "data-theme" in html

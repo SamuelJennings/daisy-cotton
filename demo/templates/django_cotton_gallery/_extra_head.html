@@ -1,8 +1,8 @@
 {% comment %}
   Loaded into every gallery document: the interface page itself, the raw
   page, and — via the gallery's inert `#cg-frame-head` template — every
-  isolated preview iframe. daisyUI, Tailwind's browser build and Alpine only
-  belong in a document that actually renders a component, so this script
+  isolated preview iframe. daisyUI, Tailwind's browser build, Alpine and the
+  Bootstrap Icons font only belong in a document that actually renders a component, so this script
   tells the two kinds of document apart and does nothing in the interface
   page (D1).
 
@@ -26,6 +26,9 @@
     document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css">');
     document.write('<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></' + 'script>');
     document.write('<script src="https://cdn.jsdelivr.net/npm/alpinejs@3" defer></' + 'script>');
+    // An icon font for trying out icon attributes: type a class such as
+    // `bi bi-house` into any icon field. The package itself resolves no icons.
+    document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1/font/bootstrap-icons.min.css">');
 
     let theme = 'light';
     try {

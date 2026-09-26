@@ -1,7 +1,7 @@
 {# @description A styled anchor. Shows the text, then the default slot. #}
 {# @prop href:text | default:"#" | description:"Destination of the link." #}
 {# @prop text:text | description:"Link text, shown before the default slot." #}
-{# @prop variant:text | description:"Colour variant, such as primary, secondary, accent, neutral, info, success, warning or error." #}
+{# @prop variant:select['neutral','primary','secondary','accent','info','success','warning','error'] | description:"Colour variant. Leave empty to inherit the text colour." #}
 {# @prop hover:boolean | description:"Underline the link only on hover." #}
 {# @prop class:text | description:"Extra classes added to the link." #}
 {# @slot — Content shown after the text. #}
