@@ -163,6 +163,8 @@ non-mirror-paths = [
     # Walks the rendered gallery sidebar; there is no source module for a
     # test parametrised from another package runtime output to mirror.
     "tests/test_gallery_links.py",
+    # Reads the navigation templates' source for scripts; no Python module to mirror.
+    "tests/test_navigation_markup.py",
 ]
 
 [tool.deptry]

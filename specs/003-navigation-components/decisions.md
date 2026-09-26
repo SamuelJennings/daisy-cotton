@@ -103,3 +103,16 @@ The review expects axe-core to flag radio inputs inside `role="tablist"` (a tabl
 FR-022 keeps the drawer-toggle branch, and FR-005 requires every interactive element to be operable from the keyboard. A `<label role="button" tabindex="0">` can be focused but not activated by Enter or Space without a script, which FR-004 rules out. The toggle drops `role` and `tabindex`, so it is a click target only, and keyboard users open the drawer through its own `drawer-toggle` checkbox, which daisyUI leaves focusable.
 
 **ADR:** none — local to the dock item.
+
+## D10 — Convergence changes made directly
+
+After the three build batches, four small changes were made without a separate dispatch, each a few lines with no design content:
+
+- `tests/test_navigation_markup.py` checks every navigation template's source for a `<script>` element or an inline event handler (SC-005). The batches had checked this by reading the templates, not with a test.
+- The steps example uses `bi bi-gift`, from the icon font the demo now loads, so the icon shows in the gallery.
+- The tabs example is a button set, the shape the root's default `tablist` role is valid for. Link tabs are shown on the tab's own page and need `links` on the root.
+- The megamenu's description names the id its example items point at, so the preview opens.
+
+The branch was rebased on main after pull request #100 merged. The one conflict, `link.html`'s `variant` annotation, kept main's wording.
+
+**ADR:** none — convergence fixes inside this feature.
