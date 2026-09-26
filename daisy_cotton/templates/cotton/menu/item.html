@@ -1,0 +1,26 @@
+{# @description One entry of a menu, used inside menu. Renders as a link when an href is given and as a button otherwise. An item with an icon and no text is named by an aria-label passed by the caller. Attributes other than the ones below land on the list item. #}
+{# @prop text:text | description:"The entry's label." #}
+{# @prop href:text | description:"Link address. Without it the entry is a button." #}
+{# @prop active:boolean | description:"Mark this entry as the current one." #}
+{# @prop disabled:boolean | description:"Show the entry as unavailable. A link loses its href and a button is disabled." #}
+{# @prop icon:text | description:"Icon shown before the text, passed as the name of the icon component." #}
+{# @prop class:text | description:"Extra classes added to the list item." #}
+{# @prop aria-label:text | description:"Accessible name of the link or button, for an entry that shows only an icon." #}
+{# @slot — Extra content shown after the text. #}
+<c-vars text href active disabled icon class aria-label />
+<li class="{% if disabled %}menu-disabled {% endif %}{{ class }}" {{ attrs }}>
+  {% if href %}
+    <a {% if not disabled %}href="{{ href }}"{% else %}role="link" aria-disabled="true"{% endif %}
+       {% if active %}class="menu-active" aria-current="page"{% endif %}
+       {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}>
+      {% if icon %}<c-icon name="{{ icon }}" aria-hidden="true" only />{% endif %}{{ text }}{{ slot }}
+    </a>
+  {% else %}
+    <button type="button"
+            {% if active %}class="menu-active"{% endif %}
+            {% if disabled %}disabled{% endif %}
+            {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}>
+      {% if icon %}<c-icon name="{{ icon }}" aria-hidden="true" only />{% endif %}{{ text }}{{ slot }}
+    </button>
+  {% endif %}
+</li>

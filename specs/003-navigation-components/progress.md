@@ -47,3 +47,17 @@ Did: CHANGELOG `Changed` entry for the dock's `<nav>` root, removed classes, but
 Verified: read back the diff; documentation only.
 Next: full verify.
 Watch: none.
+
+## 2026-09-26T21:50Z · Implementer US1 · T007
+
+Did: `menu/index.html`, a `<ul class="menu …">` with `size`, `horizontal` (boolean or breakpoint), `paged`, merged `class` and pass-through attributes; no direction class by default. New `tests/test_menu.py`, listed in `non-mirror-paths`.
+Verified: `tests/test_menu.py` 11 passed (11 failed before the template existed); `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T008.
+Watch: none.
+
+## 2026-09-26T22:05Z · Implementer US1 · T008
+
+Did: `menu/item.html`. A link when `href` is given, else a `<button type="button">`; `active` adds `menu-active` on the inner element and `aria-current="page"` on a link; `disabled` adds `menu-disabled` on the `<li>` and either `role="link" aria-disabled="true"` with no `href` or `tabindex` (link) or native `disabled` (button); icon through `<c-icon … aria-hidden="true" only>`; `class` and attributes on the `<li>`; `aria-label` on the inner control.
+Verified: `tests/test_menu.py` 26 passed (15 failed before the template existed); `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T009.
+Watch: none.
