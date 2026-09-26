@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Every component is documented in the component gallery through `@description`, `@prop` and `@slot`
+  annotations at the top of its template, and the test suite enforces it: `tests/test_gallery_lint.py`
+  fails on any error or warning from the gallery's linter, and `tests/test_gallery_annotations.py`
+  requires one `@description`, a default `@slot` wherever a template renders `{{ slot }}`, and
+  single-line annotations. [CONTRIBUTING.md](CONTRIBUTING.md) explains how to run the checks.
 - The first 21 components, migrated from django-mvp's own Cotton component library:
   `alert`, `avatar` + `avatar.group`, `badge`, `breadcrumbs` + `breadcrumbs.item`, `button`,
   `card`, `divider`, `dock` + `dock.item`, `dropdown`, `form.field`, `icon`, `link`, `modal`,

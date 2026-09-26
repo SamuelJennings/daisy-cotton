@@ -341,8 +341,13 @@
         },
         {
           "id": "T017",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "README.md links CONTRIBUTING.md; CHANGELOG.md [Unreleased] Added records the annotations and both enforcing test modules"
+            ]
+          }
         }
       ]
     }

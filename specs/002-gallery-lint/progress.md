@@ -100,3 +100,9 @@ Did: Wrote CONTRIBUTING.md: set up, open the gallery, run the linter, the suite 
 Verified: `uv sync`: exit 0; `uv run python manage.py runserver 127.0.0.1:8765 --noreload` then curl of /django-cotton-gallery/: 200, server stopped; `uv run python manage.py cotton_lint --warnings-as-errors`: exit 0, 20/21 clean, 0 errors, 0 warnings. `uv run pytest` and `uv run pre-commit run --all-files` are run in the final verify.
 Next: T017.
 Watch: the documented address uses port 8000; I tested the same route on port 8765 because 8000 is in use on this machine.
+
+## 2026-09-26T16:58:28Z · Implementer US8 · T017
+Did: Linked CONTRIBUTING.md from the README Status section; added the [Unreleased] Added entry for the annotations and the two checks that enforce them.
+Verified: read back with git diff; the final verify below covers formatting.
+Next: full verify and reports.
+Watch: none.
