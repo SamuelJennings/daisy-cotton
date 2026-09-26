@@ -12,6 +12,8 @@ Twenty-one components are built so far: `alert`, `avatar`, `badge`, `breadcrumbs
 
 `<c-icon>` renders `name` as a literal CSS class string and resolves nothing itself — a project wanting name-based icon resolution provides its own override (see [docs/adr/0001](docs/adr/0001-icon-is-an-extension-point.md)).
 
+`<c-alert>`'s `dismissible` and `delay` need [Alpine.js](https://alpinejs.dev/) on the page — this package doesn't ship or load it. Without Alpine, the alert still renders and reads fine, but the dismiss button does nothing and `delay` never fires.
+
 ## Requirements
 
 - Python 3.12+
