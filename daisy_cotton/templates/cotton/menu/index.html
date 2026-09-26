@@ -1,0 +1,10 @@
+{# @description A list of navigation entries, vertical by default. Fill the default slot with menu.item, menu.title and menu.submenu components. #}
+{# @prop size:select['xs','sm','md','lg','xl'] | description:"Size of the menu." #}
+{# @prop horizontal:boolean | description:"Lay the entries out in a row. Pass a breakpoint such as lg to do so from that width up." #}
+{# @prop paged:boolean | description:"Style the menu as a page-level list." #}
+{# @prop class:text | description:"Extra classes added to the menu." #}
+{# @slot — The menu's entries. #}
+{% load daisy_cotton %}
+<c-vars size horizontal paged class />
+<ul class="menu {% variation size "menu" "xs,sm,md,lg,xl" %} {% responsive horizontal "menu-horizontal" %}{% if paged %} menu-paged{% endif %} {{ class }}"
+    {{ attrs }}>{{ slot }}</ul>
