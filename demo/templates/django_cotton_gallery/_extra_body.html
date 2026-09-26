@@ -49,7 +49,18 @@
 
     const select = document.createElement('select');
     select.setAttribute('aria-label', 'Theme');
-    select.className = 'select select-sm';
+    // The interface page carries none of daisyUI's classes, so the control
+    // is placed and styled inline: pinned to the top-right corner, above the
+    // gallery's own layout, in the gallery's own font.
+    Object.assign(select.style, {
+      position: 'fixed',
+      top: '0.75rem',
+      right: '0.75rem',
+      zIndex: '1000',
+      padding: '0.25rem 0.5rem',
+      font: 'inherit',
+      fontSize: '0.875rem',
+    });
     for (const theme of THEMES) {
       const option = document.createElement('option');
       option.value = theme;

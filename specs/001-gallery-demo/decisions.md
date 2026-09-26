@@ -48,3 +48,9 @@ The merged specification's FR-009 still said the defect would be reported to dja
 One verified high finding and three lower ones, all applied as plan edits: the theme switcher's partial is copied into every preview frame, so it holds only a script that builds the control in the interface page (T006, research). T002 asserts only what the server renders and leaves the browser behaviours to the walkthrough. T009 fails on an empty link collection. The two new test modules are declared as non-mirror tests (T007).
 
 **ADR:** none — plan-level corrections local to this feature
+
+## D4 daisyUI loads as stylesheets, and the theme switcher is pinned in place
+
+At story acceptance the head partial loaded daisyUI's CDN files through `<script>` tags. jsDelivr serves them as `text/css` with `nosniff`, so browsers refused them and previews rendered without daisyUI, and `themes.js` does not exist. The test only checked that the URLs appeared, so it passed. Fixed directly as a two-line change: `<link rel="stylesheet">` for `daisyui@5` and `daisyui@5/themes.css`, with a test that fails on the script form. The theme `<select>` also carried daisyUI classes on a page without daisyUI and was appended to the end of the body, so it is now placed with inline styles in the top-right corner. Fixed directly rather than dispatched because both are single-line corrections with no design content.
+
+**ADR:** none — a demo configuration correction

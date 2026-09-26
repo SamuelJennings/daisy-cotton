@@ -29,11 +29,17 @@ class TestPreviewAssetsScopedToRawPage:
         )
         assert response.status_code == 200
         html = response.content.decode()
-        assert '<script src="https://cdn.jsdelivr.net/npm/daisyui@5' in html
+        # daisyUI's CDN files are stylesheets served with `nosniff`, so a
+        # browser refuses them as scripts: they must arrive as <link> tags.
         assert (
-            '<link href="https://cdn.jsdelivr.net/npm/daisyui@5' in html
-            or "daisyui@5" in html
+            '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5">'
+            in html
         )
+        assert (
+            '<link rel="stylesheet" '
+            'href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css">' in html
+        )
+        assert '<script src="https://cdn.jsdelivr.net/npm/daisyui' not in html
         assert "cdn.jsdelivr.net/npm/@tailwindcss/browser@4" in html
         assert "cdn.jsdelivr.net/npm/alpinejs@3" in html
         # The theme bootstrap runs before paint so a saved theme applies

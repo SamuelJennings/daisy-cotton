@@ -22,8 +22,8 @@
       || /\/(raw|preview|thumb)\/$/.test(window.location.pathname);
     if (!isPreviewDocument) return;
 
-    document.write('<script src="https://cdn.jsdelivr.net/npm/daisyui@5"></' + 'script>');
-    document.write('<script src="https://cdn.jsdelivr.net/npm/daisyui@5/themes.js"></' + 'script>');
+    document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5">');
+    document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css">');
     document.write('<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></' + 'script>');
     document.write('<script src="https://cdn.jsdelivr.net/npm/alpinejs@3" defer></' + 'script>');
 
