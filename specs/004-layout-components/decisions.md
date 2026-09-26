@@ -2,15 +2,16 @@
 
 Ambiguities in issue #13 resolved while writing the specification, with the reasoning behind each.
 
-## `position` for placement, not a new name
+## `placement` for placement
 
 daisyUI groups `divider-start`, `drawer-end`, `footer-center`, `indicator-*` and `stack-*` as
-placement modifiers. The package already uses `position` for exactly this idea on `divider` and
-`modal`, and Article XIV says a name another component already uses for the same idea is reused
-before a new one is coined. Renaming it on those components would be churn with no gain for the
-caller. Values are daisyUI's own suffixes, so `position="end"` gives `drawer-end`.
+placement modifiers, and Article XIV takes attribute names from daisyUI's own vocabulary, so the
+attribute is `placement`. The same name is used by every component that has placement modifiers,
+including `modal` and `dropdown` in the action components, which replaces the `position` attribute
+`divider` and `modal` carry today. Values are daisyUI's own suffixes, so `placement="end"` gives
+`drawer-end`.
 
-The indicator is the one place with two placement axes. Its `position` takes up to two values
+The indicator is the one place with two placement axes. Its `placement` takes up to two values
 separated by a space (`"bottom start"`), one per axis, which keeps one attribute name for one idea.
 
 ## Direction as two booleans that also take a breakpoint
