@@ -99,3 +99,11 @@ Ambiguities in issue #11 resolved while writing the spec, with the reasoning beh
 **Why:** the slot rule now requires a description as the gallery parses it, and the old source has none, so the test would have failed for the behaviour the fix introduces. The new source is the form the fix specifies as passing.
 
 **Revisit if:** the gallery parser's separator changes.
+
+## D6 — The review fix changed one of this feature's own scratch tests
+
+**Decision:** the scratch test for a passing default slot now uses `{# @slot — The body. #}` instead of `{# @slot The body. #}`.
+
+**Why:** the review showed the gallery reads no description from the second form: it takes the text as sample content. The slot rule now requires a description, so that input is meant to fail, and a new test asserts that it does. The test was written earlier in this feature and never ran on main.
+
+**ADR:** none — a correction inside this feature.

@@ -4,7 +4,8 @@ The gallery builds a component's page from its ``{# @… #}`` annotations, and t
 linter only checks ``@prop`` against ``<c-vars>``. Three other things it cannot
 see are easy to get wrong and silent when they are: a component with no
 ``@description`` (or two) has no summary, a template that renders the default
-slot with no ``@slot`` documents a slot nobody is told about, and a ``{#`` that
+slot with no ``@slot``, or with one the gallery reads no description from,
+documents a slot nobody is told about, and a ``{#`` that
 does not close on its own line is not a Django comment at all, so its text is
 printed into the page.
 
