@@ -33,6 +33,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `tabs`, a row of tabs with `box`, `border` and `lift` styles, a `size` and a `placement` of `top` or
   `bottom`. The row is a `tablist` unless given `links`. `tabs.tab` is a link when given `href`, a radio
   input followed by its panel when given `name`, and a button otherwise, and takes `active` and `disabled`.
+- `steps`, an ordered list showing progress, with `vertical` and `horizontal` (each a boolean or a
+  breakpoint such as `lg`). `steps.step` takes a `variant` colour, `current` (written as
+  `aria-current="step"`), `content` for the marker's text and an `icon` shown in the marker.
 - `responsive` and `variation`, the two generic Cotton-attribute helper tags several of the
   above components use, in a small `daisy_cotton` templatetag library.
 

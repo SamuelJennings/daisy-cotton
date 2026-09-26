@@ -124,3 +124,10 @@ Did: `steps/index.html`, an `<ol class="steps …">` with `vertical` and `horizo
 Verified: `tests/test_steps.py` 19 passed (19 failed before the templates existed); `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T018.
 Watch: none.
+
+## 2026-09-26T23:40Z · Implementer US6 · T018
+
+Did: the steps annotations were written with the templates (T017); this task adds the `steps/index.html` default `@slot` example (four steps: two primary, one current, one with custom content, one with an icon), lists `steps` in the README (count now twenty-eight) and adds a CHANGELOG `Added` entry. No page under `docs/` describes the steps.
+Verified: `cotton_lint --warnings-as-errors` 0 errors 0 warnings; `tests/test_steps.py`, `test_gallery_annotations.py`, `test_gallery_lint.py`, `test_render_all.py`, `test_gallery_links.py` 220 passed, 9 skipped (steps joins the folder-index skips for #96).
+Next: T019.
+Watch: none.
