@@ -131,8 +131,17 @@
       "tasks": [
         {
           "id": "T004",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "`uv run python manage.py cotton_lint` at base 85a252e: Annotated card and divider: one @description, one @prop per <c-vars> name, a default @slot and a @slot:name for each named slot (card badges, actions, footer, footer_end; divider label). Trimmed card's banner, which the annotations now repeat.",
+              "`uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone",
+              "rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK",
+              "render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical",
+              "`uv run pytest tests -q -k 'card or divider'`: ====================== 10 passed, 139 deselected in 0.28s ======================"
+            ]
+          }
         },
         {
           "id": "T005",

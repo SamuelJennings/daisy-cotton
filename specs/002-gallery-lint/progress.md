@@ -22,3 +22,9 @@ Did: Added @description and @prop lines to alert.html and icon.html, plus a defa
 Verified: `uv run python manage.py cotton_lint`: alert and icon each had missing-annotation warnings before; after, none. Each has one `{# @description`; alert has one default `{# @slot`, icon has none. Renders at base d04b053 vs after (alert with all attributes, variant only, bare; icon with name, class, attrs) identical with whitespace collapsed. `uv run pytest tests -q -k 'button or link or badge or alert or icon'`: 32 passed.
 Next: continue with the next task in the brief.
 Watch: rendered output compared with whitespace collapsed and ends stripped, using a throwaway script outside the repo.
+
+## 2026-09-26T16:53:49Z · Implementer US4 · T004
+Did: card 5 warnings + 4 undeclared-var hints, divider 4 warnings + 1 hint
+Verified: `uv run python manage.py cotton_lint` at base 85a252e: Annotated card and divider: one @description, one @prop per <c-vars> name, a default @slot and a @slot:name for each named slot (card badges, actions, footer, footer_end; divider label). Trimmed card's banner, which the annotations now repeat.; `uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone; rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK; render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical; `uv run pytest tests -q -k 'card or divider'`: ====================== 10 passed, 139 deselected in 0.28s ======================
+Next: continue with the next task in the brief.
+Watch: rendered output compared with whitespace collapsed and ends stripped, using a throwaway script outside the repo.
