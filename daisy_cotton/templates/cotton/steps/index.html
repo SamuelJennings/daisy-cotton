@@ -1,0 +1,9 @@
+{# @description A row or column of steps showing progress through a process, rendered as an ordered list. Fill the default slot with steps.step components. #}
+{# @prop vertical:boolean | description:"Stack the steps in a column. Pass a breakpoint such as md to do so from that width up." #}
+{# @prop horizontal:boolean | description:"Lay the steps out in a row. Pass a breakpoint such as lg to do so from that width up, for steps that are vertical below it." #}
+{# @prop class:text | description:"Extra classes added to the steps." #}
+{# @slot — The steps, as steps.step components. #}
+{% load daisy_cotton %}
+<c-vars vertical horizontal class />
+<ol class="steps{% if vertical %} {% responsive vertical "steps-vertical" %}{% endif %}{% if horizontal %} {% responsive horizontal "steps-horizontal" %}{% endif %} {{ class }}"
+    {{ attrs }}>{{ slot }}</ol>

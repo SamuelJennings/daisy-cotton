@@ -117,3 +117,10 @@ Did: the tabs annotations were written with the templates (T013-T015); this task
 Verified: `cotton_lint --warnings-as-errors` 0 errors 0 warnings; `tests/test_tabs.py`, `test_gallery_annotations.py`, `test_gallery_lint.py`, `test_render_all.py`, `test_gallery_links.py` 219 passed, 8 skipped (tabs joins the folder-index skips for #96).
 Next: T017.
 Watch: the README count assumes steps and megamenu bring it to twenty-eight and twenty-nine.
+
+## 2026-09-26T23:35Z · Implementer US6 · T017
+
+Did: `steps/index.html`, an `<ol class="steps …">` with `vertical` and `horizontal`, each a boolean or a breakpoint through `responsive` (vertical plus `horizontal="lg"` gives `steps-vertical lg:steps-horizontal`); and `steps/step.html`, an `<li class="step …">` with `variant` validated against the eight colours through `variation`, `aria-current="step"` on `current`, `data-content` only when `content` is given, and an icon in `<span class="step-icon">` through `<c-icon … aria-hidden="true" only />` so the step's class does not reach the icon. Annotations landed with the templates. New `tests/test_steps.py`, listed in `non-mirror-paths`.
+Verified: `tests/test_steps.py` 19 passed (19 failed before the templates existed); `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T018.
+Watch: none.
