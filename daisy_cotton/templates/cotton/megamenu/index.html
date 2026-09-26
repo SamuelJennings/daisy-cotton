@@ -5,7 +5,7 @@
 {# @prop size:select['xs','sm','md','lg','xl'] | description:"Size of the megamenu." #}
 {# @prop class:text | description:"Extra classes added to the megamenu." #}
 {# @prop aria-label:text | description:"Accessible name of the megamenu. Defaults to a translated Site." #}
-{# @slot — The megamenu's items, as megamenu.item components. #}
+{# @slot <c-megamenu.item megamenu="site-menu" key="products" text="Products"><c-menu><c-menu.item href="#" text="Overview" /><c-menu.item href="#" text="Pricing" /></c-menu></c-megamenu.item><c-megamenu.item megamenu="site-menu" key="docs" text="Docs"><c-menu><c-menu.item href="#" text="Guides" /><c-menu.item href="#" text="Reference" /></c-menu></c-megamenu.item><c-megamenu.item megamenu="site-menu" key="company" text="Company"><c-menu><c-menu.item href="#" text="About" /><c-menu.item href="#" text="Contact" /></c-menu></c-megamenu.item> — The megamenu's items, as megamenu.item components. Each item's megamenu is this megamenu's id. #}
 {% load daisy_cotton i18n %}
 <c-vars id wide full size class aria-label />
 <c-button class="sm:hidden" type="button" popovertarget="{{ id }}" text="{% trans "Menu" %}" only />

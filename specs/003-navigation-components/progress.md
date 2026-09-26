@@ -145,3 +145,10 @@ Did: `megamenu/item.html`: `<button type="button" popovertarget="<megamenu>-<key
 Verified: `tests/test_megamenu.py` 17 passed (6 new ones failed before the template existed); three items each target the id of their own following panel, and two megamenus with different ids on one page repeat no id. `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T021.
 Watch: none.
+
+## 2026-09-26T23:58Z · Implementer US7 · T021
+
+Did: the megamenu annotations were written with the templates (T019, T020, including the ten-item limit and setting `id` in the playground); this task adds the `megamenu/index.html` default `@slot` example (three items each holding a menu), lists `megamenu` in the README (count now twenty-nine) and adds a CHANGELOG `Added` entry. No page under `docs/` describes the megamenu.
+Verified: `cotton_lint --warnings-as-errors` 0 errors 0 warnings; `tests/test_megamenu.py`, `test_gallery_annotations.py`, `test_gallery_lint.py`, `test_render_all.py`, `test_gallery_links.py` 229 passed, 10 skipped (megamenu joins the folder-index skips for #96).
+Next: full verify.
+Watch: none.

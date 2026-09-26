@@ -36,6 +36,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `steps`, an ordered list showing progress, with `vertical` and `horizontal` (each a boolean or a
   breakpoint such as `lg`). `steps.step` takes a `variant` colour, `current` (written as
   `aria-current="step"`), `content` for the marker's text and an `icon` shown in the marker.
+- `megamenu`, a navigation bar whose entries open panels, rendered as a `<nav popover>` named `Site`
+  unless given an `aria-label`. It needs an `id`, takes `wide`, `full` and `size`, and shows a `Menu`
+  button below the small breakpoint. `megamenu.item` is a button paired with the panel it opens, built
+  from the megamenu's id (given as `megamenu`) and the item's `key`.
 - `responsive` and `variation`, the two generic Cotton-attribute helper tags several of the
   above components use, in a small `daisy_cotton` templatetag library.
 
