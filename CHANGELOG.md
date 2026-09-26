@@ -30,6 +30,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `navbar`, a top bar rendered as a `<nav>` named `Main` unless given an `aria-label`. Its `start`, `center`
   and `end` slots each become a `navbar-start`, `navbar-center` or `navbar-end` section only when given,
   and the default slot sits directly inside the bar.
+- `tabs`, a row of tabs with `box`, `border` and `lift` styles, a `size` and a `placement` of `top` or
+  `bottom`. The row is a `tablist` unless given `links`. `tabs.tab` is a link when given `href`, a radio
+  input followed by its panel when given `name`, and a button otherwise, and takes `active` and `disabled`.
 - `responsive` and `variation`, the two generic Cotton-attribute helper tags several of the
   above components use, in a small `daisy_cotton` templatetag library.
 

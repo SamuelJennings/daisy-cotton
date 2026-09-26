@@ -110,3 +110,10 @@ Did: the radio shape in `tabs/tab.html`: `<input type="radio" class="tab" name a
 Verified: `tests/test_tabs.py` 29 passed (5 of the 7 new tests failed before the radio branch existed); the page-context test was probed: without `name=""` in `<c-vars>` it fails, with it it passes. `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T016.
 Watch: none.
+
+## 2026-09-26T23:25Z · Implementer US4 · T016
+
+Did: the tabs annotations were written with the templates (T013-T015); this task adds the `tabs/index.html` default `@slot` example (a link set with one active and one disabled tab), lists `tabs` in the README (count now twenty-seven) and adds a CHANGELOG `Added` entry. No page under `docs/` describes the tabs.
+Verified: `cotton_lint --warnings-as-errors` 0 errors 0 warnings; `tests/test_tabs.py`, `test_gallery_annotations.py`, `test_gallery_lint.py`, `test_render_all.py`, `test_gallery_links.py` 219 passed, 8 skipped (tabs joins the folder-index skips for #96).
+Next: T017.
+Watch: the README count assumes steps and megamenu bring it to twenty-eight and twenty-nine.

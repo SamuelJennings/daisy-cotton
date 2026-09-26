@@ -6,7 +6,7 @@
 {# @prop placement:select['top','bottom'] | description:"Whether the tabs sit above or below their content." #}
 {# @prop links:boolean | description:"Set when every tab is a link, so the row is plain navigation and not a tablist." #}
 {# @prop class:text | description:"Extra classes added to the tabs." #}
-{# @slot — The tabs, as tabs.tab components. #}
+{# @slot <c-tabs.tab href="#" text="Overview" active /><c-tabs.tab href="#" text="Usage" /><c-tabs.tab href="#" text="Archived" disabled /> — The tabs, as tabs.tab components. #}
 {% load daisy_cotton %}
 <c-vars size box border lift placement links class />
 <div {% if not links %}role="tablist" {% endif %}class="tabs{% if box %} tabs-box{% endif %}{% if border %} tabs-border{% endif %}{% if lift %} tabs-lift{% endif %} {% variation size "tabs" "xs,sm,md,lg,xl" %} {% variation placement "tabs" "top,bottom" %} {{ class }}"
