@@ -360,8 +360,22 @@
         },
         {
           "id": "TC02",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_gallery_annotations.py -q -k \"empty_description or leading_dash or sample_and\": red first (1 failed, 2 passed: empty description was accepted), then uv run pytest tests/test_gallery_annotations.py -q: 85 passed",
+              "probe: restored link.html from base 0b30a48: test_documents_the_default_slot_it_renders[link.html] failed (1 failed, 84 passed); restored, 85 passed"
+            ],
+            "tests": [
+              "tests/test_gallery_annotations.py::TestAnnotationRules::test_default_slot_with_empty_description_fails",
+              "tests/test_gallery_annotations.py::TestAnnotationRules::test_default_slot_with_leading_dash_passes",
+              "tests/test_gallery_annotations.py::TestAnnotationRules::test_default_slot_with_sample_and_description_passes"
+            ],
+            "code": [
+              "tests/test_gallery_annotations.py:57"
+            ]
+          }
         }
       ]
     },

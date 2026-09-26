@@ -112,3 +112,9 @@ Did: Rewrote all 27 slot annotations (default and named, 18 templates) to the `s
 Verified: AnnotationParser over every template: 27 slots, 0 empty descriptions (was 27 empty); `uv run python manage.py cotton_lint --warnings-as-errors`: exit 0, 0 errors, 0 warnings; `uv run pytest tests/test_render_all.py tests/test_gallery_annotations.py -q`: 104 passed.
 Next: TC02, make the slot rule require a description.
 Watch: none.
+
+## 2026-09-26T17:30:00Z · FIX-1 · TC02
+Did: The slot rule now parses the source with the gallery's AnnotationParser and requires the default slot to have a non-empty description, with its own problem message. Added three scratch-source tests (empty description fails; `— The body.` and `Hi — The body.` pass). The existing scratch test for "annotation present passes" used `{# @slot The body. #}`, which the new rule correctly rejects, so its source now reads `{# @slot — The body. #}`; its assertion is unchanged.
+Verified: red first: the empty-description test failed with `[] == [<message>]` while the two passing cases passed; then `uv run pytest tests/test_gallery_annotations.py -q`: 85 passed. Probe: restoring link.html from the base commit made `test_documents_the_default_slot_it_renders[link.html]` fail (1 failed, 84 passed); restored, 85 passed.
+Next: TC03, form.field.
+Watch: the module docstring still describes the check as "no @slot"; left as is.

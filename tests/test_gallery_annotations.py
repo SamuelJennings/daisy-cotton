@@ -17,6 +17,7 @@ import re
 from pathlib import Path
 
 import pytest
+from django_cotton_gallery.core.annotations import AnnotationParser
 
 import daisy_cotton
 
@@ -56,9 +57,14 @@ class AnnotationRules:
     def slot_problems(cls, source):
         if not cls.renders_default_slot(source):
             return []
-        if DEFAULT_SLOT_ANNOTATION.search(source):
+        if not DEFAULT_SLOT_ANNOTATION.search(source):
+            return ["renders {{ slot }} but has no default {# @slot #}"]
+        slots = AnnotationParser().parse(source).slots
+        if any(slot.name is None and slot.description for slot in slots):
             return []
-        return ["renders {{ slot }} but has no default {# @slot #}"]
+        return [
+            "default {# @slot #} has no description; write `{# @slot — description #}`"
+        ]
 
     @staticmethod
     def comment_problems(source):
@@ -93,7 +99,28 @@ class TestAnnotationRules:
         assert problems == ["renders {{ slot }} but has no default {# @slot #}"]
 
     def test_default_slot_rendered_with_annotation_passes(self):
+        source = (
+            "{# @description A. #}\n{# @slot — The body. #}\n<div>{{ slot }}</div>\n"
+        )
+        assert AnnotationRules.slot_problems(source) == []
+
+    def test_default_slot_with_empty_description_fails(self):
         source = "{# @description A. #}\n{# @slot The body. #}\n<div>{{ slot }}</div>\n"
+        problems = AnnotationRules.slot_problems(source)
+        assert problems == [
+            "default {# @slot #} has no description; write `{# @slot — description #}`"
+        ]
+
+    def test_default_slot_with_leading_dash_passes(self):
+        source = (
+            "{# @description A. #}\n{# @slot — The body. #}\n<div>{{ slot }}</div>\n"
+        )
+        assert AnnotationRules.slot_problems(source) == []
+
+    def test_default_slot_with_sample_and_description_passes(self):
+        source = (
+            "{# @description A. #}\n{# @slot Hi — The body. #}\n<div>{{ slot }}</div>\n"
+        )
         assert AnnotationRules.slot_problems(source) == []
 
     def test_named_slot_alone_does_not_satisfy_the_default_slot(self):
