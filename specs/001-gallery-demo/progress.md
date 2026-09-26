@@ -88,3 +88,27 @@ silently truncates the declared list (my first draft lost both new paths this
 way). Wrote the comments without apostrophes instead of filing this against
 the kit — out of my story's scope to fix the checker itself; noted here for
 the record.
+
+## 2026-09-26T00:30:00Z · Implementer US2 · T009
+
+Did: wrote `tests/test_gallery_links.py`. Collects sidebar links from the
+rendered gallery index (`a[data-cg-component]`), fails loudly on an empty
+collection, and classifies each link as a folder component by checking
+`daisy_cotton/templates/cotton/<path>/index.html` exists while
+`<path>.html` does not (spec's own Key Entities definition, mirroring
+Cotton's own resolution order). A folder component whose page still 404s is
+skipped naming issue #96 (T008); one that returns 200 falls through to the
+same assertion as every flat component instead of staying skipped.
+Verified: `uv run pytest tests/test_gallery_links.py -q -rs` — 16 passed, 6
+skipped (avatar, breadcrumbs, card, dock, dropdown, mockup/code — exactly the
+six named in spec.md and decisions.md). Probed the mechanism per craft-tdd
+before calling this done: with `_is_folder_component` forced to always
+return `False`, `card`'s case fails loudly instead of skipping (confirms the
+skip is not silently swallowing a real 404); with a component client
+response monkeypatched to 200 for `card`, its case passes without a skip
+(confirms a fixed gallery release is not stuck skipped); the empty-collection
+guard is a plain `assert`, correct by construction. `uv run pytest -q` — 174
+passed, 6 skipped. Full verify green (`forge verify`): conformance, lint,
+typecheck, test, build all passed.
+Next: story complete.
+Watch: nothing.
