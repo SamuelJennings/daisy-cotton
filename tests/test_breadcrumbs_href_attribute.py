@@ -15,6 +15,7 @@ Cotton's c-vars / ``attrs`` extraction and would not reproduce this bug.
 
 from html.parser import HTMLParser
 
+from bs4 import BeautifulSoup
 from django import template
 from django.template.context import Context
 from django_cotton.compiler_regex import CottonCompiler
@@ -71,34 +72,119 @@ class TestBreadcrumbItemHrefAttribute:
 
 
 class TestTheItemTextSpan:
-    """[#354] The crumb's text lives in its own span, so the stylesheet can
-    ellipsis a long crumb without touching the slot — which may hold an icon,
-    and must not be truncated along with the text."""
+    """The crumb's text sits in a bare span, before the slot, so the current
+    step has an element to carry ``aria-current``."""
 
-    def test_the_link_branch_wraps_its_text_in_the_span(self):
+    def test_the_link_branch_shows_its_text_inside_the_link(self):
         html = render('<c-breadcrumbs.item text="Products" href="/products/" />')
-        assert '<span class="daisy-cotton-breadcrumb-text">Products</span>' in html
+        soup = BeautifulSoup(html, "html.parser")
+        assert soup.a.get_text(strip=True) == "Products"
+        assert soup.a.find("span", class_="daisy-cotton-breadcrumb-text") is None
 
-    def test_the_non_link_branch_wraps_its_text_in_the_span(self):
+    def test_the_non_link_branch_shows_its_text_in_a_span(self):
         html = render('<c-breadcrumbs.item text="Current Page" />')
-        assert '<span class="daisy-cotton-breadcrumb-text">Current Page</span>' in html
+        span = BeautifulSoup(html, "html.parser").li.span
+        assert span.get_text(strip=True) == "Current Page"
+        assert not span.has_attr("class")
 
-    def test_the_slot_stays_outside_the_span(self):
+    def test_the_slot_follows_the_text(self):
         html = render(
             '<c-breadcrumbs.item text="Products" href="/products/">'
             "<b>marker</b>"
             "</c-breadcrumbs.item>"
         )
-        assert html.index("</span>") < html.index("<b>marker</b>")
+        assert html.index("Products") < html.index("<b>marker</b>")
 
-    def test_href_class_and_attrs_still_land_where_they_did(self):
+    def test_href_stays_on_the_link_and_class_and_attrs_land_on_the_item(self):
         html = render(
             '<c-breadcrumbs.item text="Products" href="/products/" '
             'class="foo" data-x="1" />'
         )
         assert attrs_named_on(html, "a", "href") == ["/products/"]
         assert attrs_named_on(html, "li", "class") == ["foo"]
-        assert attrs_named_on(html, "a", "data-x") == ["1"]
+        assert attrs_named_on(html, "li", "data-x") == ["1"]
+        assert attrs_named_on(html, "a", "data-x") == []
+
+
+class TestTheCurrentItem:
+    """An item with no ``href`` is the current page."""
+
+    def test_an_item_without_href_is_marked_current(self):
+        html = render('<c-breadcrumbs.item text="Current Page" />')
+        soup = BeautifulSoup(html, "html.parser")
+        assert soup.li.span["aria-current"] == "page"
+        assert soup.a is None
+
+    def test_an_item_with_href_is_not_marked_current(self):
+        html = render('<c-breadcrumbs.item text="Products" href="/products/" />')
+        assert "aria-current" not in html
+
+
+class TestTheTrailLandmark:
+    """The trail is a named navigation landmark carrying only daisyUI's class."""
+
+    def test_root_is_a_nav_named_breadcrumbs(self):
+        html = render('<c-breadcrumbs :items="items" />', items=[{"text": "Home"}])
+        nav = BeautifulSoup(html, "html.parser").find("nav")
+        assert nav["aria-label"] == "Breadcrumbs"
+        assert nav["class"] == ["breadcrumbs"]
+
+    def test_caller_class_is_added_to_the_root_class_list(self):
+        html = render(
+            '<c-breadcrumbs class="text-sm" :items="items" />',
+            items=[{"text": "Home"}],
+        )
+        assert BeautifulSoup(html, "html.parser").nav["class"] == [
+            "breadcrumbs",
+            "text-sm",
+        ]
+
+    def test_caller_aria_label_replaces_the_default_once(self):
+        html = render(
+            '<c-breadcrumbs aria-label="You are here" :items="items" />',
+            items=[{"text": "Home"}],
+        )
+        assert html.count("aria-label=") == 1
+        assert BeautifulSoup(html, "html.parser").nav["aria-label"] == "You are here"
+
+    def test_other_attributes_reach_the_root(self):
+        html = render(
+            '<c-breadcrumbs id="trail" :items="items" />', items=[{"text": "Home"}]
+        )
+        assert BeautifulSoup(html, "html.parser").nav["id"] == "trail"
+
+
+class TestTheTrailShapes:
+    """A trail built from ``items`` matches the same trail written in the slot."""
+
+    ITEMS = [
+        {"text": "Home", "href": "/"},
+        {"text": "Products", "href": "/products/"},
+        {"text": "Widget"},
+    ]
+
+    def test_items_and_slotted_trails_are_equal_after_whitespace_normalisation(self):
+        built = render('<c-breadcrumbs :items="items" />', items=self.ITEMS)
+        slotted = render(
+            "<c-breadcrumbs>"
+            '<c-breadcrumbs.item text="Home" href="/" />'
+            '<c-breadcrumbs.item text="Products" href="/products/" />'
+            '<c-breadcrumbs.item text="Widget" />'
+            "</c-breadcrumbs>"
+        )
+        assert " ".join(built.split()) == " ".join(slotted.split())
+
+    def test_only_the_last_item_of_a_built_trail_is_current(self):
+        html = render('<c-breadcrumbs :items="items" />', items=self.ITEMS)
+        current = BeautifulSoup(html, "html.parser").find_all(attrs={"aria-current": "page"})
+        assert len(current) == 1
+        assert current[0].get_text(strip=True) == "Widget"
+
+    def test_a_single_item_trail_renders_it_as_current(self):
+        html = render('<c-breadcrumbs :items="items" />', items=[{"text": "Home"}])
+        soup = BeautifulSoup(html, "html.parser")
+        assert len(soup.find_all("li")) == 1
+        assert soup.li.span["aria-current"] == "page"
 
 
 class TestTheTrailsClassStaysOnTheTrail:

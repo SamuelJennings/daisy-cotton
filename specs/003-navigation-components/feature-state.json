@@ -126,8 +126,18 @@
         },
         {
           "id": "T002",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_breadcrumbs_href_attribute.py -q: 17 passed",
+              "uv run pytest tests/test_class_attribute_merge.py tests/test_declared_attributes.py tests/test_gallery_annotations.py tests/test_gallery_lint.py -q: passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_breadcrumbs_href_attribute.py"
+            ]
+          }
         },
         {
           "id": "T003",

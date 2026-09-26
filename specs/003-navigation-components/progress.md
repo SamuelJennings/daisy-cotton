@@ -12,3 +12,10 @@ Did: `link.html` no longer defaults `href`; `variant` goes through `variation` a
 Verified: `uv run pytest tests/test_link.py -q` 14 passed; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T002.
 Watch: none.
+
+## 2026-09-26T21:10Z · Implementer US3+US5 · T002
+
+Did: breadcrumbs root drops `text-sm` and takes an overridable translated `aria-label`; item puts class and attributes on the `<li>`, renders the hrefless step as `<span aria-current="page">`, and loses the text span's class. Changed `TestTheItemTextSpan` under D4 and added landmark, current-item and items-versus-slot tests.
+Verified: `tests/test_breadcrumbs_href_attribute.py` 17 passed; class-merge, declared-attributes and gallery tests green; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T003.
+Watch: none.
