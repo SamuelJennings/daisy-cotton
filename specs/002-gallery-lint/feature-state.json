@@ -2,7 +2,7 @@
   "feature": "002-gallery-lint",
   "branch": "002-gallery-lint",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "IMPLEMENT",
+  "state": "CONVERGE",
   "state_history": [
     {
       "state": "QUEUED",
@@ -23,6 +23,11 @@
       "state": "IMPLEMENT",
       "at": "2026-09-26T16:47:35Z",
       "note": "design review applied (D4); plan notification sent"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-26T17:00:53Z",
+      "note": "all eight stories accepted"
     }
   ],
   "gates": {
@@ -354,7 +359,7 @@
   ],
   "budgets": {
     "converge_cycles": {
-      "used": 0,
+      "used": 1,
       "max": 2
     },
     "review_cycles": {

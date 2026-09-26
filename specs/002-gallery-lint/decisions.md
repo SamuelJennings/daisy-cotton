@@ -84,10 +84,10 @@ Ambiguities in issue #11 resolved while writing the spec, with the reasoning beh
 
 **ADR:** none — review record for this feature.
 
-## D5 — Discovery checks grouped into classes by the orchestrator
+## D5 — Discovery checks grouped into classes
 
-**Decision:** the two "catalog is not empty" tests written in US7 and US1 were moved into `TestPackageTemplates` and `TestPackageCatalog` directly, without re-dispatching a story.
+**Decision:** the two "catalog is not empty" tests written in US7 and US1 were moved into `TestPackageTemplates` and `TestPackageCatalog` during convergence, rather than reopening those stories.
 
-**Why:** the test-structure check requires every test to sit in a `Test<Subject>` class. The fix is a two-line move with no change to what either test asserts, so a new dispatch would cost more than the edit.
+**Why:** the test-structure check requires every test to sit in a `Test<Subject>` class. The fix is a two-line move with no change to what either test asserts.
 
 **ADR:** none — a structural correction inside this feature.
