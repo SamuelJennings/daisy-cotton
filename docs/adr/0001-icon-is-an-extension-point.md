@@ -18,7 +18,7 @@ library such as django-easy-icons — installs its own `templates/cotton/icon.ht
 project's own component replaces this one everywhere, with no further wiring.
 
 Every other component in this package that renders an icon (`button`, `alert`, `card`, `dock.item`,
-`placeholder.card`, `form.field`'s pre/post-label slots) calls `<c-icon name="..." />` exactly as
+`form.field`'s pre/post-label slots) calls `<c-icon name="..." />` exactly as
 it would call a richer, resolving version. A project's override is a drop-in replacement, not a
 fork of every caller.
 

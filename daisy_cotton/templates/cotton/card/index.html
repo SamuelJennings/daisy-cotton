@@ -10,7 +10,7 @@
 {#     at the end                                               #}
 {#                                                              #}
 {# Every section is optional; the card renders only what it is  #}
-{# given. For a fully custom surface, use <c-card.wrapper>.     #}
+{# given.                                                     #}
 {#                                                              #}
 {# Props:                                                       #}
 {#   title      – heading text                                  #}
@@ -27,7 +27,7 @@
 {#   footer_end – footer, end-aligned                           #}
 {# ============================================================ #}
 <c-vars title="" icon="" tight class body_class />
-<c-card.wrapper class="{{ class }}" :attrs="attrs">
+<div class="card bg-base-100 shadow-sm {{ class }}" {{ attrs }}>
   <div class="card-body {% if tight %}p-0{% endif %} {{ body_class }}">
     {% if title or icon or badges or actions %}
       <div class="flex items-center gap-3">
@@ -49,4 +49,4 @@
       </div>
     {% endif %}
   </div>
-</c-card.wrapper>
+</div>

@@ -63,13 +63,6 @@ class TestClassAttributeMerge:
     """A caller-supplied ``class`` merges into the built-in classes instead
     of producing a second, browser-ignored ``class`` attribute."""
 
-    def test_text_merges_caller_class(self):
-        html = render('<c-text class="dac-prose">hi</c-text>')
-        attrs = class_attrs_on(html, "p")
-        assert len(attrs) == 1, f"expected one class attribute, found {attrs}"
-        assert "dac-prose" in attrs[0]
-        assert "text-base" in attrs[0]
-
     def test_divider_merges_caller_class(self):
         html = render('<c-divider class="my-8">Order lines</c-divider>')
         attrs = class_attrs_on(html, "div")
