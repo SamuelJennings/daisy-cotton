@@ -1,3 +1,10 @@
+{# @description A section break, optionally labelled. Any further attributes reach the divider element. #}
+{# @prop vertical:boolean | description:"Draw a vertical divider. Accepts a responsive value, such as md, to turn it vertical from that breakpoint." #}
+{# @prop variant:text | description:"Colour variant, such as neutral, primary, secondary, accent, success, warning, info or error." #}
+{# @prop position:text | description:"Where the label sits on a horizontal divider: start or end." #}
+{# @prop class:text | description:"Extra classes added to the divider." #}
+{# @slot — The divider label. #}
+{# @slot:label — The divider label, as a named slot. Rendered before the default slot. #}
 {% comment %}
   A section break, optionally labelled. `class` and any further attributes
   reach the element, so a caller can adjust spacing without reproducing the

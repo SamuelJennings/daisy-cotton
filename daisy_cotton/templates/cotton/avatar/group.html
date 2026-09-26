@@ -1,3 +1,7 @@
+{# @description A row of overlapping avatars, used around avatar components. #}
+{# @prop size:select['xs','sm','md','lg','xl','xxl'] | default:"md" | description:"How much neighbouring avatars overlap; a larger size overlaps more." #}
+{# @prop :space_options:text | description:"Dynamic attribute: the map from each size name to its overlap. Set on the component itself; the caller normally leaves it alone." #}
+{# @slot — The avatars in the group. #}
 {% load cotton %}
 <c-vars size="md"
         :space_options="{'xs': '2', 'sm': '4', 'md': '6', 'lg': '8', 'xl': '10', 'xxl': '12'}" />

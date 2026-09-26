@@ -1,3 +1,11 @@
+{# @description A small label, usually a status or a count. Shows the text, then the default slot. #}
+{# @prop size:select['sm','lg'] | description:"Badge size. Leave empty for the default size." #}
+{# @prop variant:text | description:"Colour variant, such as primary, secondary, accent, neutral, info, success, warning or error." #}
+{# @prop outline:boolean | description:"Draw the badge as an outline." #}
+{# @prop text:text | description:"Badge text, shown before the default slot." #}
+{# @prop class:text | description:"Extra classes added to the badge." #}
+{# @prop :size_opts:text | default:"{'sm': 'badge-sm', 'lg': 'badge-lg'}" | description:"Map from size name to badge size class. Rarely overridden." #}
+{# @slot — Content shown after the text. #}
 {% load cotton %}
 <c-vars size
         variant

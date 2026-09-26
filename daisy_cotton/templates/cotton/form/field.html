@@ -1,16 +1,31 @@
+{# @description A single form field: one control plus an optional label, help text and errors. Renders a text-like input, textarea, select, file input, checkbox, radio or toggle from explicit attributes. #}
+{# @prop type:text | default:"text" | description:"Control to render: any text-like input type (text, email, tel, password, number, date), or textarea, select, file, checkbox, radio or toggle." #}
+{# @prop label:text | description:"Label text. A named slot called label also works and allows rich content, such as badges." #}
+{# @prop hide-label:boolean | description:"Hide the label visually while keeping it available to screen readers." #}
+{# @prop help-text:text | description:"Help text shown below the control. A named slot called help_text (with an underscore) also works." #}
+{# @prop errors:text | description:"An error message, or a list of messages, shown below the control; also switches the control to its error style. A named slot called errors also works." #}
+{# @prop prelabel:text | description:"Text shown before the control, inside its frame (text-like inputs and select)." #}
+{# @prop postlabel:text | description:"Text shown after the control, inside its frame (text-like inputs and select)." #}
+{# @prop class:text | description:"Extra classes added to the control." #}
+{# @prop wrapper-class:text | description:"Extra classes added to the fieldset wrapper that surrounds the control when help text or errors are present, or a label on any control other than checkbox, radio or toggle." #}
+{# @slot — Fills the textarea value, the select options, or extra content inside a text input, such as a keyboard-key hint; on checkbox, radio and toggle it is extra content after the label text. File inputs render no slot. #}
 {% comment %}
   A single, presentational form field: one control plus an optional label, help
-  text, and errors. It renders entirely from explicit attributes — to render a
-  whole Django form use <c-form.render> instead.
+  text, and errors. It renders entirely from explicit attributes, so it takes
+  one field's values rather than a whole Django form.
 
   type — any text-like input (text, email, tel, password, number, date, …)
   plus textarea, select, file, checkbox, radio and toggle.
 
-  label, help-text and errors accept an attribute or a named slot of the same
-  name (a slot allows rich content, e.g. badges inside the label). errors also
-  accepts a list (e.g. :errors="form.email.errors") and switches the control
-  to its error style. The default slot fills the textarea value, the select
-  options, or extra content inside a text input (e.g. a <kbd> hint).
+  label, help-text and errors accept an attribute or a named slot (a slot
+  allows rich content, e.g. badges inside the label). The slot is named label
+  and errors like the attribute, but help_text with an underscore for help-text:
+  a slot named help-text is dropped. errors also accepts a list
+  (e.g. :errors="form.email.errors") and switches the control to its error
+  style. The default slot fills the textarea value, the select options, or
+  extra content inside a text input (e.g. a <kbd> hint); on checkbox, radio and
+  toggle it is extra content after the label text, and file inputs render no
+  slot.
 
   Everything else (name, id, value, placeholder, required, disabled, checked,
   rows, …) passes straight through to the control element.

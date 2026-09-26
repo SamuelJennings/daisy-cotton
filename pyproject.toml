@@ -149,6 +149,8 @@ non-mirror-paths = [
     "tests/test_modal.py",
     "tests/test_breadcrumbs_href_attribute.py",
     "tests/test_form_field.py",
+    "tests/test_gallery_annotations.py",
+    "tests/test_gallery_lint.py",
     # Exercises the demo project own URLs and settings, not a component
     # template or a Python module in the package.
     "tests/test_demo.py",

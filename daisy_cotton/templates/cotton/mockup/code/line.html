@@ -1,2 +1,6 @@
+{# @description One line of a code block, used inside mockup.code. Shows a prefix such as a shell prompt, then the text. #}
+{# @prop prefix:text | default:"$" | description:"Marker shown before the line, such as a shell prompt." #}
+{# @prop text:text | description:"The line's text, shown before the default slot." #}
+{# @slot — Extra content shown after the text. #}
 <c-vars prefix="$" text />
 <pre data-prefix="{{ prefix }}"><code>{{ text }}{{ slot }}</code></pre>

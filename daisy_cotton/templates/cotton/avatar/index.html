@@ -1,29 +1,13 @@
-{# ============================================================ #}
-{# <c-avatar> — daisyUI avatar component                       #}
-{#                                                              #}
-{# Props:                                                       #}
-{#   src         – URL for a profile photo. Falls back to a    #}
-{#                 placeholder, then the bare silhouette. This  #}
-{#                 package resolves no URL of its own — a       #}
-{#                 project wiring up its own user-avatar        #}
-{#                 lookup passes the resolved URL in as `src`.  #}
-{#   alt         – <img /> alt text (default: "User avatar")     #}
-{#   size        – xs|sm|md|lg|xl|xxl (default: md), or any   #}
-{#                 Tailwind w-* class (e.g. "w-16")            #}
-{#   shape       – rounded|rounded-xl|rounded-full             #}
-{#                 (default: rounded-full)                     #}
-{#   status      – online|offline|"" (default: no indicator)  #}
-{#   placeholder – Initials/text shown when no image           #}
-{#   variant     – primary|secondary|accent|neutral for the   #}
-{#                 initials background (default: primary). The #}
-{#                 bare silhouette fallback is always muted.   #}
-{#   class       – extra classes on the .avatar wrapper        #}
-{#                                                              #}
-{# Examples:                                                    #}
-{#   <c-avatar />                                              #}
-{#   <c-avatar src="{{ user.photo.url }}" status="online" />  #}
-{#   <c-avatar placeholder="AB" size="sm" />                  #}
-{# ============================================================ #}
+{# @description A user avatar: a photo, or initials, or a plain silhouette when neither is given, with an optional online or offline indicator. #}
+{# @prop src:text | description:"URL of a profile photo. Falls back to the placeholder text, then to a silhouette. This package resolves no URL itself; pass the resolved URL in." #}
+{# @prop alt:text | default:"User avatar" | description:"Alt text of the photo." #}
+{# @prop size:text | default:"md" | description:"One of xs, sm, md, lg, xl or xxl, or any Tailwind width class such as w-16." #}
+{# @prop :size_options:text | description:"Dynamic attribute: the map from each size name to its width class. Set on the component itself; the caller normally leaves it alone." #}
+{# @prop shape:text | default:"rounded-full" | description:"Corner shape: rounded, rounded-xl or rounded-full." #}
+{# @prop variant:text | default:"primary" | description:"Background colour of the initials: primary, secondary, accent or neutral. The silhouette is always muted." #}
+{# @prop status:text | description:"Presence indicator: online or offline. Empty shows none." #}
+{# @prop placeholder:text | description:"Initials or short text shown when there is no photo." #}
+{# @prop class:text | description:"Extra classes added to the avatar wrapper." #}
 {% load cotton %}
 <c-vars src
         alt="User avatar"

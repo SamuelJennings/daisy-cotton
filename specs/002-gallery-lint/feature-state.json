@@ -1,0 +1,481 @@
+{
+  "feature": "002-gallery-lint",
+  "branch": "002-gallery-lint",
+  "repo": "SamuelJennings/daisy-cotton",
+  "state": "PR_READY",
+  "state_history": [
+    {
+      "state": "QUEUED",
+      "at": "2026-09-26T14:42:28Z",
+      "note": "specification merged in #20; issue graph built"
+    },
+    {
+      "state": "PLAN",
+      "at": "2026-09-26T16:39:47Z",
+      "note": "picked up from the queue; branch cut from origin/main cc7473f; verify green on base"
+    },
+    {
+      "state": "DESIGN_REVIEW",
+      "at": "2026-09-26T16:40:16Z",
+      "note": "plan, research, tasks committed; draft PR #97 opened"
+    },
+    {
+      "state": "IMPLEMENT",
+      "at": "2026-09-26T16:47:35Z",
+      "note": "design review applied (D4); plan notification sent"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-26T17:00:53Z",
+      "note": "all eight stories accepted"
+    },
+    {
+      "state": "REVIEW",
+      "at": "2026-09-26T17:01:38Z",
+      "note": "converge green; no ADR graduated"
+    },
+    {
+      "state": "IMPLEMENT",
+      "at": "2026-09-26T17:07:02Z",
+      "note": "review fix cycle: two verified high findings (slot descriptions unread by the gallery; help-text slot name)"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-26T17:11:13Z",
+      "note": "review fixes TC01-TC04 accepted and verified"
+    },
+    {
+      "state": "REVIEW",
+      "at": "2026-09-26T17:11:50Z",
+      "note": "review recorded: 2 high + 4 lower findings, all fixed in one cycle"
+    },
+    {
+      "state": "PR_READY",
+      "at": "2026-09-26T17:13:03Z",
+      "note": "PR #97 ready; walkthrough pending with the maintainer"
+    }
+  ],
+  "gates": {
+    "spec": {
+      "approved_by": "SamuelJennings",
+      "at": "2026-09-26T14:42:28Z",
+      "self_resolved": [
+        "merge commit d42c7084bf, pull request #20"
+      ]
+    },
+    "plan": {
+      "approved_by": "notified",
+      "at": "2026-09-26T16:47:35Z"
+    },
+    "merge": {
+      "approved_by": null,
+      "at": null
+    },
+    "design_review": {
+      "approved_by": "design-panel",
+      "at": "2026-09-26T17:05:00Z",
+      "self_resolved": [
+        "ARCH-001, SPEC-001 medium: applied as plan/tasks edits (D4)",
+        "SPEC-002, ARCH-002 low: applied as tasks/D3 edits (D4)"
+      ]
+    }
+  },
+  "stories": [
+    {
+      "id": "US1",
+      "priority": "P1",
+      "issue": 35,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/002-gallery-lint",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T014",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_gallery_lint.py -q: 5 passed. Probes: treating only errors as blocking made the undocumented-name test fail (1 failed, 4 passed); pointing discovery at the wrong directory failed all 5."
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py::TestGalleryLintRules"
+            ]
+          }
+        },
+        {
+          "id": "T015",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_gallery_lint.py -q: 27 passed (5 scratch tests, 21 components, discovery check)",
+              "uv run pytest tests/test_gallery_lint.py -q -s | grep -ci \"MOUNTED AND SERVING\": 0 matches"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py::TestPackageComponentsLintClean",
+              "tests/test_gallery_lint.py::test_components_were_discovered"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US2",
+      "priority": "P1",
+      "issue": 36,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/002-gallery-lint",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T002",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "`uv run python manage.py cotton_lint`: button, link, badge each had missing-annotation warnings before (see base run); after, none listed with any error or warning. Each has one `{# @description`, one default `{# @slot`, no unterminated `{#` line. Renders at base d04b053 vs after (button with all attributes, plain, condition false; link full and bare; badge full and size lg) identical with whitespace collapsed. `uv run pytest tests -q -k 'button or link or badge or alert or icon'`: 32 passed."
+            ]
+          }
+        },
+        {
+          "id": "T003",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "`uv run python manage.py cotton_lint`: alert and icon each had missing-annotation warnings before; after, none. Each has one `{# @description`; alert has one default `{# @slot`, icon has none. Renders at base d04b053 vs after (alert with all attributes, variant only, bare; icon with name, class, attrs) identical with whitespace collapsed. `uv run pytest tests -q -k 'button or link or badge or alert or icon'`: 32 passed."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US3",
+      "priority": "P1",
+      "issue": 37,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/002-gallery-lint",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T001",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "`uv run python manage.py cotton_lint`: form/field had 1 error (unknown-component form.render) and 9 missing-annotation warnings before; after, 0 errors, 0 warnings, 3 hints. One `{# @description`, one default `{# @slot`, no unterminated `{#` line. Render of 8 attribute combinations (text input, bare, textarea, select, checkbox, toggle with list errors, file, radio) at base d04b053 and after: identical with whitespace collapsed. `uv run pytest tests/test_form_field.py -q`: 25 passed."
+            ]
+          }
+        },
+        {
+          "id": "TC03",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "rendered form.field via tests.test_form_field.render: named slot help-text dropped, help_text renders; checkbox, radio and toggle render default slot content after the label text; file renders none; wrapper appears for help text or errors, or a label on a non-check control, not for a label alone on checkbox",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings",
+              "uv run pytest tests/test_form_field.py tests/test_gallery_annotations.py tests/test_gallery_lint.py -q: 137 passed"
+            ],
+            "tests": [],
+            "code": [
+              "daisy_cotton/templates/cotton/form/field.html:5",
+              "daisy_cotton/templates/cotton/form/field.html:10",
+              "daisy_cotton/templates/cotton/form/field.html:11"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US4",
+      "priority": "P2",
+      "issue": 38,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/002-gallery-lint",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T004",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "`uv run python manage.py cotton_lint` at base 85a252e: card 5 warnings + 4 undeclared-var hints, divider 4 warnings + 1 hint",
+              "`uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone",
+              "rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK",
+              "render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical",
+              "`uv run pytest tests -q -k 'card or divider'`: ====================== 10 passed, 139 deselected in 0.28s ======================"
+            ]
+          }
+        },
+        {
+          "id": "T005",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "`uv run python manage.py cotton_lint` at base 85a252e: 6 warnings + 1 hint (button)",
+              "`uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone",
+              "rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK",
+              "render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical",
+              "`uv run pytest tests -q -k 'dropdown'`: ====================== 26 passed, 123 deselected in 0.31s ======================"
+            ]
+          }
+        },
+        {
+          "id": "T006",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "`uv run python manage.py cotton_lint` at base 85a252e: 5 warnings + 3 hints (actions, footer, footer_end)",
+              "`uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone",
+              "rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK",
+              "render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical",
+              "`uv run pytest tests -q -k 'modal'`: ====================== 7 passed, 142 deselected in 0.27s ======================="
+            ]
+          }
+        },
+        {
+          "id": "TC01",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run python (AnnotationParser over every template): 27 slots, 0 empty descriptions",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0",
+              "uv run pytest tests/test_render_all.py tests/test_gallery_annotations.py -q: 104 passed"
+            ],
+            "tests": [],
+            "code": [
+              "daisy_cotton/templates/cotton/alert.html:10"
+            ]
+          }
+        },
+        {
+          "id": "TC04",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "rendered by the test render helper: dropdown full adds btn-block to the default trigger and w-full to the panel; dropdown class reaches the wrapper and the default trigger (neither reaches a custom button slot); alert class reaches the alert and its icon; modal size sm gives max-md with position start and none/absent, and w-full max-w-none with top or bottom",
+              "AnnotationParser on modal.html: id example=myModal, size description carries the position note",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings",
+              "uv run pytest tests/test_dropdown.py tests/test_modal.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_gallery_annotations.py tests/test_gallery_lint.py -q: 189 passed"
+            ],
+            "tests": [],
+            "code": [
+              "daisy_cotton/templates/cotton/dropdown/index.html:4",
+              "daisy_cotton/templates/cotton/dropdown/index.html:6",
+              "daisy_cotton/templates/cotton/alert.html:9",
+              "daisy_cotton/templates/cotton/modal.html:3",
+              "daisy_cotton/templates/cotton/modal.html:4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US5",
+      "priority": "P2",
+      "issue": 39,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/002-gallery-lint",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T007",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "`uv run python manage.py cotton_lint` at base 85a252e: breadcrumbs 2 warnings, breadcrumbs/item 3 warnings",
+              "`uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone",
+              "rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK",
+              "render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical",
+              "`uv run pytest tests -q -k 'breadcrumbs or breadcrumb'`: ====================== 12 passed, 137 deselected in 0.27s ======================"
+            ]
+          }
+        },
+        {
+          "id": "T008",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "`uv run python manage.py cotton_lint` at base 85a252e: dock 1 warning, dock/item 6 warnings",
+              "`uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone",
+              "rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK",
+              "render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical",
+              "`uv run pytest tests -q -k 'dock'`: ====================== 7 passed, 142 deselected in 0.26s ======================="
+            ]
+          }
+        },
+        {
+          "id": "T009",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "`uv run python manage.py cotton_lint` at base 85a252e: avatar 9 warnings, avatar/group 2 warnings",
+              "`uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone",
+              "rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK",
+              "render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical",
+              "`uv run pytest tests -q -k 'avatar'`: ====================== 4 passed, 145 deselected in 0.22s ======================="
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US6",
+      "priority": "P3",
+      "issue": 40,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/002-gallery-lint",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T010",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "`uv run python manage.py cotton_lint` at base 85a252e: browser 2 warnings; window and phone had no findings but no annotations",
+              "`uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone",
+              "rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK",
+              "render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical",
+              "`uv run pytest tests -q -k 'mockup or browser or window or phone'`: ====================== 11 passed, 138 deselected in 0.27s ======================"
+            ]
+          }
+        },
+        {
+          "id": "T011",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "`uv run python manage.py cotton_lint` at base 85a252e: line 2 warnings; code index had no findings but no annotations",
+              "`uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone",
+              "rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK",
+              "render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical",
+              "`uv run pytest tests -q -k 'mockup or code'`: ====================== 11 passed, 138 deselected in 0.27s ======================",
+              "`uv run python manage.py cotton_lint --warnings-as-errors`: exit 0, '20/21 clean \u00b7 0 errors \u00b7 0 warnings' (all 21 components free of errors and warnings; the one not counted clean is form.field, with 3 undeclared-variable hints)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US7",
+      "priority": "P2",
+      "issue": 41,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/002-gallery-lint",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T012",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_gallery_annotations.py -q: 18 failed before the helpers existed (class not defined), 18 passed after"
+            ],
+            "tests": [
+              "tests/test_gallery_annotations.py::TestAnnotationRules"
+            ]
+          }
+        },
+        {
+          "id": "T013",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_gallery_annotations.py -q: 82 passed (18 rule tests, 3 rules x 21 templates, discovery check)"
+            ],
+            "tests": [
+              "tests/test_gallery_annotations.py::TestPackageTemplateAnnotations",
+              "tests/test_gallery_annotations.py::test_templates_were_discovered"
+            ]
+          }
+        },
+        {
+          "id": "TC02",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_gallery_annotations.py -q -k \"empty_description or leading_dash or sample_and\": red first (1 failed, 2 passed: empty description was accepted), then uv run pytest tests/test_gallery_annotations.py -q: 85 passed",
+              "probe: restored link.html from base 0b30a48: test_documents_the_default_slot_it_renders[link.html] failed (1 failed, 84 passed); restored, 85 passed"
+            ],
+            "tests": [
+              "tests/test_gallery_annotations.py::TestAnnotationRules::test_default_slot_with_empty_description_fails",
+              "tests/test_gallery_annotations.py::TestAnnotationRules::test_default_slot_with_leading_dash_passes",
+              "tests/test_gallery_annotations.py::TestAnnotationRules::test_default_slot_with_sample_and_description_passes"
+            ],
+            "code": [
+              "tests/test_gallery_annotations.py:57"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US8",
+      "priority": "P2",
+      "issue": 42,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/002-gallery-lint",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T016",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv sync: exit 0, environment already current",
+              "uv run python manage.py runserver 127.0.0.1:8765 --noreload then curl http://127.0.0.1:8765/django-cotton-gallery/: HTTP 200 (same route as the documented default port 8000), server stopped after",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 20/21 clean, 0 errors, 0 warnings (form.field keeps hints)"
+            ]
+          }
+        },
+        {
+          "id": "T017",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "README.md links CONTRIBUTING.md; CHANGELOG.md [Unreleased] Added records the annotations and both enforcing test modules"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "budgets": {
+    "converge_cycles": {
+      "used": 2,
+      "max": 2
+    },
+    "review_cycles": {
+      "used": 1,
+      "max": 1
+    },
+    "design_review_cycles": {
+      "used": 1,
+      "max": 1
+    },
+    "tokens": {
+      "used": 0,
+      "max": 120
+    }
+  },
+  "pr": {
+    "number": 97,
+    "draft": false
+  }
+}

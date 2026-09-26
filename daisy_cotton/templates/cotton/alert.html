@@ -1,3 +1,13 @@
+{# @description A message banner, optionally dismissible and auto-hiding. Shows an icon, then the default slot, then a dismiss button. #}
+{# @prop variant:text | description:"Colour variant: info, success, warning or error. Also picks the icon when none is given." #}
+{# @prop icon:text | description:"Icon shown before the message, passed as the name of the icon component. Defaults to an icon named after the variant." #}
+{# @prop soft:boolean | description:"Use the soft style." #}
+{# @prop outline:boolean | description:"Draw the alert as an outline." #}
+{# @prop dash:boolean | description:"Use a dashed border." #}
+{# @prop dismissible:boolean | description:"Add a dismiss button that hides the alert (needs Alpine.js)." #}
+{# @prop delay:number | description:"Milliseconds before a dismissible alert hides itself." #}
+{# @prop class:text | description:"Extra classes added to the alert. The icon gets them too." #}
+{# @slot Your changes were saved. — The alert message. #}
 <c-vars variant icon soft outline dash dismissible delay class />
 <div role="alert"
      class="alert{% if variant %} alert-{{ variant }}{% endif %}{% if soft %} alert-soft{% endif %}{% if outline %} alert-outline{% endif %}{% if dash %} alert-dash{% endif %} {{ class }}"
