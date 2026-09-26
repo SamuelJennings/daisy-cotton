@@ -2,7 +2,7 @@
   "feature": "002-gallery-lint",
   "branch": "002-gallery-lint",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "DESIGN_REVIEW",
+  "state": "IMPLEMENT",
   "state_history": [
     {
       "state": "QUEUED",
@@ -18,6 +18,11 @@
       "state": "DESIGN_REVIEW",
       "at": "2026-09-26T16:40:16Z",
       "note": "plan, research, tasks committed; draft PR #97 opened"
+    },
+    {
+      "state": "IMPLEMENT",
+      "at": "2026-09-26T16:47:35Z",
+      "note": "design review applied (D4); plan notification sent"
     }
   ],
   "gates": {
@@ -29,12 +34,20 @@
       ]
     },
     "plan": {
-      "approved_by": null,
-      "at": null
+      "approved_by": "notified",
+      "at": "2026-09-26T16:47:35Z"
     },
     "merge": {
       "approved_by": null,
       "at": null
+    },
+    "design_review": {
+      "approved_by": "design-panel",
+      "at": "2026-09-26T17:05:00Z",
+      "self_resolved": [
+        "ARCH-001, SPEC-001 medium: applied as plan/tasks edits (D4)",
+        "SPEC-002, ARCH-002 low: applied as tasks/D3 edits (D4)"
+      ]
     }
   },
   "stories": [

@@ -68,10 +68,18 @@ Ambiguities in issue #11 resolved while writing the spec, with the reasoning beh
 
 ## D3 — "Rendered output unchanged" means equal after whitespace normalisation
 
-**Decision:** FR-014 and SC-006 are checked by rendering every touched component before and after with the same attributes and comparing the output with runs of whitespace collapsed, plus the existing tests passing unmodified.
+**Decision:** FR-014 and SC-006 are checked by rendering every touched component before and after with the same attributes and comparing the output with runs of whitespace collapsed and both ends stripped, plus the existing tests passing unmodified. For `mockup.code.line`, whose content sits inside `<pre>`, the rendered `<pre …>…</pre>` must also be byte-identical.
 
 **Why:** a `{# … #}` line renders nothing, but the newline after it still reaches the output, so a byte-for-byte comparison would report every annotated template as changed while the markup a browser builds is identical.
 
-**Revisit if:** a component ever renders inside `<pre>` or another context where leading whitespace is visible. `mockup.code.line` is the one to watch; its annotations must not add whitespace inside its `<pre>`.
+**Revisit if:** another component renders its content inside `<pre>` or anywhere else whitespace is visible.
 
 **ADR:** none — how this feature verifies one requirement.
+
+## D4 — Design review applied
+
+**Decision:** all four design-review findings were applied as plan and task edits: the lint check reads every report from one `lint_catalog` call, the annotation stories prove the three rules the annotation check will later enforce, both new test modules are registered in one task, and the render comparison strips both ends and holds `mockup.code.line`'s `<pre>` byte-identical.
+
+**Why:** none needed a spec change, and each was a sentence in `plan.md` or `tasks.md`.
+
+**ADR:** none — review record for this feature.

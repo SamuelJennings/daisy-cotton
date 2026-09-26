@@ -4,7 +4,7 @@
 
 **Organization**: by user story, in build order (plan.md "Story order"). Annotation stories come first so each check lands against a catalog that already passes it.
 
-**Proof for annotation tasks**: `uv run python manage.py cotton_lint` output for the task's templates shows findings before and none (no errors, no warnings) after, and a whitespace-normalised render of every touched component is identical before and after. Record both in the task's evidence.
+**Proof for annotation tasks**: `uv run python manage.py cotton_lint` output for the task's templates shows findings before and none (no errors, no warnings) after, each touched template has exactly one `{# @description`, a default `{# @slot` (no colon) where it renders `{{ slot }}`, and no line with a `{#` lacking a later `#}`, and every touched component's render is identical before and after with whitespace collapsed and both ends stripped (for `mockup.code.line`, the rendered `<pre …>…</pre>` byte-identical). For US4, the `undeclared-template-var` hints main reports for its named slots are gone. Record all of it in the task's evidence.
 
 ## Phase 1: US3 — The form field is annotated and its lint error is gone (P1)
 
@@ -19,7 +19,7 @@
 
 - [ ] T004 [P] [US4] Annotate `card/index.html` and `divider.html`, including a `@slot:name` for every named slot each renders (`card`: `badges`, `actions`, `footer`, `footer_end` and any other; `divider`: `label`) (FR-009).
 - [ ] T005 [P] [US4] Annotate `dropdown/index.html`, including `@slot:button` and any other named slot it renders (FR-009).
-- [ ] T006 [US4] Annotate `modal.html`: its props, default slot, the named slots it forwards to its inner card (`actions`, `footer`, `footer_end`, and `title`/`icon` if they are slots rather than props), and a `@trigger` saying how another element opens it (FR-009, FR-010). Trim the `{# … #}` banner where annotations now say the same thing.
+- [ ] T006 [US4] Annotate `modal.html`: its props, default slot, the named slots it forwards to its inner card (`actions`, `footer`, `footer_end`; not `badges`). `title` and `icon` are neither props nor slots on `modal`: they reach the inner card through `attrs`, and its `@description` says so, and a `@trigger` saying how another element opens it (FR-009, FR-010). Trim the `{# … #}` banner where annotations now say the same thing.
 
 ## Phase 4: US5 — Navigation and avatar components are fully annotated (P2)
 
@@ -37,12 +37,12 @@
 ## Phase 6: US7 — The suite catches the documentation the linter does not check (P2)
 
 - [ ] T012 [US7] Write `tests/test_gallery_annotations.py` rule tests against scratch sources first (red): no `@description`, two `@description`s, `{{ slot }}` rendered with no default `@slot`, a `@slot:name` alone not satisfying the default slot, no `{{ slot }}` needing no `@slot`, a `{#` that does not close on its line (failure names the line). Then implement the three rule helpers to green.
-- [ ] T013 [US7] Add the catalog-wide tests, parametrised by template path, applying the three rules to every template under the package's `cotton/` directory; add the module to `[tool.forge.conformance] non-mirror-paths` in `pyproject.toml` (FR-015, FR-016, FR-017, SC-004).
+- [ ] T013 [US7] Add the catalog-wide tests, parametrised by template path, applying the three rules to every template under the package's `cotton/` directory; add both new modules, `tests/test_gallery_annotations.py` and `tests/test_gallery_lint.py`, to `[tool.forge.conformance] non-mirror-paths` in `pyproject.toml` (FR-015, FR-016, FR-017, SC-004).
 
 ## Phase 7: US1 — The test suite fails when a component breaks the gallery lint (P1)
 
-- [ ] T014 [US1] Write `tests/test_gallery_lint.py` tests against scratch sources first (red): an undocumented `<c-vars>` name fails with component, line, rule and message; a call to a component that does not exist fails; a hints-only template passes; a template added to a scratch `cotton/` directory is discovered. Then implement discovery (`scan` + `CatalogConfig`) and the blocking-findings filter to green (FR-001–FR-004).
-- [ ] T015 [US1] Add the catalog-wide test parametrised by component path, asserting no errors or warnings, with every blocking finding listed in the failure message; add the module to `non-mirror-paths`. Confirm the suite prints no gallery start-up notice (FR-001, FR-003, FR-005, SC-002, SC-003).
+- [ ] T014 [US1] Write `tests/test_gallery_lint.py` tests against scratch sources first (red): an undocumented `<c-vars>` name fails with component, line, rule and message; a call to a component that does not exist fails; a hints-only template passes; a template added to a scratch `cotton/` directory is discovered. Scratch sources are linted through `lint_catalog`. Then implement discovery (`scan` + `CatalogConfig`) and the blocking-findings filter to green (FR-001–FR-004).
+- [ ] T015 [US1] Add the catalog-wide test parametrised by component path, asserting no errors or warnings, with every blocking finding listed in the failure message. Every case reads its report from one module-level `lint_catalog` call over the whole catalog, never `lint_component` per path. Confirm the suite prints no gallery start-up notice (FR-001, FR-003, FR-005, SC-002, SC-003).
 
 ## Phase 8: US8 — Contributors can find how to run the gallery and the linter (P2)
 
@@ -53,4 +53,5 @@
 
 - Phases 1–5 touch disjoint templates and may run in any order; they are dispatched as two batches (US3+US2, then US4+US5+US6).
 - Phases 6 and 7 require Phases 1–5: their catalog-wide tests are green only once every template is annotated.
+- Phase 7 starts after Phase 6 has landed; both are built by one dispatch, in order.
 - Phase 8 describes the checks from Phases 6 and 7.
