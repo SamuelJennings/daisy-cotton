@@ -50,3 +50,8 @@ decision.
   the inner `<a>`. To set `target`, `hx-*` or similar on the link, write your own `<a>` in the item's slot.
   An item without `href` renders `<span aria-current="page">`, and the text span no longer carries the
   `daisy-cotton-breadcrumb-text` class.
+- `dock` renders as a `<nav>` named `Dock` by default (translated; an `aria-label` passed by the caller replaces
+  it) instead of a `<div>`, and no longer adds `bg-transparent backdrop-blur`; pass them through `class` to keep them.
+  A `dock.item` with no `href` and no `toggle` is now a `<button type="button">`, its icon is hidden from
+  assistive technology, and the drawer-toggle item no longer has `role="button" tabindex="0"`, so it is no
+  longer a Tab stop.
