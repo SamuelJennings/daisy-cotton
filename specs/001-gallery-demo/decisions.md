@@ -2,7 +2,7 @@
 
 Ambiguities resolved while writing the specification. Each one is also recorded under Clarifications in `spec.md`.
 
-## The folder-component 404 is upstream, and gets no local workaround
+## The folder-component 404 is a gallery defect, and gets no local workaround
 
 Reproduced on main with the demo's own settings: every sidebar link returns 200 except `avatar`, `breadcrumbs`, `card`, `dock`, `dropdown` and `mockup/code`, which return 404. The gallery's catalog scanner treats `<dir>/index.html` as a component named `<dir>`. Its path resolver (`core/catalog/resolver.py` in django-cotton-gallery 1.0.0, unchanged on its main branch) builds only `<dir>.html` and raises "not found" when that file is missing. `/django-cotton-gallery/card/index/` works because the resolver then finds `card/index.html` directly. No setting in this repository touches either code path.
 
@@ -11,7 +11,7 @@ Two local fixes were available and both were rejected:
 - Flattening `card/index.html` to `card.html`, and likewise for the others, reshapes the package's template layout around a bug in a development tool. `dock` and `breadcrumbs` would end up split across a file and a folder.
 - Overriding the gallery's sidebar or detail view in the demo forks the gallery's code for a defect that is a few lines from being fixed at its source.
 
-Instead the test covers every link, skips the folder cases with a reason naming the upstream issue, and the dev dependency's minimum is raised once a fixed release exists. Skipped rather than expected-failure, so a later reader can see why without decoding pytest's xfail semantics.
+Instead the test covers every link, skips the folder cases with a reason naming the tracking issue filed in this repository, and the dev dependency's minimum is raised once a fixed release exists. Skipped rather than expected-failure, so a later reader can see why without decoding pytest's xfail semantics.
 
 ## Alpine in the demo
 
