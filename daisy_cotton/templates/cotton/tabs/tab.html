@@ -1,16 +1,26 @@
-{# @description One tab of a row of tabs, used inside tabs. Renders as a link when an href is given and as a button otherwise. #}
+{# @description One tab of a row of tabs, used inside tabs. Renders as a link when an href is given, as a radio input followed by its panel when a name is given, and as a button otherwise. #}
 {# @prop text:text | description:"The tab's label." #}
 {# @prop href:text | description:"Link address. Without it the tab is a button." #}
+{# @prop name:text | description:"Name shared by a set of radio tabs. Given to every tab in the set; the default slot is then the tab's panel." #}
 {# @prop active:boolean | description:"Mark this tab as the current one." #}
 {# @prop disabled:boolean | description:"Show the tab as unavailable. A link loses its href and a button is disabled." #}
 {# @prop class:text | description:"Extra classes added to the tab." #}
-{# @slot — Extra content shown after the text. #}
-<c-vars text href active disabled class />
+{# @slot — Extra content shown after the text, or the panel shown when a radio tab is selected. #}
+<c-vars text href name="" active disabled class />
 {% if href %}
   <a {% if not disabled %}href="{{ href }}"{% else %}role="link" aria-disabled="true"{% endif %}
      class="tab{% if active %} tab-active{% endif %}{% if disabled %} tab-disabled{% endif %} {{ class }}"
      {% if active %}aria-current="page"{% endif %}
      {{ attrs }}>{{ text }}{{ slot }}</a>
+{% elif name %}
+  <input type="radio"
+         name="{{ name }}"
+         class="tab {{ class }}"
+         aria-label="{{ text }}"
+         {% if active %}checked{% endif %}
+         {% if disabled %}disabled{% endif %}
+         {{ attrs }} />
+  <div class="tab-content">{{ slot }}</div>
 {% else %}
   <button type="button"
           role="tab"

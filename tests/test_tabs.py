@@ -154,3 +154,65 @@ class TestTabButton:
         ).button
         assert b["class"] == ["tab", "mine"]
         assert b["data-x"] == "1"
+
+
+class TestTabRadio:
+    """A tab given a ``name`` is a radio input followed by its panel."""
+
+    SET = (
+        '<c-tabs><c-tabs.tab name="g" text="One" active>panel one</c-tabs.tab>'
+        '<c-tabs.tab name="g" text="Two">panel two</c-tabs.tab>'
+        '<c-tabs.tab name="g" text="Three" disabled>panel three</c-tabs.tab></c-tabs>'
+    )
+
+    def test_each_tab_is_a_radio_sharing_the_name_with_its_label(
+        self, cotton_render_string
+    ):
+        root = parse(cotton_render_string(self.SET)).div
+        inputs = root.find_all("input")
+        assert [i["type"] for i in inputs] == ["radio"] * 3
+        assert {i["name"] for i in inputs} == {"g"}
+        assert all("tab" in i["class"] for i in inputs)
+        assert [i["aria-label"] for i in inputs] == ["One", "Two", "Three"]
+
+    def test_each_input_is_immediately_followed_by_its_panel(
+        self, cotton_render_string
+    ):
+        inputs = parse(cotton_render_string(self.SET)).find_all("input")
+        panels = []
+        for i in inputs:
+            panel = i.find_next_sibling()
+            assert panel.name == "div"
+            assert panel["class"] == ["tab-content"]
+            panels.append(panel.get_text(strip=True))
+        assert panels == ["panel one", "panel two", "panel three"]
+
+    def test_active_checks_exactly_that_input(self, cotton_render_string):
+        inputs = parse(cotton_render_string(self.SET)).find_all("input")
+        assert [i.has_attr("checked") for i in inputs] == [True, False, False]
+
+    def test_disabled_input_is_natively_disabled(self, cotton_render_string):
+        inputs = parse(cotton_render_string(self.SET)).find_all("input")
+        assert [i.has_attr("disabled") for i in inputs] == [False, False, True]
+
+    def test_root_keeps_the_tablist_role(self, cotton_render_string):
+        assert parse(cotton_render_string(self.SET)).div["role"] == "tablist"
+
+    def test_class_and_attributes_reach_the_input(self, cotton_render_string):
+        i = parse(
+            cotton_render_string(
+                '<c-tabs.tab name="g" text="A" class="mine" data-x="1" />'
+            )
+        ).input
+        assert i["class"] == ["tab", "mine"]
+        assert i["data-x"] == "1"
+
+    def test_a_name_in_the_page_context_does_not_make_a_button_tab_a_radio(
+        self, cotton_render_string
+    ):
+        html = cotton_render_string(
+            '<c-tabs.tab text="A" />', context={"name": "leaked"}
+        )
+        soup = parse(html)
+        assert soup.find("input") is None
+        assert soup.button["role"] == "tab"

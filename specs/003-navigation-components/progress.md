@@ -103,3 +103,10 @@ Did: `tabs/tab.html` link and button shapes. A link tab with `active` gets `tab-
 Verified: `tests/test_tabs.py` 22 passed (12 new ones failed before the template existed); `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T015 (radio shape and the `name` c-var).
 Watch: none.
+
+## 2026-09-26T23:20Z · Implementer US4 · T015
+
+Did: the radio shape in `tabs/tab.html`: `<input type="radio" class="tab" name aria-label>` with `checked` on `active` and native `disabled`, followed by `<div class="tab-content">` holding the slot. `name` is declared in `<c-vars>` with an empty default so a page variable called `name` cannot turn a button tab into a radio. Radio tabs sit in a root that keeps `role="tablist"`.
+Verified: `tests/test_tabs.py` 29 passed (5 of the 7 new tests failed before the radio branch existed); the page-context test was probed: without `name=""` in `<c-vars>` it fails, with it it passes. `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T016.
+Watch: none.
