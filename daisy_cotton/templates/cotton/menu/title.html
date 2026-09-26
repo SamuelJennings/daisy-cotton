@@ -1,0 +1,6 @@
+{# @description A heading row inside a menu, used inside menu. It is not interactive. Attributes other than the ones below land on the list item. #}
+{# @prop text:text | description:"The heading." #}
+{# @prop class:text | description:"Extra classes added to the list item." #}
+{# @slot — Extra content shown after the text. #}
+<c-vars text class />
+<li class="menu-title {{ class }}" {{ attrs }}>{{ text }}{{ slot }}</li>

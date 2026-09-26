@@ -1,0 +1,13 @@
+{# @description A collapsible group of entries inside a menu, used inside menu. Nests inside itself for further levels. Attributes other than the ones below land on the list item. #}
+{# @prop text:text | description:"Label of the group, shown in the summary." #}
+{# @prop open:boolean | description:"Render the group expanded." #}
+{# @prop icon:text | description:"Icon shown before the label, passed as the name of the icon component." #}
+{# @prop class:text | description:"Extra classes added to the list item." #}
+{# @slot — The group's entries, as menu.item and menu.submenu components. #}
+<c-vars text open icon class />
+<li{% if class %} class="{{ class }}"{% endif %} {{ attrs }}>
+  <details{% if open %} open{% endif %}>
+    <summary>{% if icon %}<c-icon name="{{ icon }}" aria-hidden="true" only />{% endif %}{{ text }}</summary>
+    <ul>{{ slot }}</ul>
+  </details>
+</li>

@@ -187,3 +187,85 @@ class TestMenuItem:
             )
         ).a
         assert a.text.strip().replace("\n", "").replace(" ", "") == "A2"
+
+
+class TestMenuTitle:
+    """A title is a non-interactive list item."""
+
+    def test_title_is_a_list_item_with_the_menu_title_class(
+        self, cotton_render_string
+    ):
+        li = parse(cotton_render_string('<c-menu.title text="Docs" />')).li
+        assert li["class"] == ["menu-title"]
+        assert li.text.strip() == "Docs"
+
+    def test_title_holds_no_interactive_element(self, cotton_render_string):
+        li = parse(cotton_render_string('<c-menu.title text="Docs" />')).li
+        assert li.find(["a", "button", "input", "summary"]) is None
+
+    def test_class_and_attributes_land_on_the_list_item(self, cotton_render_string):
+        li = parse(
+            cotton_render_string('<c-menu.title text="Docs" class="mine" id="t" />')
+        ).li
+        assert li["class"] == ["menu-title", "mine"]
+        assert li["id"] == "t"
+
+    def test_slot_content_follows_the_text(self, cotton_render_string):
+        li = parse(
+            cotton_render_string('<c-menu.title text="Docs"><b>x</b></c-menu.title>')
+        ).li
+        assert li.b.text == "x"
+
+
+class TestMenuSubmenu:
+    """A submenu is a details element holding a nested list."""
+
+    def test_renders_details_summary_and_a_list(self, cotton_render_string):
+        li = parse(
+            cotton_render_string(
+                '<c-menu.submenu text="More"><li>x</li></c-menu.submenu>'
+            )
+        ).li
+        details = li.details
+        assert details.summary.text.strip() == "More"
+        assert details.ul.li.text == "x"
+
+    def test_closed_by_default(self, cotton_render_string):
+        html = cotton_render_string('<c-menu.submenu text="More">x</c-menu.submenu>')
+        assert not parse(html).details.has_attr("open")
+
+    def test_open_adds_the_open_attribute(self, cotton_render_string):
+        html = cotton_render_string(
+            '<c-menu.submenu text="More" open>x</c-menu.submenu>'
+        )
+        assert parse(html).details.has_attr("open")
+
+    def test_submenu_nests_inside_a_submenu(self, cotton_render_string):
+        html = cotton_render_string(
+            '<c-menu.submenu text="One" open>'
+            '<c-menu.submenu text="Two" open><c-menu.item text="Leaf" /></c-menu.submenu>'
+            "</c-menu.submenu>"
+        )
+        soup = parse(html)
+        assert len(soup.find_all("details")) == 2
+        inner = soup.details.ul.find("details")
+        assert inner.summary.text.strip() == "Two"
+        assert inner.ul.button.text.strip() == "Leaf"
+
+    def test_icon_is_shown_in_the_summary(self, cotton_render_string):
+        html = cotton_render_string(
+            '<c-menu.submenu text="More" icon="fa fa-plus">x</c-menu.submenu>'
+        )
+        icon = parse(html).summary.find("i")
+        assert icon["class"][:2] == ["fa", "fa-plus"]
+        assert icon["aria-hidden"] == "true"
+
+    def test_class_and_attributes_land_on_the_list_item(self, cotton_render_string):
+        li = parse(
+            cotton_render_string(
+                '<c-menu.submenu text="More" class="mine" id="s">x</c-menu.submenu>'
+            )
+        ).li
+        assert li["class"] == ["mine"]
+        assert li["id"] == "s"
+        assert not li.details.get("class")

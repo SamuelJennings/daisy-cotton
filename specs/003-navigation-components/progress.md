@@ -61,3 +61,10 @@ Did: `menu/item.html`. A link when `href` is given, else a `<button type="button
 Verified: `tests/test_menu.py` 26 passed (15 failed before the template existed); `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T009.
 Watch: none.
+
+## 2026-09-26T22:15Z · Implementer US1 · T009
+
+Did: `menu/title.html` (a `<li class="menu-title">` with no interactive element) and `menu/submenu.html` (`<li><details><summary>` plus a nested `<ul>`, `open` adds the attribute, icon in the summary, nests two levels).
+Verified: `tests/test_menu.py` 36 passed (10 failed before the templates existed); `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T010.
+Watch: none.
