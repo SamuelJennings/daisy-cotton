@@ -112,3 +112,91 @@ passed, 6 skipped. Full verify green (`forge verify`): conformance, lint,
 typecheck, test, build all passed.
 Next: story complete.
 Watch: nothing.
+
+## 2026-09-26T00:35:00Z · Implementer US3 · T010
+
+Did: rewrote README.md's intro, "More land as the need arises" status line,
+the daisyUI requirement note and the Prior art paragraph so none names
+another project as this package's host, source or consumer.
+Verified: `grep -in "mvp\|daisy-cotton-blocks" README.md` — no matches.
+Next: T011.
+Watch: nothing.
+
+## 2026-09-26T00:37:00Z · Implementer US3 · T011
+
+Did: rewrote CONTEXT.md's Component and Block entries (no reference to a
+sibling package), the Demo entry (now describes the gallery-only demo per
+FR-012), and the "Component library" deliberately-not-used entry (no longer
+names labb or django-mvp by name).
+Verified: `grep -in "mvp\|daisy-cotton-blocks\|labb" CONTEXT.md` — no matches.
+Next: T012.
+Watch: nothing.
+
+## 2026-09-26T00:39:00Z · Implementer US3 · T012
+
+Did: AGENTS.md's Article XII line now says "any host project" rather than
+naming django-mvp (its `django-mvp/shared` CI-toolchain reference stays, per
+decisions.md). docs/brainstorm.md's "Why this package exists" and prior-art
+sections restated without naming django-mvp or daisy-cotton-blocks as a
+source or sibling. ADR 0001's "Why" section drops the django-mvp comparison;
+django-easy-icons stays in both places purely as an example override.
+Verified: `grep -in "mvp\|daisy-cotton-blocks" AGENTS.md docs/brainstorm.md
+docs/adr/0001-icon-is-an-extension-point.md` — only AGENTS.md's toolchain
+line.
+Next: T013.
+Watch: nothing.
+
+## 2026-09-26T00:41:00Z · Implementer US3 · T013
+
+Did: rewrote CHANGELOG.md's Unreleased section — dropped "migrated from
+django-mvp's own Cotton component library" and the two components-that-
+differ-from-django-mvp bullets, restated as plain facts about what this
+package ships (`avatar`'s `src`/`placeholder` API, `dropdown`'s CSS-only
+positioning, `breadcrumbs.item`'s hook class), dropped the "Removed" section
+(nine components that were never in this package and never released), added
+a line saying the demo is the component gallery alone.
+Verified: `grep -in "mvp\|migrat" CHANGELOG.md` — no matches.
+Next: T014.
+Watch: merged two `### Changed` headings the edit would otherwise have left
+duplicated.
+
+## 2026-09-26T00:43:00Z · Implementer US3 · T014
+
+Did: edited only what T014 authorised — the docstrings in
+tests/test_class_attribute_merge.py and tests/test_breadcrumbs_href_attribute.py
+(dropped "issue #121 (django-mvp)" / "issue #127" and the
+`mvp/templates/cotton/breadcrumbs/item.html` path reference), and the sample
+text in tests/test_mockup_code.py (`pip install django-mvp` → `pip install
+requests`; no assertion in that test checks the text itself, only
+`data-prefix`, so there was no matching assertion to change).
+Verified: `uv run pytest tests/test_mockup_code.py
+tests/test_breadcrumbs_href_attribute.py tests/test_class_attribute_merge.py
+-q` — 16 passed.
+Next: T015.
+Watch: nothing.
+
+## 2026-09-26T00:45:00Z · Implementer US3 · T015
+
+Did: ran the SC-004 search:
+`grep -rniE "mvp|daisy-cotton-blocks" README.md CONTEXT.md AGENTS.md docs/
+CHANGELOG.md demo/ tests/ pyproject.toml`.
+Result: six hits. Three are the allowed exception —
+`AGENTS.md:43` and `pyproject.toml:40,49` name `django-mvp/shared` /
+`mvp-shared`, the toolchain repository (decisions.md "What counts as naming
+a host or consumer"). The other three are in `tests/test_demo.py` (written
+in US1, T002): the class docstring "django-mvp and its chain are gone", the
+method name `test_mvp_not_installed`, and the assertion
+`"mvp" not in settings.INSTALLED_APPS`. That assertion checks the literal
+Django app label of the package being proven absent (FR-004/FR-005/SC-001)
+— there is no way to assert an app is not installed without the app's own
+label appearing as a string somewhere in the test, and T002's own brief
+acceptance criterion is written using that same label. SC-004's search is
+mechanical and does not distinguish "naming a host" from "naming what was
+removed to prove it's gone", so this does not clean up to a literal zero
+outside the two allowed strings. Recorded as a concern rather than resolved
+by renaming: renaming the test method/docstring would not remove the
+`"mvp"` string literal the assertion itself needs, so it would not actually
+satisfy SC-004's letter either, and would cost the test its own honesty
+about what it checks for no gain.
+Next: story complete.
+Watch: see concerns in the completion report.
