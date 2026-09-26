@@ -200,3 +200,28 @@ satisfy SC-004's letter either, and would cost the test its own honesty
 about what it checks for no gain.
 Next: story complete.
 Watch: see concerns in the completion report.
+
+## 2026-09-26T00:50:00Z · Implementer US4 · T016
+
+Did: added a line next to `<c-alert>` in README.md's Status section stating
+`dismissible` and `delay` need Alpine.js on the page, that this package
+doesn't ship or load it, and that without Alpine the alert still renders and
+reads fine but the dismiss button does nothing and `delay` never fires.
+Verified against `daisy_cotton/templates/cotton/alert.html`: `dismissible`
+drives `x-data`/`x-show`/`x-transition`, `delay` drives an `x-init` with
+`setTimeout` — both Alpine directives, confirming the README claim is
+accurate.
+Next: T018.
+Watch: T017 (spec.md's FR-009 amendment) was already done by Forge before
+this run started; confirmed it reads correctly (tracks the defect in this
+repository, not upstream) rather than redoing it.
+
+## 2026-09-26T00:52:00Z · Implementer US4 · T018
+
+Did: ran the full verify.
+Verified: `forge verify --repo .` — conformance passed, lint passed,
+typecheck passed, test passed, build passed (docs skipped, needs --base).
+`uv run pytest -q` — 174 passed, 6 skipped (the known folder-component
+defect, US2). Worktree clean, nothing uncommitted.
+Next: run complete.
+Watch: nothing.
