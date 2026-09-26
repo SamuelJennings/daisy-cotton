@@ -101,8 +101,9 @@
       "tasks": [
         {
           "id": "T001",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": "`uv run python manage.py cotton_lint`: form/field had 1 error (unknown-component form.render) and 9 missing-annotation warnings before; after, 0 errors, 0 warnings, 3 hints. One `{# @description`, one default `{# @slot`, no unterminated `{#` line. Render of 8 attribute combinations (text input, bare, textarea, select, checkbox, toggle with list errors, file, radio) at base d04b053 and after: identical with whitespace collapsed. `uv run pytest tests/test_form_field.py -q`: 25 passed."
         }
       ]
     },
