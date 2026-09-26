@@ -156,5 +156,8 @@ class TestPackageComponentsLintClean:
         assert not findings, "\n".join(findings)
 
 
-def test_components_were_discovered():
-    assert PACKAGE_FINDINGS, f"no components found under {COTTON_DIR}"
+class TestPackageCatalog:
+    """The catalog the lint runs over is not empty."""
+
+    def test_components_were_discovered(self):
+        assert PACKAGE_FINDINGS, f"no components found under {COTTON_DIR}"

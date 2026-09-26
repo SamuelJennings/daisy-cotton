@@ -167,5 +167,8 @@ class TestPackageTemplateAnnotations:
         assert not problems, f"{template_id(path)}: {problems}"
 
 
-def test_templates_were_discovered():
-    assert TEMPLATES, f"no templates found under {COTTON_DIR}"
+class TestPackageTemplates:
+    """The templates the rules run over are not empty."""
+
+    def test_templates_were_discovered(self):
+        assert TEMPLATES, f"no templates found under {COTTON_DIR}"
