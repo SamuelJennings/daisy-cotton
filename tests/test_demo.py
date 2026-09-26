@@ -58,7 +58,7 @@ class TestGalleryHasNoExtraCssOrJs:
 
 
 class TestNoHostPackageInstalled:
-    """django-mvp and its chain are gone from the running project."""
+    """The former host package and its dependencies are gone from the project."""
 
     def test_mvp_not_installed(self) -> None:
         assert "mvp" not in settings.INSTALLED_APPS

@@ -10,11 +10,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "testserver"]
 
-# The gallery link test (tests/test_gallery_links.py) needs the gallery
-# mounted, so unlike the rest of this module it isn't borrowed from the demo:
-# the demo drops the gallery app itself under DEBUG in urls.py, but the app
-# stays in INSTALLED_APPS regardless, and this settings module installs it
-# too rather than filtering it back out.
+# The component gallery is installed so the sidebar-link test
+# (tests/test_gallery_links.py) can open its pages through the demo's URLconf.
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",

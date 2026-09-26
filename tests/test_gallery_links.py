@@ -25,7 +25,7 @@ FOLDER_COMPONENT_ISSUE = "https://github.com/SamuelJennings/daisy-cotton/issues/
 COTTON_DIR = Path(next(iter(daisy_cotton.__path__))).resolve() / "templates" / "cotton"
 
 
-def _is_folder_component(component_path: str) -> bool:
+def is_folder_component(component_path: str) -> bool:
     """True when Cotton would resolve ``component_path`` to ``<path>/index.html``.
 
     Mirrors Cotton's own resolution order: a flat ``<path>.html`` wins when
@@ -38,7 +38,7 @@ def _is_folder_component(component_path: str) -> bool:
     )
 
 
-def _collect_sidebar_links() -> list[tuple[str, str]]:
+def collect_sidebar_links() -> list[tuple[str, str]]:
     """(component_path, href) for every component link the sidebar renders.
 
     Collected from the rendered gallery index rather than the catalog
@@ -59,7 +59,7 @@ def _collect_sidebar_links() -> list[tuple[str, str]]:
     return links
 
 
-SIDEBAR_LINKS = _collect_sidebar_links()
+SIDEBAR_LINKS = collect_sidebar_links()
 
 
 class TestGallerySidebarLinks:
@@ -74,19 +74,13 @@ class TestGallerySidebarLinks:
         "component_path,href", SIDEBAR_LINKS, ids=[path for path, _ in SIDEBAR_LINKS]
     )
     def test_sidebar_link_opens_its_component(self, component_path, href) -> None:
-        if _is_folder_component(component_path):
-            client = Client()
-            response = client.get(href)
-            if response.status_code != 200:
-                pytest.skip(
-                    f"{component_path}: gallery index-file defect, "
-                    f"see {FOLDER_COMPONENT_ISSUE}"
-                )
-            # A gallery release that fixed the defect: fall through to the
-            # same assertion every other case gets, so this case starts
-            # passing rather than staying skipped.
-
-        client = Client()
-        response = client.get(href)
+        response = Client().get(href)
+        if response.status_code != 200 and is_folder_component(component_path):
+            # Skipped only while the installed gallery still 404s the link, so
+            # the case starts passing by itself once a fixed release lands.
+            pytest.skip(
+                f"{component_path}: gallery index-file defect, "
+                f"see {FOLDER_COMPONENT_ISSUE}"
+            )
         assert response.status_code == 200
         assert component_path.rsplit("/", 1)[-1] in response.content.decode()
