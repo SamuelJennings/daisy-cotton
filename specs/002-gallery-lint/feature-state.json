@@ -2,7 +2,7 @@
   "feature": "002-gallery-lint",
   "branch": "002-gallery-lint",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "REVIEW",
+  "state": "PR_READY",
   "state_history": [
     {
       "state": "QUEUED",
@@ -48,6 +48,11 @@
       "state": "REVIEW",
       "at": "2026-09-26T17:11:50Z",
       "note": "review recorded: 2 high + 4 lower findings, all fixed in one cycle"
+    },
+    {
+      "state": "PR_READY",
+      "at": "2026-09-26T17:13:03Z",
+      "note": "PR #97 ready; walkthrough pending with the maintainer"
     }
   ],
   "gates": {
@@ -471,6 +476,6 @@
   },
   "pr": {
     "number": 97,
-    "draft": true
+    "draft": false
   }
 }
