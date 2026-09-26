@@ -75,3 +75,10 @@ Did: `menu/index.html` default `@slot` carries a one-line example (title, active
 Verified: `cotton_lint --warnings-as-errors` 0 errors 0 warnings; `tests/test_gallery_annotations.py`, `test_gallery_lint.py`, `test_render_all.py`, `test_gallery_links.py` 173 passed, 7 skipped (the menu joins the folder-index skips for #96); gallery page `/django-cotton-gallery/menu/index/` returns 200.
 Next: T011.
 Watch: the README component count assumes navbar (T012) brings it to twenty-six.
+
+## 2026-09-26T22:35Z · Implementer US2 · T011
+
+Did: `navbar.html`, a `<nav class="navbar …">` named `Main` by default (a caller's `aria-label` replaces it once), merged `class`, pass-through attributes, `start`/`center`/`end` sections each written only when given, default slot directly inside the root. `start`, `center` and `end` are declared in `<c-vars>` with empty defaults so a page variable of the same name emits no section, and a real slot still wins. New `tests/test_navbar.py`, listed in `non-mirror-paths`. The template's annotations landed in this commit because the gallery lint gate fails on an unannotated template.
+Verified: `tests/test_navbar.py` 12 passed (12 failed before the template existed); `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T012.
+Watch: none.
