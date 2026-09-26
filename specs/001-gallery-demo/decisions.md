@@ -30,3 +30,15 @@ The issue lists six documents. Article XII names the demo, the tests and the dep
 ## Themes
 
 The switcher keeps the demo's current ten themes. That list was chosen to cover light, dark and heavily tinted palettes, and nothing in the issue asks for a different set.
+
+## D1 Preview assets come from the gallery's head partial, scoped to previews
+
+The gallery's URL-list settings load assets into its own interface page as well as the previews, and daisyUI's base styles would restyle the gallery's chrome. The demo supplies `django_cotton_gallery/_extra_head.html`, whose script loads daisyUI, Tailwind's browser build and Alpine only into preview documents.
+
+**ADR:** none — a demo configuration detail, nothing in the package inherits it
+
+## D2 FR-009 tracks the gallery defect in this repository
+
+The merged specification's FR-009 still said the defect would be reported to django-cotton-gallery. The maintainer's rule is that implementation files issues here and he decides what goes upstream, and the rest of the spec was already corrected to say so. FR-009 is amended to match in this branch.
+
+**ADR:** none — a process rule, recorded in the workspace, not an architectural decision
