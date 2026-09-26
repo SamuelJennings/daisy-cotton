@@ -13,7 +13,7 @@ declaration describing an interface narrower than the one the demo uses.
 class TestCodeLinePrefix:
     def test_the_prompt_defaults_to_a_shell_dollar(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
-            '<c-mockup.code.line text="pip install django-mvp" />'
+            '<c-mockup.code.line text="pip install requests" />'
         )
 
         assert soup.find("pre")["data-prefix"] == "$"

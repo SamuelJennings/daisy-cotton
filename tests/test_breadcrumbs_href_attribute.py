@@ -1,11 +1,10 @@
-"""Regression test for issue #127: ``c-breadcrumbs.item`` renders ``href``
-twice.
+"""Regression test: ``c-breadcrumbs.item`` renders ``href`` twice.
 
-``mvp/templates/cotton/breadcrumbs/item.html`` renders an explicit
-``href="{{ href }}"`` on its anchor and also spreads ``{{ attrs }}`` on the
-same element. Cotton only strips a variable out of ``attrs`` when it is
-declared in ``<c-vars>``; ``href`` was not declared, so it stayed in
-``attrs`` and was written a second time, verbatim and unrendered.
+``breadcrumbs/item.html`` renders an explicit ``href="{{ href }}"`` on its
+anchor and also spreads ``{{ attrs }}`` on the same element. Cotton only
+strips a variable out of ``attrs`` when it is declared in ``<c-vars>``;
+``href`` was not declared, so it stayed in ``attrs`` and was written a
+second time, verbatim and unrendered.
 
 Sources are compiled through the Cotton compiler (mirroring
 ``test_class_attribute_merge.py``) so the test exercises the component

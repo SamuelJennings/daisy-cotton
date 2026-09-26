@@ -1,7 +1,7 @@
-"""Regression tests for issue #121 (django-mvp): components that hardcode a
-literal ``class="..."`` on their root element *and* also spread ``{{ attrs }}``
-on that same element must declare ``class`` as a ``<c-vars>`` variable and
-merge it into the hardcoded string.
+"""Regression tests: components that hardcode a literal ``class="..."`` on
+their root element *and* also spread ``{{ attrs }}`` on that same element
+must declare ``class`` as a ``<c-vars>`` variable and merge it into the
+hardcoded string.
 
 Without that, an undeclared ``class`` passed by the caller is not stripped
 from ``{{ attrs }}`` by Cotton, so the element ends up with **two**
