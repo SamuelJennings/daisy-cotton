@@ -91,3 +91,11 @@ Ambiguities in issue #11 resolved while writing the spec, with the reasoning beh
 **Why:** the test-structure check requires every test to sit in a `Test<Subject>` class. The fix is a two-line move with no change to what either test asserts.
 
 **ADR:** none — a structural correction inside this feature.
+
+## D6 — One earlier scratch test's source changed with the slot rule
+
+**Decision:** `test_default_slot_rendered_with_annotation_passes` in `tests/test_gallery_annotations.py` now uses `{# @slot — The body. #}` as its scratch source instead of `{# @slot The body. #}`. Its assertion is unchanged.
+
+**Why:** the slot rule now requires a description as the gallery parses it, and the old source has none, so the test would have failed for the behaviour the fix introduces. The new source is the form the fix specifies as passing.
+
+**Revisit if:** the gallery parser's separator changes.
