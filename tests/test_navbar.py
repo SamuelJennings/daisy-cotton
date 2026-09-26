@@ -81,9 +81,7 @@ class TestNavbarSections:
         )
         assert "navbar-start" not in html
 
-    def test_a_page_variable_named_start_emits_no_section(
-        self, cotton_render_string
-    ):
+    def test_a_page_variable_named_start_emits_no_section(self, cotton_render_string):
         html = cotton_render_string(
             "<c-navbar>x</c-navbar>",
             {"start": "leak", "center": "leak", "end": "leak"},

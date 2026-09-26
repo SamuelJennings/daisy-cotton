@@ -62,23 +62,60 @@
       "tasks": [
         {
           "id": "T007",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_menu.py -q: 11 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_menu.py"
+            ]
+          }
         },
         {
           "id": "T008",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_menu.py -q: 26 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_menu.py"
+            ]
+          }
         },
         {
           "id": "T009",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_menu.py -q: 36 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_menu.py"
+            ]
+          }
         },
         {
           "id": "T010",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_gallery_links.py -q: 173 passed, 7 skipped",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py",
+              "tests/test_gallery_annotations.py"
+            ]
+          }
         }
       ]
     },
@@ -92,13 +129,31 @@
       "tasks": [
         {
           "id": "T011",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_navbar.py -q: 12 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_navbar.py"
+            ]
+          }
         },
         {
           "id": "T012",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_navbar.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py -q: 171 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py"
+            ]
+          }
         }
       ]
     },

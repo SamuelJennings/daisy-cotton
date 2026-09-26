@@ -192,9 +192,7 @@ class TestMenuItem:
 class TestMenuTitle:
     """A title is a non-interactive list item."""
 
-    def test_title_is_a_list_item_with_the_menu_title_class(
-        self, cotton_render_string
-    ):
+    def test_title_is_a_list_item_with_the_menu_title_class(self, cotton_render_string):
         li = parse(cotton_render_string('<c-menu.title text="Docs" />')).li
         assert li["class"] == ["menu-title"]
         assert li.text.strip() == "Docs"
