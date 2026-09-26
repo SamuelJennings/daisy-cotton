@@ -117,8 +117,7 @@ class TestGalleryLintRules:
             tmp_path,
             {
                 "thing.html": (
-                    "{# @description A thing. #}\n"
-                    "<div>{{ undeclared }}</div>\n"
+                    "{# @description A thing. #}\n<div>{{ undeclared }}</div>\n"
                 )
             },
         )
