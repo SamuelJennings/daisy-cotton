@@ -8,6 +8,8 @@ Evidence behind the plan. Third-party behaviour is cited from the packages this 
 
 The parent's attributes are reachable during that render through `cotton_data["stack"]` (same file, lines 31–38), but that is Cotton's internal bookkeeping, not an interface, and nothing in this package reads it.
 
+The other side runs the opposite way. A component called inside another component's own template renders with the host's state still on the context (`_component.py:111-118`, no isolation by default), and a `<c-vars>` name with no default resolves from that scope (`_vars.py:80-82`). `<c-icon>` inside an item reads the item's `class`, and `<c-button>` inside the megamenu reads its `size` and `full`. The same applies to a page-context variable reaching a no-default name. `breadcrumbs/index.html` already calls its item with `only` for this reason.
+
 **Consequence.** Anything an item needs from its parent is given to the item. This decides two designs:
 
 - a radio tab is given its group's `name`, the way every native radio input is;

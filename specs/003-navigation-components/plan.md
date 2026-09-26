@@ -24,7 +24,7 @@ Five new Cotton components (`menu`, `navbar`, `tabs`, `steps`, `megamenu`) and t
 
 **Constraints**: no JavaScript, no stylesheet, no literal colours, no class daisyUI does not define for the component (FR-002, FR-004)
 
-**Scale/Scope**: 8 components, 17 templates (12 new, 5 changed)
+**Scale/Scope**: 8 components, 16 templates (11 new, 5 changed)
 
 ## Constitution Check
 
@@ -51,15 +51,16 @@ Shared rules, applied everywhere below:
 - **Modifiers.** `size` goes through `{% variation size "<base>" "xs,sm,md,lg,xl" %}`. `variant` goes through `{% variation variant "<base>" "neutral,primary,secondary,accent,info,success,warning,error" %}`, so an unknown value adds nothing (Edge Cases). A direction attribute that takes a boolean or a breakpoint goes through `{% responsive … %}`, as `divider` does.
 - **Landmarks** (`breadcrumbs`, `dock`, `megamenu`, `navbar`) render as `<nav>`, declare `aria-label` in `<c-vars>` with no default, and write `aria-label="{% if aria_label %}{{ aria_label }}{% else %}{% trans "<Default>" %}{% endif %}"` (research R2). Defaults: `Breadcrumbs`, `Dock`, `Site`, `Main`.
 - **Items.** The root of a list item is its `<li>`, and `class` and `{{ attrs }}` land there (decisions.md, "Attributes on list items go to the item's root"). A component whose root is a link or button (`link`, `dock.item`, `tabs.tab`) keeps them on that element.
-- **Icons** inside an item are `<c-icon name="{{ icon }}" aria-hidden="true" />`, so the item's text is its name.
-- **Current and disabled.** `active` on a link adds `aria-current="page"`. `disabled` on a link drops `href` and adds `aria-disabled="true"`, which takes it out of the Tab order without a `tabindex`. `disabled` on a button or input uses the native `disabled` attribute.
+- **Nested components are called with `only`.** A component called inside another component's own template reads the host's `<c-vars>` from the shared context (research R1, second half), so `<c-icon>` would pick up an item's `class` and `<c-button>` the megamenu's `size`, `full` and any `href` in the page. Every nested call passes what it needs explicitly and ends in `only` (D7).
+- **Icons** inside an item are `<c-icon name="{{ icon }}" aria-hidden="true" only />`, so the item's text is its name.
+- **Current and disabled.** `active` on a link adds `aria-current="page"`. `disabled` on a link drops `href` and adds `role="link" aria-disabled="true"`: without `href` it leaves the Tab order with no `tabindex`, and the explicit role keeps it announced as a disabled link (D7). `disabled` on a button or input uses the native `disabled` attribute.
 - **Buttons** are always `type="button"`.
 
 ### Menu (US1)
 
 `menu/index.html` — `<ul class="menu {size} {horizontal} {paged} {class}" {{ attrs }}>{{ slot }}</ul>`. `<c-vars size horizontal paged class />`. `horizontal` goes through `responsive` (`horizontal` → `menu-horizontal`, `horizontal="lg"` → `lg:menu-horizontal`). No direction class otherwise: daisyUI's menu is vertical by default.
 
-`menu/item.html` — `<li class="{disabled: menu-disabled} {class}" {{ attrs }}>` holding an `<a>` when `href` is given, else a `<button type="button">`. `<c-vars text href active disabled icon class />`. `active` adds `menu-active` on the inner element (daisyUI's own placement) and `aria-current="page"` on a link. Content: icon, `text`, then `{{ slot }}`.
+`menu/item.html` — `<li class="{disabled: menu-disabled} {class}" {{ attrs }}>` holding an `<a>` when `href` is given, else a `<button type="button">`. `<c-vars text href active disabled icon class aria-label />`. `aria-label`, when given, is written on the inner link or button, the element that needs the name, so an icon-only item can be named (Edge Cases, D7). `active` adds `menu-active` on the inner element (daisyUI's own placement) and `aria-current="page"` on a link. Content: icon, `text`, then `{{ slot }}`.
 
 `menu/title.html` — `<li class="menu-title {class}" {{ attrs }}>{{ text }}{{ slot }}</li>`. `<c-vars text class />`. No interactive element.
 
@@ -67,7 +68,7 @@ Shared rules, applied everywhere below:
 
 ### Navbar (US2)
 
-`navbar.html` — a single file, no parts. `<nav class="navbar {class}" aria-label=… {{ attrs }}>`, then `<div class="navbar-start">{{ start }}</div>` only when `start` is given, likewise `center` and `end`, then `{{ slot }}`. `<c-vars class aria-label />`. Named slots `start`, `center`, `end`.
+`navbar.html` — a single file, no parts. `<nav class="navbar {class}" aria-label=… {{ attrs }}>`, then `<div class="navbar-start">{{ start }}</div>` only when `start` is given, likewise `center` and `end`, then `{{ slot }}`. `<c-vars class aria-label start="" center="" end="" />`: the empty defaults stop a page-context variable of the same name from emitting a section, and a real named slot still wins (D7). Named slots `start`, `center`, `end`.
 
 ### Link and breadcrumbs (US3)
 
@@ -87,13 +88,13 @@ Shared rules, applied everywhere below:
 - `name` → `<input type="radio" name="{{ name }}" class="tab {class}" aria-label="{{ text }}" {checked when active} {disabled} {{ attrs }} />` followed by `<div class="tab-content">{{ slot }}</div>`. The panel is in the slot. The shared group name is the caller's, given to each tab (D1, research R1).
 - otherwise → `<button type="button" role="tab" class="tab …" aria-selected="{{ active|yesno:'true,false' }}" {disabled} {{ attrs }}>`.
 
-`<c-vars text href name active disabled class />`. Link tabs sit in a root given `links` (D1).
+`<c-vars text href name="" active disabled class />`, the empty `name` default for the same reason as the navbar's slots (D7). Link tabs sit in a root given `links` (D1). Radio tabs keep daisyUI's documented `role="tablist"` root, as scenario 6 requires, and the walkthrough's accessibility run decides whether that stands (D8).
 
 ### Dock (US5)
 
 `dock/index.html` — `<nav class="dock {size} {class}" aria-label=… {{ attrs }}>{{ slot }}</nav>`. `bg-transparent backdrop-blur` removed (FR-021). `<c-vars size class aria-label />`.
 
-`dock/item.html` — the three existing branches kept. Each adds `dock-active` when active, `aria-current="page"` only on the link, `type="button"` on the button, the icon through `<c-icon … aria-hidden="true" />`, and the label inside `dock-label`. The toggle branch's `aria-label` is written only when `label` is given. With no label, the caller's `aria-label` reaches the element through `{{ attrs }}` (Edge Cases).
+`dock/item.html` — the three existing branches kept. The toggle branch drops `role="button" tabindex="0"`: a focused `<label>` cannot be activated from the keyboard without a script, and keyboard users reach the drawer through its own focusable `drawer-toggle` checkbox (D9). Each branch adds `dock-active` when active, `aria-current="page"` only on the link, `type="button"` on the button, the icon through `<c-icon … aria-hidden="true" />`, and the label inside `dock-label`. The toggle branch's `aria-label` is written only when `label` is given. With no label, the caller's `aria-label` reaches the element through `{{ attrs }}` (Edge Cases).
 
 ### Steps (US6)
 
@@ -105,7 +106,7 @@ Shared rules, applied everywhere below:
 
 `megamenu/index.html` — `id` is required (`@prop id:text | required`). Renders, in order:
 
-1. `<c-button class="sm:hidden" popovertarget="{{ id }}" text="{% trans "Menu" %}" />` — the small-screen toggle, through `<c-button>` (FR-003, FR-025).
+1. `<c-button class="sm:hidden" type="button" popovertarget="{{ id }}" text="{% trans "Menu" %}" only />` — the small-screen toggle, through `<c-button>` (FR-003, FR-025). `only` keeps the megamenu's own `size` and `full`, and any `href` in the page, off the toggle (D7).
 2. `<nav id="{{ id }}" popover class="megamenu max-sm:megamenu-vertical {wide} {full} {size} {class}" aria-label=… {{ attrs }}><span class="megamenu-active"></span>{{ slot }}</nav>`.
 
 `<c-vars id wide full size class aria-label />`.
@@ -114,7 +115,7 @@ Shared rules, applied everywhere below:
 
 ### Gallery entries (FR-007, FR-008)
 
-Every template carries `@description`, a `@prop` per `<c-vars>` name (fixed-value props as `select[…]` with daisyUI's full list), and `@slot` / `@slot:name` per slot, per Article XVI. The index template's default `@slot` carries a one-line example showing every state: for `menu`, a title, an active link, a disabled item and an open two-level submenu. For `tabs`, a link set with one active and one disabled. For `steps`, four steps, two coloured, one current, one with custom content, one with an icon. For `megamenu`, three items holding a menu, with daisyUI's ten-item limit in its description. Item templates show their own states through their boolean props. Folder components' pages are at `/django-cotton-gallery/<name>/index/` until #96 is fixed (research R3).
+Every template carries `@description`, a `@prop` per `<c-vars>` name (fixed-value props as `select[…]` with daisyUI's full list), and `@slot` / `@slot:name` per slot, per Article XVI. The index template's default `@slot` carries a one-line example showing every state: for `menu`, a title, an active link, a disabled item and an open two-level submenu. For `tabs`, a link set with one active and one disabled. For `steps`, four steps, two coloured, one current, one with custom content, one with an icon. For `megamenu`, three items holding a menu. Its description gives daisyUI's ten-item limit and tells the viewer to set `id` in the playground, since a required prop has no default for the preview to use. Item templates show their own states through their boolean props. Folder components' pages are at `/django-cotton-gallery/<name>/index/` until #96 is fixed (research R3).
 
 ### Documentation
 

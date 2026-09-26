@@ -79,3 +79,27 @@ SC-004 is checked by axe-core and a scripted keyboard walk over each gallery ent
 Open pull request #100 retypes fixed-value props as `select[…]` and edits `link.html`. This branch starts from main and types every fixed-value prop it touches as `select[…]` already, so the two agree whichever merges first. The second to merge resolves the conflict in `link.html`.
 
 **ADR:** none — sequencing between two open branches.
+
+## D7 — Design review applied
+
+One design review round, verdict "request changes", no critical or high findings. Applied as plan and task edits:
+
+- Nested `<c-icon>` and `<c-button>` calls end in `only` and receive what they need explicitly, and the megamenu toggle is `type="button"` (ARCH-001).
+- A disabled link carries `role="link" aria-disabled="true"` with no `href`, so it is announced as disabled (SPEC-001).
+- `start`, `center` and `end` on the navbar and `name` on a tab default to `""`, so a page-context variable of the same name cannot change the markup (ARCH-002).
+- The megamenu's description tells the viewer to set `id` in the gallery playground (SPEC-004).
+- `menu.item` writes a given `aria-label` on its inner link or button, where an icon-only item needs its name (review note).
+
+**ADR:** none — plan corrections inside this feature.
+
+## D8 — Radio tabs keep the tablist role until the accessibility run says otherwise
+
+The review expects axe-core to flag radio inputs inside `role="tablist"` (a tablist must own tabs), which would put US4 scenario 6 against SC-004. Scenario 6 is approved and daisyUI documents that markup, so the tabs are built as specified. If the walkthrough's run reports the violation, it goes to Sam as a one-line change to scenario 6: radio tabs get no container role, since native radios sharing a name already give arrow-key selection.
+
+**ADR:** none — a question for the spec's owner, not an architectural decision.
+
+## D9 — The dock's drawer toggle is not a Tab stop
+
+FR-022 keeps the drawer-toggle branch, and FR-005 requires every interactive element to be operable from the keyboard. A `<label role="button" tabindex="0">` can be focused but not activated by Enter or Space without a script, which FR-004 rules out. The toggle drops `role` and `tabindex`, so it is a click target only, and keyboard users open the drawer through its own `drawer-toggle` checkbox, which daisyUI leaves focusable.
+
+**ADR:** none — local to the dock item.
