@@ -39,16 +39,22 @@ INSTALLED_APPS = [
 
 ## Scope & philosophy
 
-**What this is.** A presentation-only component library. Templates and the small amount of JavaScript a component needs. Components are configured through attributes and themed by whatever daisyUI theme the project runs, so they never pin a literal colour into the markup.
+**What this is.** One Cotton component for each base daisyUI component, and nothing else. A component that daisyUI builds out of other components, or a class that only modifies another component, gets no Cotton component of its own. Everything here is presentation: templates configured through attributes and themed by whatever daisyUI theme the project runs.
 
 **What this deliberately is not.**
 
-- **Not an application shell.** No settings-driven configuration, no menu system, no icon registry, no class-based views. Those stay in django-mvp.
-- **Not page-level layout.** Heroes, sections and other block-level compositions are [daisy-cotton-blocks](https://github.com/django-mvp/daisy-cotton-blocks)' job. This package owns the primitives those blocks are built from.
-- **Not a CSS framework.** No daisyUI plugin, no theme layer, no preflight. Those come from the project.
-- **Not tied to django-mvp.** django-mvp is a demo/development dependency of this repository, never a runtime dependency of the package. Any django-cotton + daisyUI project can use these components standalone.
+- **Not an application shell.** No settings, no menu system, no icon registry, no views.
+- **Not page-level layout.** Heroes, sections and other compositions are built from these components, not shipped with them.
+- **Not a CSS framework.** daisyUI, its themes and Tailwind's preflight come from the project.
+- **Not a JavaScript layer.** The package ships no scripts. A project that wants behaviour daisyUI's CSS doesn't give, such as smarter dropdown placement, adds it by overriding the component.
+- **Not coupled to Django objects.** Components take plain values. Wiring one up to a form, a paginator or the messages framework is the project's job.
+- **Not shaped for any particular project.** Nothing here exists because one adopter needed it.
 
-**Tie-breaks.** When two of these pull against each other: theme-driven beats hard-coded, and a component that composes existing daisyUI markup beats one that invents its own.
+**Tie-breaks.** When two of these pull against each other:
+
+1. Following daisyUI beats convenience. A component's attributes use daisyUI's own names for its modifiers rather than a friendlier parallel vocabulary.
+2. Leaving it to the project beats doing it here. If only some adopters need it, they get it by overriding the component.
+3. Fewer attributes beat more. Anything a component doesn't need to decide passes straight through to the markup.
 
 ## Prior art
 
