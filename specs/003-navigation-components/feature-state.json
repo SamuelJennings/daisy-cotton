@@ -2,7 +2,7 @@
   "feature": "003-navigation-components",
   "branch": "003-navigation-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "IMPLEMENT",
+  "state": "REVIEW",
   "state_history": [
     {
       "state": "QUEUED",
@@ -38,6 +38,16 @@
       "state": "IMPLEMENT",
       "at": "2026-09-26T21:13:36Z",
       "note": "review fix cycle: RVW-001 medium, RVW-002..004 low, all verified"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-26T21:16:24Z",
+      "note": "review fixes T023-T025 accepted and verified"
+    },
+    {
+      "state": "REVIEW",
+      "at": "2026-09-26T21:16:24Z",
+      "note": "review recorded: 1 medium + 3 low fixed in one cycle, 1 low accepted"
     }
   ],
   "gates": {
@@ -477,7 +487,7 @@
   ],
   "budgets": {
     "converge_cycles": {
-      "used": 1,
+      "used": 2,
       "max": 2
     },
     "review_cycles": {
