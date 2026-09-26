@@ -2,7 +2,7 @@
   "feature": "001-gallery-demo",
   "branch": "001-gallery-demo",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "DESIGN_REVIEW",
+  "state": "IMPLEMENT",
   "state_history": [
     {
       "state": "QUEUED",
@@ -18,6 +18,11 @@
       "state": "DESIGN_REVIEW",
       "at": "2026-09-26T15:00:12Z",
       "note": "plan, research and tasks written; design reviewer dispatched"
+    },
+    {
+      "state": "IMPLEMENT",
+      "at": "2026-09-26T15:05:11Z",
+      "note": "design review applied; dispatching US1-US4"
     }
   ],
   "gates": {
