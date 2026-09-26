@@ -76,3 +76,9 @@ Did: Wrote tests/test_gallery_annotations.py rule tests against scratch sources 
 Verified: red first: `uv run pytest tests/test_gallery_annotations.py -q`: 18 failed (helper class not defined); after implementing: 18 passed.
 Next: T013, the catalog-wide tests and the pyproject registration.
 Watch: the helpers live in the test module, since only test files are in scope.
+
+## 2026-09-26T16:57:07Z · Implementer US7 · T013
+Did: Added catalog-wide tests over every template under cotton/ (parametrised by relative path, three rules each), and registered tests/test_gallery_annotations.py and tests/test_gallery_lint.py in non-mirror-paths. Also recorded T012 in the ledger.
+Verified: `uv run pytest tests/test_gallery_annotations.py -q`: 82 passed (arrived green on the real templates, as expected).
+Next: US1, T014.
+Watch: none.

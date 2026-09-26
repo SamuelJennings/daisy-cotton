@@ -144,3 +144,28 @@ class TestAnnotationRules:
         source = "{# fine #} {# never closed\n"
         problems = AnnotationRules.comment_problems(source)
         assert problems == ["line 1: {# does not close with #} on the same line"]
+
+
+def template_id(path):
+    return path.relative_to(COTTON_DIR).as_posix()
+
+
+@pytest.mark.parametrize("path", TEMPLATES, ids=template_id)
+class TestPackageTemplateAnnotations:
+    """Every template the package ships passes all three rules."""
+
+    def test_has_exactly_one_description(self, path):
+        problems = AnnotationRules.description_problems(path.read_text())
+        assert not problems, f"{template_id(path)}: {problems}"
+
+    def test_documents_the_default_slot_it_renders(self, path):
+        problems = AnnotationRules.slot_problems(path.read_text())
+        assert not problems, f"{template_id(path)}: {problems}"
+
+    def test_annotations_close_on_their_own_line(self, path):
+        problems = AnnotationRules.comment_problems(path.read_text())
+        assert not problems, f"{template_id(path)}: {problems}"
+
+
+def test_templates_were_discovered():
+    assert TEMPLATES, f"no templates found under {COTTON_DIR}"
