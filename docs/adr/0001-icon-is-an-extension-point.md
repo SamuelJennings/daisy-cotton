@@ -24,12 +24,11 @@ fork of every caller.
 
 ## Why
 
-The alternative was taking on django-easy-icons (or an equivalent) as a runtime dependency, since
-it is what django-mvp's own icon-bearing components use today. Rejected: it would make every
-consumer of `daisy_cotton` pull in an icon-resolution package whether or not it wants one, and it
-would tie this package's release cadence to that dependency's for a concern this package does not
-actually need to solve. The components that use `icon=` do not care how a name becomes markup —
-they only need something to render into that slot.
+The alternative was taking on an icon-resolution package such as django-easy-icons as a runtime
+dependency. Rejected: it would make every consumer of `daisy_cotton` pull in an icon-resolution
+package whether or not it wants one, and it would tie this package's release cadence to that
+dependency's for a concern this package does not actually need to solve. The components that use
+`icon=` do not care how a name becomes markup — they only need something to render into that slot.
 
 ## Revisit if
 
