@@ -22,11 +22,15 @@ import daisy_cotton
 
 COTTON_DIR = Path(next(iter(daisy_cotton.__path__))).resolve() / "templates" / "cotton"
 
-NAVIGATION_TEMPLATES = sorted(
-    path
-    for group in ("breadcrumbs", "dock", "menu", "tabs", "steps", "megamenu")
-    for path in (COTTON_DIR / group).glob("*.html")
-) + [COTTON_DIR / "link.html", COTTON_DIR / "navbar.html"]
+NAVIGATION_TEMPLATES = [
+    *sorted(
+        path
+        for group in ("breadcrumbs", "dock", "menu", "tabs", "steps", "megamenu")
+        for path in (COTTON_DIR / group).glob("*.html")
+    ),
+    COTTON_DIR / "link.html",
+    COTTON_DIR / "navbar.html",
+]
 
 INLINE_COMMENT = re.compile(r"\{#.*?#\}")
 COMMENT_BLOCK = re.compile(r"\{%\s*comment\b.*?%\}.*?\{%\s*endcomment\s*%\}", re.DOTALL)
