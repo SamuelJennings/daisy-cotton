@@ -154,8 +154,21 @@
         },
         {
           "id": "TC03",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "rendered form.field via tests.test_form_field.render: named slot help-text dropped, help_text renders; checkbox, radio and toggle render default slot content after the label text; file renders none; wrapper appears for help text or errors, or a label on a non-check control, not for a label alone on checkbox",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings",
+              "uv run pytest tests/test_form_field.py tests/test_gallery_annotations.py tests/test_gallery_lint.py -q: 137 passed"
+            ],
+            "tests": [],
+            "code": [
+              "daisy_cotton/templates/cotton/form/field.html:5",
+              "daisy_cotton/templates/cotton/form/field.html:10",
+              "daisy_cotton/templates/cotton/form/field.html:11"
+            ]
+          }
         }
       ]
     },
