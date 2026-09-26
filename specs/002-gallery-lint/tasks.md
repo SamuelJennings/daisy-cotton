@@ -55,3 +55,10 @@
 - Phases 6 and 7 require Phases 1–5: their catalog-wide tests are green only once every template is annotated.
 - Phase 7 starts after Phase 6 has landed; both are built in one batch, in order.
 - Phase 8 describes the checks from Phases 6 and 7.
+
+## Review fixes
+
+- [ ] TC01 [US4] Rewrite every `@slot` and `@slot:name` annotation in the gallery's `content — description` form, so the gallery reads a description for each slot instead of treating the sentence as sample content. Lead with `— ` where no sample content is wanted.
+- [ ] TC02 [US7] The annotation check requires the default slot's annotation to carry a description as the gallery parses it, not just to exist (FR-016).
+- [ ] TC03 [US3] `form.field`: the `help-text` annotation and comment name the slot that actually renders (`help_text`); the `@slot` and `wrapper-class` descriptions cover checkbox, radio, toggle and file controls.
+- [ ] TC04 [US4] `dropdown`'s `full` and `class`, `alert`'s `class` and `modal`'s `size` descriptions say everything the attribute does today; `modal`'s `id` gives the gallery an example id matching its `@trigger`.
