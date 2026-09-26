@@ -14,19 +14,19 @@
 
 **Independent Test**: start the demo, open `/`, land in the gallery, switch theme, dismiss an alert. `uv tree` shows no django-mvp.
 
-- [ ] T002 [US1] Write `tests/test_demo.py`: `/` redirects to the gallery index. The preview document of a component carries the daisyUI, Tailwind browser and Alpine assets and a `data-theme` bootstrap. The interface page does not load daisyUI. Neither `mvp`, `flex_menu`, `easy_icons` nor `crispy_forms` is importable from the test environment's installed apps.
+- [ ] T002 [US1] Write `tests/test_demo.py`, cases grouped in `Test<Subject>` classes, asserting only what the server renders: `/` redirects to the gallery index. A component's `raw/` page includes the head partial (its script, the pinned daisyUI, Tailwind browser and Alpine URLs, and the theme bootstrap). No gallery `EXTRA_CSS`/`EXTRA_JS` URL list is configured. None of `mvp`, `flex_menu`, `easy_icons` or `crispy_forms` is in `INSTALLED_APPS`. The preview-only scoping, theme switching and persistence, and alert dismissal are browser behaviours, checked in the live walkthrough rather than claimed by a test.
 - [ ] T003 [US1] Rewrite `tests/settings.py` to stand alone: the demo's app list including the gallery, no django-mvp settings or context processor, no crispy settings.
 - [ ] T004 [US1] Rewrite `demo/settings.py`: drop the host-package apps, their settings and the context processor. Keep `daisy_cotton`, `demo`, `django_cotton`, `django_cotton_gallery` and `django_browser_reload`.
 - [ ] T005 [US1] Rewrite `demo/urls.py`: `/` redirects to the gallery index, the gallery mounts under `DEBUG`, custom error handlers go. Delete `demo/views.py`, `demo/templates/base.html` and `demo/templates/demo/home.html`.
-- [ ] T006 [US1] Add `demo/templates/django_cotton_gallery/_extra_head.html` (preview-only daisyUI, themes, Tailwind browser build, Alpine, saved theme applied before paint) and `_extra_body.html` (theme `<select>` of the ten themes, interface page only, applies to every preview frame and persists).
-- [ ] T007 [US1] Remove `django-mvp` from the dev dependency group in `pyproject.toml`, reword its comments, and regenerate `uv.lock`. Confirm `uv tree` has none of django-mvp, django-flex-menus, django-easy-icons, django-crispy-forms or crispy-tailwind.
+- [ ] T006 [US1] Add `demo/templates/django_cotton_gallery/_extra_head.html` (preview-only daisyUI, themes, Tailwind browser build, Alpine, saved theme applied before paint) and `_extra_body.html`, which carries no markup, only a script. Both partials are copied into every preview frame and the raw page as well as the interface page, so the script creates the theme `<select>` of the ten themes only when it runs in the interface page (top-level window, path not ending in `raw/`, `preview/` or `thumb/`) and does nothing anywhere else. A change stores the theme and applies it to every preview frame on the page.
+- [ ] T007 [US1] Remove `django-mvp` from the dev dependency group in `pyproject.toml`, reword its comments, and regenerate `uv.lock`. Confirm `uv tree` has none of django-mvp, django-flex-menus, django-easy-icons, django-crispy-forms or crispy-tailwind. Add `tests/test_demo.py` and `tests/test_gallery_links.py` to `[tool.forge.conformance] non-mirror-paths`.
 
 ## Phase 3: User Story 2 — Every sidebar link opens its component (P2)
 
 **Goal**: a test walks every sidebar link. Folder components are skipped, naming the tracking issue.
 
 - [ ] T008 [US2] File an issue in this repository describing the gallery's index-file defect, its reproduction and the six affected links. Do not file anything with the gallery project.
-- [ ] T009 [US2] Write `tests/test_gallery_links.py`: collect the component links from the rendered gallery index, parametrise one case per link, assert 200 with the component on the page. A case for a folder component (`<name>/index.html` exists and `<name>.html` does not) is skipped with a reason naming the issue from T008 while the installed gallery still 404s it. A case that starts passing is not skipped.
+- [ ] T009 [US2] Write `tests/test_gallery_links.py`: collect the component links from the rendered gallery index, parametrise one case per link, assert 200 with the component on the page. A case for a folder component (`<name>/index.html` exists and `<name>.html` does not) is skipped with a reason naming the issue from T008 while the installed gallery still 404s it. A case that starts passing is not skipped. Cases are grouped in a `Test<Subject>` class. Collection that finds no component links in the sidebar is a failure, never an empty parametrisation.
 
 ## Phase 4: User Story 3 — The repository describes the package on its own terms (P2)
 

@@ -42,3 +42,9 @@ The gallery's URL-list settings load assets into its own interface page as well 
 The merged specification's FR-009 still said the defect would be reported to django-cotton-gallery. The maintainer's rule is that implementation files issues here and he decides what goes upstream, and the rest of the spec was already corrected to say so. FR-009 is amended to match in this branch.
 
 **ADR:** none — a process rule, recorded in the workspace, not an architectural decision
+
+## D3 Design review outcome
+
+One verified high finding and three lower ones, all applied as plan edits: the theme switcher's partial is copied into every preview frame, so it holds only a script that builds the control in the interface page (T006, research). T002 asserts only what the server renders and leaves the browser behaviours to the walkthrough. T009 fails on an empty link collection. The two new test modules are declared as non-mirror tests (T007).
+
+**ADR:** none — plan-level corrections local to this feature

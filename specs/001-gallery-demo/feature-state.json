@@ -31,8 +31,19 @@
       "at": null
     },
     "plan": {
-      "approved_by": null,
-      "at": null
+      "approved_by": "notified",
+      "at": "2026-09-26T15:40:00Z",
+      "self_resolved": []
+    },
+    "design_review": {
+      "approved_by": "design-panel",
+      "at": "2026-09-26T15:40:00Z",
+      "self_resolved": [
+        "ARCH-001 high: theme switcher partial is copied into previews; body partial is script-only and builds the control in the interface page (T006, research)",
+        "SPEC-001 medium: T002 asserts server-rendered output only; browser behaviours go to the walkthrough",
+        "SPEC-002 low: T009 fails on empty link collection",
+        "ARCH-002 low: new test modules declared non-mirror (T007)"
+      ]
     }
   },
   "stories": [
@@ -156,8 +167,13 @@
         },
         {
           "id": "T017",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "grep -n FR-009 specs/001-gallery-demo/spec.md"
+            ]
+          }
         },
         {
           "id": "T018",

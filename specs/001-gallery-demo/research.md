@@ -15,7 +15,7 @@ django-cotton-gallery 1.x offers two extension points and uses both in its inter
 
 The preview iframe is same-origin, so the interface page can reach `frame.contentDocument` and a `storage` event reaches it too.
 
-**Decision**: `_extra_head.html` sets `data-theme` on a preview document from `localStorage` before first paint. `_extra_body.html`, in the interface page only, renders a `<select>` of the ten themes. A change stores the choice and sets `data-theme` on every iframe document on the page. Frames created later read the stored value when they load.
+**Decision**: `_extra_head.html` sets `data-theme` on a preview document from `localStorage` before first paint. `_extra_body.html` holds only a script, because the gallery copies it into every preview frame and the raw page too. The script builds a `<select>` of the ten themes when it runs in the interface page and does nothing elsewhere. A change stores the choice and sets `data-theme` on every iframe document on the page. Frames created later read the stored value when they load.
 
 **Rejected**: a query-string theme. The gallery rebuilds its URLs and would drop it between pages.
 
