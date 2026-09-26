@@ -148,3 +148,11 @@ class TestLinkPassthroughAttrs:
         attrs = first_tag_attrs(html, "a")
         assert attrs["target"] == "_blank"
         assert attrs["rel"] == "noopener"
+
+
+class TestLinkPageContext:
+    """A page variable named like a prop never reaches a plain link."""
+
+    def test_page_href_does_not_give_the_link_an_href(self):
+        html = render('<c-link text="Sign in" />', href="/leak")
+        assert "href" not in first_tag_attrs(html, "a")

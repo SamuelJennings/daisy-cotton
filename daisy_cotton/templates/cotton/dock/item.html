@@ -6,7 +6,7 @@
 {# @prop toggle:text | description:"Id of a drawer checkbox this item flips, such as the sidebar toggle." #}
 {# @prop class:text | description:"Extra classes added to the item." #}
 {% load i18n %}
-<c-vars active icon label href toggle class />
+<c-vars active="" icon label href="" toggle="" class />
 {% if toggle %}
   <label for="{{ toggle }}"
          {% if label %}aria-label="{{ label }}"{% endif %}

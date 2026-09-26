@@ -214,3 +214,32 @@ class TestTabRadio:
         soup = parse(html)
         assert soup.find("input") is None
         assert soup.button["role"] == "tab"
+
+
+class TestTabsPageContext:
+    """Page variables named like props never reach a plain tabs row or tab."""
+
+    def test_page_links_does_not_drop_the_tablist_role(self, cotton_render_string):
+        root = parse(
+            cotton_render_string("<c-tabs>x</c-tabs>", {"links": True})
+        ).div
+        assert root["role"] == "tablist"
+
+    def test_page_active_does_not_mark_a_tab_current(self, cotton_render_string):
+        button = parse(
+            cotton_render_string('<c-tabs.tab text="A" />', {"active": "x"})
+        ).button
+        assert "tab-active" not in button["class"]
+        assert button["aria-selected"] == "false"
+
+    def test_page_disabled_does_not_disable_a_tab(self, cotton_render_string):
+        button = parse(
+            cotton_render_string('<c-tabs.tab text="A" />', {"disabled": True})
+        ).button
+        assert "tab-disabled" not in button["class"]
+        assert button.get("disabled") is None
+
+    def test_page_href_does_not_turn_a_tab_into_a_link(self, cotton_render_string):
+        soup = parse(cotton_render_string('<c-tabs.tab text="A" />', {"href": "/leak"}))
+        assert soup.a is None
+        assert soup.button is not None

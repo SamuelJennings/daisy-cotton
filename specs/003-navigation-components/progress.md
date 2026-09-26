@@ -152,3 +152,10 @@ Did: the megamenu annotations were written with the templates (T019, T020, inclu
 Verified: `cotton_lint --warnings-as-errors` 0 errors 0 warnings; `tests/test_megamenu.py`, `test_gallery_annotations.py`, `test_gallery_lint.py`, `test_render_all.py`, `test_gallery_links.py` 229 passed, 10 skipped (megamenu joins the folder-index skips for #96).
 Next: full verify.
 Watch: none.
+
+## 2026-09-26T23:30Z · Implementer US1 · T023
+
+Did: `link`, `menu.item`, `menu.submenu`, `tabs`, `tabs.tab`, `steps.step` and `dock.item` now default `href`, `active`, `disabled`, `open`, `links`, `current`, `content` and `toggle` to an empty string in `<c-vars>`, so a page variable of the same name no longer switches markup on. One page-context test class per component, added to the existing test modules.
+Verified: 14 new tests all failed before the template edits; `uv run pytest tests/test_link.py tests/test_menu.py tests/test_tabs.py tests/test_steps.py tests/test_dock.py -q` 137 passed; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T024.
+Watch: none.

@@ -7,7 +7,7 @@
 {# @prop class:text | description:"Extra classes added to the list item." #}
 {# @prop aria-label:text | description:"Accessible name of the link or button, for an entry that shows only an icon." #}
 {# @slot — Extra content shown after the text. #}
-<c-vars text href active disabled icon class aria-label />
+<c-vars text href="" active="" disabled="" icon class aria-label />
 <li class="{% if disabled %}menu-disabled {% endif %}{{ class }}" {{ attrs }}>
   {% if href %}
     <a {% if not disabled %}href="{{ href }}"{% else %}role="link" aria-disabled="true"{% endif %}

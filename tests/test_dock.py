@@ -174,3 +174,25 @@ class TestDockItemToggle:
         ).label
         assert "dock-active" in label["class"]
         assert not label.has_attr("aria-current")
+
+
+class TestDockItemPageContext:
+    """Page variables named like props never reach a plain dock item."""
+
+    def test_page_active_does_not_mark_an_item_current(self, cotton_render_string):
+        button = parse(
+            cotton_render_string('<c-dock.item label="A" />', {"active": "x"})
+        ).button
+        assert "dock-active" not in button["class"]
+
+    def test_page_href_does_not_turn_an_item_into_a_link(self, cotton_render_string):
+        soup = parse(cotton_render_string('<c-dock.item label="A" />', {"href": "/leak"}))
+        assert soup.a is None
+        assert soup.button is not None
+
+    def test_page_toggle_does_not_turn_an_item_into_a_label(self, cotton_render_string):
+        soup = parse(
+            cotton_render_string('<c-dock.item label="A" />', {"toggle": "drawer"})
+        )
+        assert soup.label is None
+        assert soup.button is not None

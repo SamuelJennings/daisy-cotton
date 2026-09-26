@@ -267,3 +267,28 @@ class TestMenuSubmenu:
         assert li["class"] == ["mine"]
         assert li["id"] == "s"
         assert not li.details.get("class")
+
+
+class TestMenuPageContext:
+    """Page variables named like props never reach a plain item or submenu."""
+
+    def test_page_active_does_not_mark_an_item_current(self, cotton_render_string):
+        html = cotton_render_string('<c-menu.item text="A" />', {"active": "x"})
+        assert "menu-active" not in html
+        assert "aria-current" not in html
+
+    def test_page_disabled_does_not_disable_an_item(self, cotton_render_string):
+        li = parse(
+            cotton_render_string('<c-menu.item text="A" />', {"disabled": True})
+        ).li
+        assert "menu-disabled" not in li["class"]
+        assert li.button.get("disabled") is None
+
+    def test_page_href_does_not_turn_an_item_into_a_link(self, cotton_render_string):
+        soup = parse(cotton_render_string('<c-menu.item text="A" />', {"href": "/leak"}))
+        assert soup.a is None
+        assert soup.button is not None
+
+    def test_page_open_does_not_expand_a_submenu(self, cotton_render_string):
+        soup = parse(cotton_render_string('<c-menu.submenu text="M" />', {"open": True}))
+        assert soup.details.get("open") is None

@@ -8,6 +8,6 @@
 {# @prop class:text | description:"Extra classes added to the tabs." #}
 {# @slot <c-tabs.tab text="Overview" active /><c-tabs.tab text="Usage" /><c-tabs.tab text="Archived" disabled /> — The tabs, as tabs.tab components. #}
 {% load daisy_cotton %}
-<c-vars size box border lift placement links class />
+<c-vars size box border lift placement links="" class />
 <div {% if not links %}role="tablist" {% endif %}class="tabs{% if box %} tabs-box{% endif %}{% if border %} tabs-border{% endif %}{% if lift %} tabs-lift{% endif %} {% variation size "tabs" "xs,sm,md,lg,xl" %} {% variation placement "tabs" "top,bottom" %} {{ class }}"
      {{ attrs }}>{{ slot }}</div>

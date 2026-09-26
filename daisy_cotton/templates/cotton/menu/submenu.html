@@ -4,7 +4,7 @@
 {# @prop icon:text | description:"Icon shown before the label, passed as the name of the icon component." #}
 {# @prop class:text | description:"Extra classes added to the list item." #}
 {# @slot — The group's entries, as menu.item and menu.submenu components. #}
-<c-vars text open icon class />
+<c-vars text open="" icon class />
 <li{% if class %} class="{{ class }}"{% endif %} {{ attrs }}>
   <details{% if open %} open{% endif %}>
     <summary>{% if icon %}<c-icon name="{{ icon }}" aria-hidden="true" only />{% endif %}{{ text }}</summary>

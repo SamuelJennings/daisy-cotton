@@ -6,7 +6,7 @@
 {# @prop disabled:boolean | description:"Show the tab as unavailable. A link loses its href and a button is disabled." #}
 {# @prop class:text | description:"Extra classes added to the tab." #}
 {# @slot — Extra content shown after the text, or the panel shown when a radio tab is selected. #}
-<c-vars text href name="" active disabled class />
+<c-vars text href="" name="" active="" disabled="" class />
 {% if href %}
   <a {% if not disabled %}href="{{ href }}"{% else %}role="link" aria-disabled="true"{% endif %}
      class="tab{% if active %} tab-active{% endif %}{% if disabled %} tab-disabled{% endif %} {{ class }}"
