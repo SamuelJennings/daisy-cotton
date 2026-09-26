@@ -2,15 +2,17 @@
 
 Base [daisyUI](https://daisyui.com/)-styled components for [django-cotton](https://django-cotton.com/) — buttons, inputs, cards, alerts, badges, modals and the rest of an application's furniture.
 
-These components currently live inside [django-mvp](https://github.com/django-mvp/django-mvp), bundled with its application shell. This package is where they are moving to, so a project that only wants daisyUI-styled Cotton components can depend on them directly, without adopting django-mvp's settings, menus, icons or views. [daisy-cotton-blocks](https://github.com/django-mvp/daisy-cotton-blocks), which builds page-level layouts such as heroes and sections, composes on top of this package rather than on django-mvp for the same reason.
+A project that wants daisyUI-styled Cotton components depends on this package directly: install it, add it to `INSTALLED_APPS`, and each `<c-name>` tag is ready to use. It carries no settings, no menus, no icon registry and no views of its own — see [Scope & philosophy](#scope--philosophy).
 
 ## Status
 
 Version 0.0.1, pre-1.0: names, attributes and the set of classes a component emits can change between minor versions. The [CHANGELOG](CHANGELOG.md) is how a project finds out what has landed.
 
-Twenty-one components are built so far: `alert`, `avatar`, `badge`, `breadcrumbs`, `button`, `card`, `divider`, `dock`, `dropdown`, `form.field`, `icon`, `link`, `modal` and `mockup.*`. Each one is documented live in the component gallery (`python manage.py runserver` from a checkout). More migrate in from django-mvp as the need arises. To set up a checkout, run the checks or add a component, see [CONTRIBUTING](https://github.com/SamuelJennings/daisy-cotton/blob/main/CONTRIBUTING.md).
+Twenty-one components are built so far: `alert`, `avatar`, `badge`, `breadcrumbs`, `button`, `card`, `divider`, `dock`, `dropdown`, `form.field`, `icon`, `link`, `modal` and `mockup.*`. Each one is documented live in the component gallery (`python manage.py runserver` from a checkout). More land as the need arises. To set up a checkout, run the checks or add a component, see [CONTRIBUTING](https://github.com/SamuelJennings/daisy-cotton/blob/main/CONTRIBUTING.md).
 
 `<c-icon>` renders `name` as a literal CSS class string and resolves nothing itself — a project wanting name-based icon resolution provides its own override (see [docs/adr/0001](docs/adr/0001-icon-is-an-extension-point.md)).
+
+`<c-alert>`'s `dismissible` and `delay` need [Alpine.js](https://alpinejs.dev/) on the page — this package doesn't ship or load it. Without Alpine, the alert still renders and reads fine, but the dismiss button does nothing and `delay` never fires.
 
 ## Requirements
 
@@ -19,7 +21,7 @@ Twenty-one components are built so far: `alert`, `avatar`, `badge`, `breadcrumbs
 - django-cotton 2.6+
 - daisyUI 5, loaded by the project
 
-daisyUI is a hard requirement and this package does not ship it. Any project already running daisyUI satisfies it, whether through its own Tailwind build or through a package that provides one, such as django-mvp.
+daisyUI is a hard requirement and this package does not ship it. Any project already running daisyUI satisfies it, through whatever Tailwind build the project already has.
 
 ## Install
 
@@ -58,7 +60,7 @@ INSTALLED_APPS = [
 
 ## Prior art
 
-[labbhq/labb](https://github.com/labbhq/labb) is an actively maintained django-cotton + daisyUI 5 component library covering similar ground. It is a batteries-included framework — its own CLI, reactivity layer, icon system and project scaffolder — rather than a thin base layer, and daisy-cotton's purpose here is narrower: extracting components already written and shipped inside django-mvp so other packages in this family can depend on them directly. See [docs/brainstorm.md](docs/brainstorm.md) for the fuller reasoning.
+[labbhq/labb](https://github.com/labbhq/labb) is an actively maintained django-cotton + daisyUI 5 component library covering similar ground. It is a batteries-included framework — its own CLI, reactivity layer, icon system and project scaffolder — rather than a thin base layer, and daisy-cotton's purpose here is narrower: a dependency-free set of base primitives a project drops in alongside its own choices. See [docs/brainstorm.md](docs/brainstorm.md) for the fuller reasoning.
 
 ## License
 

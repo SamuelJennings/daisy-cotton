@@ -38,9 +38,6 @@ Issues = "https://github.com/SamuelJennings/daisy-cotton/issues"
 # ruff, mypy, deptry, pre-commit, pytest, pytest-django, coverage, django-stubs.
 dev = [
     "mvp-shared[dev,test]",
-    # A host for the demo project: django-mvp is one ready-made daisyUI and
-    # Cotton host, which is all the demo needs it to be.
-    "django-mvp>=0.23.0",
     # The component gallery, which reads a component's annotations and gives
     # back a live playground and a linter. A development dependency, and its
     # URLs are mounted under DEBUG only: it serves component source and
@@ -71,6 +68,13 @@ addopts = [
     "--verbose",
     "--tb=short",
     "-ra",
+]
+filterwarnings = [
+    # The gallery mounts in every test run now that tests/settings.py
+    # installs it directly (T003) rather than borrowing the demo's DEBUG
+    # guard, so its own "mounted and serving" notice would otherwise print
+    # on every collection. The suite deliberately runs it mounted.
+    "ignore:(?s).*django-cotton-gallery is MOUNTED AND SERVING.*:RuntimeWarning",
 ]
 
 [tool.coverage.report]
@@ -147,6 +151,12 @@ non-mirror-paths = [
     "tests/test_form_field.py",
     "tests/test_gallery_annotations.py",
     "tests/test_gallery_lint.py",
+    # Exercises the demo project own URLs and settings, not a component
+    # template or a Python module in the package.
+    "tests/test_demo.py",
+    # Walks the rendered gallery sidebar; there is no source module for a
+    # test parametrised from another package runtime output to mirror.
+    "tests/test_gallery_links.py",
 ]
 
 [tool.deptry]

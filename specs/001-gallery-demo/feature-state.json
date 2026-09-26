@@ -1,0 +1,333 @@
+{
+  "feature": "001-gallery-demo",
+  "branch": "001-gallery-demo",
+  "repo": "SamuelJennings/daisy-cotton",
+  "state": "MERGED",
+  "state_history": [
+    {
+      "state": "QUEUED",
+      "at": "2026-09-26T14:36:56Z",
+      "note": "specification merged in PR #24 (merge commit 86fc6dca6951ba38e04b2682e92bfe2c44b21b58), wording correction in PR #30; epic #10, stories #31-#34"
+    },
+    {
+      "state": "PLAN",
+      "at": "2026-09-26T14:59:47Z",
+      "note": "planning off main at merged spec PR #24; draft PR #95"
+    },
+    {
+      "state": "DESIGN_REVIEW",
+      "at": "2026-09-26T15:00:12Z",
+      "note": "plan, research and tasks written; design reviewer dispatched"
+    },
+    {
+      "state": "IMPLEMENT",
+      "at": "2026-09-26T15:05:11Z",
+      "note": "design review applied; dispatching US1-US4"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-26T15:49:34Z",
+      "note": "all four stories accepted"
+    },
+    {
+      "state": "REVIEW",
+      "at": "2026-09-26T15:50:21Z",
+      "note": "converged; dispatching code review"
+    },
+    {
+      "state": "PR_READY",
+      "at": "2026-09-26T15:53:44Z",
+      "note": "review done; PR ready; walkthrough pending"
+    },
+    {
+      "state": "MERGED",
+      "at": "2026-09-26T18:37:02Z",
+      "note": "PR #95 merged; no approving review found"
+    }
+  ],
+  "gates": {
+    "spec": {
+      "approved_by": "SamuelJennings",
+      "at": "2026-09-26T14:36:56Z",
+      "self_resolved": []
+    },
+    "merge": {
+      "approved_by": null,
+      "at": "2026-09-26T18:37:02Z"
+    },
+    "plan": {
+      "approved_by": "notified",
+      "at": "2026-09-26T15:40:00Z",
+      "self_resolved": []
+    },
+    "design_review": {
+      "approved_by": "design-panel",
+      "at": "2026-09-26T15:40:00Z",
+      "self_resolved": [
+        "ARCH-001 high: theme switcher partial is copied into previews; body partial is script-only and builds the control in the interface page (T006, research)",
+        "SPEC-001 medium: T002 asserts server-rendered output only; browser behaviours go to the walkthrough",
+        "SPEC-002 low: T009 fails on empty link collection",
+        "ARCH-002 low: new test modules declared non-mirror (T007)"
+      ]
+    },
+    "review": {
+      "approved_by": "reviewer",
+      "at": "2026-09-26T16:30:00Z",
+      "self_resolved": [
+        "REV-001 medium remedied: link test asserts the detail title",
+        "REV-002 medium remedied: skip only on 404 for folder components",
+        "REV-003 low remedied: demo checks read demo.settings; redundant mvp case dropped"
+      ]
+    }
+  },
+  "stories": [
+    {
+      "id": "US1",
+      "priority": "P1",
+      "issue": 31,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/001-gallery-demo",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T001",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "forge verify at 714b171 (green, 2026-09-26T15:05:24Z)"
+            ]
+          }
+        },
+        {
+          "id": "T002",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_demo.py -q"
+            ]
+          }
+        },
+        {
+          "id": "T003",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_demo.py -q"
+            ]
+          }
+        },
+        {
+          "id": "T004",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_demo.py -q"
+            ]
+          }
+        },
+        {
+          "id": "T005",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_demo.py -q"
+            ]
+          }
+        },
+        {
+          "id": "T006",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_demo.py -q",
+              "playwright verification against the running dev server (not committed; browser behaviours are the live walkthrough's per the brief)"
+            ]
+          }
+        },
+        {
+          "id": "T007",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv lock",
+              "uv sync",
+              "uv tree",
+              "uv run pytest -q"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US2",
+      "priority": "P2",
+      "issue": 32,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/001-gallery-demo",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T008",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "gh issue create -> https://github.com/SamuelJennings/daisy-cotton/issues/96"
+            ]
+          }
+        },
+        {
+          "id": "T009",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_gallery_links.py -q -rs",
+              "uv run pytest -q"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US3",
+      "priority": "P2",
+      "issue": 33,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/001-gallery-demo",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T010",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "grep -in \"mvp\\|daisy-cotton-blocks\" README.md"
+            ]
+          }
+        },
+        {
+          "id": "T011",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "grep -in \"mvp\\|daisy-cotton-blocks\\|labb\" CONTEXT.md"
+            ]
+          }
+        },
+        {
+          "id": "T012",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "grep -in \"mvp\\|daisy-cotton-blocks\" AGENTS.md docs/brainstorm.md docs/adr/0001-icon-is-an-extension-point.md"
+            ]
+          }
+        },
+        {
+          "id": "T013",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "grep -in \"mvp\\|migrat\" CHANGELOG.md"
+            ]
+          }
+        },
+        {
+          "id": "T014",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_mockup_code.py tests/test_breadcrumbs_href_attribute.py tests/test_class_attribute_merge.py -q"
+            ]
+          }
+        },
+        {
+          "id": "T015",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "grep -rniE \"mvp|daisy-cotton-blocks\" README.md CONTEXT.md AGENTS.md docs/ CHANGELOG.md demo/ tests/ pyproject.toml"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US4",
+      "priority": "P3",
+      "issue": 34,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/001-gallery-demo",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T016",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "grep -n \"dismissible\\|delay\\|x-data\" daisy_cotton/templates/cotton/alert.html"
+            ]
+          }
+        },
+        {
+          "id": "T017",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "grep -n FR-009 specs/001-gallery-demo/spec.md"
+            ]
+          }
+        },
+        {
+          "id": "T018",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "/home/sam/.openclaw/workspaces/forge/engineering-org/kit/forge verify --repo /home/sam/projects/samueljennings/daisy-cotton-wt/001-gallery-demo",
+              "uv run pytest -q"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "budgets": {
+    "converge_cycles": {
+      "used": 1,
+      "max": 2
+    },
+    "review_cycles": {
+      "used": 1,
+      "max": 1
+    },
+    "design_review_cycles": {
+      "used": 1,
+      "max": 1
+    },
+    "tokens": {
+      "used": 25.45,
+      "max": 120
+    }
+  },
+  "pr": {
+    "number": 95,
+    "draft": false
+  }
+}

@@ -1,0 +1,91 @@
+{% comment %}
+  Loaded into every gallery document (see `_extra_head.html`). Carries no
+  markup of its own — only a script — because the gallery copies this
+  partial into every preview frame and the raw page, not only the
+  interface page (D3). The theme `<select>` is built only when this script
+  is running in the interface page itself: the top-level window, on a path
+  that is neither the raw page nor a preview/thumb endpoint. Everywhere
+  else it does nothing except apply the saved theme, mirroring the bootstrap
+  in `_extra_head.html` for a document that loaded before a theme choice
+  existed yet.
+{% endcomment %}
+<script>
+  (() => {
+    const STORAGE_KEY = 'daisy-cotton-theme';
+    const THEMES = [
+      'light', 'dark', 'cupcake', 'emerald', 'corporate',
+      'synthwave', 'dracula', 'business', 'night', 'winter',
+    ];
+
+    const isInterfacePage = window.top === window
+      && !/\/(raw|preview|thumb)\/$/.test(window.location.pathname);
+    if (!isInterfacePage) return;
+
+    const readTheme = () => {
+      try {
+        return localStorage.getItem(STORAGE_KEY) || 'light';
+      } catch (_) {
+        return 'light';
+      }
+    };
+
+    const writeTheme = (theme) => {
+      try {
+        localStorage.setItem(STORAGE_KEY, theme);
+      } catch (_) { /* storage disabled */ }
+    };
+
+    // Every preview frame currently on the page — the live preview stage,
+    // the compare panels, thumbnails — mirrors this document's own iframes,
+    // reachable through the same window.
+    const applyToFrames = (theme) => {
+      document.querySelectorAll('iframe').forEach((frame) => {
+        try {
+          frame.contentDocument
+            && frame.contentDocument.documentElement.setAttribute('data-theme', theme);
+        } catch (_) { /* cross-origin, or not loaded yet */ }
+      });
+    };
+
+    const select = document.createElement('select');
+    select.setAttribute('aria-label', 'Theme');
+    // The interface page carries none of daisyUI's classes, so the control
+    // is placed and styled inline: pinned to the top-right corner, above the
+    // gallery's own layout, in the gallery's own font.
+    Object.assign(select.style, {
+      position: 'fixed',
+      top: '0.75rem',
+      right: '0.75rem',
+      zIndex: '1000',
+      padding: '0.25rem 0.5rem',
+      font: 'inherit',
+      fontSize: '0.875rem',
+    });
+    for (const theme of THEMES) {
+      const option = document.createElement('option');
+      option.value = theme;
+      option.textContent = theme;
+      select.appendChild(option);
+    }
+    select.value = readTheme();
+    select.addEventListener('change', () => {
+      writeTheme(select.value);
+      applyToFrames(select.value);
+    });
+
+    document.body.appendChild(select);
+
+    // A frame that finishes loading after the switcher already has a value
+    // (the common case: this script runs once per page, the frames beneath
+    // it keep loading and reloading) picks up the current choice too.
+    document.body.addEventListener(
+      'load',
+      (event) => {
+        if (event.target.tagName === 'IFRAME') {
+          applyToFrames(select.value);
+        }
+      },
+      true,
+    );
+  })();
+</script>

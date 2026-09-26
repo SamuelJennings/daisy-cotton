@@ -4,11 +4,11 @@ Working notes from framing this package. Not ratified decisions — see `docs/ad
 
 ## Why this package exists
 
-django-mvp's component library currently bundles its daisyUI-styled Cotton components (buttons, inputs, cards, alerts, and similar) together with the rest of its application shell — settings, menus, icons, views. Anything that wants only the components has to adopt the whole shell to get them.
+A project that wants daisyUI-styled Cotton components (buttons, inputs, cards, alerts, and similar) without adopting a full application shell — settings, menus, icons, views — has nowhere to get just those.
 
-`daisy-cotton` is where those components move to, decoupled from django-mvp. `daisy-cotton-blocks` (page-level layouts: heroes, sections, calls to action) already exists as a sibling package built the same way — pulled out so it works on any django-cotton + daisyUI project rather than depending on django-mvp. `daisy-cotton` is the base layer underneath it: block-level layouts compose the primitives this package will ship.
+`daisy-cotton` is that base layer: a dependency-free set of Cotton primitives styled with daisyUI, installable on its own. A page-level layout package (heroes, sections, calls to action) can compose on top of it without depending on anything heavier.
 
-Migrating the actual components out of django-mvp happens later, as its own piece of work once the first one is needed. This repository starts as an empty scaffold with a passing test suite and green CI, nothing more.
+This repository started as an empty scaffold with a passing test suite and green CI, then filled in with its first components.
 
 ## Prior-art research (2026-09-23)
 
@@ -20,4 +20,4 @@ Searched for existing standalone django-cotton + daisyUI component libraries bef
 
 **cotton-daisy (PyPI/Qwizi)** and **django-cotton-components (PyPI)** — different tools, not competitors. The former is a CLI code-generator that scaffolds component files into a consuming project rather than shipping an installable library; the latter is an Alpine.js-based form component pack with no daisyUI styling.
 
-**Why proceeding despite labb's overlap is justified:** this isn't a search for a generic solution to "daisyUI components for django-cotton" — it's extracting code that already exists, is already proven inside django-mvp and its downstream packages, and needs to keep working exactly as it does today. Depending on labb instead would mean rewriting every consuming component against a different framework (different reactivity model, different icon system, different CLI) for no functional gain, and would still leave django-mvp's own components needing a home. The honest motivation, in Sam's words: control over packages this family depends on, rather than waiting on someone else's release cadence for a piece this central.
+**Why proceeding despite labb's overlap is justified:** this isn't a search for a generic solution to "daisyUI components for django-cotton" — it's building components that need to work exactly one specific way and keep working that way. Depending on labb instead would mean building every component against a different framework (different reactivity model, different icon system, different CLI) for no functional gain. The honest motivation, in Sam's words: control over a piece this central, rather than waiting on someone else's release cadence for it.

@@ -9,14 +9,13 @@ The terms below are the ones to use in issues, commits, tests and component name
 **Component**:
 The unit this package ships: a single Cotton component (`<c-name>`), styled with daisyUI classes —
 a button, an input, a card, an alert, a badge, a modal. A component has no page-level layout of its
-own; it composes into whatever a project, or a block from a package like daisy-cotton-blocks,
-builds around it.
+own; it composes into whatever a project builds around it.
 _Avoid_: element, widget, control, block (see below).
 
 **Block**:
-Not used in this package. It names a page-level layout — a hero, a section, a call-to-action — and
-belongs to daisy-cotton-blocks. Named here only to draw the line: this package's job stops at the
-component; blocks compose components together.
+Not used in this package. It names a page-level layout — a hero, a section, a call-to-action —
+built from components. Named here only to draw the line: this package's job stops at the
+component; a project's own blocks compose components together.
 
 **Host project**:
 The Django project that installs daisy-cotton. It owns daisyUI, the active theme and the base
@@ -34,11 +33,12 @@ daisyUI's named colour roles: `primary`, `secondary`, `accent`, `neutral`, `base
 hard-coded value.
 
 **Demo**:
-The `demo/` Django project in this repository: a development target, never deployed, that hosts
-the component gallery and a browsable page per component as they land. Not a public interface.
+The `demo/` Django project in this repository: a development target, never deployed, that serves
+the component gallery and nothing else — a plain Cotton and daisyUI page with a theme switcher,
+with every component browsable as it lands.
 
 ## Terms deliberately not used
 
-**Component library**: accurate but too broad — it describes labb, django-mvp and this package
-equally, and the distinction between them (framework vs. base primitives vs. block layouts) is the
-point. Say *component* when talking about a single unit, or name the package.
+**Component library**: accurate but too broad — it names this package's shape without saying what
+makes it a base layer rather than a framework, which is the distinction that matters. Say
+*component* when talking about a single unit, or name the package.
