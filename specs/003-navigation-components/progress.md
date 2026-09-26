@@ -166,3 +166,10 @@ Did: tests that the submenu's icon does not receive the item's class and that th
 Verified: `uv run pytest tests/test_menu.py tests/test_dock.py -q` 71 passed. Probed each: removing `only` from the submenu icon fails the isolation test, removing `aria-hidden="true"` from the toggle icon fails the aria test, removing `only` from the toggle icon fails its class test; templates restored afterwards.
 Next: T025.
 Watch: none.
+
+## 2026-09-26T23:50Z · Implementer US1 · T025
+
+Did: README component count is now thirty-two. The CHANGELOG `breadcrumbs.item` bullet says linked items render their text directly in the `<a>` with no span, the current item's span has no class, and a project that styled `.daisy-cotton-breadcrumb-text` targets `.breadcrumbs li > a` and `.breadcrumbs li > span` or writes its own span in the slot. The `tabs.tab` `text` annotation says a radio tab needs it for its accessible name. No page under `docs/` describes these.
+Verified: `cotton_lint --warnings-as-errors` 0 errors 0 warnings; full verify below.
+Next: full verify.
+Watch: none.
