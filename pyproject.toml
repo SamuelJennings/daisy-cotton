@@ -138,7 +138,7 @@ non-mirror-paths = [
     "tests/test_class_attribute_merge.py",
     "tests/test_button.py",
     "tests/test_dropdown.py",
-    "tests/test_group.py",
+    "tests/test_card.py",
     "tests/test_icon.py",
     "tests/test_link.py",
     "tests/test_mockup_code.py",
