@@ -220,9 +220,7 @@ class TestTabsPageContext:
     """Page variables named like props never reach a plain tabs row or tab."""
 
     def test_page_links_does_not_drop_the_tablist_role(self, cotton_render_string):
-        root = parse(
-            cotton_render_string("<c-tabs>x</c-tabs>", {"links": True})
-        ).div
+        root = parse(cotton_render_string("<c-tabs>x</c-tabs>", {"links": True})).div
         assert root["role"] == "tablist"
 
     def test_page_active_does_not_mark_a_tab_current(self, cotton_render_string):

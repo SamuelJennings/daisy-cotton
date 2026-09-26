@@ -186,7 +186,9 @@ class TestDockItemPageContext:
         assert "dock-active" not in button["class"]
 
     def test_page_href_does_not_turn_an_item_into_a_link(self, cotton_render_string):
-        soup = parse(cotton_render_string('<c-dock.item label="A" />', {"href": "/leak"}))
+        soup = parse(
+            cotton_render_string('<c-dock.item label="A" />', {"href": "/leak"})
+        )
         assert soup.a is None
         assert soup.button is not None
 

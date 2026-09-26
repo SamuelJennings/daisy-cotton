@@ -145,9 +145,13 @@ class TestStepPageContext:
     """Page variables named like props never reach a plain step."""
 
     def test_page_current_does_not_mark_a_step_in_progress(self, cotton_render_string):
-        li = parse(cotton_render_string('<c-steps.step text="A" />', {"current": "x"})).li
+        li = parse(
+            cotton_render_string('<c-steps.step text="A" />', {"current": "x"})
+        ).li
         assert li.get("aria-current") is None
 
     def test_page_content_does_not_set_the_marker_text(self, cotton_render_string):
-        li = parse(cotton_render_string('<c-steps.step text="A" />', {"content": "x"})).li
+        li = parse(
+            cotton_render_string('<c-steps.step text="A" />', {"content": "x"})
+        ).li
         assert li.get("data-content") is None

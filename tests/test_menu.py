@@ -285,12 +285,16 @@ class TestMenuPageContext:
         assert li.button.get("disabled") is None
 
     def test_page_href_does_not_turn_an_item_into_a_link(self, cotton_render_string):
-        soup = parse(cotton_render_string('<c-menu.item text="A" />', {"href": "/leak"}))
+        soup = parse(
+            cotton_render_string('<c-menu.item text="A" />', {"href": "/leak"})
+        )
         assert soup.a is None
         assert soup.button is not None
 
     def test_page_open_does_not_expand_a_submenu(self, cotton_render_string):
-        soup = parse(cotton_render_string('<c-menu.submenu text="M" />', {"open": True}))
+        soup = parse(
+            cotton_render_string('<c-menu.submenu text="M" />', {"open": True})
+        )
         assert soup.details.get("open") is None
 
 
