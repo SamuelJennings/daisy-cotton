@@ -124,3 +124,9 @@ Did: form.field comments only. The help-text prop description and the comment pr
 Verified: rendered each claim through the test render helper: `help-text` slot dropped, `help_text` slot rendered; EXTRA after the label span on checkbox, radio and toggle; nothing on file; wrapper-class applied for label on text, help text on checkbox, errors on toggle, and absent for a label alone on checkbox or a bare field. `uv run python manage.py cotton_lint --warnings-as-errors`: exit 0, 0 errors, 0 warnings; `uv run pytest tests/test_form_field.py tests/test_gallery_annotations.py tests/test_gallery_lint.py -q`: 137 passed.
 Next: TC04.
 Watch: none.
+
+## 2026-09-26T17:50:00Z · FIX-1 · TC04
+Did: Annotation text only. dropdown: `full` also stretches the default trigger button and `class` also reaches it. alert: `class` also reaches the icon. modal: `size` has no effect with position top or bottom; the `id` prop gains `example:"myModal"`, matching the @trigger.
+Verified: rendered each claim (dropdown full: `btn-block` on the trigger and `w-full` on the panel; dropdown class on wrapper and trigger, and on the wrapper only with a custom button slot; alert class on the alert and the icon; modal size sm gives `max-w-md` with no position or start, and `w-full max-w-none` with top or bottom, also for xl). AnnotationParser reads modal id example `myModal`. `uv run python manage.py cotton_lint --warnings-as-errors`: exit 0, 0 errors, 0 warnings; `uv run pytest tests/test_dropdown.py tests/test_modal.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_gallery_annotations.py tests/test_gallery_lint.py -q`: 189 passed.
+Next: full verify and report.
+Watch: the dropdown trigger leak is documented as it behaves, not fixed (no markup change).

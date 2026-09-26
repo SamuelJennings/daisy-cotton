@@ -1,9 +1,9 @@
 {# @description A daisyUI dropdown: a trigger and a panel that opens beside it. By default the trigger is a button built from the dropdown's own extra attributes. #}
 {# @prop valign:select['top','bottom','left','right'] | default:"bottom" | description:"Side of the trigger the panel opens on." #}
 {# @prop halign:select['start','center','end'] | default:"start" | description:"Alignment of the panel along the trigger." #}
-{# @prop full:boolean | description:"Stretch the panel to the width of the trigger; otherwise it sizes to its content with a minimum width." #}
+{# @prop full:boolean | description:"Stretch the panel to the width of the trigger; otherwise it sizes to its content with a minimum width. The default trigger button is stretched to full width too." #}
 {# @prop hover:boolean | description:"Open on hover instead of on click." #}
-{# @prop class:text | description:"Extra classes added to the dropdown wrapper." #}
+{# @prop class:text | description:"Extra classes added to the dropdown wrapper. The default trigger button gets them too." #}
 {# @prop content_class:text | description:"Extra classes added to the panel." #}
 {# @slot — The panel content. #}
 {# @slot:button — A custom trigger. When given, extra attributes fall through to the dropdown wrapper instead of a button, and the caller owns the trigger's tabindex and role. #}

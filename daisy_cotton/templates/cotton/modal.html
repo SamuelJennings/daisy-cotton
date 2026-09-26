@@ -1,6 +1,6 @@
 {# @description A dialog built around a card. The modal owns the dialog element, the backdrop and the placement and sizing; the title, icon, body and the actions, footer and footer_end slots are forwarded to an inner card. Title, icon and any other attributes are not modal props: they reach the inner card. #}
-{# @prop id:text | description:"Dialog id, used to open and close it with showModal() and close()." #}
-{# @prop size:select['sm','md','lg','xl','full'] | default:"md" | description:"Width of the dialog box." #}
+{# @prop id:text | example:"myModal" | description:"Dialog id, used to open and close it with showModal() and close()." #}
+{# @prop size:select['sm','md','lg','xl','full'] | default:"md" | description:"Width of the dialog box. Has no effect when position is top or bottom, where the box spans the full width." #}
 {# @prop position:select['top','bottom','start','end'] | description:"Where the dialog sits on screen; by default daisyUI centres it." #}
 {# @prop closable:boolean | description:"Show a close button in the top corner." #}
 {# @prop class:text | description:"Extra classes added to the inner card surface." #}

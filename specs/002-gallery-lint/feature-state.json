@@ -240,8 +240,24 @@
         },
         {
           "id": "TC04",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "rendered by the test render helper: dropdown full adds btn-block to the default trigger and w-full to the panel; dropdown class reaches the wrapper and the default trigger (neither reaches a custom button slot); alert class reaches the alert and its icon; modal size sm gives max-md with position start and none/absent, and w-full max-w-none with top or bottom",
+              "AnnotationParser on modal.html: id example=myModal, size description carries the position note",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings",
+              "uv run pytest tests/test_dropdown.py tests/test_modal.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_gallery_annotations.py tests/test_gallery_lint.py -q: 189 passed"
+            ],
+            "tests": [],
+            "code": [
+              "daisy_cotton/templates/cotton/dropdown/index.html:4",
+              "daisy_cotton/templates/cotton/dropdown/index.html:6",
+              "daisy_cotton/templates/cotton/alert.html:9",
+              "daisy_cotton/templates/cotton/modal.html:3",
+              "daisy_cotton/templates/cotton/modal.html:4"
+            ]
+          }
         }
       ]
     },
