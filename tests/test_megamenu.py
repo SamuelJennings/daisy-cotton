@@ -28,8 +28,12 @@ class TestMegamenuRoot:
         assert nav.b.get_text() == "marker"
 
     def test_wide_and_full_add_their_classes(self, cotton_render_string):
-        wide = parse(cotton_render_string('<c-megamenu id="mm" wide>x</c-megamenu>')).nav
-        full = parse(cotton_render_string('<c-megamenu id="mm" full>x</c-megamenu>')).nav
+        wide = parse(
+            cotton_render_string('<c-megamenu id="mm" wide>x</c-megamenu>')
+        ).nav
+        full = parse(
+            cotton_render_string('<c-megamenu id="mm" full>x</c-megamenu>')
+        ).nav
         assert "megamenu-wide" in wide["class"]
         assert "megamenu-full" in full["class"]
 
@@ -39,14 +43,20 @@ class TestMegamenuRoot:
         assert "megamenu-full" not in html
 
     def test_size_adds_the_size_class_and_unknown_size_none(self, cotton_render_string):
-        md = parse(cotton_render_string('<c-megamenu id="mm" size="md">x</c-megamenu>')).nav
-        odd = parse(cotton_render_string('<c-megamenu id="mm" size="huge">x</c-megamenu>')).nav
+        md = parse(
+            cotton_render_string('<c-megamenu id="mm" size="md">x</c-megamenu>')
+        ).nav
+        odd = parse(
+            cotton_render_string('<c-megamenu id="mm" size="huge">x</c-megamenu>')
+        ).nav
         assert "megamenu-md" in md["class"]
         assert not any(c.startswith("megamenu-h") for c in odd["class"])
 
     def test_class_and_attributes_reach_the_root(self, cotton_render_string):
         nav = parse(
-            cotton_render_string('<c-megamenu id="mm" class="mine" data-x="1">x</c-megamenu>')
+            cotton_render_string(
+                '<c-megamenu id="mm" class="mine" data-x="1">x</c-megamenu>'
+            )
         ).nav
         assert "mine" in nav["class"]
         assert nav["data-x"] == "1"
@@ -56,7 +66,9 @@ class TestMegamenuRoot:
         assert nav["aria-label"] == "Site"
 
     def test_caller_aria_label_replaces_the_default_once(self, cotton_render_string):
-        html = cotton_render_string('<c-megamenu id="mm" aria-label="Shop">x</c-megamenu>')
+        html = cotton_render_string(
+            '<c-megamenu id="mm" aria-label="Shop">x</c-megamenu>'
+        )
         assert html.count("aria-label=") == 1
         assert parse(html).nav["aria-label"] == "Shop"
 
@@ -67,7 +79,9 @@ class TestMegamenuToggle:
     def test_toggle_is_a_button_hidden_from_small_up_and_pointing_at_the_id(
         self, cotton_render_string
     ):
-        button = parse(cotton_render_string('<c-megamenu id="mm">x</c-megamenu>')).button
+        button = parse(
+            cotton_render_string('<c-megamenu id="mm">x</c-megamenu>')
+        ).button
         assert button is not None
         assert button["type"] == "button"
         assert button["popovertarget"] == "mm"
@@ -141,10 +155,7 @@ class TestMegamenuItem:
         assert len(ids) == len(set(ids))
 
     def test_two_megamenus_with_different_ids_share_no_id(self, cotton_render_string):
-        html = cotton_render_string(
-            self.THREE
-            + self.THREE.replace('"mm"', '"other"')
-        )
+        html = cotton_render_string(self.THREE + self.THREE.replace('"mm"', '"other"'))
         ids = [t["id"] for t in parse(html).find_all(id=True)]
         assert len(ids) == len(set(ids))
         assert {"mm", "other", "mm-a", "other-a"} <= set(ids)

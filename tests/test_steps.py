@@ -104,9 +104,7 @@ class TestStep:
     def test_icon_sits_in_a_step_icon_span_hidden_from_assistive_tech(
         self, cotton_render_string
     ):
-        li = parse(
-            cotton_render_string('<c-steps.step text="A" icon="fa-check" />')
-        ).li
+        li = parse(cotton_render_string('<c-steps.step text="A" icon="fa-check" />')).li
         holder = li.find("span", class_="step-icon")
         assert holder is not None
         icon = holder.find(class_="fa-check")

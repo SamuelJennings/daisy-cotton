@@ -90,9 +90,7 @@ class TestTabLink:
     def test_disabled_link_is_an_announced_disabled_link_without_href(
         self, cotton_render_string
     ):
-        a = parse(
-            cotton_render_string('<c-tabs.tab href="/a" text="A" disabled />')
-        ).a
+        a = parse(cotton_render_string('<c-tabs.tab href="/a" text="A" disabled />')).a
         assert "tab-disabled" in a["class"]
         assert a["role"] == "link"
         assert a["aria-disabled"] == "true"
