@@ -2,7 +2,7 @@
   "feature": "001-gallery-demo",
   "branch": "001-gallery-demo",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "IMPLEMENT",
+  "state": "CONVERGE",
   "state_history": [
     {
       "state": "QUEUED",
@@ -23,6 +23,11 @@
       "state": "IMPLEMENT",
       "at": "2026-09-26T15:05:11Z",
       "note": "design review applied; dispatching US1-US4"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-26T15:49:34Z",
+      "note": "all four stories accepted"
     }
   ],
   "gates": {
@@ -57,7 +62,7 @@
       "priority": "P1",
       "issue": 31,
       "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/001-gallery-demo",
-      "status": "todo",
+      "status": "done",
       "replans": 0,
       "tasks": [
         {
@@ -141,7 +146,7 @@
       "priority": "P2",
       "issue": 32,
       "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/001-gallery-demo",
-      "status": "todo",
+      "status": "done",
       "replans": 0,
       "tasks": [
         {
@@ -172,7 +177,7 @@
       "priority": "P2",
       "issue": 33,
       "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/001-gallery-demo",
-      "status": "todo",
+      "status": "done",
       "replans": 0,
       "tasks": [
         {
@@ -242,7 +247,7 @@
       "priority": "P3",
       "issue": 34,
       "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/001-gallery-demo",
-      "status": "todo",
+      "status": "done",
       "replans": 0,
       "tasks": [
         {
@@ -281,7 +286,7 @@
   ],
   "budgets": {
     "converge_cycles": {
-      "used": 0,
+      "used": 1,
       "max": 2
     },
     "review_cycles": {
