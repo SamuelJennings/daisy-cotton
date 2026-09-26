@@ -235,8 +235,17 @@
       "tasks": [
         {
           "id": "T010",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "`uv run python manage.py cotton_lint` at base 85a252e: Annotated the three mockup frames: description, browser's props, default slot each.",
+              "`uv run python manage.py cotton_lint` after: no errors, no warnings for these templates; the named-slot hints (where any) are gone",
+              "rules check (one `{# @description`, default `{# @slot` iff `{{ slot }}` rendered, no unterminated `{#` line) on each touched template: all OK",
+              "render comparison at base 85a252e vs after, 22 cases across the touched components with attributes, slots and named slots, whitespace collapsed and ends stripped (plus `<pre>` blocks byte-compared): identical",
+              "`uv run pytest tests -q -k 'mockup or browser or window or phone'`: ====================== 11 passed, 138 deselected in 0.27s ======================"
+            ]
+          }
         },
         {
           "id": "T011",
