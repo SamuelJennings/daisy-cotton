@@ -107,8 +107,13 @@
       "tasks": [
         {
           "id": "T008",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "gh issue create -> https://github.com/SamuelJennings/daisy-cotton/issues/96"
+            ]
+          }
         },
         {
           "id": "T009",
