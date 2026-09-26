@@ -184,7 +184,7 @@ class TestAnnotationRules:
 
     @pytest.mark.parametrize("name", sorted(FIXED_CHOICE_PROPS))
     def test_fixed_choice_prop_typed_text_fails(self, name):
-        source = f"{{# @prop {name}:text | description:\"x\" #}}\n"
+        source = f'{{# @prop {name}:text | description:"x" #}}\n'
         assert AnnotationRules.choice_problems(source) == [
             f"@prop {name} takes a fixed set of values; type it select['…'] listing them"
         ]
@@ -194,7 +194,7 @@ class TestAnnotationRules:
         assert AnnotationRules.choice_problems(source) != []
 
     def test_other_text_props_are_not_checked(self):
-        source = "{# @prop href:text | description:\"x\" #}\n"
+        source = '{# @prop href:text | description:"x" #}\n'
         assert AnnotationRules.choice_problems(source) == []
 
     def test_single_line_annotations_pass(self):
