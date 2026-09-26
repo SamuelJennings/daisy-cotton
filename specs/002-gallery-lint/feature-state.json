@@ -329,8 +329,15 @@
       "tasks": [
         {
           "id": "T016",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv sync: exit 0, environment already current",
+              "uv run python manage.py runserver 127.0.0.1:8765 --noreload then curl http://127.0.0.1:8765/django-cotton-gallery/: HTTP 200 (same route as the documented default port 8000), server stopped after",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 20/21 clean, 0 errors, 0 warnings (form.field keeps hints)"
+            ]
+          }
         },
         {
           "id": "T017",

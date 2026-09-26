@@ -94,3 +94,9 @@ Did: Added the catalog-wide test, parametrised by component path, reading every 
 Verified: `uv run pytest tests/test_gallery_lint.py -q`: 27 passed (arrived green on the real templates); the same run with -s piped through `grep -ci "MOUNTED AND SERVING"`: 0.
 Next: US8, T016.
 Watch: none.
+
+## 2026-09-26T16:58:28Z · Implementer US8 · T016
+Did: Wrote CONTRIBUTING.md: set up, open the gallery, run the linter, the suite and pre-commit, which findings fail, the annotation reference link, and what done means for a component.
+Verified: `uv sync`: exit 0; `uv run python manage.py runserver 127.0.0.1:8765 --noreload` then curl of /django-cotton-gallery/: 200, server stopped; `uv run python manage.py cotton_lint --warnings-as-errors`: exit 0, 20/21 clean, 0 errors, 0 warnings. `uv run pytest` and `uv run pre-commit run --all-files` are run in the final verify.
+Next: T017.
+Watch: the documented address uses port 8000; I tested the same route on port 8765 because 8000 is in use on this machine.
