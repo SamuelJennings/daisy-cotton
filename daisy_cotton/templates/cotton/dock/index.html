@@ -1,6 +1,10 @@
-{# @description A bottom navigation bar for small screens. Fill the default slot with dock.item components, one per destination. #}
+{# @description A bottom navigation bar for small screens, rendered as a navigation landmark. Fill the default slot with dock.item components, one per destination. #}
 {# @prop size:select['xs','sm','md','lg','xl'] | description:"Size of the dock." #}
+{# @prop class:text | description:"Extra classes added to the dock." #}
+{# @prop aria-label:text | description:"Accessible name of the dock. Defaults to a translated Dock." #}
 {# @slot — The dock's items, as dock.item components. #}
-{% load daisy_cotton %}
-<c-vars size />
-<div class="dock bg-transparent backdrop-blur {% variation size "dock" "xs,sm,md,lg,xl" %}">{{ slot }}</div>
+{% load daisy_cotton i18n %}
+<c-vars size class aria-label />
+<nav class="dock {% variation size "dock" "xs,sm,md,lg,xl" %} {{ class }}"
+     aria-label="{% if aria_label %}{{ aria_label }}{% else %}{% trans "Dock" %}{% endif %}"
+     {{ attrs }}>{{ slot }}</nav>

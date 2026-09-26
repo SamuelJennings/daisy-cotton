@@ -26,3 +26,10 @@ Did: CHANGELOG `Changed` entries for the link and breadcrumbs breaking changes, 
 Verified: read back the diff; documentation only.
 Next: T004.
 Watch: none.
+
+## 2026-09-26T21:20Z · Implementer US3+US5 · T004
+
+Did: dock root is a `<nav class="dock …">` with `size`, merged `class`, pass-through attributes and an overridable translated `aria-label`; `bg-transparent backdrop-blur` removed. New `tests/test_dock.py`, listed in `non-mirror-paths`.
+Verified: `tests/test_dock.py` and `tests/test_class_attribute_merge.py` 12 passed; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T005.
+Watch: none.
