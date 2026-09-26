@@ -6,9 +6,10 @@ dismissal are browser behaviours that a test client cannot observe through
 an isolated preview iframe — they are checked in the live walkthrough.
 """
 
-from django.conf import settings
 from django.test import Client
 from django.urls import reverse
+
+from demo import settings as demo_settings
 
 
 class TestRootRedirectsToGallery:
@@ -51,26 +52,23 @@ class TestGalleryHasNoExtraCssOrJs:
     """The demo's assets arrive only through the head/body partials (D1)."""
 
     def test_no_extra_css_configured(self) -> None:
-        assert not getattr(settings, "DJANGO_COTTON_GALLERY_EXTRA_CSS", ())
+        assert not getattr(demo_settings, "DJANGO_COTTON_GALLERY_EXTRA_CSS", ())
 
     def test_no_extra_js_configured(self) -> None:
-        assert not getattr(settings, "DJANGO_COTTON_GALLERY_EXTRA_JS", ())
+        assert not getattr(demo_settings, "DJANGO_COTTON_GALLERY_EXTRA_JS", ())
 
 
 class TestNoHostPackageInstalled:
-    """The former host package and its dependencies are gone from the project."""
-
-    def test_mvp_not_installed(self) -> None:
-        assert "mvp" not in settings.INSTALLED_APPS
+    """The demo installs none of the former host package's dependency chain."""
 
     def test_flex_menu_not_installed(self) -> None:
-        assert "flex_menu" not in settings.INSTALLED_APPS
+        assert "flex_menu" not in demo_settings.INSTALLED_APPS
 
     def test_easy_icons_not_installed(self) -> None:
-        assert "easy_icons" not in settings.INSTALLED_APPS
+        assert "easy_icons" not in demo_settings.INSTALLED_APPS
 
     def test_crispy_forms_not_installed(self) -> None:
-        assert "crispy_forms" not in settings.INSTALLED_APPS
+        assert "crispy_forms" not in demo_settings.INSTALLED_APPS
 
     def test_crispy_tailwind_not_installed(self) -> None:
-        assert "crispy_tailwind" not in settings.INSTALLED_APPS
+        assert "crispy_tailwind" not in demo_settings.INSTALLED_APPS

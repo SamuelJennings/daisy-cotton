@@ -75,7 +75,7 @@ class TestGallerySidebarLinks:
     )
     def test_sidebar_link_opens_its_component(self, component_path, href) -> None:
         response = Client().get(href)
-        if response.status_code != 200 and is_folder_component(component_path):
+        if response.status_code == 404 and is_folder_component(component_path):
             # Skipped only while the installed gallery still 404s the link, so
             # the case starts passing by itself once a fixed release lands.
             pytest.skip(
@@ -83,4 +83,5 @@ class TestGallerySidebarLinks:
                 f"see {FOLDER_COMPONENT_ISSUE}"
             )
         assert response.status_code == 200
-        assert component_path.rsplit("/", 1)[-1] in response.content.decode()
+        name = component_path.rsplit("/", 1)[-1]
+        assert f'<h1 class="cg-detail__title">{name}</h1>' in response.content.decode()
