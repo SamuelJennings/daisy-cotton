@@ -45,3 +45,33 @@ Ambiguities in issue #11 resolved while writing the spec, with the reasoning beh
 **Chosen:** this feature does not touch the demo project. Making the demo the gallery alone and fixing gallery links that return 404 belong to #10.
 
 **Why:** the linter reads the package's templates, not the demo's pages, so this feature needs nothing from #10 and can land in either order.
+
+## D1 — Annotations land before the checks
+
+**Decision:** the annotation stories (US3, US2, US4, US5, US6) are built first and the two suite checks (US7, US1) after them.
+
+**Why:** both checks run over every template. Landed first, they would be red until the last template was annotated, and no story boundary before that could leave the suite green. Landed last, they arrive green, and each proves it can fail through its own tests against scratch templates. Until then the linter's own output is the proof for each annotation story.
+
+**Revisit if:** a later feature adds a check that can be scoped per component from the start.
+
+**ADR:** none — ordering inside this feature, nothing downstream inherits it.
+
+## D2 — The lint check reuses the gallery's scanner and linter functions
+
+**Decision:** `tests/test_gallery_lint.py` discovers components with `django_cotton_gallery.core.catalog.scanner.scan` and lints them with `django_cotton_gallery.core.linter.lint_catalog`, rather than calling the `cotton_lint` command or walking the directory itself.
+
+**Why:** calling the command would need the gallery installed as an app in the test settings, which prints its start-up notice into every run, and its output would have to be parsed back. A hand-written walk would restate the gallery's rule for naming `<dir>/index.html` components. The two functions are pure, need no settings, and lint exactly what `cotton_lint` lints.
+
+**Revisit if:** a gallery release moves or renames either function. The pin is `>=1.0.0,<2`, so that arrives as a deliberate dependency bump.
+
+**ADR:** none — a test-suite implementation choice, recorded here and in the test module.
+
+## D3 — "Rendered output unchanged" means equal after whitespace normalisation
+
+**Decision:** FR-014 and SC-006 are checked by rendering every touched component before and after with the same attributes and comparing the output with runs of whitespace collapsed, plus the existing tests passing unmodified.
+
+**Why:** a `{# … #}` line renders nothing, but the newline after it still reaches the output, so a byte-for-byte comparison would report every annotated template as changed while the markup a browser builds is identical.
+
+**Revisit if:** a component ever renders inside `<pre>` or another context where leading whitespace is visible. `mockup.code.line` is the one to watch; its annotations must not add whitespace inside its `<pre>`.
+
+**ADR:** none — how this feature verifies one requirement.
