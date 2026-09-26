@@ -107,25 +107,25 @@ Verified: read back with git diff; the final verify below covers formatting.
 Next: full verify and reports.
 Watch: none.
 
-## 2026-09-26T17:20:00Z · FIX-1 · TC01
+## 2026-09-26T17:08:19Z · review fixes · TC01
 Did: Rewrote all 27 slot annotations (default and named, 18 templates) to the `sample — description` form the gallery parser splits on. Every slot leads with `— ` (no sample) except alert's default slot, which carries the sample message "Your changes were saved.". Comment text only; no `<c-vars>` or markup touched.
 Verified: AnnotationParser over every template: 27 slots, 0 empty descriptions (was 27 empty); `uv run python manage.py cotton_lint --warnings-as-errors`: exit 0, 0 errors, 0 warnings; `uv run pytest tests/test_render_all.py tests/test_gallery_annotations.py -q`: 104 passed.
 Next: TC02, make the slot rule require a description.
 Watch: none.
 
-## 2026-09-26T17:30:00Z · FIX-1 · TC02
+## 2026-09-26T17:08:53Z · review fixes · TC02
 Did: The slot rule now parses the source with the gallery's AnnotationParser and requires the default slot to have a non-empty description, with its own problem message. Added three scratch-source tests (empty description fails; `— The body.` and `Hi — The body.` pass). The existing scratch test for "annotation present passes" used `{# @slot The body. #}`, which the new rule correctly rejects, so its source now reads `{# @slot — The body. #}`; its assertion is unchanged.
 Verified: red first: the empty-description test failed with `[] == [<message>]` while the two passing cases passed; then `uv run pytest tests/test_gallery_annotations.py -q`: 85 passed. Probe: restoring link.html from the base commit made `test_documents_the_default_slot_it_renders[link.html]` fail (1 failed, 84 passed); restored, 85 passed.
 Next: TC03, form.field.
 Watch: the module docstring still describes the check as "no @slot"; left as is.
 
-## 2026-09-26T17:40:00Z · FIX-1 · TC03
+## 2026-09-26T17:09:20Z · review fixes · TC03
 Did: form.field comments only. The help-text prop description and the comment prose now name the slot that renders, `help_text`, and say `help-text` is dropped. The default slot description covers checkbox, radio and toggle (extra content after the label text) and says file inputs render no slot. wrapper-class says the wrapper appears for help text or errors, or a label on any control other than checkbox, radio or toggle.
 Verified: rendered each claim through the test render helper: `help-text` slot dropped, `help_text` slot rendered; EXTRA after the label span on checkbox, radio and toggle; nothing on file; wrapper-class applied for label on text, help text on checkbox, errors on toggle, and absent for a label alone on checkbox or a bare field. `uv run python manage.py cotton_lint --warnings-as-errors`: exit 0, 0 errors, 0 warnings; `uv run pytest tests/test_form_field.py tests/test_gallery_annotations.py tests/test_gallery_lint.py -q`: 137 passed.
 Next: TC04.
 Watch: none.
 
-## 2026-09-26T17:50:00Z · FIX-1 · TC04
+## 2026-09-26T17:09:46Z · review fixes · TC04
 Did: Annotation text only. dropdown: `full` also stretches the default trigger button and `class` also reaches it. alert: `class` also reaches the icon. modal: `size` has no effect with position top or bottom; the `id` prop gains `example:"myModal"`, matching the @trigger.
 Verified: rendered each claim (dropdown full: `btn-block` on the trigger and `w-full` on the panel; dropdown class on wrapper and trigger, and on the wrapper only with a custom button slot; alert class on the alert and the icon; modal size sm gives `max-w-md` with no position or start, and `w-full max-w-none` with top or bottom, also for xl). AnnotationParser reads modal id example `myModal`. `uv run python manage.py cotton_lint --warnings-as-errors`: exit 0, 0 errors, 0 warnings; `uv run pytest tests/test_dropdown.py tests/test_modal.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_gallery_annotations.py tests/test_gallery_lint.py -q`: 189 passed.
 Next: full verify and report.

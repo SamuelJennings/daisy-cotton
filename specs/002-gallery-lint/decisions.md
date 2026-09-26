@@ -92,14 +92,6 @@ Ambiguities in issue #11 resolved while writing the spec, with the reasoning beh
 
 **ADR:** none — a structural correction inside this feature.
 
-## D6 — One earlier scratch test's source changed with the slot rule
-
-**Decision:** `test_default_slot_rendered_with_annotation_passes` in `tests/test_gallery_annotations.py` now uses `{# @slot — The body. #}` as its scratch source instead of `{# @slot The body. #}`. Its assertion is unchanged.
-
-**Why:** the slot rule now requires a description as the gallery parses it, and the old source has none, so the test would have failed for the behaviour the fix introduces. The new source is the form the fix specifies as passing.
-
-**Revisit if:** the gallery parser's separator changes.
-
 ## D6 — The review fix changed one of this feature's own scratch tests
 
 **Decision:** the scratch test for a passing default slot now uses `{# @slot — The body. #}` instead of `{# @slot The body. #}`.
