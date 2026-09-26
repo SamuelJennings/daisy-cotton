@@ -20,15 +20,6 @@ wheels = [
 ]
 
 [[package]]
-name = "anytree"
-version = "2.13.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/bc/a8/eb55fab589c56f9b6be2b3fd6997aa04bb6f3da93b01154ce6fc8e799db2/anytree-2.13.0.tar.gz", hash = "sha256:c9d3aa6825fdd06af7ebb05b4ef291d2db63e62bb1f9b7d9b71354be9d362714", size = 48389, upload-time = "2025-04-08T21:06:30.662Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/7b/98/f6aa7fe0783e42be3093d8ef1b0ecdc22c34c0d69640dfb37f56925cb141/anytree-2.13.0-py3-none-any.whl", hash = "sha256:4cbcf10df36b1f1cba131b7e487ff3edafc9d6e932a3c70071b5b768bab901ff", size = 45077, upload-time = "2025-04-08T21:06:29.494Z" },
-]
-
-[[package]]
 name = "asgiref"
 version = "3.12.1"
 source = { registry = "https://pypi.org/simple" }
@@ -390,19 +381,6 @@ wheels = [
 ]
 
 [[package]]
-name = "crispy-tailwind"
-version = "1.0.3"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "django" },
-    { name = "django-crispy-forms" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/ae/ac/a307ae5ce869d7151b90d4b8b042a48eb454a936dacc695f6418486e5bd8/crispy-tailwind-1.0.3.tar.gz", hash = "sha256:2bc9f616d406e4b003f25d46fcb0079f1c2522719d97adb107667271d849459a", size = 19172, upload-time = "2024-02-13T09:52:37.895Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/c9/ca/11f65e24f3c182dfaf90fd3710d2dcca0fbc3026923e47b43f52a4a2349b/crispy_tailwind-1.0.3-py3-none-any.whl", hash = "sha256:31427f66b1c4fd0d6fb040f4197cfb97d104cdbe7641ea2dea940c0057c4db4b", size = 25700, upload-time = "2024-02-13T09:52:35.928Z" },
-]
-
-[[package]]
 name = "cssbeautifier"
 version = "2.0.3"
 source = { registry = "https://pypi.org/simple" }
@@ -427,7 +405,6 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "django-cotton-gallery" },
-    { name = "django-mvp" },
     { name = "mvp-shared", extra = ["dev", "test"] },
 ]
 
@@ -440,7 +417,6 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "django-cotton-gallery", specifier = ">=1.0.0,<2" },
-    { name = "django-mvp", specifier = ">=0.23.0" },
     { name = "mvp-shared", extras = ["dev", "test"], git = "https://github.com/django-mvp/shared.git?tag=v0.6.0" },
 ]
 
@@ -542,18 +518,6 @@ wheels = [
 ]
 
 [[package]]
-name = "django-crispy-forms"
-version = "2.7"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "django" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/bc/f5/b79e3ed7cae871d5d71bf3448d627e1fabab769358bb90808bec056556fe/django_crispy_forms-2.7.tar.gz", hash = "sha256:4c59bed60417375cba26cebb2c67ab350b655934670270b1c89dbcd7e60f1b4c", size = 1097842, upload-time = "2026-07-29T11:12:12.081Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/1f/44/50335d09c4deb70affee0c54feef07ba458df015e32e45490615d9dc5b6b/django_crispy_forms-2.7-py3-none-any.whl", hash = "sha256:42a7ecb05ac3fd050d006dfe7aeceb7f318c30e5b5124ff619e2be252f36f096", size = 31478, upload-time = "2026-07-29T11:12:11.052Z" },
-]
-
-[[package]]
 name = "django-debug-toolbar"
 version = "8.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -580,18 +544,6 @@ wheels = [
 ]
 
 [[package]]
-name = "django-easy-icons"
-version = "0.6.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "django" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/53/ca/85a14426ba0bdd31442c68e2c8a56e89c5fc43751216c9c2e01b6bd75cf6/django_easy_icons-0.6.0.tar.gz", hash = "sha256:7be23b3d8e16022c382c3e35ae38a6ea547bf3741da1e58258b83c7b242602c2", size = 15231, upload-time = "2026-07-14T14:05:10.923Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/02/7f/3acc791253b3d23a412e43a1ef886d87f2f11a56e8a4207b1af156ed0ff6/django_easy_icons-0.6.0-py3-none-any.whl", hash = "sha256:ddddbfa7dd9cb1112310018d7be212cf057db200e69a06c4dc4b66bbebbd30df", size = 16936, upload-time = "2026-07-14T14:05:09.728Z" },
-]
-
-[[package]]
 name = "django-extensions"
 version = "4.1"
 source = { registry = "https://pypi.org/simple" }
@@ -601,19 +553,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/6d/b3/ed0f54ed706ec0b54fd251cc0364a249c6cd6c6ec97f04dc34be5e929eac/django_extensions-4.1.tar.gz", hash = "sha256:7b70a4d28e9b840f44694e3f7feb54f55d495f8b3fa6c5c0e5e12bcb2aa3cdeb", size = 283078, upload-time = "2025-04-11T01:15:39.617Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/64/96/d967ca440d6a8e3861120f51985d8e5aec79b9a8bdda16041206adfe7adc/django_extensions-4.1-py3-none-any.whl", hash = "sha256:0699a7af28f2523bf8db309a80278519362cd4b6e1fd0a8cd4bf063e1e023336", size = 232980, upload-time = "2025-04-11T01:15:37.701Z" },
-]
-
-[[package]]
-name = "django-flex-menus"
-version = "0.4.6"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "anytree" },
-    { name = "django" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/58/bf/1eff7e9c5ad33f4c310e2e11611c33bc85237bcdb75f73fc5471da1f21bd/django_flex_menus-0.4.6.tar.gz", hash = "sha256:0b3bba51246143206dbc5891467ab1927fb56296582855911afe43393e4c031f", size = 20856, upload-time = "2026-09-23T20:03:54.501Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a0/13/3e7e8b7bed83cb1d0978d4de507c9348cd97abde436f37671c4954bd37d3/django_flex_menus-0.4.6-py3-none-any.whl", hash = "sha256:05a20d93c315ceacb3350dea6363fafa755a7d564da3ee58acf5aa7b51824b56", size = 21279, upload-time = "2026-09-23T20:03:53.221Z" },
 ]
 
 [[package]]
@@ -629,24 +568,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/ac/0b/5646cc9918636ae6caeba516238ee506c8898e23f7e15ad89072ea2b7d86/django_model_info-2026.3.1.tar.gz", hash = "sha256:4ceceb4766e56f7ec01b75d0ff1458eef14211fff819d3e1396d25ad55e7e323", size = 65730, upload-time = "2026-03-14T20:39:46.676Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/0a/6d/e7b4512da715b344bf9f23f5cc1bb064c56eeecf19608d0adfd965841c81/django_model_info-2026.3.1-py3-none-any.whl", hash = "sha256:0cd5043a999b30841f7e2ba64f1ec6e973a080e6c8f0ac8e7a3759131ff2a287", size = 51771, upload-time = "2026-03-14T20:39:47.699Z" },
-]
-
-[[package]]
-name = "django-mvp"
-version = "0.24.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "crispy-tailwind" },
-    { name = "django" },
-    { name = "django-cotton" },
-    { name = "django-crispy-forms" },
-    { name = "django-easy-icons" },
-    { name = "django-flex-menus" },
-    { name = "mergedeep" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/48/6f/69bf15c87bf0a67989695780984bf579b745ed9bffbc7eb3095bc474c3dc/django_mvp-0.24.0.tar.gz", hash = "sha256:afe4bbf3f946673a1bfbb21ebc7a43f247cb1db7a9819a5878fdd9b30d2315a8", size = 279253, upload-time = "2026-09-23T08:14:54.337Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/2f/d4/aa77c39d7b10bb737549dc3626699204fc75877c0fab3787e4c24520f1e9/django_mvp-0.24.0-py3-none-any.whl", hash = "sha256:969a2b991d090064b777d96712317972745ac57e0b7566659759dcc8417da3b8", size = 324458, upload-time = "2026-09-23T08:14:52.567Z" },
 ]
 
 [[package]]
@@ -1138,15 +1059,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/d6/54/cfe61301667036ec958cb99bd3efefba235e65cdeb9c84d24a8293ba1d90/mdurl-0.1.2.tar.gz", hash = "sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba", size = 8729, upload-time = "2022-08-14T12:40:10.846Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl", hash = "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8", size = 9979, upload-time = "2022-08-14T12:40:09.779Z" },
-]
-
-[[package]]
-name = "mergedeep"
-version = "1.3.4"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/3a/41/580bb4006e3ed0361b8151a01d324fb03f420815446c7def45d02f74c270/mergedeep-1.3.4.tar.gz", hash = "sha256:0096d52e9dad9939c3d975a774666af186eda617e6ca84df4c94dec30004f2a8", size = 4661, upload-time = "2021-02-05T18:55:30.623Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/2c/19/04f9b178c2d8a15b076c8b5140708fa6ffc5601fb6f1e975537072df5b2a/mergedeep-1.3.4-py3-none-any.whl", hash = "sha256:70775750742b25c0d8f36c55aed03d24c3384d17c951b3175d898bd778ef0307", size = 6354, upload-time = "2021-02-05T18:55:29.583Z" },
 ]
 
 [[package]]
