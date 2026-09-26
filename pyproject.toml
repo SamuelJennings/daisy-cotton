@@ -148,6 +148,12 @@ non-mirror-paths = [
     "tests/test_mockup_code.py",
     "tests/test_modal.py",
     "tests/test_breadcrumbs_href_attribute.py",
+    "tests/test_dock.py",
+    "tests/test_menu.py",
+    "tests/test_navbar.py",
+    "tests/test_tabs.py",
+    "tests/test_steps.py",
+    "tests/test_megamenu.py",
     "tests/test_form_field.py",
     "tests/test_gallery_annotations.py",
     "tests/test_gallery_lint.py",
@@ -157,6 +163,9 @@ non-mirror-paths = [
     # Walks the rendered gallery sidebar; there is no source module for a
     # test parametrised from another package runtime output to mirror.
     "tests/test_gallery_links.py",
+    # Reads the source of the navigation templates for scripts; there is no
+    # Python module to mirror.
+    "tests/test_navigation_markup.py",
 ]
 
 [tool.deptry]

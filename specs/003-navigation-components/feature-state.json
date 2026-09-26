@@ -1,0 +1,515 @@
+{
+  "feature": "003-navigation-components",
+  "branch": "003-navigation-components",
+  "repo": "SamuelJennings/daisy-cotton",
+  "state": "PR_READY",
+  "state_history": [
+    {
+      "state": "QUEUED",
+      "at": "2026-09-26T14:43:39Z",
+      "note": "specification merged in #21; issue graph built"
+    },
+    {
+      "state": "PLAN",
+      "at": "2026-09-26T20:40:46Z",
+      "note": "picked up from the queue; branch cut from origin/main de15a40; verify green on base"
+    },
+    {
+      "state": "DESIGN_REVIEW",
+      "at": "2026-09-26T20:41:15Z",
+      "note": "plan, research, tasks committed; draft PR #101 opened"
+    },
+    {
+      "state": "IMPLEMENT",
+      "at": "2026-09-26T20:50:52Z",
+      "note": "design review applied (D7-D9); plan notification sent"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-26T21:05:41Z",
+      "note": "all seven stories accepted"
+    },
+    {
+      "state": "REVIEW",
+      "at": "2026-09-26T21:08:04Z",
+      "note": "converge green; SC-005 check added; no ADR graduated"
+    },
+    {
+      "state": "IMPLEMENT",
+      "at": "2026-09-26T21:13:36Z",
+      "note": "review fix cycle: RVW-001 medium, RVW-002..004 low, all verified"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-26T21:16:24Z",
+      "note": "review fixes T023-T025 accepted and verified"
+    },
+    {
+      "state": "REVIEW",
+      "at": "2026-09-26T21:16:24Z",
+      "note": "review recorded: 1 medium + 3 low fixed in one cycle, 1 low accepted"
+    },
+    {
+      "state": "PR_READY",
+      "at": "2026-09-26T21:17:57Z",
+      "note": "walkthrough pending with the maintainer; pull request left as a draft"
+    }
+  ],
+  "gates": {
+    "spec": {
+      "approved_by": "SamuelJennings",
+      "at": "2026-09-26T14:43:39Z",
+      "self_resolved": [
+        "merge commit 19682a35ff, pull request #21"
+      ]
+    },
+    "plan": {
+      "approved_by": "notified",
+      "at": "2026-09-26T20:50:47Z"
+    },
+    "merge": {
+      "approved_by": null,
+      "at": null
+    },
+    "design_review": {
+      "approved_by": "design-panel",
+      "at": "2026-09-26T20:50:47Z",
+      "self_resolved": [
+        "ARCH-001, SPEC-001, ARCH-002, SPEC-004 and the icon-only note: applied as plan/tasks edits (D7)",
+        "SPEC-003: dock toggle drops role/tabindex (D9)",
+        "SPEC-002: spec-level, held for the accessibility run (D8)"
+      ]
+    }
+  },
+  "stories": [
+    {
+      "id": "US1",
+      "priority": "P1",
+      "issue": 43,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/003-navigation-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T007",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_menu.py -q: 11 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_menu.py"
+            ]
+          }
+        },
+        {
+          "id": "T008",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_menu.py -q: 26 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_menu.py"
+            ]
+          }
+        },
+        {
+          "id": "T009",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_menu.py -q: 36 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_menu.py"
+            ]
+          }
+        },
+        {
+          "id": "T010",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_gallery_links.py -q: 173 passed, 7 skipped",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py",
+              "tests/test_gallery_annotations.py"
+            ]
+          }
+        },
+        {
+          "id": "T023",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_link.py tests/test_menu.py tests/test_tabs.py tests/test_steps.py tests/test_dock.py -q: 137 passed (14 new failed first)",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "TestLinkPageContext",
+              "TestMenuPageContext",
+              "TestTabsPageContext",
+              "TestStepPageContext",
+              "TestDockItemPageContext"
+            ]
+          }
+        },
+        {
+          "id": "T024",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_menu.py tests/test_dock.py -q: 71 passed; probes removing only / aria-hidden each failed a test"
+            ],
+            "tests": [
+              "TestMenuSubmenuIconIsolation",
+              "TestDockItemToggleIcon"
+            ]
+          }
+        },
+        {
+          "id": "T025",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "US2",
+      "priority": "P1",
+      "issue": 44,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/003-navigation-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T011",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_navbar.py -q: 12 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_navbar.py"
+            ]
+          }
+        },
+        {
+          "id": "T012",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_navbar.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py -q: 171 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US3",
+      "priority": "P1",
+      "issue": 45,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/003-navigation-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T001",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_link.py -q: 14 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_link.py"
+            ]
+          }
+        },
+        {
+          "id": "T002",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_breadcrumbs_href_attribute.py -q: 17 passed",
+              "uv run pytest tests/test_class_attribute_merge.py tests/test_declared_attributes.py tests/test_gallery_annotations.py tests/test_gallery_lint.py -q: passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_breadcrumbs_href_attribute.py"
+            ]
+          }
+        },
+        {
+          "id": "T003",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "git diff: CHANGELOG.md [Unreleased] Changed entries for link and breadcrumbs added"
+            ],
+            "tests": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "US4",
+      "priority": "P2",
+      "issue": 46,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/003-navigation-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T013",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_tabs.py -q: 10 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_tabs.py::TestTabsRoot"
+            ]
+          }
+        },
+        {
+          "id": "T014",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_tabs.py -q: 22 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_tabs.py::TestTabLink",
+              "tests/test_tabs.py::TestTabButton"
+            ]
+          }
+        },
+        {
+          "id": "T015",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_tabs.py -q: 29 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_tabs.py::TestTabRadio"
+            ]
+          }
+        },
+        {
+          "id": "T016",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_tabs.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_gallery_links.py -q: 219 passed, 8 skipped",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US5",
+      "priority": "P2",
+      "issue": 47,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/003-navigation-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T004",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_dock.py tests/test_class_attribute_merge.py -q: 12 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_dock.py::TestDockRoot"
+            ]
+          }
+        },
+        {
+          "id": "T005",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_dock.py tests/test_class_attribute_merge.py -q: 29 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_dock.py::TestDockItemLink",
+              "tests/test_dock.py::TestDockItemButton",
+              "tests/test_dock.py::TestDockItemToggle"
+            ]
+          }
+        },
+        {
+          "id": "T006",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "git diff: CHANGELOG.md [Unreleased] Changed entry for the dock added"
+            ],
+            "tests": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "US6",
+      "priority": "P3",
+      "issue": 48,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/003-navigation-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T017",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_steps.py -q: 19 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_steps.py"
+            ]
+          }
+        },
+        {
+          "id": "T018",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_steps.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_gallery_links.py -q: 220 passed, 9 skipped",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US7",
+      "priority": "P3",
+      "issue": 49,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/003-navigation-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T019",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_megamenu.py -q: 11 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_megamenu.py::TestMegamenuRoot",
+              "tests/test_megamenu.py::TestMegamenuToggle"
+            ]
+          }
+        },
+        {
+          "id": "T020",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_megamenu.py -q: 17 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_megamenu.py::TestMegamenuItem"
+            ]
+          }
+        },
+        {
+          "id": "T021",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_megamenu.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_gallery_links.py -q: 229 passed, 10 skipped",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "budgets": {
+    "converge_cycles": {
+      "used": 2,
+      "max": 2
+    },
+    "review_cycles": {
+      "used": 1,
+      "max": 1
+    },
+    "design_review_cycles": {
+      "used": 1,
+      "max": 1
+    },
+    "tokens": {
+      "used": 0,
+      "max": 120
+    }
+  },
+  "pr": {
+    "number": 101,
+    "draft": true
+  }
+}
