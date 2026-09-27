@@ -3,7 +3,8 @@
 A literal Tailwind shade (``bg-neutral-900``), ``white``/``black`` or a hex
 value ignores the project's active daisyUI theme. The check reads every
 template's source, gallery examples included, since an example is markup a
-reader copies.
+reader copies. The pixels of an image a gallery example embeds, such as an
+inline SVG placeholder, are that image's own and out of scope.
 """
 
 import re

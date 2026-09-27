@@ -117,6 +117,15 @@ class TestMaskContainer:
         assert not mask(soup).has_attr("src")
         assert not mask(soup).has_attr("alt")
 
+    def test_a_div_merges_class_and_passes_attributes(self, cotton_render_string):
+        html = cotton_render_string(
+            '<c-mask shape="circle" class="size-16" data-x="1">x</c-mask>'
+        )
+
+        assert root_attribute_names(html).count("class") == 1
+        assert "size-16" in html
+        assert 'data-x="1"' in html
+
 
 class TestMaskEdgeCases:
     def test_no_shape_gives_only_mask(self, cotton_render_string_soup):

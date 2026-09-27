@@ -214,3 +214,22 @@ Three changes, each small enough that a dispatch would have cost more than the e
   repeating both calls in each branch.
 
 **ADR:** none — local fixes inside this feature's templates and tests.
+
+## D13 — Code review applied
+
+One reviewer, correctness and spec lens, verdict approve with six low findings, all verified. Fixed
+directly, each a line or two:
+
+- LAY-001: a test that the mask's container branch merges `class` and passes attributes.
+- LAY-002: `mockup.code` declares `tabindex` with a default of `0`, so a caller's value replaces it
+  once instead of producing a duplicate attribute.
+- LAY-003: the CHANGELOG says what a project writes to keep the old phone and window layouts, and
+  that `mockup.browser` now wraps its content in a `<div>`.
+- LAY-004: the `side` and `items` descriptions say an attribute of the same name replaces the slot.
+- LAY-005: the literal-colour check's docstring puts an embedded image's own pixels out of scope,
+  which covers the mask example's inline SVG placeholder.
+
+LAY-006 (`class` still has no default, so a page variable named `class` reaches the root) applies to
+every component in the package, not only this feature's, and belongs in its own change.
+
+**ADR:** none — a record of review dispositions.

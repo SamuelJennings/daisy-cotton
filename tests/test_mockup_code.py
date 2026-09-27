@@ -100,6 +100,14 @@ class TestCodeBlock:
 
         assert soup.find("div")["tabindex"] == "0"
 
+    def test_a_caller_tabindex_replaces_the_default_once(self, cotton_render_string):
+        html = cotton_render_string(
+            '<c-mockup.code tabindex="-1"><c-mockup.code.line text="ls" /></c-mockup.code>'
+        )
+
+        assert root_attribute_names(html).count("tabindex") == 1
+        assert 'tabindex="-1"' in html
+
     def test_class_is_merged_into_the_root(
         self, cotton_render_string, cotton_render_string_soup
     ):
