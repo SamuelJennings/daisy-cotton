@@ -28,6 +28,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `unique_id`, a `daisy_cotton` template tag returning a prefix plus eight lowercase hex
   characters, different on every call. `<c-dropdown>` uses it to give its panel an id when the
   caller gives none.
+- `<c-swap>`: daisyUI's checkbox-driven swap. `rotate`, `flip` and `active` map to `swap-rotate`,
+  `swap-flip` and `swap-active`; `label` names the checkbox for assistive technology; `checked`,
+  `disabled`, `name` and `value` land on the checkbox, and everything else lands on the wrapper.
+  `on` and `off` slots always render in `swap-on`/`swap-off`, and an `indeterminate` slot renders
+  in `swap-indeterminate` when given. The checkbox accepts extra classes through `input_class` —
+  a theme toggle is `input_class="theme-controller" value="dark"`; the theme controller has no
+  component of its own, since a plain `<c-swap>` already covers it.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is

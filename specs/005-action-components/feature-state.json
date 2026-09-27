@@ -254,8 +254,18 @@
         },
         {
           "id": "T011",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_swap.py tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_declared_attributes.py -q: 191 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 21/22 clean, 0 errors/0 warnings, exit 0"
+            ],
+            "tests": [
+              "tests/test_swap.py::TestSwapGalleryAnnotations",
+              "tests/test_swap.py::TestSwapThemeToggleComment"
+            ]
+          }
         }
       ]
     },

@@ -5,6 +5,7 @@ the control's state, form attributes and accessible name, and `on`/`off`/
 `indeterminate` slots in `swap-on`/`swap-off`/`swap-indeterminate`.
 """
 
+import re
 from pathlib import Path
 
 from django_cotton_gallery.core.annotations import AnnotationParser
@@ -145,6 +146,31 @@ class TestSwapGalleryAnnotations:
     def test_on_off_and_indeterminate_each_have_a_named_slot(self):
         names = {s.name for s in self._parsed().slots}
         assert {"on", "off", "indeterminate"} <= names
+
+    def test_on_and_off_have_short_word_examples(self):
+        slots = {s.name: s for s in self._parsed().slots}
+        assert slots["on"].content == "ON"
+        assert slots["off"].content == "OFF"
+
+    def test_indeterminate_has_no_example_and_describes_the_script_dependency(self):
+        slot = next(s for s in self._parsed().slots if s.name == "indeterminate")
+        assert slot.content == ""
+        assert "script" in slot.description
+
+    def test_the_description_tells_the_viewer_to_give_label(self):
+        assert "label" in self._parsed().description
+
+
+class TestSwapThemeToggleComment:
+    """FR-024: the theme controller has no component of its own, and the
+    template says so and shows the markup."""
+
+    def test_the_comment_names_the_theme_controller_class(self):
+        source = SWAP_TEMPLATE.read_text()
+        [comment] = re.findall(
+            r"\{%\s*comment\s*%\}(.*?)\{%\s*endcomment\s*%\}", source, re.DOTALL
+        )
+        assert "theme-controller" in comment
 
 
 class TestSwapContextLeak:

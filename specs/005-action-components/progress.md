@@ -197,3 +197,23 @@ tests/test_swap.py -q` → 15 passed. `uv run djlint daisy_cotton/templates/cott
 Next: T011 (swap gallery annotations, theme-toggle comment, README/CHANGELOG).
 Watch: US4 done-check for scenarios 1, 3-6 satisfied; scenarios 2, 7 and 8 (in-browser
 keyboard, documentation, gallery) are T011's and T013's.
+
+## 2026-09-27T09:35Z · Implementer US4 · T011
+
+Did: `@slot:on ON` and `@slot:off OFF` gained short-word examples; `@slot:indeterminate` keeps
+no example and its description says only a project's own script sets the indeterminate state;
+the component `@description` now tells the viewer to give `label` (D5-style). Added a
+`{% comment %}` block showing the theme toggle (`input_class="theme-controller" value="dark"`)
+and that the theme controller has no component of its own, since a plain `<c-swap>` already
+covers it. README's component count and list gain `swap`. CHANGELOG `Added` records `<c-swap>`'s
+attributes and the theme-toggle pattern (FR-003, FR-007, FR-024).
+Added `TestSwapThemeToggleComment` and extended `TestSwapGalleryAnnotations` in
+`tests/test_swap.py`, reading the template through the gallery's `AnnotationParser` and the raw
+source for the comment block.
+Verified: `uv run pytest tests/test_swap.py tests/test_gallery_lint.py
+tests/test_gallery_annotations.py tests/test_declared_attributes.py -q` → 191 passed. `uv run
+python manage.py cotton_lint --warnings-as-errors` → 21/22 clean, 0 errors/0 warnings (exit 0).
+Next: T012 (FAB).
+Watch: US4 done-check satisfied for scenarios 1, 3-6; scenario 2 (in-browser keyboard) and
+scenario 7's gallery walk are T013's. Scenario 8 (gallery entry showing the styles/states) is
+covered by the annotations above plus T013's browser walk.

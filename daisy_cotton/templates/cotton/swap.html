@@ -1,4 +1,4 @@
-{# @description A checkbox-driven swap: content flips between the on and off slots when its checkbox is toggled. #}
+{# @description A checkbox-driven swap: content flips between the on and off slots when its checkbox is toggled. Give label so it has an accessible name. #}
 {# @prop label:text | description:"Accessible name for the checkbox." #}
 {# @prop rotate:boolean | description:"Flip the content with a rotation instead of a swap." #}
 {# @prop flip:boolean | description:"Flip the content with a horizontal flip instead of a swap." #}
@@ -12,9 +12,20 @@
 {# @prop off:text | description:"Content shown when the checkbox is unchecked." #}
 {# @prop indeterminate:text | description:"Content shown while the checkbox is indeterminate." #}
 {# @prop class:text | description:"Extra classes added to the wrapper." #}
-{# @slot:on — Content shown when the checkbox is checked. #}
-{# @slot:off — Content shown when the checkbox is unchecked. #}
-{# @slot:indeterminate — Content shown while the checkbox is indeterminate. #}
+{# @slot:on ON — Content shown when the checkbox is checked. #}
+{# @slot:off OFF — Content shown when the checkbox is unchecked. #}
+{# @slot:indeterminate — Only a project's own script sets the checkbox's indeterminate state; give label so the control still has a name. #}
+{% comment %}
+  daisyUI's theme-controller class turns a checkbox into a full page theme
+  switch. It has no component of its own here: it is exactly a swap whose
+  checkbox carries an extra class and a value, so <c-swap> already covers
+  it:
+
+    <c-swap input_class="theme-controller" value="dark">
+      <c-slot name="on">🌙</c-slot>
+      <c-slot name="off">☀️</c-slot>
+    </c-swap>
+{% endcomment %}
 <c-vars label=""
         rotate=""
         flip=""
