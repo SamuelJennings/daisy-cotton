@@ -530,8 +530,28 @@
       "tasks": [
         {
           "id": "T022",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_kbd.py tests/test_status.py -q: 32 passed (observed 32 failures on TemplateDoesNotExist before the templates existed)",
+              "uv run pytest tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_render_all.py -q: 74 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/kbd.html daisy_cotton/templates/cotton/status.html tests/test_kbd.py tests/test_status.py pyproject.toml: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_kbd.py::TestKbdElement",
+              "tests/test_kbd.py::TestKbdContent",
+              "tests/test_kbd.py::TestKbdSize",
+              "tests/test_kbd.py::TestKbdClassAndAttrs",
+              "tests/test_kbd.py::TestKbdPageContextDoesNotLeak",
+              "tests/test_status.py::TestStatusElement",
+              "tests/test_status.py::TestStatusVariant",
+              "tests/test_status.py::TestStatusSize",
+              "tests/test_status.py::TestStatusAccessibility",
+              "tests/test_status.py::TestStatusClassAndAttrs",
+              "tests/test_status.py::TestStatusPageContextDoesNotLeak"
+            ]
+          }
         },
         {
           "id": "T023",
