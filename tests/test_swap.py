@@ -190,3 +190,11 @@ class TestSwapContextLeak:
         assert "Leaked on" not in html
         assert "Leaked off" not in html
         assert "Leaked label" not in html
+
+
+class TestSwapWrapperClass:
+    """FR-021: the wrapper itself carries daisyUI's `swap` class."""
+
+    def test_the_wrapper_carries_swap(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup('<c-swap label="Dark mode" />')
+        assert "swap" in soup.label["class"]

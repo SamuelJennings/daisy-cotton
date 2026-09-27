@@ -238,3 +238,11 @@ class TestDropdownContextLeak:
         assert "Leaked" not in html
         assert "leaked-id" not in html
         assert "dropdown-top" not in html
+
+
+class TestDropdownPanelClass:
+    """FR-017: the panel carries daisyUI's `dropdown` class, which positions it."""
+
+    def test_the_panel_carries_the_dropdown_class(self):
+        html = render(f'<c-dropdown text="Options">{PANEL}</c-dropdown>')
+        assert re.search(r'<div id="[^"]+"\s+popover\s+class="dropdown[ "]', html)

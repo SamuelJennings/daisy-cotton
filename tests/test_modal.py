@@ -224,3 +224,34 @@ class TestModalWithoutId:
         html = render("<c-modal>Body</c-modal>")
 
         assert "id=" not in html.split(">", 1)[0]
+
+
+class TestModalCloseMechanics:
+    """FR-015: the close button and the backdrop close the dialog without script."""
+
+    def test_the_close_button_is_a_btn_inside_a_dialog_form(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup('<c-modal id="m" closable>Body</c-modal>')
+        close = soup.find("button", attrs={"aria-label": "Close"})
+        assert "btn" in close["class"]
+        form = close.find_parent("form")
+        assert form["method"] == "dialog"
+        assert "modal-backdrop" not in (form.get("class") or [])
+
+    def test_the_backdrop_is_daisyuis_dialog_form(self):
+        html = render('<c-modal id="m">Body</c-modal>')
+        assert '<form method="dialog" class="modal-backdrop">' in html
+
+    def test_a_title_without_an_id_writes_no_labelledby(self):
+        html = render('<c-modal title="T">Body</c-modal>')
+        assert "aria-labelledby" not in html
+
+    def test_the_modal_class_does_not_reach_the_close_button(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup(
+            '<c-modal id="m" closable class="my-modal">Body</c-modal>'
+        )
+        close = soup.find("button", attrs={"aria-label": "Close"})
+        assert "my-modal" not in close["class"]

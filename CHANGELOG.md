@@ -58,7 +58,8 @@ decision.
 - The demo project is the component gallery alone: a plain Cotton and daisyUI page with a theme
   switcher, needing no other package behind it.
 - `<c-button>`: `size` accepts daisyUI's full `xs`–`xl` scale (previously `sm`–`lg`); `dash`,
-  `link` and `active` are new style/behaviour booleans; `full` is renamed `block`, daisyUI's own
+  `soft`, `link`, `active`, `wide`, `square` and `circle` are new booleans (on main they reached the
+  element as raw attributes and did nothing); `full` is renamed `block`, daisyUI's own
   name for the modifier. `align`, `reverse` and `condition` are removed: set layout with `class`,
   put an icon after the text in the default slot, and wrap the tag in `{% if %}` for a conditional
   button. The icon is now hidden from assistive technology (`aria-hidden="true"`); an icon-only
@@ -68,7 +69,8 @@ decision.
 - `<c-modal>`: drops the inner `<c-card>` for daisyUI's own plain box, so `class` now lands on the
   `<dialog>` instead of the card — put an inner surface's own classes in `content_class`. `size`,
   `icon`, `footer` and `footer_end` are removed: put a `<c-card>` in the default slot for a card
-  inside a modal, and size the box with `content_class`. `position` is renamed `placement` and
+  inside a modal, and size the box with `content_class`. The `actions` slot now renders in
+  daisyUI's actions row at the foot of the box instead of the card header. `position` is renamed `placement` and
   gains `middle` alongside `top`, `bottom`, `start` and `end`. `title` now renders as a heading
   that names the dialog (`aria-labelledby`) instead of forwarding to the card.
 - `<c-dropdown>`: moves to daisyUI's popover method — the trigger is a real `<button>` with
@@ -77,4 +79,8 @@ decision.
   `placement` taking one side and one alignment, e.g. `placement="top end"`. `full` and `hover`
   are removed: the popover method offers neither. `class` now lands on the wrapper only and
   never reaches the default trigger. The panel no longer carries `dropdown-content`, `tabindex`,
-  `z-50` or a border — put those in `content_class` if a project needs them.
+  `z-50` or a border — put those in `content_class` if a project needs them. `id` now names the
+  panel instead of passing through to the wrapper or the trigger. A custom `button` slot trigger
+  opens the panel only if it is a button carrying `popovertarget` set to the dropdown's `id`,
+  `type="button"` and `style="anchor-name: --<id>"`, so a dropdown with a custom trigger needs an
+  `id`. A `<div tabindex="0" role="button">` trigger no longer opens anything.

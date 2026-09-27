@@ -196,3 +196,27 @@ class TestFabContextLeak:
         assert "Leaked close" not in html
         assert "Leaked main action" not in html
         assert "Leaked button" not in html
+
+
+class TestFabAttributeRouting:
+    """FR-026: the trigger's attributes stay on the trigger; actions follow close and main action."""
+
+    def test_trigger_attributes_do_not_reach_the_wrapper(self, cotton_render_string):
+        html = cotton_render_string(
+            '<c-fab icon="bi bi-plus-lg" aria-label="Actions" variant="primary" />'
+        )
+        wrapper_open_tag = html.strip().split(">", 1)[0]
+        assert "aria-label" not in wrapper_open_tag
+        assert "icon=" not in html
+        assert "variant=" not in html
+
+    def test_close_and_main_action_come_before_the_actions(self, cotton_render_string):
+        html = cotton_render_string(
+            '<c-fab aria-label="Actions"><c-slot name="close">X</c-slot>'
+            '<c-slot name="main_action">M</c-slot><span id="first-action">A</span></c-fab>'
+        )
+        assert (
+            html.index("fab-close")
+            < html.index("fab-main-action")
+            < html.index("first-action")
+        )

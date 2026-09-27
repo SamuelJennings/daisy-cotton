@@ -6,6 +6,7 @@ modifier boolean, and the removed `align`, `reverse`, `condition` and `full`
 attributes (`block` replaces `full`).
 """
 
+import re
 from pathlib import Path
 
 import pytest
@@ -184,3 +185,65 @@ class TestButtonContextLeak:
         assert "<a" not in html
         assert "Leaked" not in html
         assert "btn-primary" not in html
+
+
+class TestButtonVocabulary:
+    """FR-008, FR-011: every modifier, colour and size maps to its daisyUI class."""
+
+    @pytest.mark.parametrize(
+        "name",
+        [
+            "outline",
+            "dash",
+            "soft",
+            "ghost",
+            "link",
+            "active",
+            "wide",
+            "block",
+            "square",
+            "circle",
+        ],
+    )
+    def test_each_boolean_emits_its_class(self, name):
+        html = render(f"<c-button {name}>Save</c-button>")
+        opening = html.split(">", 1)[0]
+        assert f"btn-{name}" in opening
+
+    @pytest.mark.parametrize(
+        "variant",
+        [
+            "neutral",
+            "primary",
+            "secondary",
+            "accent",
+            "info",
+            "success",
+            "warning",
+            "error",
+        ],
+    )
+    def test_each_variant_emits_its_class(self, variant):
+        html = render(f'<c-button variant="{variant}">Save</c-button>')
+        assert f"btn-{variant}" in html.split(">", 1)[0]
+
+    @pytest.mark.parametrize("size", ["xs", "sm", "md", "lg", "xl"])
+    def test_each_size_emits_its_class(self, size):
+        html = render(f'<c-button size="{size}">Save</c-button>')
+        assert f"btn-{size}" in html.split(">", 1)[0]
+
+    def test_full_is_not_a_modifier(self):
+        html = render("<c-button full>Save</c-button>")
+        assert "btn-full" not in html
+        assert "btn-block" not in html
+
+    def test_disabled_button_carries_a_bare_native_attribute(self):
+        html = render("<c-button disabled>Save</c-button>")
+        assert re.search(r"<button[^>]*\sdisabled[\s>]", html)
+        assert "aria-disabled" not in html
+
+    def test_an_undeclared_small_attribute_does_not_size_the_button(self):
+        """Regression guard kept from main (#328)."""
+        html = render('<c-button text="Save" small />')
+        assert "btn-sm" not in html
+        assert re.search(r"<button[^>]*\bsmall\b[^>]*>", html)

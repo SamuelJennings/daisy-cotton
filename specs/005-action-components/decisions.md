@@ -161,3 +161,25 @@ Every acceptance scenario that rendered markup can show has a test. The scenario
 browser (keyboard, Escape, focus return, the gallery entries) are checked in the accessibility run.
 
 **ADR:** none — local edits inside this feature's templates.
+
+## D9 — Code review applied
+
+One reviewer, correctness and spec lens, verdict request changes with one high finding, all
+findings verified. Each fix was a line or a test, so each was made directly and checked against
+the mutation the reviewer reported: every mutation that had survived the suite now fails it.
+
+- DOC-001 (high): the CHANGELOG says that `id` now names the dropdown's panel, and what a custom
+  `button` slot trigger must carry. A `<div tabindex="0" role="button">` trigger no longer opens
+  anything.
+- DOC-002: the CHANGELOG says the modal's `actions` slot moved to the actions row at the foot.
+- TST-001 to TST-008: tests for every button modifier, colour and size; the bare native
+  `disabled`; the dropdown panel's `dropdown` class; the modal's close form and backdrop class; a
+  title with no id; the modal's `class` staying off its close button; the swap wrapper's class; the
+  FAB's trigger attributes staying off the wrapper and its child order; and one no-script check
+  across all five components.
+- TST-009: main's regression test that an undeclared `small` never sizes the button is restored.
+- ACC-001: the swap's gallery preview has no `label` until one is typed. The linter rejects an
+  annotation default that differs from the `<c-vars>` default, so this is D5's exemption again.
+  The `label` description asks for one.
+
+**ADR:** none — a record of review dispositions.
