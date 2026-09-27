@@ -1,7 +1,6 @@
 """``<c-divider>``: direction, colour, label placement, label and role."""
 
 from html.parser import HTMLParser
-
 from pathlib import Path
 
 import pytest

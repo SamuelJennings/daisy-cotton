@@ -29,12 +29,9 @@ class TestResponsive:
         assert responsive("true", "divider-horizontal") == ""
         assert responsive("left", "divider-horizontal") == ""
 
-    @pytest.mark.parametrize("breakpoint", ["sm", "md", "lg", "xl", "2xl"])
-    def test_every_daisyui_breakpoint_is_accepted(self, breakpoint):
-        assert (
-            responsive(breakpoint, "divider-horizontal")
-            == f"{breakpoint}:divider-horizontal"
-        )
+    @pytest.mark.parametrize("bp", ["sm", "md", "lg", "xl", "2xl"])
+    def test_every_daisyui_breakpoint_is_accepted(self, bp):
+        assert responsive(bp, "divider-horizontal") == f"{bp}:divider-horizontal"
 
 
 class TestVariation:
