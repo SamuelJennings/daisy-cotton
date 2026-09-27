@@ -124,6 +124,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   colours), plus optional `image`, `header` and `footer` named slots rendered in `chat-image`,
   `chat-header` and `chat-footer`, each emitted only when given. An avatar goes in the `image` slot as
   `<c-avatar>`; the chat's side is visual only, so name the speaker in `header`.
+- `<c-diff>`: daisyUI's diff, a `<figure>` carrying `diff` and `tabindex="0"`, holding `diff-item-1`
+  (also focusable) and `diff-item-2` in the `item_1` and `item_2` named slots, and an empty
+  `diff-resizer`, in that order. Both items stay available to assistive technology whatever the
+  resizer's position; dragging it needs a pointer. `aria-label` has no default: the component cannot
+  invent a name.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
