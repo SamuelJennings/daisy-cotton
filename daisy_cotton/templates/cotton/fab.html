@@ -1,0 +1,23 @@
+{# @description A floating action button: daisyUI's large circular trigger reveals further actions arranged around it. Type icon="bi bi-plus-lg" aria-label="Actions" in the attributes field to give the trigger an icon and a name. #}
+{# @prop flower:boolean | description:"Arrange the actions in a quarter-circle instead of a column." #}
+{# @prop close:text | description:"Content shown in the close button's place while the FAB is open." #}
+{# @prop main_action:text | description:"Content shown as the primary action while the FAB is open, taking the trigger's place." #}
+{# @prop button:text | description:"A custom trigger, replacing the default. Must be focusable and carry tabindex, so a click opens the FAB in every browser." #}
+{# @prop class:text | description:"Extra classes added to the FAB wrapper. Never reaches the default trigger." #}
+{# @slot <c-button circle icon="bi bi-envelope" aria-label="Mail" /><c-button circle icon="bi bi-bell" aria-label="Notifications" /><div>Profile <c-button circle icon="bi bi-person" aria-label="Profile" /></div> — The FAB's actions, each a direct child of the wrapper. #}
+{# @slot:close — Content shown in the close button's place while the FAB is open, e.g. a <c-button circle icon="bi bi-x-lg" aria-label="Close" />. #}
+{# @slot:main_action — Content shown as the primary action while the FAB is open, e.g. a labelled <c-button>. #}
+{# @slot:button — A custom trigger. Must be focusable and carry tabindex, so a click opens the FAB in every browser. #}
+<c-vars flower="" close="" main_action="" button="" class="" />
+{# djlint:off #}
+<div class="fab{% if flower %} fab-flower{% endif %} {{ class }}" {% if button %}{{ attrs }}{% endif %}>
+  {% if button %}
+    {{ button }}
+  {% else %}
+    <c-button type="button" size="lg" circle tabindex="0" :attrs="attrs" />
+  {% endif %}
+  {% if close %}<div class="fab-close">{{ close }}</div>{% endif %}
+  {% if main_action %}<div class="fab-main-action">{{ main_action }}</div>{% endif %}
+  {{ slot }}
+</div>
+{# djlint:on #}

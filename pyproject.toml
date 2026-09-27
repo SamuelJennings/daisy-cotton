@@ -148,6 +148,14 @@ non-mirror-paths = [
     "tests/test_content_display_no_script.py",
     "tests/test_icon.py",
     "tests/test_link.py",
+    "tests/test_divider.py",
+    "tests/test_join.py",
+    "tests/test_footer.py",
+    "tests/test_drawer.py",
+    "tests/test_indicator.py",
+    "tests/test_hero.py",
+    "tests/test_mask_stack.py",
+    "tests/test_mockup.py",
     "tests/test_mockup_code.py",
     "tests/test_modal.py",
     "tests/test_collapse.py",
@@ -157,7 +165,15 @@ non-mirror-paths = [
     "tests/test_timeline.py",
     "tests/test_kbd.py",
     "tests/test_status.py",
+    "tests/test_swap.py",
+    "tests/test_fab.py",
     "tests/test_breadcrumbs_href_attribute.py",
+    "tests/test_dock.py",
+    "tests/test_menu.py",
+    "tests/test_navbar.py",
+    "tests/test_tabs.py",
+    "tests/test_steps.py",
+    "tests/test_megamenu.py",
     "tests/test_form_field.py",
     "tests/test_gallery_annotations.py",
     "tests/test_gallery_lint.py",
@@ -167,6 +183,11 @@ non-mirror-paths = [
     # Walks the rendered gallery sidebar; there is no source module for a
     # test parametrised from another package runtime output to mirror.
     "tests/test_gallery_links.py",
+    # Reads every component template for literal colours (Article XIII).
+    "tests/test_semantic_palette.py",
+    # Reads the source of the navigation templates for scripts; there is no
+    # Python module to mirror.
+    "tests/test_navigation_markup.py",
 ]
 
 [tool.deptry]

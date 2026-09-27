@@ -148,3 +148,14 @@ The reviewer approved with two medium and four low findings, all verified but on
 The review's notes on the card's gallery examples (the figure's `alt`, the spacing in "Cart 3") and on an untitled collapse were applied in the same pass.
 
 **ADR:** none — local fixes inside this feature.
+
+## D8 — Merged with the navigation, layout and action components
+
+#101, #102 and #103 merged to main while this pull request was open, and main was merged into this branch:
+
+- **The modal is main's.** #103 replaced the card inside the modal with daisyUI's own modal box, so the stopgap in D3 and its tests go. The modal no longer depends on the card.
+- **The template tags are main's.** The `responsive` breakpoint check and `unique_id` were copied unchanged from #102 and #103, so they merged to identical code.
+- **The README's count is 55.** Main read 32, the count after #101, and #102 and #103 had added twelve components without updating it. The figure is now counted from the templates: 44 on main plus 11 here. The list names every component.
+- **CHANGELOG.** Both sides were kept. The duplicate `unique_id` entry is merged into main's, and the line about the modal's actions moving is dropped because it describes the stopgap.
+
+**ADR:** none — a merge of concurrent branches.

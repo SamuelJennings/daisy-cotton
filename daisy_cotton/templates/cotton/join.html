@@ -1,0 +1,16 @@
+{# @description A group of joined items, such as buttons or an input with a button, sharing borders and rounded ends. Give each child the join-item class. Any further attributes reach the group element. #}
+{# @prop horizontal:boolean | description:"Lay the items out in a row. Accepts a breakpoint such as lg to apply it from that width up." #}
+{# @prop vertical:boolean | description:"Stack the items in a column. Accepts a breakpoint such as lg to apply it from that width up." #}
+{# @prop role:text | description:"ARIA role of the group. Leave empty for group; name the group with an aria-label attribute." #}
+{# @prop class:text | description:"Extra classes added to the group." #}
+{# @slot <button class="btn join-item">One</button><button class="btn join-item">Two</button><button class="btn join-item">Three</button> — The joined items, each carrying join-item. #}
+{% comment %}
+  Children go straight into the group, with no wrapper, because daisyUI
+  styles `.join > .join-item`. The role is written once: the caller's, else
+  `group`.
+{% endcomment %}
+{% load daisy_cotton %}
+<c-vars horizontal="" vertical="" role="" class />
+<div class="join {% if vertical %}{% responsive vertical 'join-vertical' %}{% endif %} {% if horizontal %}{% responsive horizontal 'join-horizontal' %}{% endif %} {{ class }}"
+     role="{{ role|default:'group' }}"
+     {{ attrs }}>{{ slot }}</div>

@@ -1,4 +1,4 @@
-{# @description One item of a dock, used inside dock. Renders as a label that toggles a drawer when toggle is given, as a link when href is given, and as an inert button otherwise. #}
+{# @description One item of a dock, used inside dock. Renders as a label that toggles a drawer when toggle is given, as a link when href is given, and as a button otherwise. An item with an icon and no label is named by an aria-label passed by the caller. #}
 {# @prop active:boolean | description:"Mark this item as the current destination." #}
 {# @prop icon:text | description:"Icon shown above the label, passed as the name of the icon component." #}
 {# @prop label:text | description:"Text shown under the icon." #}
@@ -6,15 +6,13 @@
 {# @prop toggle:text | description:"Id of a drawer checkbox this item flips, such as the sidebar toggle." #}
 {# @prop class:text | description:"Extra classes added to the item." #}
 {% load i18n %}
-<c-vars active icon label href toggle class />
+<c-vars active="" icon label href="" toggle="" class />
 {% if toggle %}
   <label for="{{ toggle }}"
-         role="button"
-         tabindex="0"
-         aria-label="{{ label }}"
+         {% if label %}aria-label="{{ label }}"{% endif %}
          class="{% if active %}dock-active{% endif %} {{ class }}"
          {{ attrs }}>
-    {% if icon %}<c-icon name="{{ icon }}" />{% endif %}
+    {% if icon %}<c-icon name="{{ icon }}" aria-hidden="true" only />{% endif %}
     {% if label %}<span class="dock-label">{{ label }}</span>{% endif %}
   </label>
 {% elif href %}
@@ -22,12 +20,12 @@
      class="{% if active %}dock-active{% endif %} {{ class }}"
      {% if active %}aria-current="page"{% endif %}
      {{ attrs }}>
-    {% if icon %}<c-icon name="{{ icon }}" />{% endif %}
+    {% if icon %}<c-icon name="{{ icon }}" aria-hidden="true" only />{% endif %}
     {% if label %}<span class="dock-label">{{ label }}</span>{% endif %}
   </a>
 {% else %}
-  <button class="{% if active %}dock-active{% endif %} {{ class }}" {{ attrs }}>
-    {% if icon %}<c-icon name="{{ icon }}" />{% endif %}
+  <button type="button" class="{% if active %}dock-active{% endif %} {{ class }}" {{ attrs }}>
+    {% if icon %}<c-icon name="{{ icon }}" aria-hidden="true" only />{% endif %}
     {% if label %}<span class="dock-label">{{ label }}</span>{% endif %}
   </button>
 {% endif %}

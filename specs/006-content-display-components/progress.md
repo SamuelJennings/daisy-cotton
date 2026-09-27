@@ -213,3 +213,8 @@ Watch: a pre-existing uncommitted formatting-only diff in `tests/test_content_di
 Did: one reviewer, approve, two medium and four low findings, all fixed with the collapse focus ring from the accessibility run (T025-T029, D7). Each remedy verified by breaking it: the suite fails.
 Verified: uv run pytest 609 passed, 9 skipped. Accessibility run clean apart from the theme's soft-badge contrast.
 Next: walkthrough.
+
+## 2026-09-27T16:29Z · Merge main
+
+Did: merged main after #101, #102 and #103 landed (D8). Resolved README, CHANGELOG, pyproject, modal and tag-test conflicts. README count set to 55 from the templates.
+Verified: uv run pytest 1392 passed, 16 skipped (folder-component gallery links, #96); pre-commit and cotton_lint clean.

@@ -1,17 +1,18 @@
 {# @description A breadcrumb trail. Pass items to build it from data, or fill the default slot with breadcrumbs.item components; each item is one step of the trail. #}
 {# @prop items:text | description:"A list of dictionaries, each holding the attributes of one breadcrumbs.item (text, href, class). When given, the default slot is not shown." #}
 {# @prop class:text | description:"Extra classes added to the trail." #}
+{# @prop aria-label:text | description:"Accessible name of the trail. Defaults to a translated Breadcrumbs." #}
 {# @slot — The trail's steps, as breadcrumbs.item components. Shown when no items are passed. #}
 {% load i18n %}
-<c-vars items class />
+<c-vars items class aria-label />
 {% comment %}
   `only` on the item is load-bearing. This component and the item declare a
   prop of the same name — `class` — and a Cotton child with no isolated context
   reads any prop it was not given out of the surrounding scope. Without it, a
   class meant for the trail is written onto every <li> in it as well.
 {% endcomment %}
-<nav class="breadcrumbs text-sm {{ class }}"
-     aria-label="{% trans "Breadcrumbs" %}"
+<nav class="breadcrumbs {{ class }}"
+     aria-label="{% if aria_label %}{{ aria_label }}{% else %}{% trans "Breadcrumbs" %}{% endif %}"
      {{ attrs }}>
   <ul>
     {% if items %}

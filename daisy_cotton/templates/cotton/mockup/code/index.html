@@ -1,3 +1,6 @@
 {# @description A terminal-style code block. Fill it with mockup.code.line components, one per line of the command or output. #}
-{# @slot — The code lines, as mockup.code.line components. #}
-<div class="mockup-code w-full">{{ slot }}</div>
+{# @prop class:text | description:"Extra classes added to the code block." #}
+{# @prop tabindex:text | default:"0" | description:"Tab order of the block. It is a Tab stop by default so overflowing lines can be scrolled with the arrow keys." #}
+{# @slot <c-mockup.code.line prefix="$" text="pip install daisy-cotton" /><c-mockup.code.line text="Successfully installed daisy-cotton" /> — The code lines, as mockup.code.line components. #}
+<c-vars class tabindex="0" />
+<div class="mockup-code w-full {{ class }}" tabindex="{{ tabindex }}" {{ attrs }}>{{ slot }}</div>

@@ -1,48 +1,40 @@
-{# @description A dialog built around a card. The modal owns the dialog element, the backdrop and the placement and sizing. title and icon are modal props drawn into the inner card's title; footer and footer_end render in a row above the actions; actions render in a card-actions row at the foot of the card body. #}
-{# @prop id:text | example:"myModal" | description:"Dialog id, used to open and close it with showModal() and close()." #}
-{# @prop size:select['sm','md','lg','xl','full'] | default:"md" | description:"Width of the dialog box. Has no effect when position is top or bottom, where the box spans the full width." #}
-{# @prop position:select['top','bottom','start','end'] | description:"Where the dialog sits on screen; by default daisyUI centres it." #}
-{# @prop closable:boolean | description:"Show a close button in the top corner." #}
-{# @prop class:text | description:"Extra classes added to the inner card surface." #}
-{# @prop title:text | description:"Heading text, forwarded to the inner card's title." #}
-{# @prop icon:text | description:"Icon shown before the title, forwarded to the inner card. Passed as the name of the icon component." #}
-{# @prop footer:text | description:"Card footer, start-aligned, in a row above the actions. Fill the footer slot instead for markup." #}
-{# @prop footer_end:text | description:"Card footer, end-aligned, in the same row as footer. Fill the footer_end slot instead for markup." #}
-{# @prop actions:text | description:"Content in a card-actions row at the foot of the card body. Fill the actions slot instead for markup." #}
-{# @slot — The dialog body, shown in the inner card. #}
-{# @slot:actions — Content in a card-actions row at the foot of the card body: buttons, a dropdown. #}
-{# @slot:footer — Card footer, start-aligned, in a row above the actions. #}
-{# @slot:footer_end — Card footer, end-aligned, in the same row as footer. #}
-{# @trigger <button onclick="myModal.showModal()">Open</button> — a modal starts closed; any element opens it by calling showModal() on the dialog whose id matches the modal's id prop, and close() or a form with method="dialog" closes it. #}
+{# @description A dialog: daisyUI's modal box with a body and an optional actions row. Give title or aria-label so it has a name. To preview it open, set id to demo_modal and switch open on. #}
+{# @prop id:text | required | description:"Dialog id, used by a trigger to open it (showModal()) and close it (close()). Also names the dialog's heading when title is set." #}
+{# @prop title:text | description:"Heading shown in the box, and the dialog's accessible name when id is set. Give this or aria-label." #}
+{# @prop placement:select['top','middle','bottom','start','end'] | description:"Where the dialog sits on screen. Leave empty to centre it." #}
+{# @prop closable:boolean | description:"Show a close button in the top corner that closes the dialog without script." #}
+{# @prop open:boolean | description:"Render the dialog already shown (<dialog open>). This is not modal: Escape does not close it and focus is not trapped, though the backdrop still does. A trigger cannot open a dialog that is already shown this way. A project that needs a modal dialog shown on load calls showModal() itself." #}
+{# @prop content_class:text | description:"Extra classes added to the modal box." #}
+{# @prop actions:text | description:"Buttons shown in daisyUI's trailing actions row. Given as the actions slot." #}
+{# @prop class:text | description:"Extra classes added to the dialog." #}
+{# @slot Delete this item? This can't be undone. — The dialog body, shown in the box. #}
+{# @slot:actions <form method="dialog"><c-button>Cancel</c-button></form> — Buttons shown in daisyUI's trailing actions row. #}
+{# @trigger <c-button onclick="demo_modal.showModal()">Open</c-button> — a modal starts closed; any element opens it by calling showModal() on the dialog whose id matches the modal's id prop, and close() or a form with method="dialog" closes it. #}
 {% load i18n daisy_cotton %}
-<c-vars id size="md" position closable class="" title="" icon="" footer="" footer_end="" actions="" />
-<dialog {% if id %}id="{{ id }}"{% endif %}
-        class="modal {% variation position "modal" "top,bottom,start,end" %}">
-  <div class="modal-box bg-transparent p-0 shadow-none {% if position == "top" or position == "bottom" %}w-full max-w-none{% else %}w-11/12 {% if size == "sm" %}max-w-md{% elif size == "lg" %}max-w-4xl{% elif size == "xl" %}max-w-6xl{% elif size == "full" %}max-w-none{% else %}max-w-2xl{% endif %}{% endif %}">
-    <c-card class="w-full h-full bg-base-100 shadow-sm {{ class }}" :attrs="attrs">
-      {% if title or icon %}
-        <c-slot name="title">
-          {% if icon %}<c-icon name="{{ icon }}" />{% endif %}
-          {% if title %}<span>{{ title }}</span>{% endif %}
-        </c-slot>
-      {% endif %}
-      {{ slot }}
-      {% if footer or footer_end %}
-        <div class="flex flex-wrap items-center gap-2 pt-2">
-          {% if footer %}<div class="flex items-center gap-2">{{ footer }}</div>{% endif %}
-          {% if footer_end %}<div class="flex items-center gap-2 ms-auto">{{ footer_end }}</div>{% endif %}
-        </div>
-      {% endif %}
-      {% if actions %}<c-slot name="actions">{{ actions }}</c-slot>{% endif %}
-    </c-card>
+<c-vars id=""
+        title=""
+        placement=""
+        closable=""
+        open=""
+        content_class=""
+        actions=""
+        class="" />
+<dialog{% if id %} id="{{ id }}"{% endif %}
+        class="modal {% variation placement "modal" "top,middle,bottom,start,end" %} {{ class }}"
+        {% if id and title %}aria-labelledby="{{ id }}-title"{% endif %}
+        {% if open %}open{% endif %}
+        {{ attrs }}>
+  <div class="modal-box {{ content_class }}">
     {% if closable %}
-      <form method="dialog">
-        <button class="btn btn-sm btn-circle btn-ghost absolute end-3 top-3"
-                aria-label="{% trans "Close" %}">✕</button>
+      <form method="dialog" class="absolute end-2 top-2">
+        <c-button size="sm" circle ghost aria-label="{% trans "Close" %}"><span aria-hidden="true">✕</span></c-button>
       </form>
     {% endif %}
+    {% if title %}<h2{% if id %} id="{{ id }}-title"{% endif %} class="text-lg font-bold">{{ title }}</h2>{% endif %}
+    {{ slot }}
+    {% if actions %}<div class="modal-action">{{ actions }}</div>{% endif %}
   </div>
   <form method="dialog" class="modal-backdrop">
-    <button aria-label="{% trans "Close" %}">{% trans "Close" %}</button>
+    <button>{% trans "Close" %}</button>
   </form>
 </dialog>

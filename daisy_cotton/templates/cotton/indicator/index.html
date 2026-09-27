@@ -1,0 +1,12 @@
+{# @description A wrapper that pins a badge or other item to a corner of its content. Put the pinned items in the items slot and the content they sit on in the default slot. Any further attributes reach the wrapper element. #}
+{# @prop class:text | description:"Extra classes added to the wrapper." #}
+{# @prop items:text | description:"The pinned items. Give them as the items slot; this declaration keeps a page variable of the same name, such as a list view's items, out of the indicator. An attribute of the same name replaces the slot." #}
+{# @slot <button class="btn">Inbox</button> — The content the items are pinned to. #}
+{# @slot:items <c-indicator.item class="badge badge-primary" placement="top end"><span aria-hidden="true">12</span><span class="sr-only">12 unread messages</span></c-indicator.item> — The pinned items, each an indicator.item. Hide a visible count from assistive technology and give it a visually hidden phrase beside it. #}
+{% comment %}
+  The items slot is written first, whatever order the caller wrote the slots
+  in: daisyUI positions each item against the wrapper, and an item that
+  follows the content would be read after it.
+{% endcomment %}
+<c-vars class items="" />
+<div class="indicator {{ class }}" {{ attrs }}>{{ items }}{{ slot }}</div>

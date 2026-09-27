@@ -1,13 +1,13 @@
-{# @description One step of a breadcrumb trail, used inside breadcrumbs. Renders as a link when an href is given, and as plain text otherwise, as the current page. #}
+{# @description One step of a breadcrumb trail, used inside breadcrumbs. Renders as a link when an href is given, and as the current page otherwise. Attributes other than the ones below land on the list item. #}
 {# @prop text:text | description:"The step's label." #}
 {# @prop class:text | description:"Extra classes added to the list item." #}
-{# @prop href:text | description:"Link address. Without it the step is not a link." #}
+{# @prop href:text | description:"Link address. Without it the step is the current page and not a link." #}
 {# @slot — Extra content shown after the label. #}
 <c-vars text class href />
-{% if href %}
-  <li class="{{ class }}">
-    <a href="{{ href }}" {{ attrs }}><span class="daisy-cotton-breadcrumb-text">{{ text }}</span>{{ slot }}</a>
-  </li>
-{% else %}
-  <li class="{{ class }}"><span class="daisy-cotton-breadcrumb-text">{{ text }}</span>{{ slot }}</li>
-{% endif %}
+<li class="{{ class }}" {{ attrs }}>
+  {% if href %}
+    <a href="{{ href }}">{{ text }}{{ slot }}</a>
+  {% else %}
+    <span aria-current="page">{{ text }}{{ slot }}</span>
+  {% endif %}
+</li>
