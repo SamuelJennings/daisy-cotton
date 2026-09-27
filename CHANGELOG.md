@@ -111,6 +111,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `<c-status>`: daisyUI's status, a `<span>` carrying `status`, with `variant` (the eight daisyUI
   colours) and `size` (`xs`–`xl`). Given `label`, it is exposed to assistive technology as an image
   named by it; without one, it is hidden from assistive technology.
+- `<c-carousel>` and `<c-carousel.item>`: daisyUI's carousel, a scrollable, snapping row or column of
+  `<c-carousel.item>` slides. With no controls of its own it is a focusable, named `role="region"`
+  carrying the translatable roledescription "carousel", scrolled by keyboard with the arrow keys once
+  focused; each slide carries `role="group"` and the roledescription "slide". `snap` maps to
+  `carousel-start`/`carousel-center`/`carousel-end`, and `horizontal`/`vertical` (each a boolean or a
+  breakpoint) to `carousel-horizontal`/`carousel-vertical`. `aria-label` has no default: the component
+  cannot invent a name. A slide accepts `id`, `class` and other attributes, so a project builds its own
+  previous/next or indicator links to it with `<c-button href="#…">`.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
