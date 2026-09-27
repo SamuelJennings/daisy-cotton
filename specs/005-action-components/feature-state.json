@@ -2,7 +2,7 @@
   "feature": "005-action-components",
   "branch": "005-action-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "REVIEW",
+  "state": "PR_READY",
   "state_history": [
     {
       "state": "QUEUED",
@@ -33,6 +33,11 @@
       "state": "REVIEW",
       "at": "2026-09-27T09:35:15Z",
       "note": "converge green; button simplified, modal empty id fixed; no ADR graduated"
+    },
+    {
+      "state": "PR_READY",
+      "at": "2026-09-27T09:46:58Z",
+      "note": "review applied (D9); accessibility run clean; pull request ready; walkthrough sent to the maintainer"
     }
   ],
   "gates": {
