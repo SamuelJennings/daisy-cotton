@@ -109,8 +109,23 @@
       "tasks": [
         {
           "id": "T003",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_chat.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q: 343 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 51/58 clean, 0 errors, 0 warnings",
+              "uv run ruff check tests/test_chat.py tests/test_animated_display_no_script.py: all checks passed",
+              "uv run ruff format tests/test_chat.py: 1 file reformatted, then re-ran pytest green"
+            ],
+            "tests": [
+              "tests/test_chat.py::TestChatRoot",
+              "tests/test_chat.py::TestChatVariant",
+              "tests/test_chat.py::TestChatNamedSlots",
+              "tests/test_chat.py::TestChatPageContext",
+              "tests/test_animated_display_no_script.py::TestAnimatedDisplayNoScript"
+            ]
+          }
         },
         {
           "id": "T004",

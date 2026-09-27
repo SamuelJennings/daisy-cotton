@@ -18,6 +18,14 @@ CALLER_STRINGS = {
         '<img src="/a.jpg" alt="A"></c-carousel.item>'
         "</c-carousel>"
     ),
+    "chat": (
+        '<c-chat placement="end" variant="primary">'
+        '<c-slot name="image"><c-avatar src="/a.jpg" alt="Sam" /></c-slot>'
+        '<c-slot name="header">Sam</c-slot>'
+        '<c-slot name="footer">Delivered</c-slot>'
+        "Hello"
+        "</c-chat>"
+    ),
 }
 
 
