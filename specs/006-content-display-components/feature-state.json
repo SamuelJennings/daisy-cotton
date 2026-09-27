@@ -555,8 +555,23 @@
         },
         {
           "id": "T023",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 31/32 clean, 0 errors, 0 warnings",
+              "uv run pytest tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_kbd.py tests/test_status.py tests/test_table.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_render_all.py -q: 317 passed",
+              "Rendered the table's @slot composition directly through the Cotton compiler and read the output: the status dot carries aria-hidden=true with no role/aria-label (no label given) beside 'Online' text, and the two <kbd> elements render either side of '+'",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/kbd.html daisy_cotton/templates/cotton/status.html daisy_cotton/templates/cotton/table.html README.md CHANGELOG.md: all hooks passed, no reformatting"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py",
+              "tests/test_gallery_annotations.py",
+              "tests/test_kbd.py",
+              "tests/test_status.py",
+              "tests/test_table.py"
+            ]
+          }
         }
       ]
     }
