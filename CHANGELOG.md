@@ -25,6 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `<c-icon name="..." />` exactly as it would call that richer version.
 - `responsive` and `variation`, the two generic Cotton-attribute helper tags several of the
   above components use, in a small `daisy_cotton` templatetag library.
+- `unique_id`, a `daisy_cotton` template tag returning a prefix plus eight lowercase hex
+  characters, different on every call. `<c-dropdown>` uses it to give its panel an id when the
+  caller gives none.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
@@ -55,3 +58,10 @@ decision.
   inside a modal, and size the box with `content_class`. `position` is renamed `placement` and
   gains `middle` alongside `top`, `bottom`, `start` and `end`. `title` now renders as a heading
   that names the dialog (`aria-labelledby`) instead of forwarding to the card.
+- `<c-dropdown>`: moves to daisyUI's popover method — the trigger is a real `<button>` with
+  `popovertarget`, and the browser handles opening, closing on Escape and on an outside click,
+  and reporting the open state, with no script. `valign` and `halign` are replaced by a single
+  `placement` taking one side and one alignment, e.g. `placement="top end"`. `full` and `hover`
+  are removed: the popover method offers neither. `class` now lands on the wrapper only and
+  never reaches the default trigger. The panel no longer carries `dropdown-content`, `tabindex`,
+  `z-50` or a border — put those in `content_class` if a project needs them.

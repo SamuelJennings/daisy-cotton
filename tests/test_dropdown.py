@@ -7,13 +7,25 @@ and `hover` are removed (the popover method offers neither).
 """
 
 import re
+from pathlib import Path
 
 import pytest
 from django import template
 from django.template.context import Context
 from django_cotton.compiler_regex import CottonCompiler
+from django_cotton_gallery.core.annotations import AnnotationParser
+
+import daisy_cotton
 
 compiler = CottonCompiler()
+
+DROPDOWN_TEMPLATE = (
+    Path(next(iter(daisy_cotton.__path__))).resolve()
+    / "templates"
+    / "cotton"
+    / "dropdown"
+    / "index.html"
+)
 
 
 def render(source, **context):
@@ -180,6 +192,34 @@ class TestDropdownClassAndContentClass:
         html = render(f'<c-dropdown content_class="w-56 mt-4">{PANEL}</c-dropdown>')
 
         assert "min-w-52 shadow-sm w-56 mt-4" in html
+
+
+class TestDropdownGalleryAnnotations:
+    """Article XVI, read through the gallery's own `AnnotationParser` (T009)."""
+
+    @staticmethod
+    def _parsed():
+        return AnnotationParser().parse(DROPDOWN_TEMPLATE.read_text())
+
+    def test_placement_lists_every_single_word_and_pair(self):
+        prop = next(p for p in self._parsed().props if p.clean_name == "placement")
+        assert prop.type == "select"
+        words = {"top", "bottom", "left", "right", "start", "center", "end"}
+        pairs = {f"{side} {alignment}" for side, alignment in PLACEMENTS}
+        assert words | pairs <= set(prop.options)
+
+    def test_the_button_slot_has_no_example_and_describes_the_contract(self):
+        slot = next(s for s in self._parsed().slots if s.name == "button")
+        assert slot.content == ""
+        assert "popovertarget" in slot.description
+        assert "type=" in slot.description
+
+    def test_the_default_slot_has_a_menu_example(self):
+        [slot] = [s for s in self._parsed().slots if s.name is None]
+        assert "<ul" in slot.content
+
+    def test_the_description_tells_the_viewer_to_type_the_trigger_text(self):
+        assert 'text="Options"' in self._parsed().description
 
 
 class TestDropdownContextLeak:

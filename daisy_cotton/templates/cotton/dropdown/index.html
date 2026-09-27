@@ -1,11 +1,11 @@
-{# @description A daisyUI dropdown built on the popover method: a trigger button opens a popover panel with no script. By default the trigger is a button built from the dropdown's own extra attributes. #}
+{# @description A daisyUI dropdown built on the popover method: a trigger button opens a popover panel with no script. By default the trigger is a button built from the dropdown's own extra attributes — type text="Options" in the attributes field to see it labelled. #}
 {# @prop id:text | description:"Panel id, and the base of the trigger's anchor name. A custom trigger (the button slot) needs this to target the panel itself." #}
-{# @prop placement:select['top','bottom','left','right','start','center','end'] | description:"One side and one alignment, e.g. \"top end\". Leave empty for the browser's default placement." #}
+{# @prop placement:select['top','bottom','left','right','start','center','end','top start','top center','top end','bottom start','bottom center','bottom end','left start','left center','left end','right start','right center','right end'] | description:"One side and one alignment, e.g. \"top end\". Leave empty for the browser's default placement." #}
 {# @prop content_class:text | description:"Extra classes added to the panel." #}
 {# @prop button:text | description:"A custom trigger. When given, extra attributes fall through to the dropdown wrapper instead of a button, and the caller owns the trigger's popovertarget, type=\"button\" and anchor style." #}
 {# @prop class:text | description:"Extra classes added to the dropdown wrapper." #}
-{# @slot — The panel content. #}
-{# @slot:button — A custom trigger. #}
+{# @slot <ul class="menu"><li><a href="#">Profile</a></li><li><a href="#">Settings</a></li></ul> — The panel content. #}
+{# @slot:button — A custom trigger. Must carry popovertarget set to the dropdown's id and type="button", plus style="anchor-name: --<id>" for placement, so a dropdown with a custom trigger needs an id. #}
 {% comment %}
   Trigger: by default, any extra attributes on the dropdown (text, icon,
   variant, size) are forwarded to an inner button that becomes the trigger.

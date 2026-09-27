@@ -156,3 +156,25 @@ tests/test_gallery_annotations.py tests/test_render_all.py -q` → 277 passed. `
 manage.py cotton_lint --warnings-as-errors` → 20/21 clean, 0 errors/0 warnings (exit 0).
 Next: T009 (gallery annotations for dropdown, CHANGELOG). Checkpoint after T009: batch 1 full
 suite, cotton_lint, pre-commit.
+
+## 2026-09-27T10:45Z · Implementer US3 · T009
+
+Did: `placement`'s `select` now lists all seven single words and all twelve side-and-alignment
+pairs; `@slot:button` has no example and its description names the custom-trigger contract
+(`popovertarget`, `type="button"`, the anchor `style`); the default `@slot` example is a plain
+daisyUI menu; the component `@description` tells the viewer to type `text="Options"` in the
+attributes field to see the default trigger labelled (D5). The `{% comment %}` block on the
+custom-trigger contract and the anchor-positioning limitation was already written in T008.
+Added `TestDropdownGalleryAnnotations` to `tests/test_dropdown.py`, reading the template
+through the gallery's `AnnotationParser`. Added the dropdown's `CHANGELOG.md` `Changed` entry
+(popover method, `placement` replacing `valign`/`halign`, `full`/`hover` removed, `class` no
+longer reaching the trigger, the panel's dropped classes) and `unique_id`'s `Added` entry — no
+README change needed, `dropdown` was already listed and README does not enumerate template tags
+individually.
+Verified: `uv run pytest tests/test_dropdown.py tests/test_declared_attributes.py
+tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_render_all.py -q` → 188
+passed. `uv run python manage.py cotton_lint --warnings-as-errors` → 20/21 clean, 0 errors/0
+warnings (exit 0).
+Next: batch 1 checkpoint — full suite, cotton_lint, pre-commit.
+Watch: US3 (dropdown) done-check satisfied for scenarios 1, 2, 5 and 6; scenarios 3, 4 and 7
+(in-browser keyboard/outside-click, gallery) are T013's.
