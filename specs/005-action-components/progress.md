@@ -65,3 +65,21 @@ errors/0 warnings (exit 0).
 Next: T004 (US2, modal structure).
 Watch: US1 (button) done-check satisfied — every acceptance scenario the tests can cover (1-6)
 has a test that fails when the behaviour is removed; scenario 7 (gallery, in-browser) is T013's.
+
+## 2026-09-27T09:45Z · Implementer US2 · T004
+
+Did: rewrote `modal.html`'s structure (FR-012, FR-014, FR-016): a `<dialog>` with the
+caller's `id`, `placement` (top/middle/bottom/start/end) validated through `{% variation %}`,
+`class` merged and attributes spread on the dialog; a plain `modal-box` (no inner `<c-card>`)
+holding the default slot and `content_class`; an `actions` slot rendered in a trailing
+`modal-action` only when given; `open` rendering `<dialog open>`. Removed the inner card,
+`size`, `position`, `icon`, `footer` and `footer_end`; kept the existing translatable
+backdrop-close form unchanged. Every declared name has an empty default. `title` and
+`closable` are deliberately not yet declared — T005 adds and reads them, so nothing here is
+declared without being used (`tests/test_declared_attributes.py`). Rewrote `tests/test_modal.py`
+under D2 for scenarios 1 (structure half), 2, 3, 6, an unknown placement, and a page context
+carrying `title`, `actions` and `open` that does not leak in.
+Verified: `uv run pytest tests/test_modal.py tests/test_declared_attributes.py
+tests/test_gallery_lint.py tests/test_gallery_annotations.py -q` → 181 passed. `uv run python
+manage.py cotton_lint --warnings-as-errors` → 20/21 clean, 0 errors/0 warnings (exit 0).
+Next: T005 (modal naming and closing: title heading, aria-labelledby, closable).

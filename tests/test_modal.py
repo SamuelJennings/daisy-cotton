@@ -1,27 +1,13 @@
-"""Regression tests for issue #180 — modal positioning bugs.
+"""Tests for the <c-modal> component's structure.
 
-Two failure modes, both stemming from the same fixed-width/no-height styling
-on the modal box:
-
-1. ``position="top"``/``"bottom"`` modals were always given a ``max-w-*``
-   cap (``w-11/12`` plus a size class), which overrode daisyUI's own
-   ``.modal-top``/``.modal-bottom`` full-width rule — the dialog never spanned
-   the screen.
-2. ``position="start"``/``"end"`` modals get ``height: 100vh`` on the outer
-   ``.modal-box`` wrapper from daisyUI, but the inner ``<c-card>`` (the
-   visible surface, since the wrapper itself is transparent) had no height
-   utility and stayed sized to its content — it never stretched to fill that
-   height.
-
-Sources are compiled through the Cotton compiler (mirroring
-``test_breadcrumbs_href_attribute.py``), which is what exercises ``<c-vars>``
-and ``attrs`` extraction the way a real template invocation would. Full-width
-and full-height are ultimately live-layout properties, so
-``tests/test_e2e/test_modal_positioning.py`` pairs this with a real-browser
-bounding-box assertion; this module is the part of the guard that runs
-everywhere.
+Rewritten under decisions.md D2 for daisyUI's own modal shape (FR-012,
+FR-014, FR-016): a dialog holding a plain modal-box (no inner card), an
+`actions` slot in daisyUI's actions row, `placement` replacing `position`,
+and `content_class` for the box. `size`, `position`, `icon`, `footer` and
+`footer_end` are removed.
 """
 
+import pytest
 from django import template
 from django.template.context import Context
 from django_cotton.compiler_regex import CottonCompiler
@@ -34,40 +20,90 @@ def render(source, **context):
     return template.Template(compiler.process(source)).render(Context(context))
 
 
-class TestModalPositionWidth:
-    """Top/bottom positioned modals must not be capped to a max-width."""
-
-    def test_top_position_spans_full_width(self):
-        html = render('<c-modal id="m" position="top">Body</c-modal>')
-        assert "w-full" in html
-        assert "max-w-none" in html
-        assert "max-w-2xl" not in html
-        assert "w-11/12" not in html
-
-    def test_bottom_position_spans_full_width(self):
-        html = render('<c-modal id="m" position="bottom">Body</c-modal>')
-        assert "w-full" in html
-        assert "max-w-none" in html
-        assert "max-w-2xl" not in html
-        assert "w-11/12" not in html
-
-    def test_default_centred_position_keeps_the_size_cap(self):
-        """No position set: the original centred-dialog sizing is unchanged."""
-        html = render('<c-modal id="m">Body</c-modal>')
-        assert "w-11/12" in html
-        assert "max-w-2xl" in html
-
-    def test_start_and_end_keep_the_size_cap(self):
-        """Side panels still size by ``size``, only their height changes."""
-        for position in ["start", "end"]:
-            html = render(f'<c-modal id="m" position="{position}">Body</c-modal>')
-            assert "w-11/12" in html
-            assert "max-w-2xl" in html
+PLACEMENTS = ["top", "middle", "bottom", "start", "end"]
 
 
-class TestModalCardHeight:
-    """The inner card must be able to stretch to the wrapper's full height."""
+class TestModalStructure:
+    """Scenario 1 (structure half): a dialog with the caller's id and class,
+    its box holding the body.
+    """
 
-    def test_card_gets_full_height_utility(self):
-        html = render('<c-modal id="m" position="start">Body</c-modal>')
-        assert "h-full" in html
+    def test_dialog_carries_the_callers_id_and_the_modal_class(self):
+        html = render('<c-modal id="confirm">Body</c-modal>')
+        assert '<dialog id="confirm"' in html
+        assert 'class="modal ' in html
+
+    def test_the_box_holds_the_default_slot(self):
+        html = render('<c-modal id="confirm">Delete item?</c-modal>')
+        assert "modal-box" in html
+        assert "Delete item?" in html
+
+
+class TestModalActions:
+    """Scenario 2: an `actions` slot renders in daisyUI's trailing actions row."""
+
+    def test_actions_slot_renders_in_the_actions_row(self):
+        html = render(
+            '<c-modal id="confirm">Body<c-slot name="actions">'
+            "<button>OK</button></c-slot></c-modal>"
+        )
+        assert '<div class="modal-action">' in html
+        assert "<button>OK</button>" in html
+
+    def test_no_actions_given_renders_no_actions_row(self):
+        html = render('<c-modal id="confirm">Body</c-modal>')
+        assert "modal-action" not in html
+
+
+class TestModalPlacement:
+    """Scenario 3: `placement` maps to daisyUI's modal placement classes."""
+
+    @pytest.mark.parametrize("placement", PLACEMENTS)
+    def test_every_placement_emits_its_daisyui_class(self, placement):
+        html = render(f'<c-modal id="confirm" placement="{placement}">Body</c-modal>')
+        assert f"modal-{placement}" in html
+
+    def test_an_unknown_placement_emits_no_class_and_does_not_raise(self):
+        html = render('<c-modal id="confirm" placement="diagonal">Body</c-modal>')
+        assert "modal-diagonal" not in html
+        assert "<dialog" in html
+
+
+class TestModalOpen:
+    """Scenario 6: `open` renders the dialog already shown."""
+
+    def test_open_renders_the_open_attribute(self):
+        html = render('<c-modal id="confirm" open>Body</c-modal>')
+        assert "<dialog" in html
+        assert " open" in html.split(">")[0]
+
+    def test_without_open_the_dialog_is_not_shown(self):
+        html = render('<c-modal id="confirm">Body</c-modal>')
+        assert " open" not in html.split(">")[0]
+
+
+class TestModalClassAndContentClass:
+    def test_class_lands_on_the_dialog(self):
+        html = render('<c-modal id="confirm" class="my-modal">Body</c-modal>')
+        assert "my-modal" in html.split(">")[0]
+
+    def test_content_class_lands_on_the_box(self):
+        html = render('<c-modal id="confirm" content_class="w-11/12">Body</c-modal>')
+        assert 'modal-box w-11/12' in html
+
+
+class TestModalContextLeak:
+    """A page variable of the same name as a declared prop never leaks in
+    (research R5, D6).
+    """
+
+    def test_a_page_context_title_actions_and_open_do_not_leak_in(self):
+        html = render(
+            '<c-modal id="confirm">Body</c-modal>',
+            title="Leaked heading",
+            actions="<button>Leaked</button>",
+            open=True,
+        )
+        assert "Leaked heading" not in html
+        assert "Leaked" not in html
+        assert " open" not in html.split(">")[0]
