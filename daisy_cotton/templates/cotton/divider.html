@@ -1,17 +1,20 @@
 {# @description A section break, optionally labelled. Any further attributes reach the divider element. #}
-{# @prop vertical:boolean | description:"Draw a vertical divider. Accepts a responsive value, such as md, to turn it vertical from that breakpoint." #}
+{# @prop horizontal:boolean | description:"Lay the divider out horizontally, as a vertical line between side-by-side items. Accepts a breakpoint such as md to apply it from that width up." #}
+{# @prop vertical:boolean | description:"Lay the divider out vertically, as a horizontal line between stacked items. Accepts a breakpoint such as md to apply it from that width up." #}
 {# @prop variant:select['neutral','primary','secondary','accent','info','success','warning','error'] | description:"Colour variant. Leave empty for the default colour." #}
-{# @prop position:select['start','end'] | description:"Where the label sits on a horizontal divider. Leave empty to centre it." #}
+{# @prop placement:select['start','end'] | description:"Where the label sits along the divider. Leave empty to centre it." #}
+{# @prop text:text | description:"The divider label, shown before the default slot." #}
 {# @prop class:text | description:"Extra classes added to the divider." #}
-{# @slot — The divider label. #}
-{# @slot:label — The divider label, as a named slot. Rendered before the default slot. #}
+{# @slot — The divider label, for markup that text cannot hold. #}
 {% comment %}
   A section break, optionally labelled. `class` and any further attributes
   reach the element, so a caller can adjust spacing without reproducing the
   markup - the component's attributes are its only supported customization
   surface (Article XI), and until this accepted a class there was none.
+
+  `horizontal` and `vertical` name the modifier they emit, as daisyUI does.
 {% endcomment %}
 {% load daisy_cotton %}
-<c-vars vertical variant position class />
-<div class="divider{% if variant %} divider-{{ variant }}{% endif %}{% if vertical %} {% responsive vertical "divider-horizontal" %}{% endif %}{% if position %} divider-{{ position }}{% endif %} {{ class }}"
-     {{ attrs }}>{{ label }}{{ slot }}</div>
+<c-vars horizontal="" vertical="" variant="" placement="" text="" class />
+<div class="divider {% variation variant 'divider' 'neutral,primary,secondary,accent,info,success,warning,error' %} {% if horizontal %}{% responsive horizontal 'divider-horizontal' %}{% endif %} {% if vertical %}{% responsive vertical 'divider-vertical' %}{% endif %} {% variation placement 'divider' 'start,end' %} {{ class }}"
+     {{ attrs }}>{{ text }}{{ slot }}</div>
