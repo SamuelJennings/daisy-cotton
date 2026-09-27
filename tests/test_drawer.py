@@ -162,6 +162,24 @@ class TestDrawerIgnoresPageContext:
 
         assert root(soup)["class"] == ["drawer"]
 
+    def test_a_page_side_variable_does_not_fill_the_sidebar(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup(
+            '<c-drawer id="nav">Page</c-drawer>', {"side": "PAGE-SIDE"}
+        )
+
+        assert "PAGE-SIDE" not in soup.get_text()
+
+    def test_a_side_slot_still_fills_the_sidebar(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup(
+            '<c-drawer id="nav">Page<c-slot name="side">Links</c-slot></c-drawer>',
+            {"side": "PAGE-SIDE"},
+        )
+
+        assert "Links" in soup.find(class_="drawer-side").get_text()
+        assert "PAGE-SIDE" not in soup.get_text()
+
 
 class TestDrawerAccessibleNames:
     def test_the_toggle_has_an_accessible_name(self, cotton_render_string_soup):

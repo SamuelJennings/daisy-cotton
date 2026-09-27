@@ -12,4 +12,6 @@
 {% endcomment %}
 {% load daisy_cotton %}
 <c-vars shape="" half="" src="" alt="" class />
-{% if src %}<img src="{{ src }}" alt="{{ alt }}" class="mask {% variation shape 'mask' 'circle,decagon,diamond,heart,hexagon,hexagon-2,pentagon,squircle,star,star-2,triangle,triangle-2,triangle-3,triangle-4' %} {% variation half 'mask-half' '1,2' %} {{ class }}" {{ attrs }} />{% else %}<div class="mask {% variation shape 'mask' 'circle,decagon,diamond,heart,hexagon,hexagon-2,pentagon,squircle,star,star-2,triangle,triangle-2,triangle-3,triangle-4' %} {% variation half 'mask-half' '1,2' %} {{ class }}" {{ attrs }}>{{ slot }}</div>{% endif %}
+{% variation shape 'mask' 'circle,decagon,diamond,heart,hexagon,hexagon-2,pentagon,squircle,star,star-2,triangle,triangle-2,triangle-3,triangle-4' as shape_class %}
+{% variation half 'mask-half' '1,2' as half_class %}
+{% if src %}<img src="{{ src }}" alt="{{ alt }}" class="mask {{ shape_class }} {{ half_class }} {{ class }}" {{ attrs }} />{% else %}<div class="mask {{ shape_class }} {{ half_class }} {{ class }}" {{ attrs }}>{{ slot }}</div>{% endif %}

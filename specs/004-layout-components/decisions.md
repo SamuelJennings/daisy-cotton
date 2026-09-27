@@ -198,3 +198,19 @@ One design reviewer, three lenses, verdict approve with no critical or high find
   classes this way. Not in scope here.
 
 **ADR:** none — a record of review dispositions.
+
+## D12 — Convergence changes made directly
+
+Three changes, each small enough that a dispatch would have cost more than the edit.
+
+- `drawer`'s `side` and `indicator`'s `items` slots are declared with empty defaults. A named slot
+  that is not declared reads a page variable of the same name when the caller gives no slot, so a
+  list view's `items` rendered inside every indicator on the page. The slot still wins when given,
+  the pattern FS-003 uses for the navbar's sections. Tests for both directions.
+- `tests/test_semantic_palette.py` reads every component template for a literal Tailwind shade,
+  `white`/`black` or a hex value (SC-005, Article XIII). It fails on the phone mockup as it stood on
+  main.
+- `mask.html` computes its shape and half classes once, through `{% variation … as … %}`, instead of
+  repeating both calls in each branch.
+
+**ADR:** none — local fixes inside this feature's templates and tests.

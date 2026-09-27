@@ -165,6 +165,8 @@ non-mirror-paths = [
     # Walks the rendered gallery sidebar; there is no source module for a
     # test parametrised from another package runtime output to mirror.
     "tests/test_gallery_links.py",
+    # Reads every component template for literal colours (Article XIII).
+    "tests/test_semantic_palette.py",
 ]
 
 [tool.deptry]

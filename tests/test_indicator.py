@@ -197,6 +197,24 @@ class TestIndicatorIgnoresPageContext:
 
         assert placement_classes(soup.find("span")) == set()
 
+    def test_a_page_items_variable_is_not_rendered(self, cotton_render_string_soup):
+        """A list view's own ``items`` must not appear in the indicator."""
+        soup = cotton_render_string_soup(
+            "<c-indicator>Inbox</c-indicator>", {"items": "PAGE-ITEMS"}
+        )
+
+        assert soup.find("div").get_text() == "Inbox"
+
+    def test_an_items_slot_still_renders(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup(
+            '<c-indicator>Inbox<c-slot name="items">'
+            "<c-indicator.item>3</c-indicator.item></c-slot></c-indicator>",
+            {"items": "PAGE-ITEMS"},
+        )
+
+        assert soup.find(class_="indicator-item").get_text() == "3"
+        assert "PAGE-ITEMS" not in soup.get_text()
+
 
 class TestIndicatorAnnotations:
     @pytest.fixture
