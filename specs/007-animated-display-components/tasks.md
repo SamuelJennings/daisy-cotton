@@ -1,0 +1,58 @@
+# Tasks: Animated and decorative display components
+
+**Input**: `specs/007-animated-display-components/` — spec.md, plan.md, research.md, decisions.md
+
+**Organization**: by user story, in build order (plan.md "Story order").
+
+**Every story's done-check**: its acceptance scenarios each have a test that fails when the behaviour is removed, except the gallery and in-browser scenarios the browser check covers (T015). An unknown value for each fixed-value prop it adds emits no modifier class and does not raise. Its templates pass `uv run python manage.py cotton_lint --warnings-as-errors` (SC-002). Its component, rendered from a caller string, emits no `<script>` and no `on*=` attribute (SC-003, `tests/test_animated_display_no_script.py`) and no literal Tailwind colour (Article XIII). Each component merges `class` into the root and passes an extra attribute to the element the plan names for it (FR-002). Every declared name has a default, and one test per component renders it with the names it declares in the surrounding template context and asserts the component's own default (research R5). Its new test modules are in `[tool.forge.conformance] non-mirror-paths`. Its README and CHANGELOG lines are written. Its gallery examples give every image `alt`, every icon-only control an `aria-label`, every named region or linked card a name, and use only semantic palette colours (SC-004, FR-004).
+
+Tests render through the Cotton compiler as a caller's template would (the `cotton_render_string` and `cotton_render_string_soup` fixtures in `tests/conftest.py`), never by rendering the component file directly.
+
+## Phase 1: US1 — Carousel (P1)
+
+- [ ] T001 [US1] `carousel/index.html`: `<div class="carousel …" role="region" tabindex="0">` with the translatable `aria-roledescription` "carousel"; `aria-label` declared and emitted only when given; `snap` validated against `start,center,end`; `horizontal`, `vertical` through `responsive`; `class` merged, attributes spread; every declared name `=""`. `carousel/item.html`: `<div class="carousel-item …" role="group">` with the translatable roledescription "slide", `class` merged, `id` and other attributes spread. Tests in a new `tests/test_carousel.py` for scenarios 1, 2, 3 and 5, a one-slide carousel still a focusable named region, an unknown `snap` and `vertical="left"` emitting nothing, `horizontal="md"` giving `md:carousel-horizontal`, both roledescriptions wrapped for translation (render under an active translation override and assert the translated string), and a page context carrying `snap`, `vertical` and `aria_label` that does not leak in (FR-008–FR-010). Start `tests/test_animated_display_no_script.py` with the carousel (FS-006's `tests/test_content_display_no_script.py` is the model).
+- [ ] T002 [US1] Gallery annotations for `carousel` and `carousel.item` (plan "Gallery entries": the previous/next pattern with full-width slides and daisyUI stock images; descriptions saying to give `aria-label`, that controls are links to slide ids the project writes and the component emits none, that following such a link also scrolls the page, and naming the `mockup.browser` entry as where the indicator pattern and a named carousel are shown); the `{% comment %}` block. The `mockup.browser` entry's `@slot` becomes the product page with the named carousel and the indicator row (plan "Compositions"; T008 and T012 add to it). README: count 55 → 57, list `carousel`, and the aura sentence (plan "Documentation"). CHANGELOG `Added` for `carousel` + `carousel.item` (FR-004, FR-006, FR-011).
+
+## Phase 2: US2 — Chat bubble (P2)
+
+- [ ] T003 [US2] `chat.html`: root `<div class="chat …">` with `placement` validated against `start,end` (default `start`), `class` merged, attributes spread; `image`, `header`, `footer` named slots in `chat-image`, `chat-header`, `chat-footer`, each emitted only when given; the default slot in `chat-bubble` with `variant` validated against the eight colours. Tests in a new `tests/test_chat.py` for scenarios 1–6, unknown `placement` and `variant` emitting nothing, a bubble with every named slot empty emitting only the root and the bubble, and a page context carrying `image`, `header`, `footer` and `variant` that does not leak in (FR-012–FR-014). Extend the no-script module.
+- [ ] T004 [US2] Gallery annotations for `chat` (plan "Gallery entries"; the description says to name the speaker in `header` because the side is visual only, and names the `mockup.window` entry as where a conversation is shown). The `mockup.window` entry's `@slot` becomes the two-sided conversation (plan "Compositions"). README count 57 → 58 and list `chat`, CHANGELOG `Added` (FR-004, FR-015).
+
+## Phase 3: US3 — Countdown (P2)
+
+- [ ] T005 [US3] `countdown.html`: `<span class="countdown …">` with `class` merged and attributes spread, wrapping `<span style="--value:{{ value }};" aria-live="polite" aria-label="{{ value }}">{{ value }}</span>`; `value` defaults to `0`. Tests in a new `tests/test_countdown.py` for scenarios 1, 3 (the `1000` and `abc` values rendered as given, no error) and 4; a value holding `"` and `<` escaped so it stays inside the `style` attribute; a bare `<c-countdown />` rendering 0; and a page context carrying `value` that does not leak in (FR-016, FR-017). Extend the no-script module.
+- [ ] T006 [US3] Gallery annotations for `countdown` (description: daisyUI animates 0 through 999; a live timer's script updates `--value`, the text and `aria-label` together; every change is announced, so a seconds counter speaks once a second and a project wanting a quieter timer overrides the component; zero-padding with `--digits` needs an override; names the `hero` entry as where a clock is shown). The `hero` entry's `@slot` gains the days, hours, minutes and seconds clock (plan "Compositions"; T014 adds the rotating text). README count 58 → 59 and list `countdown`, CHANGELOG `Added` (FR-018).
+
+**Checkpoint**: batch 1 green. Full suite, `cotton_lint --warnings-as-errors`, pre-commit.
+
+## Phase 4: US4 — Diff (P3)
+
+- [ ] T007 [US4] `diff.html`: `<figure class="diff …" tabindex="0">` with `aria-label` declared and emitted only when given, `class` merged, attributes spread; children in order `<div class="diff-item-1" tabindex="0">` holding `item_1`, `<div class="diff-item-2">` holding `item_2`, and an empty `<div class="diff-resizer">`; no `role` on either item (research R4). Tests in a new `tests/test_diff.py` for scenarios 1 and 2, no element carrying `role="img"` or `aria-hidden`, and a page context carrying `item_1`, `item_2` and `aria_label` that does not leak in (FR-019, FR-020). Extend the no-script module.
+- [ ] T008 [US4] Gallery annotations for `diff` (the image comparison with daisyUI stock images; description: dragging the resizer needs a pointer, Tab to the comparison shows the first item and Tab again the second, give `aria-label`, an aspect-ratio class such as `aspect-16/9` keeps the ratio, and names the `mockup.browser` entry for a text comparison). The `mockup.browser` `@slot` gains the text comparison. README count 59 → 60 and list `diff`, CHANGELOG `Added` (FR-007).
+
+## Phase 5: US5 — Hover gallery (P3)
+
+- [ ] T009 [US5] `hover-gallery.html`: `<figure class="hover-gallery …">` holding the default slot, `class` merged, attributes spread, no width class of its own. Tests in a new `tests/test_hover_gallery.py` for scenario 1, no `aria-hidden` on the figure or any image, and a page context carrying `class` that does not leak in (FR-021). Extend the no-script module.
+- [ ] T010 [US5] Gallery annotations for `hover-gallery` (four same-size daisyUI stock images with `alt`; description with daisyUI's three rules, that every image stays available to screen readers and only the hover effect needs a pointer, that a decorative image takes `alt=""`, and naming the `card` entry for a gallery inside a card). The `card` entry's `@slot:figure` becomes a `<c-hover-gallery>` of four images. README count 60 → 61 and list `hover-gallery`, CHANGELOG `Added` (FR-022, FR-007).
+
+## Phase 6: US6 — Hover 3D card (P3)
+
+- [ ] T011 [US6] `hover-3d.html`: a `<div>`, or an `<a href>` when `href` is given, carrying `hover-3d`, `class` merged, attributes spread; the default slot first, then exactly eight empty `<div aria-hidden="true">`. Tests in a new `tests/test_hover_3d.py` for scenarios 1–3 (nine element children, slot content first, eight empty hidden zones; the `<a>` root with `href`; no `href` attribute without it), and a page context carrying `href` that does not leak in (FR-023, FR-024). Extend the no-script module.
+- [ ] T012 [US6] Gallery annotations for `hover-3d` (`@slot` a `<figure>` with a daisyUI stock image and `alt`; description: the content is one element with no buttons, links or inputs; a linked card takes its name from the content's text or image alt, or from `aria-label`; the tilt needs a pointer and whether it respects reduced motion is up to daisyUI's CSS; names the `mockup.browser` entry for a linked `<c-card>`). The `mockup.browser` `@slot` gains the linked hover 3D card around a `<c-card>`. README count 61 → 62 and list `hover-3d`, CHANGELOG `Added` (FR-025, FR-007).
+
+## Phase 7: US7 — Text rotate (P3)
+
+- [ ] T013 [US7] `text-rotate.html`: `<span class="text-rotate …">` with `class` merged and attributes spread, wrapping one `<span>` that holds the default slot and carries `content_class` when given. Tests in a new `tests/test_text_rotate.py` for scenarios 1 and 4, no `class` attribute on the inner span without `content_class`, no `aria-hidden` anywhere, and a page context carrying `content_class` that does not leak in (FR-026). Extend the no-script module.
+- [ ] T014 [US7] Gallery annotations for `text-rotate` (three lines in `text-primary`, `text-secondary`, `text-accent`; description with daisyUI's six-line limit, a `duration-*` class on the root to change the ten-second loop, the loop pausing only under a pointer so rotating text is never the only place information appears, every line read by screen readers, and naming the `hero` entry for an inline word and a large centred heading). The `hero` entry's `@slot` gains the large centred rotating heading and the sentence with an inline rotating word. README count 62 → 63 and list `text-rotate`, CHANGELOG `Added` (FR-027, FR-007).
+
+**Checkpoint**: batch 2 green.
+
+## Phase 8: Browser check at the walkthrough (orchestrator)
+
+- [ ] T015 Run axe-core and the scripted checks (research R7) against every gallery entry this feature adds or changes, on the running demo, and record the result in the pull request's test evidence (SC-003, SC-004, scenarios US1-4, US3-2, US4-3, US5-2, US5-3, US6-2, US6-4, US7-2, US7-3). A failure the markup can fix becomes a fix task. A failure that is daisyUI's CSS (research R3, the countdown) is reported in the pull request, not worked around.
+
+## Dependencies
+
+- Phases 1–7 add disjoint templates and test modules. They share `README.md`, `CHANGELOG.md`, `pyproject.toml`'s `non-mirror-paths`, the no-script module and the host entries' annotations, so they run one after another on one branch.
+- T002 before T008 and T012 (they extend the `mockup.browser` product page). T006 before T014 (both write the `hero` slot). A slot example may only use components that already exist.
+- Phase 8 needs every story done and the demo running.

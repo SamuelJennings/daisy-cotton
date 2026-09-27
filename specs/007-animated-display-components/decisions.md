@@ -53,3 +53,33 @@ The hover gallery, the hover 3D card, the diff resizer and the text rotate's pau
 ## Priorities
 
 Priorities reflect how many adopters need each component: the carousel in most kinds of project (P1), the chat bubble and countdown in many (P2), and the diff, hover gallery, hover 3D card and text rotate in some (P3).
+
+## D1 — The diff leaves out daisyUI's `role="img"`
+
+daisyUI's diff example puts `role="img"` on both items. An element with that role exposes none of its children, and these carry no name of their own, so a screen reader would get neither item's image alt nor its text. FR-005 and FR-020 require both items' content to stay available. FR-019's "any further attributes daisyUI's documented diff markup carries" is read as the two `tabindex="0"`s, which give keyboard users a way to see each item, and not the role (research R3, R4).
+
+**ADR:** none — local to the diff template.
+
+## D2 — The countdown's value defaults to 0
+
+The spec gives `value` no default. With an empty one, `<c-countdown />` and the gallery preview would render `--value:;` and draw nothing. A counter's natural starting point is 0, a non-empty default still keeps a page variable named `value` from leaking in, and FR-017 is unaffected: whatever the caller gives is rendered as given.
+
+**ADR:** none — local to the countdown template.
+
+## D3 — Multi-instance gallery scenarios are shown in host entries
+
+The gallery renders one preview per component (research R6), and FS-001 rules out a demo page of the project's own. Scenarios that need several instances or markup beside the component (the carousel's indicator row, a conversation, a countdown clock, a gallery inside a card, a linked 3D card, a text comparison, an inline and a centred text rotate) are written into the slot examples of `mockup.browser`, `mockup.window`, `hero` and `card`, and each component's description names where. This is how FS-006 showed its accordion groups.
+
+**ADR:** none — follows the approach FS-006 already set for the gallery.
+
+## D4 — Gallery examples use daisyUI's stock images
+
+The components in this group exist to show images, and the hover gallery only works with images of one size. The existing `src="..."` placeholders draw broken images. Examples use the stock images daisyUI's own documentation uses for these components (research R8). They appear only in annotations, which the gallery reads, so the package ships no reference to them in rendered output.
+
+**ADR:** none — a choice of example content.
+
+## D5 — The carousel and the diff declare `aria-label`
+
+Both take their name from `aria-label`, which would reach them through `{{ attrs }}` anyway. Declaring it puts a named field in the gallery's props panel, as the navbar, dock and megamenu do, so the one attribute every example needs is visible rather than left to the extra-attributes box. Neither gets a default: a component cannot invent a name.
+
+**ADR:** none — local to two templates.
