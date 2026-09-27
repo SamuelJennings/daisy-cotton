@@ -1,0 +1,20 @@
+{# @description A top bar rendered as a navigation landmark, with start, center and end sections. Each section is written only when its slot is given; the default slot sits directly inside the bar. #}
+{# @prop class:text | description:"Extra classes added to the bar." #}
+{# @prop aria-label:text | description:"Accessible name of the bar. Defaults to a translated Main." #}
+{# @prop start:text | description:"Content of the start section. Give it as the start slot; this declaration keeps a page variable of the same name out of the bar." #}
+{# @prop center:text | description:"Content of the center section. Give it as the center slot; this declaration keeps a page variable of the same name out of the bar." #}
+{# @prop end:text | description:"Content of the end section. Give it as the end slot; this declaration keeps a page variable of the same name out of the bar." #}
+{# @slot <c-button text="Menu" /> — Content sitting directly inside the bar, after any sections. #}
+{# @slot:start <a class="btn btn-ghost text-xl" href="#">Site</a> — The section at the start of the bar: a brand, a drawer toggle. #}
+{# @slot:center <c-menu horizontal><c-menu.item href="#" text="Docs" active /><c-menu.item href="#" text="Blog" /></c-menu> — The centred section: the main links. #}
+{# @slot:end <c-button text="Sign in" /> — The section at the end of the bar: actions, a user menu. #}
+{% load i18n %}
+<c-vars class aria-label start="" center="" end="" />
+<nav class="navbar {{ class }}"
+     aria-label="{% if aria_label %}{{ aria_label }}{% else %}{% trans "Main" %}{% endif %}"
+     {{ attrs }}>
+  {% if start %}<div class="navbar-start">{{ start }}</div>{% endif %}
+  {% if center %}<div class="navbar-center">{{ center }}</div>{% endif %}
+  {% if end %}<div class="navbar-end">{{ end }}</div>{% endif %}
+  {{ slot }}
+</nav>

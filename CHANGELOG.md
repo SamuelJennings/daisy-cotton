@@ -23,6 +23,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   project wanting name-based resolution (an icon font, an SVG sprite, an icon-resolution package)
   provides its own `cotton/icon.html`, which shadows this one. Every other component here calls
   `<c-icon name="..." />` exactly as it would call that richer version.
+- `menu`, `menu.item`, `menu.title` and `menu.submenu`. `menu` is a vertical list by default, takes `size`,
+  `horizontal` (or a breakpoint such as `lg`) and `paged`. `menu.item` is a link when given `href` and a
+  button otherwise, and takes `active`, `disabled`, `icon` and an `aria-label` for an icon-only entry.
+  `menu.title` is a heading row, and `menu.submenu` is a collapsible group that nests and takes `open`.
+- `navbar`, a top bar rendered as a `<nav>` named `Main` unless given an `aria-label`. Its `start`, `center`
+  and `end` slots each become a `navbar-start`, `navbar-center` or `navbar-end` section only when given,
+  and the default slot sits directly inside the bar.
+- `tabs`, a row of tabs with `box`, `border` and `lift` styles, a `size` and a `placement` of `top` or
+  `bottom`. The row is a `tablist` unless given `links`. `tabs.tab` is a link when given `href`, a radio
+  input followed by its panel when given `name`, and a button otherwise, and takes `active` and `disabled`.
+- `steps`, an ordered list showing progress, with `vertical` and `horizontal` (each a boolean or a
+  breakpoint such as `lg`). `steps.step` takes a `variant` colour, `current` (written as
+  `aria-current="step"`), `content` for the marker's text and an `icon` shown in the marker.
+- `megamenu`, a navigation bar whose entries open panels, rendered as a `<nav popover>` named `Site`
+  unless given an `aria-label`. It needs an `id`, takes `wide`, `full` and `size`, and shows a `Menu`
+  button below the small breakpoint. `megamenu.item` is a button paired with the panel it opens, built
+  from the megamenu's id (given as `megamenu`) and the item's `key`.
 - `responsive` and `variation`, the two generic Cotton-attribute helper tags several of the
   above components use, in a small `daisy_cotton` templatetag library.
 
@@ -41,3 +58,19 @@ decision.
 - Django 6.1 is supported and tested.
 - The demo project is the component gallery alone: a plain Cotton and daisyUI page with a theme
   switcher, needing no other package behind it.
+- `link` no longer defaults `href` to `#`: without an `href` it renders an anchor with no `href` attribute.
+  Write `href="#"` to keep the old result. Its `variant` accepts daisyUI's eight link colours
+  (`neutral`, `primary`, `secondary`, `accent`, `info`, `success`, `warning`, `error`) and adds no class for any other value.
+- `breadcrumbs` no longer adds `text-sm` to its root; pass `class="text-sm"` to keep it. The root is named
+  `Breadcrumbs` by default (translated), and an `aria-label` passed by the caller replaces that name.
+- A `breadcrumbs.item` puts its `class` and any other attributes on its `<li>`, where they used to land on
+  the inner `<a>`. To set `target`, `hx-*` or similar on the link, write your own `<a>` in the item's slot.
+  An item without `href` renders `<span aria-current="page">`. Linked items render their text directly in the
+  `<a>` with no span, and the current item's span has no class. A project that styled
+  `.daisy-cotton-breadcrumb-text` now targets `.breadcrumbs li > a` and `.breadcrumbs li > span`, or writes its
+  own span in the item's slot.
+- `dock` renders as a `<nav>` named `Dock` by default (translated; an `aria-label` passed by the caller replaces
+  it) instead of a `<div>`, and no longer adds `bg-transparent backdrop-blur`; pass them through `class` to keep them.
+  A `dock.item` with no `href` and no `toggle` is now a `<button type="button">`, its icon is hidden from
+  assistive technology, and the drawer-toggle item no longer has `role="button" tabindex="0"`, so it is no
+  longer a Tab stop.
