@@ -459,8 +459,21 @@
       "tasks": [
         {
           "id": "T019",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_timeline.py -q: 10 passed (observed all 10 fail on TemplateDoesNotExist before the template existed)",
+              "uv run pytest tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py -q: 78 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/timeline/index.html tests/test_timeline.py pyproject.toml: all hooks passed, no reformatting"
+            ],
+            "tests": [
+              "tests/test_timeline.py::TestTimelineRoot",
+              "tests/test_timeline.py::TestTimelineModifiers",
+              "tests/test_timeline.py::TestTimelineClassAndAttrs",
+              "tests/test_timeline.py::TestTimelinePageContextDoesNotLeak"
+            ]
+          }
         },
         {
           "id": "T020",
