@@ -2,7 +2,7 @@
   "feature": "007-animated-display-components",
   "branch": "007-animated-display-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "DESIGN_REVIEW",
+  "state": "IMPLEMENT",
   "state_history": [
     {
       "state": "QUEUED",
@@ -18,6 +18,11 @@
       "state": "DESIGN_REVIEW",
       "at": "2026-09-27T20:27:16Z",
       "note": "plan, research, tasks committed; draft PR #105 opened"
+    },
+    {
+      "state": "IMPLEMENT",
+      "at": "2026-09-27T20:34:43Z",
+      "note": "design review applied (D6, D7); plan notification sent; US3 waits on the maintainer's FR-016 ruling"
     }
   ],
   "gates": {
@@ -29,12 +34,20 @@
       ]
     },
     "plan": {
-      "approved_by": null,
-      "at": null
+      "approved_by": "notified",
+      "at": "2026-09-27T20:34:33Z"
     },
     "merge": {
       "approved_by": null,
       "at": null
+    },
+    "design_review": {
+      "approved_by": "design-panel",
+      "at": "2026-09-27T20:34:33Z",
+      "self_resolved": [
+        "SPEC-001 high: spec fault, put to the maintainer; US3 built last (D6)",
+        "SPEC-002..SPEC-004 medium, SEC-001, SPEC-005, ARCH-001 low: applied as plan/tasks edits (D6, D7)"
+      ]
     }
   },
   "stories": [
