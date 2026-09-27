@@ -110,3 +110,9 @@ Gallery 1.0.0 builds a preview from declared defaults only, and the linter rejec
 `{% trans "carousel" %}` does not call `django.utils.translation.gettext` directly: `TranslateNode.render` marks the filter expression for translation and resolves it, and `FilterExpression.resolve` (`django/template/base.py`) calls `gettext_lazy`, imported by name into that module at import time. Patching `django.utils.translation.gettext` therefore does nothing — the lazy wrapper already closed over the real function. `tests/test_carousel.py::TestCarouselTranslation` patches `django.template.base.gettext_lazy` itself, which is the name `FilterExpression.resolve` actually looks up at call time, with a function returning a marked string (`"[t]carousel[/t]"`), no `.po`/`.mo` catalog involved. Verified by mutation: hard-coding `aria-roledescription="carousel"` in the template makes the test fail on the unmarked string, then the template was reverted.
 
 **ADR:** none — a testing technique, not a design choice; recorded so later stories' no-script/translation tests don't rediscover it.
+
+## D9 — The two-sided conversation's avatars carry no alt text of their own
+
+`mockup.window`'s composition names each speaker in the chat's `header` slot (FR-015), so the `<c-avatar>` in each bubble's `image` slot sits beside that name. `avatar`'s own `alt` prop documents "leave empty unless the avatar is the only thing identifying the person — beside a name it is usually noise", so the composition's four avatars carry `alt=""`. `chat.html`'s own isolated `@slot:image` example has no header alongside it, so it keeps a descriptive `alt` there.
+
+**ADR:** none — applies `avatar`'s own documented rule; local to one gallery example.

@@ -119,6 +119,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   breakpoint) to `carousel-horizontal`/`carousel-vertical`. `aria-label` has no default: the component
   cannot invent a name. A slide accepts `id`, `class` and other attributes, so a project builds its own
   previous/next or indicator links to it with `<c-button href="#…">`.
+- `<c-chat>`: daisyUI's chat, a `<div>` carrying `chat` and a `placement` class (`start`/`end`, default
+  `start`), holding the default slot in a `chat-bubble` coloured by `variant` (the eight daisyUI
+  colours), plus optional `image`, `header` and `footer` named slots rendered in `chat-image`,
+  `chat-header` and `chat-footer`, each emitted only when given. An avatar goes in the `image` slot as
+  `<c-avatar>`; the chat's side is visual only, so name the speaker in `header`.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is

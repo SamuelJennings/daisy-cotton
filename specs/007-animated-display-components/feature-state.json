@@ -129,8 +129,20 @@
         },
         {
           "id": "T004",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_chat.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_mockup.py tests/test_gallery_links.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q: 604 passed, 17 skipped",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 51/58 clean, 0 errors, 0 warnings",
+              "manual: rendered mockup.window's annotated default @slot through the Cotton compiler directly, no errors, confirmed four chat bubbles alternating start/end, avatars in chat-image, names+times in chat-header, Delivered/Seen in chat-footer on the two sent bubbles"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py::TestPackageComponentsLintClean",
+              "tests/test_gallery_annotations.py",
+              "tests/test_mockup.py"
+            ]
+          }
         }
       ]
     },
