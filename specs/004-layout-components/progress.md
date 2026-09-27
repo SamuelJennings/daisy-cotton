@@ -117,3 +117,10 @@ Did: indicator annotations finished: the default `@slot` is a button, `@slot:ite
 Verified: the new annotation test on the items slot failed first (no `aria-hidden` count, no `sr-only` phrase), then `uv run pytest tests/test_indicator.py` 27 passed. The test reads the slot through the gallery's parser and renders it inside `<c-indicator>`.
 Next: T018 hero.
 Watch: none.
+
+## 2026-09-27T02:30Z · Implementer US6 · T018
+
+Did: `hero.html`: `hero` root with the caller's class and attributes, the slot inside `hero-content`, `overlay` adding `<div class="hero-overlay" aria-hidden="true">` before it, `style` reaching the root through `{{ attrs }}`. Annotations: `overlay` toggle, `class`, default `@slot` a heading, a paragraph and a button. README lists `hero` (count now twenty-nine) and its scope line now says the hero container ships while composed hero sections stay with the project; CHANGELOG Added.
+Verified: `tests/test_hero.py` failed (8 failed, 3 errors) before the template, then `uv run pytest tests/test_hero.py` 11 passed; gallery annotation, lint, render-all, declared-attribute and class-merge suites green; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T019 mask and stack.
+Watch: none.

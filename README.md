@@ -8,7 +8,7 @@ A project that wants daisyUI-styled Cotton components depends on this package di
 
 Version 0.0.1, pre-1.0: names, attributes and the set of classes a component emits can change between minor versions. The [CHANGELOG](CHANGELOG.md) is how a project finds out what has landed.
 
-Twenty-eight components are built so far: `alert`, `avatar`, `badge`, `breadcrumbs`, `button`, `card`, `divider`, `dock`, `drawer` + `drawer.button`, `dropdown`, `footer` + `footer.nav`, `form.field`, `icon`, `indicator` + `indicator.item`, `join`, `link`, `modal` and `mockup.*`. Each one is documented live in the component gallery (`python manage.py runserver` from a checkout). More land as the need arises. To set up a checkout, run the checks or add a component, see [CONTRIBUTING](https://github.com/SamuelJennings/daisy-cotton/blob/main/CONTRIBUTING.md).
+Twenty-nine components are built so far: `alert`, `avatar`, `badge`, `breadcrumbs`, `button`, `card`, `divider`, `dock`, `drawer` + `drawer.button`, `dropdown`, `footer` + `footer.nav`, `form.field`, `hero`, `icon`, `indicator` + `indicator.item`, `join`, `link`, `modal` and `mockup.*`. Each one is documented live in the component gallery (`python manage.py runserver` from a checkout). More land as the need arises. To set up a checkout, run the checks or add a component, see [CONTRIBUTING](https://github.com/SamuelJennings/daisy-cotton/blob/main/CONTRIBUTING.md).
 
 `<c-icon>` renders `name` as a literal CSS class string and resolves nothing itself — a project wanting name-based icon resolution provides its own override (see [docs/adr/0001](docs/adr/0001-icon-is-an-extension-point.md)).
 
@@ -46,7 +46,7 @@ INSTALLED_APPS = [
 **What this deliberately is not.**
 
 - **Not an application shell.** No settings, no menu system, no icon registry, no views.
-- **Not page-level layout.** Heroes, sections and other compositions are built from these components, not shipped with them.
+- **Not page-level layout.** The `hero` container ships, but composed hero sections (the heading, copy and calls to action inside it) and other page sections stay with the project, built from these components.
 - **Not a CSS framework.** daisyUI, its themes and Tailwind's preflight come from the project.
 - **Not a JavaScript layer.** The package ships no scripts. A project that wants behaviour daisyUI's CSS doesn't give, such as smarter dropdown placement, adds it by overriding the component.
 - **Not coupled to Django objects.** Components take plain values. Wiring one up to a form, a paginator or the messages framework is the project's job.

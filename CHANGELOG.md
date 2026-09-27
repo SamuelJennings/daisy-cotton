@@ -31,6 +31,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `items` slot and the content in the default slot; the items are always written first. `placement` takes
   one or two words from `top`, `middle`, `bottom`, `start`, `center` and `end` (`top end`, `bottom start`),
   each checked on its own, so an unknown word adds nothing.
+- `hero`: the hero container. The slot lands inside `hero-content`, `overlay` adds a `hero-overlay` element
+  hidden from assistive technology behind the content, and a `style` attribute such as
+  `style="background-image: url(hero.jpg)"` reaches the root unchanged. Composed hero sections stay in your own markup.
 - `<c-icon>`: a basic primitive that treats `name` as a literal CSS class string
   (`<i class="{{ name }} {{ class }}">`). This package resolves no icon pack of its own — a
   project wanting name-based resolution (an icon font, an SVG sprite, an icon-resolution package)
