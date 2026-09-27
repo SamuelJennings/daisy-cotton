@@ -136,6 +136,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `hover-3d`, holding the default slot followed by eight empty `<div aria-hidden="true">` zones that
   track the pointer. The content must be one element with no buttons, links or inputs of its own; a
   linked card takes its accessible name from the content's text or image alt, or from `aria-label`.
+- `<c-text-rotate>`: daisyUI's text rotate, a `<span>` carrying `text-rotate` wrapping one inner
+  `<span>` that holds up to six slotted lines shown one at a time in a ten-second loop, `content_class`
+  reaching that inner span. A `duration-*` class on the root changes the loop's length; the loop pauses
+  only while the pointer is over it, and every line stays readable to a screen reader.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
