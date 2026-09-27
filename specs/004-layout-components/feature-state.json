@@ -2,7 +2,7 @@
   "feature": "004-layout-components",
   "branch": "004-layout-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "DESIGN_REVIEW",
+  "state": "IMPLEMENT",
   "state_history": [
     {
       "state": "QUEUED",
@@ -18,6 +18,11 @@
       "state": "DESIGN_REVIEW",
       "at": "2026-09-27T00:43:16Z",
       "note": "plan, research, tasks committed; draft PR #102 opened"
+    },
+    {
+      "state": "IMPLEMENT",
+      "at": "2026-09-27T00:53:36Z",
+      "note": "design review applied (D9-D11); plan notification recorded"
     }
   ],
   "gates": {
@@ -29,12 +34,22 @@
       ]
     },
     "plan": {
-      "approved_by": null,
-      "at": null
+      "approved_by": "notified",
+      "at": "2026-09-27T00:53:24Z"
     },
     "merge": {
       "approved_by": null,
       "at": null
+    },
+    "design_review": {
+      "approved_by": "design-panel",
+      "at": "2026-09-27T00:53:24Z",
+      "self_resolved": [
+        "SPEC-001, SPEC-002, SPEC-004, SPEC-005, ARCH-001: applied as plan/tasks edits (D9, D10, D11)",
+        "SPEC-003: spec against tool, held for the walkthrough (D8)",
+        "ACC-001: recorded in D4 for the walkthrough",
+        "ARCH-002: pre-existing, out of scope (D11)"
+      ]
     }
   },
   "stories": [

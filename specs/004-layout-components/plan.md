@@ -48,8 +48,9 @@ Ten new Cotton components (`drawer`, `drawer.button`, `footer`, `footer.nav`, `h
 
 Shared rules, applied everywhere below:
 
-- **Modifiers.** `variant` and `placement` go through `{% variation … %}` against daisyUI's list for that component (research R1), so an unknown value adds nothing and nothing raises (Edge Cases, FR-004). `horizontal`, `vertical` and `open` go through `{% responsive … %}`: bare gives the class, a breakpoint gives `<bp>:<class>`.
+- **Modifiers.** `variant` and `placement` go through `{% variation … %}` against daisyUI's list for that component (research R1), so an unknown value adds nothing and nothing raises (Edge Cases, FR-004). `horizontal`, `vertical` and `open` go through `{% responsive … %}`: bare gives the class, a breakpoint gives `<bp>:<class>`. `responsive` is narrowed so a string that is not one of `sm`, `md`, `lg`, `xl`, `2xl` gives nothing (FR-004, D10).
 - **Root.** Every component declares `class`, merges it into the root's class list, and spreads `{{ attrs }}` on the root (FR-003).
+- **Empty defaults.** Every declared name except `class` is declared with an empty default (`role=""`, `placement=""`), the `card/index.html` pattern. A name declared with no default falls through to the page's template context when the caller leaves it out, so a view with `role` or `title` in its context would otherwise rewrite the component's semantics (D9). The `<c-vars>` lines below show the names; each carries `=""`. Annotations give no `default:` for these, which the linter accepts.
 - **Caller `role`.** Where a component sets a role by default, `role` is declared in `<c-vars>` and written once: the caller's if given, else the default (research R6, D5).
 - **No script.** No `<script>`, no `on*=` attribute (FR-005). Each test module asserts it for its own components.
 
@@ -68,11 +69,11 @@ Shared rules, applied everywhere below:
 
 ### Mockups (US8)
 
-- `mockup/browser.html` — `<div class="mockup-browser border border-base-300 bg-base-100 w-full {{ class }}" {{ attrs }}>`, toolbar `<div class="mockup-browser-toolbar"><div class="input">{{ url }}</div></div>`, then `{{ slot }}`. The URL is plain text in the toolbar, never hidden. The toolbar's dots are CSS pseudo-elements with nothing for assistive technology to read.
+- `mockup/browser.html` — `<div class="mockup-browser border border-base-300 bg-base-100 w-full {{ class }}" {{ attrs }}>`, toolbar `<div class="mockup-browser-toolbar"><div class="input">{{ url }}</div></div>`, then `<div>{{ slot }}</div>`, daisyUI's documented content wrapper. The URL is plain text in the toolbar, never hidden. The toolbar's dots are CSS pseudo-elements with nothing for assistive technology to read.
 - `mockup/code/index.html` — `<c-vars class />`, `<div class="mockup-code w-full {{ class }}" tabindex="0" {{ attrs }}>{{ slot }}</div>`. `tabindex="0"` makes the overflowing box a Tab stop that scrolls with the arrow keys (FR-024). Visible focus is the browser's default outline, measured at the walkthrough (research R8).
 - `mockup/code/line.html` — `<c-vars prefix text class />`, `<pre{% if prefix %} data-prefix="{{ prefix }}"{% endif %} class="{{ class }}" {{ attrs }}><code>{{ text }}{{ slot }}</code></pre>`. No default prefix (decisions.md "Code mockup lines have no default prefix", D2).
 - `mockup/phone.html` — `<c-vars class />`, `<div class="mockup-phone {{ class }}" {{ attrs }}><div class="mockup-phone-camera" aria-hidden="true"></div><div class="mockup-phone-display bg-base-100 text-base-content">{{ slot }}</div></div>`. `grid place-content-center` and the literal colours go (FR-023, D3).
-- `mockup/window.html` — `<c-vars class />`, `<div class="mockup-window border border-base-300 bg-base-100 {{ class }}" {{ attrs }}>{{ slot }}</div>`. The `grid place-content-center h-80` wrapper goes. The window's dots are pseudo-elements.
+- `mockup/window.html` — `<c-vars class />`, `<div class="mockup-window border border-base-300 bg-base-100 {{ class }}" {{ attrs }}><div>{{ slot }}</div></div>`. The wrapper stays, daisyUI's documented structure, and loses `grid place-content-center h-80`. Without it every child of the slot would become a stretched item of the window's column flexbox. The window's dots are pseudo-elements.
 
 ### Join (US4)
 
@@ -86,7 +87,7 @@ Shared rules, applied everywhere below:
 
 ### Drawer (US1)
 
-`drawer/index.html` — `<c-vars id open placement class />`, `id` annotated `required`.
+`drawer/index.html` — `{% load i18n daisy_cotton %}`, `<c-vars id open placement class />`, `id` annotated `required`.
 
 ```
 <div class="drawer {open: responsive drawer-open} {placement: drawer-end} {{ class }}" {{ attrs }}>
@@ -99,7 +100,7 @@ Shared rules, applied everywhere below:
 </div>
 ```
 
-`id` is declared, so it reaches the checkbox and never the root: two elements with one id would break every `for`. `placement` validated against `end` only (FR-011). Named slot `side`. `@trigger` describes `drawer.button` (Article XVI).
+`id` is declared, so it reaches the checkbox and never the root: two elements with one id would break every `for`. `placement` validated against `end` only (FR-011). Named slot `side`. `@trigger` is the opener's markup, `<c-drawer.button drawer="demo-drawer">…</c-drawer.button>`, as `modal.html`'s trigger is. The gallery prepends it to the default slot, so it lands inside `drawer-content` where the focus ring applies (Article XVI, research R2).
 
 `drawer/button.html` — `<c-vars drawer class />`, `drawer` annotated `required`. `<label for="{{ drawer }}" class="btn drawer-button {{ class }}" {{ attrs }}>{{ slot }}</label>`. A `<label>`, because daisyUI's focus ring targets `label.drawer-button` inside `.drawer-content` (research R2). `btn` is daisyUI's documented opener class (D4). No `role`, no `tabindex`: the Tab stop is the checkbox (research R2).
 
@@ -115,7 +116,7 @@ Shared rules, applied everywhere below:
 
 ### Mask and stack (US7)
 
-`mask.html` — `<c-vars shape half src alt="" class />`, `shape` annotated `required` and `select[…]` with daisyUI's fourteen shapes. With `src`: `<img src="{{ src }}" alt="{{ alt }}" class="mask {shape} {half} {{ class }}" {{ attrs }} />`. Without: `<div class="mask {shape} {half} {{ class }}" {{ attrs }}>{{ slot }}</div>`. `half` validated against `1,2` (FR-021).
+`mask.html` — `<c-vars shape half src alt class />` (each `=""` per the shared rule), `shape` annotated `required` and `select[…]` with daisyUI's fourteen shapes. With `src`: `<img src="{{ src }}" alt="{{ alt }}" class="mask {shape} {half} {{ class }}" {{ attrs }} />`. Without: `<div class="mask {shape} {half} {{ class }}" {{ attrs }}>{{ slot }}</div>`. `half` validated against `1,2` (FR-021).
 
 `stack.html` — `<c-vars placement class />`. `<div class="stack {placement: stack-top|bottom|start|end} {{ class }}" {{ attrs }}>{{ slot }}</div>` (FR-022).
 
@@ -123,8 +124,10 @@ Shared rules, applied everywhere below:
 
 Every template carries `@description`, a `@prop` per `<c-vars>` name and `@slot` / `@slot:name` per slot. Fixed-value props are `select[…]` with daisyUI's full list, which gives the gallery's variants matrix every colour, placement and shape (FS-003 research R4). Booleans (`horizontal`, `vertical`, `open`, `overlay`) are toggles. Each default `@slot` is a one-line example that shows the component's states:
 
-- `drawer`: a page holding a `drawer.button` for `demo-drawer`, daisyUI's responsive divider pattern (`<div class="flex flex-col sm:flex-row">…<c-divider horizontal="sm">OR</c-divider>…</div>`), a `<c-join vertical horizontal="sm">` of three buttons, and a `<c-footer vertical horizontal="sm">` with two `footer.nav` groups. `@slot:side` is a sidebar list. The description tells the viewer to set `id` to `demo-drawer` (research R4). This page is the responsive example for `divider`, `join` and `footer` (research R3, D8).
+- `drawer`: `@trigger` the opener for `demo-drawer`. The default `@slot` a page holding daisyUI's responsive divider pattern (`<div class="flex flex-col sm:flex-row">…<c-divider horizontal="sm">OR</c-divider>…</div>`), a `<c-join vertical horizontal="sm">` of three buttons, and a `<c-footer vertical horizontal="sm">` with two `footer.nav` groups. `@slot:side` is a sidebar list. The description tells the viewer to set `id` to `demo-drawer` (research R4). This page is the responsive example for `divider`, `join` and `footer` (research R3, D8).
 - `divider`: `OR`. `join`: three buttons with `join-item`. `indicator`: a button with an item whose count carries a visually hidden text alternative (scenario 4). `hero`: a heading, copy and a button. `mask`: an inline image. `stack`: three cards. Each mockup: content that exercises it (`mockup.code` with a prompt line and an output line).
+
+Two traps in a one-line example: it must not contain `#}`, and must not contain a spaced em dash, which the gallery takes as the start of the slot's description (`core/annotations.py:241`). The indicator example's count carries a visually hidden text alternative, and a test reads the example through the gallery's own parser to hold it there (T017).
 
 Descriptions of `horizontal`, `vertical` and `open` say that a breakpoint such as `lg` applies the modifier from that width up, as FS-003's do.
 

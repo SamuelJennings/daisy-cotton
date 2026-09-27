@@ -30,7 +30,7 @@ Fourteen mask shapes, matching the spec's clarification. `mask-square` does not 
 
 The Tab stop is the invisible `drawer-toggle` checkbox, and Space toggles it natively. daisyUI draws the focus ring on a `<label class="drawer-button">` that is a descendant of `.drawer-content`, a later sibling of the checkbox. So `drawer.button` must emit a `<label>`, not a `<button>`, and the gallery example places it inside the page content. An opener placed outside the drawer still opens it (`for` works across the document, which is what scenario 2 needs), but its focus ring does not show. The description says so.
 
-A `<label>` is not itself focusable, and adding `role="button" tabindex="0"` would make a second Tab stop that Space and Enter cannot activate without a script. That is the ruling FS-003 reached for the dock's drawer toggle (its D9). The keyboard path is the checkbox.
+A `<label>` is not itself focusable, and adding `role="button" tabindex="0"` would make a second Tab stop that Space and Enter cannot activate without a script. FS-003's plan reaches the same ruling for the dock's drawer toggle (its D9, in the open pull request #101). On main the dock toggle still carries `role="button" tabindex="0"`. The keyboard path is the checkbox.
 
 `drawer-open` hides the checkbox, so a permanently open drawer has no Tab stop for the toggle. This is correct: there is nothing to toggle.
 
@@ -48,7 +48,7 @@ A required prop with no default renders empty in the default preview (`build_def
 
 `django_cotton/templatetags/_component.py:86` renders the default slot before the component's own `<c-vars>` are extracted (FS-003 research R1). Nothing in this feature needs a child to read its parent: `drawer.button` is given the drawer's id, `indicator.item` is placed through the parent's named slot, and `join` needs `join-item` on the child, which the caller passes as `class`.
 
-None of this feature's templates call another component inside their own markup, so the host-context leak FS-003 guarded with `only` does not arise here.
+None of this feature's templates call another component inside their own markup. The same fall-through reaches them from the page itself, though: a declared name with no default resolves from the caller's template context when the caller leaves it out (`_vars.py:80-82`, `_component.py:111-118`), while a quoted default shadows it (`_vars.py:73-77`, the reason `card/index.html:12` declares `title=""`). Hence the empty defaults in plan.md and D9.
 
 ## R6. A caller's `role` without a duplicate attribute
 

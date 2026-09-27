@@ -112,7 +112,12 @@ daisyUI draws the keyboard focus ring on `label.drawer-button` inside `.drawer-c
 hidden toggle has focus (research R2), so the opener must be a `<label>`, and a `<button>` would
 never show focus. daisyUI's documented opener is `btn drawer-button`, so `btn` is emitted too and
 a caller restyles it through `class` (`btn-primary`, `btn-ghost btn-square`). The opener gets no
-`role` or `tabindex`: the toggle is the Tab stop, as FS-003 ruled for the dock's drawer toggle.
+`role` or `tabindex`: the toggle is the Tab stop, as FS-003's plan rules for the dock's drawer toggle.
+
+Trade-off carried to the walkthrough: because the package names the toggle itself (FR-006,
+FR-012), a voice-control user who says the opener's visible text may not reach it, since an
+`aria-label` takes precedence over the opener's `<label>` text. The spec asks for the package's
+name, so it stays.
 
 **ADR:** none — follows daisyUI's documented markup, nothing cross-cutting.
 
@@ -149,10 +154,47 @@ no sample values (research R3). The only place it shows a caller's markup verbat
 default content. The drawer's page slot is a whole page, which is where a responsive layout
 naturally sits and is SC-006's page. It holds daisyUI's responsive divider pattern
 (`<c-divider horizontal="sm">` between two columns that stack below `sm`), a
-`<c-join vertical horizontal="sm">` and a `<c-footer vertical horizontal="sm">`. The drawer's own
-`open` takes its breakpoint the same way, and is documented in its description. Each prop that
-accepts a breakpoint says so in its description.
+`<c-join vertical horizontal="sm">` and a `<c-footer vertical horizontal="sm">`. Each prop that accepts a breakpoint says so in its description.
+
+**Falls short of FR-008 for the drawer's own `open`.** The drawer being previewed cannot give
+itself `open="lg"` from its own slot, and the gallery has no control that can. Its description
+documents the breakpoint form. This goes to Sam at the walkthrough.
 
 **Revisit if:** a gallery release lets a boolean control take a value, or renders `example:`.
 
 **ADR:** none — a workaround for one tool version, recorded here and in research R3.
+
+## D9 — Declared names default to empty
+
+Design review SPEC-001. A name declared in `<c-vars>` with no default falls through to the page's
+template context when the caller leaves it out, so a view with `role`, `title` or `text` in its
+context rewrote the divider's separator role, the join's group role and the footer group's name
+in a probe. Every declared name except `class` gets `=""`, the pattern `card/index.html` already
+uses for `title`. `class` keeps no default, as every existing component does.
+
+**ADR:** none — the repository's existing pattern applied to this feature's templates.
+
+## D10 — `responsive` accepts only daisyUI's breakpoints
+
+Design review SPEC-004. FR-004 says a value daisyUI does not define emits no modifier class. The
+`responsive` tag prefixed any string, so `horizontal="true"` gave `true:join-horizontal`. It now
+returns nothing for a string that is not `sm`, `md`, `lg`, `xl` or `2xl`. `divider` is its only
+caller on main.
+
+**ADR:** none — a validation fix inside one helper.
+
+## D11 — Design review applied
+
+One design reviewer, three lenses, verdict approve with no critical or high findings.
+
+- SPEC-001 → D9. SPEC-002 → the mockups keep daisyUI's content wrapper `<div>`. SPEC-004 → D10.
+  ARCH-001 → the drawer's `@trigger` is the opener and the page example no longer repeats it.
+  SPEC-005 → T017 reads the indicator example through the gallery's parser.
+- SPEC-003 (spec against tool) → D8 states the gap for the drawer's `open`, which goes to Sam at
+  the walkthrough.
+- ACC-001 (voice control and the toggle's name) → recorded in D4 for the walkthrough.
+- ARCH-002 (classes built at render time are invisible to a project's own Tailwind build, and the
+  CDN build has no `2xl:` variants) predates this feature: `divider` and `button` already build
+  classes this way. Not in scope here.
+
+**ADR:** none — a record of review dispositions.
