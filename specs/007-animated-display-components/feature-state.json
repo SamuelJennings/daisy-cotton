@@ -315,8 +315,20 @@
       "tasks": [
         {
           "id": "T013",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_text_rotate.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q: 365 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 54/62 clean, 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_text_rotate.py::TestTextRotateRoot",
+              "tests/test_text_rotate.py::TestTextRotateNoAriaHidden",
+              "tests/test_text_rotate.py::TestTextRotatePageContext",
+              "tests/test_animated_display_no_script.py"
+            ]
+          }
         },
         {
           "id": "T014",

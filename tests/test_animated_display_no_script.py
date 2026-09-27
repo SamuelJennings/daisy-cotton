@@ -41,6 +41,11 @@ CALLER_STRINGS = {
     "hover-3d": (
         '<c-hover-3d href="/cards/1"><figure><img src="/a.jpg" alt="A"></figure></c-hover-3d>'
     ),
+    "text-rotate": (
+        '<c-text-rotate content_class="justify-items-center">'
+        "<span>One</span><span>Two</span><span>Three</span>"
+        "</c-text-rotate>"
+    ),
 }
 
 

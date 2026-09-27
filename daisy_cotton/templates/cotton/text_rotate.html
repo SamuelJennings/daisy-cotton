@@ -1,0 +1,11 @@
+{# @description daisyUI's text rotate: up to six lines shown one at a time in a continuous loop, drawn from the default slot. The default loop is ten seconds; add a duration-* class such as duration-6000 to the root to change it. The loop pauses only while the pointer is over it, so rotating text should never be the only place information appears. Every line stays readable to a screen reader. Whether the loop respects a reduced-motion setting depends on daisyUI's CSS. See the hero entry for an inline rotating word and a large centred heading. #}
+{# @prop content_class:text | description:"Extra classes added to the inner span holding the lines, such as justify-items-center to centre them." #}
+{# @prop class:text | description:"Extra classes added to the text rotate, such as text-5xl or a duration-* class." #}
+{# @slot <span class="text-primary">Designers</span><span class="text-secondary">Developers</span><span class="text-accent">Managers</span> — Up to six lines shown one at a time. #}
+{% comment %}
+  The loop and its pause under a pointer are daisyUI's CSS; no script here.
+  content_class lands on the inner span, which is how daisyUI centres or
+  otherwise arranges the lines.
+{% endcomment %}
+<c-vars content_class="" class="" />
+<span class="text-rotate {{ class }}" {{ attrs }}><span{% if content_class %} class="{{ content_class }}"{% endif %}>{{ slot }}</span></span>

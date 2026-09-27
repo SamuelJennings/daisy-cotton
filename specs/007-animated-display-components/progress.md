@@ -128,3 +128,10 @@ image and alt, a `card-title` of "Rewards card", and no `card-actions` element. 
 dynamically, the same pattern T010 followed for the hover gallery).
 Next: US6 done.
 Watch: nothing new.
+
+## 2026-09-27T21:53Z · Implementer US7 · T013
+
+Did: added `text_rotate.html` — a `<span class="text-rotate">` (`class` merged, `attrs` spread) wrapping one inner `<span>` that holds the default slot's lines in order and carries `content_class` only when given (D10: the file is `text_rotate.html` because Cotton folds `-` to `_`; callers write `<c-text-rotate>`). Wrote `tests/test_text_rotate.py` for the root's class merge, the inner span's line order, `content_class` landing on the inner span, no `class` attribute on the inner span when `content_class` is empty, `class`/`data-id` on the root, no `aria-hidden` anywhere, and a page context carrying `content_class`/`class` not leaking in. Extended `tests/test_animated_display_no_script.py` with the text rotate's caller string. Added `tests/test_text_rotate.py` to `pyproject.toml`'s `non-mirror-paths`.
+Verified: `uv run pytest tests/test_text_rotate.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q` — 365 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — exit 0, 54/62 clean, 0 errors, 0 warnings (`text_rotate` is not among the pre-existing `aria_label` heuristic hints). All 8 tests observed failing on `TemplateDoesNotExist: cotton/text_rotate/index.html` before the template existed, then passing after.
+Next: T014 — gallery annotations for `text-rotate`, the `hero` composition's rotating heading and inline word, README and CHANGELOG.
+Watch: US6 (`hover_3d`) already hit the gallery-linter's underscore-only `known_tags` mismatch D11 names; T014 will need `<c-text_rotate>` (not `<c-text-rotate>`) inside the `hero` template's scanned `@slot` annotation for the same reason.
