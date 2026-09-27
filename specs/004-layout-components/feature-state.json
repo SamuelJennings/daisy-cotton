@@ -270,13 +270,31 @@
       "tasks": [
         {
           "id": "T016",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_indicator.py: 20 passed (failed 20 before the templates)"
+            ],
+            "tests": [
+              "tests/test_indicator.py::TestIndicatorRoot",
+              "tests/test_indicator.py::TestIndicatorItems",
+              "tests/test_indicator.py::TestIndicatorItemPlacement"
+            ]
+          }
         },
         {
           "id": "T017",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_indicator.py: 27 passed"
+            ],
+            "tests": [
+              "tests/test_indicator.py::TestIndicatorAnnotations"
+            ]
+          }
         }
       ]
     },
@@ -290,8 +308,16 @@
       "tasks": [
         {
           "id": "T018",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_hero.py: 11 passed (8 failed, 3 errors before the template)"
+            ],
+            "tests": [
+              "tests/test_hero.py"
+            ]
+          }
         }
       ]
     },
@@ -305,13 +331,31 @@
       "tasks": [
         {
           "id": "T019",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_mask_stack.py: 35 passed (35 failed before the templates)"
+            ],
+            "tests": [
+              "tests/test_mask_stack.py::TestMaskImage",
+              "tests/test_mask_stack.py::TestStack"
+            ]
+          }
         },
         {
           "id": "T020",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_mask_stack.py: 42 passed (3 annotation tests failed first)"
+            ],
+            "tests": [
+              "tests/test_mask_stack.py::TestMaskAnnotations",
+              "tests/test_mask_stack.py::TestStackAnnotations"
+            ]
+          }
         }
       ]
     },
