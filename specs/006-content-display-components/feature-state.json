@@ -56,7 +56,7 @@
       "priority": "P1",
       "issue": 63,
       "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/006-content-display-components",
-      "status": "todo",
+      "status": "done",
       "replans": 0,
       "tasks": [
         {
@@ -71,9 +71,6 @@
             "tests": [
               "tests/test_templatetags/test_daisy_cotton.py::TestResponsive::test_a_string_that_is_not_a_breakpoint_returns_empty_string",
               "tests/test_templatetags/test_daisy_cotton.py::TestResponsive::test_every_daisyui_breakpoint_is_accepted"
-            ],
-            "commits": [
-              "a9f7204"
             ]
           }
         },
@@ -93,9 +90,6 @@
               "tests/test_card.py::TestCardEmptyParts",
               "tests/test_card.py::TestCardClasses",
               "tests/test_card.py::TestCardPageContextDoesNotLeak"
-            ],
-            "commits": [
-              "2ec669d"
             ]
           }
         },
@@ -112,9 +106,6 @@
             "tests": [
               "tests/test_card.py::TestCardSize",
               "tests/test_card.py::TestCardModifiers"
-            ],
-            "commits": [
-              "38b0d07"
             ]
           }
         },
@@ -130,9 +121,6 @@
             ],
             "tests": [
               "tests/test_modal.py::TestModalCardContent"
-            ],
-            "commits": [
-              "7d9e399"
             ]
           }
         },
@@ -148,9 +136,6 @@
             ],
             "tests": [
               "tests/test_gallery_lint.py::TestPackageComponentsLintClean::test_has_no_blocking_findings"
-            ],
-            "commits": [
-              "b65d74f"
             ]
           }
         }
