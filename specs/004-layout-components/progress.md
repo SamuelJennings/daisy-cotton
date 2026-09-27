@@ -26,3 +26,10 @@ Did: divider annotations (`placement` and `variant` as selects, direction toggle
 Verified: `uv run pytest tests/test_divider.py` 42 passed.
 Next: T004 mockups.
 Watch: none.
+
+## 2026-09-27T01:30Z · Implementer US3+US8 · T004
+
+Did: `mockup/browser.html`, `phone.html` and `window.html` declare `class`, merge it and spread attributes on the root. The phone display takes `bg-base-100 text-base-content`, loses `text-white`, `bg-neutral-900`, `grid`, `place-content-center`, and its camera is `aria-hidden`. The window keeps a bare `<div>` around the slot without `grid place-content-center h-80`. The browser wraps its slot in a bare `<div>` after the toolbar and declares `url=""`. New `tests/test_mockup.py`, registered in `non-mirror-paths`. Annotations updated with the templates.
+Verified: `uv run pytest tests/test_mockup.py` 22 passed; gallery, render-all and class-merge suites green; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T005 code mockup.
+Watch: none.
