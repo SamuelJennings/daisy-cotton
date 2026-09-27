@@ -187,17 +187,23 @@ class TestDrawerAccessibleNames:
 
         assert root(soup).find("input")["aria-label"].strip()
 
-    def test_the_overlay_has_an_accessible_name(self, cotton_render_string_soup):
+    def test_the_overlay_carries_readable_text_not_an_aria_label(
+        self, cotton_render_string_soup
+    ):
+        """ARIA does not allow aria-label on a <label>, so the overlay's name is
+        visually hidden text inside it (D14)."""
         soup = cotton_render_string_soup(DRAWER)
+        overlay = root(soup).find(class_="drawer-overlay")
 
-        assert root(soup).find(class_="drawer-overlay")["aria-label"].strip()
+        assert not overlay.has_attr("aria-label")
+        assert overlay.find(class_="sr-only").get_text().strip()
 
     def test_both_strings_are_translatable_in_the_template_source(self):
         source = (DRAWER_DIR / "index.html").read_text()
 
         assert "{% load i18n" in source
-        assert source.count("aria-label=") == 2
-        assert source.count('aria-label="{% trans ') == 2
+        assert source.count('aria-label="{% trans ') == 1
+        assert source.count('<span class="sr-only">{% trans ') == 1
 
 
 class TestDrawerButton:

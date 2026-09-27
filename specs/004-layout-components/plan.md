@@ -94,7 +94,7 @@ Shared rules, applied everywhere below:
   <input id="{{ id }}" type="checkbox" class="drawer-toggle" aria-label="{% trans "Toggle sidebar" %}" />
   <div class="drawer-content">{{ slot }}</div>
   <div class="drawer-side">
-    <label for="{{ id }}" aria-label="{% trans "Close sidebar" %}" class="drawer-overlay"></label>
+    <label for="{{ id }}" class="drawer-overlay"><span class="sr-only">{% trans "Close sidebar" %}</span></label>
     {{ side }}
   </div>
 </div>

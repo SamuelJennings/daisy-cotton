@@ -233,3 +233,14 @@ LAY-006 (`class` still has no default, so a page variable named `class` reaches 
 every component in the package, not only this feature's, and belongs in its own change.
 
 **ADR:** none — a record of review dispositions.
+
+## D14 — The overlay's name is visually hidden text, not `aria-label`
+
+The accessibility run found `aria-prohibited-attr` (serious) on the open drawer: ARIA does not allow
+`aria-label` on a `<label>`, which has no role that takes a name. daisyUI's documented markup has
+the same fault. The overlay now holds `<span class="sr-only">Close sidebar</span>`, translatable,
+which a screen reader reads and axe accepts. FR-012 asks for the overlay to be named; this is the
+closest valid form, since the overlay is a pointer target and keyboard users close the drawer from
+the toggle.
+
+**ADR:** none — a markup correction inside one template.
