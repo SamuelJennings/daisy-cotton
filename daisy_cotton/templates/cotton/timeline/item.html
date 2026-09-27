@@ -1,0 +1,9 @@
+{% load daisy_cotton %}
+<c-vars start="" middle="" end="" box="" class="" />
+<li class="group/item {{ class }}" {{ attrs }}>
+  <hr class="group-first/item:hidden" aria-hidden="true" />
+  {% if start %}<div class="timeline-start{% if box == "start" %} timeline-box{% endif %}">{{ start }}</div>{% endif %}
+  {% if middle %}<div class="timeline-middle">{{ middle }}</div>{% endif %}
+  {% if end %}<div class="timeline-end{% if box and box != "start" %} timeline-box{% endif %}">{{ end }}</div>{% endif %}
+  <hr class="group-last/item:hidden" aria-hidden="true" />
+</li>
