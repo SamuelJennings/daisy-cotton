@@ -60,6 +60,14 @@
         "ACC-001: recorded in D4 for the walkthrough",
         "ARCH-002: pre-existing, out of scope (D11)"
       ]
+    },
+    "review": {
+      "approved_by": "review-panel",
+      "at": "2026-09-27T01:24:04Z",
+      "self_resolved": [
+        "LAY-001..LAY-005 low: fixed directly (D13)",
+        "LAY-006 low: package-wide, out of scope (D13)"
+      ]
     }
   },
   "stories": [
