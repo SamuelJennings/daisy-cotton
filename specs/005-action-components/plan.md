@@ -50,14 +50,14 @@ Two new Cotton components (`fab`, `swap`) and three existing ones rebuilt to the
 Shared rules, applied everywhere below:
 
 - **Modifiers.** `variant`, `size` and `placement` go through `{% variation … %}` against daisyUI's list for that component (research R1), so an unknown value adds nothing and nothing raises (Edge Cases). A `placement` that takes two words is split and each word validated on its own, as FS-004's indicator does.
-- **Root.** Every component declares `class`, merges it into the root's class list, and spreads `{{ attrs }}` on the root (FR-002), except where FR-018 and FR-026 send extra attributes to a trigger.
-- **Empty defaults.** Every declared name except `class` is declared with an empty default (`text=""`, `placement=""`), the `card/index.html` pattern, so a page variable of the same name never leaks in (research R5). Annotations give no `default:` for these, which the linter accepts.
-- **No script.** No `<script>`, no `on*=` attribute in any template (SC-003). Each test module asserts it for its own component.
-- **Triggers are `type="button"`.** The dropdown's and FAB's default triggers pass `type="button"` to `<c-button>`. Inside a form, a button with no type is a submit button, which would submit the form and, for the dropdown, never open the popover (research R2). A caller's `type` still wins (research R4).
+- **Root.** Every component declares `class`, merges it into the root's class list, and spreads `{{ attrs }}` on the root (FR-002), except where FR-018 and FR-026 send extra attributes to a trigger. A component's `class` never reaches a component it draws inside itself (D6).
+- **Empty defaults.** Every declared name, `class` included, is declared with an empty default (`text=""`, `placement=""`, `class=""`), the `card/index.html` pattern, so a page variable of the same name, or an enclosing component's own attribute, never leaks in (research R5, D6). Annotations give no `default:` for these, which the linter accepts, and a `select` must not get `default:""`, which the linter rejects as out of range.
+- **No script.** No `<script>` and no `on*=` attribute in any component's rendered output (SC-003). Each test module asserts it on the component rendered from a caller string, not on the template source, whose `@trigger` annotation legitimately shows an `onclick`.
+- **Triggers are `type="button"`.** The dropdown's and FAB's default triggers pass `type="button"` to `<c-button>`. Inside a form, a button with no type is a submit button, which would submit the form and, for the dropdown, never open the popover (research R2).
 
 ### Button (US1)
 
-`button.html` — `{% load daisy_cotton %}`, `<c-vars href text icon variant size outline dash soft ghost link active disabled wide block square circle class />`, each `=""` except `class`.
+`button.html` — `{% load daisy_cotton %}`, `<c-vars href text icon variant size outline dash soft ghost link active disabled wide block square circle class />`, each `=""`.
 
 ```
 {% if href %}<a href="{{ href }}" class="{classes}{% if disabled %} btn-disabled{% endif %}"{% if disabled %} aria-disabled="true" role="button" tabindex="-1"{% endif %} {{ attrs }}>
@@ -104,7 +104,7 @@ Shared rules, applied everywhere below:
 ```
 {% unique_id "dropdown" as generated_id %}{% firstof id generated_id as panel_id %}
 <div class="inline-block {{ class }}" {% if button %}{{ attrs }}{% endif %}>
-  {% if button %}{{ button }}{% else %}<c-button type="button" popovertarget="{{ panel_id }}" style="anchor-name: --{{ panel_id }}" :attrs="attrs" />{% endif %}
+  {% if button %}{{ button }}{% else %}<c-button type="button" :attrs="attrs" popovertarget="{{ panel_id }}" style="anchor-name: --{{ panel_id }}" />{% endif %}
   <div id="{{ panel_id }}" popover
        class="dropdown {% for word in placement.split %}{% variation word "dropdown" "top,bottom,left,right,start,center,end" %} {% endfor %}bg-base-100 rounded-box min-w-52 shadow-sm {{ content_class }}"
        style="position-anchor: --{{ panel_id }}">{{ slot }}</div>
@@ -112,7 +112,7 @@ Shared rules, applied everywhere below:
 ```
 
 - The root is a wrapper `<div class="inline-block">`, the display `.dropdown` gave the old wrapper, so `class` has a root to land on (Article XIV). The `dropdown` class and its placement classes sit on the panel, which is where daisyUI's popover method puts them (research R2).
-- The panel id is the caller's `id`, or `dropdown-` plus eight hex characters from the new `unique_id` tag (FR-019, research R6). The trigger's `popovertarget` and both anchor names are built from it.
+- The panel id is the caller's `id`, or `dropdown-` plus eight hex characters from the new `unique_id` tag (FR-019, research R6). The trigger's `popovertarget` and both anchor names are built from it. `popovertarget` and `style` are written after `:attrs`, so a caller's `style` cannot drop the anchor (Cotton applies a tag's attributes in source order, research R4). A caller's `style` therefore does not reach the default trigger, and the `{% comment %}` block says so.
 - Extra attributes configure the default trigger (`text`, `icon`, `variant`, `aria-label`…), and fall through to the wrapper when a `button` slot replaces it, as today. A custom trigger must carry `popovertarget` set to the dropdown's `id` and `type="button"`, plus `style="anchor-name: --<id>"` for placement, so a dropdown with a custom trigger needs an `id`. The `@slot:button` description and a `{% comment %}` block say so (scenario 6).
 - `button` is declared with an empty default, so a page variable called `button` does not replace the trigger (FS-004 D12).
 - `valign`, `halign`, `full` and `hover` go (FR-020). The panel loses `dropdown-content`, `tabindex`, `z-50` and `border border-base-300`: the popover is in the top layer, and daisyUI's popover panel carries none of them (SC-001).

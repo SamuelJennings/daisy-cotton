@@ -69,7 +69,9 @@ module this feature adds `unique_id` to, which is a line-level merge.
 `tests/test_dropdown.py` asserts `valign`, `halign`, `full`, `hover`, the `dropdown-content` panel
 and the focus-method trigger, all of which FR-017 and FR-020 replace. `tests/test_modal.py`
 asserts `position`, `size` and the inner card, which FR-014 and FR-016 remove. Each module is
-rewritten to the new contract in its story (T001, T004, T008). The behaviours they guarded that
+rewritten to the new contract in its story (T001, T004, T008). T001 also updates the one
+expected-markup string in `tests/test_dropdown.py` that asserts the old button classes on the
+dropdown's trigger, so the suite is green at the end of US1 and not only at the end of the batch. The behaviours they guarded that
 survive (`size` sets the button's size, an undeclared attribute passes through, `class` and
 `content_class` land where they should) are asserted again in the new modules.
 
@@ -114,3 +116,33 @@ button's vocabulary and still leave the other half forwarded. The descriptions t
 which attributes to type (`text="Options"`, or `icon="bi bi-plus-lg" aria-label="Actions"`).
 
 **ADR:** none — an annotation choice for two components.
+
+## D6 — `class` gets an empty default too
+
+Design review SPEC-001. Cotton pushes an enclosing component's attributes, its declared `class`
+included, into the context its inner components render in. A name declared with no default then
+reads that value. On main, `<c-dropdown class="mt-4">` puts `mt-4` on the wrapper and on the
+trigger button. For the FAB this would move the trigger away from its actions whenever a project
+positions the FAB with a class. Every template this feature touches declares `class=""`, and the
+dropdown and FAB tests assert the component's `class` is absent from the default trigger.
+
+**ADR:** none — the empty-default pattern already used for every other declared name.
+
+## D7 — Design review applied
+
+One design reviewer, three lenses, verdict request changes with one high finding.
+
+- SPEC-001 (high) → D6, plan "Empty defaults", T008 and T012 assertions.
+- SPEC-002 → D2 and T001 update the dropdown test's expected trigger markup.
+- SPEC-003 → the dropdown writes `popovertarget` and `style` after `:attrs`, so a caller's `style`
+  cannot remove the anchor. T008 tests it.
+- SPEC-004 → the `title` description says it names the dialog when `id` is set.
+- SPEC-005 → T013 names the dropdown's gallery URL.
+- SPEC-006 → the no-script check asserts on rendered output, not the template source.
+- SPEC-007 → dropped the test that a caller's `type` replaces the trigger's.
+- Notes folded into T006, T011 and T013: the modal description asks for `title` or `aria-label`
+  and says the trigger cannot open an already-shown dialog; the `indeterminate` slot says only a
+  project's script sets that state; T013 opens a dropdown inside an open modal. `modal-open` is
+  reachable through `class` (SC-001), and `open` covers the same state.
+
+**ADR:** none — a record of review dispositions.

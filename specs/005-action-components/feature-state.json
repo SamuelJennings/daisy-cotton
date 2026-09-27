@@ -2,7 +2,7 @@
   "feature": "005-action-components",
   "branch": "005-action-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "PLAN",
+  "state": "IMPLEMENT",
   "state_history": [
     {
       "state": "QUEUED",
@@ -13,6 +13,16 @@
       "state": "PLAN",
       "at": "2026-09-27T08:46:14Z",
       "note": "picked up from the queue; branch cut from origin/main 73a4826; verify green on base"
+    },
+    {
+      "state": "DESIGN_REVIEW",
+      "at": "2026-09-27T08:47:03Z",
+      "note": "plan, research, tasks committed; draft PR #103 opened"
+    },
+    {
+      "state": "IMPLEMENT",
+      "at": "2026-09-27T08:55:45Z",
+      "note": "design review applied (D6, D7); plan notification recorded"
     }
   ],
   "gates": {
@@ -24,12 +34,20 @@
       ]
     },
     "plan": {
-      "approved_by": null,
-      "at": null
+      "approved_by": "notified",
+      "at": "2026-09-27T09:00:00Z"
     },
     "merge": {
       "approved_by": null,
       "at": null
+    },
+    "design_review": {
+      "approved_by": "design-panel",
+      "at": "2026-09-27T09:00:00Z",
+      "self_resolved": [
+        "SPEC-001 high: applied as plan/tasks edits (D6)",
+        "SPEC-002..SPEC-007: applied as plan/tasks edits (D7)"
+      ]
     }
   },
   "stories": [
@@ -154,7 +172,7 @@
       "max": 1
     },
     "design_review_cycles": {
-      "used": 0,
+      "used": 1,
       "max": 1
     },
     "tokens": {
