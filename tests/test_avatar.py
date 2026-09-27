@@ -246,3 +246,58 @@ class TestAvatarPageContextDoesNotLeak:
 
         svg = root.find("svg")
         assert svg is not None
+
+
+class TestAvatarGroup:
+    """FR-024, AS7: the group's root carries ``avatar-group`` and the
+    caller's ``class`` in one class list, with the avatars inside."""
+
+    def test_group_root_carries_avatar_group_and_caller_class(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup(
+            '<c-avatar.group class="-space-x-6">'
+            '<c-avatar src="/a.jpg" alt="Ada" />'
+            '<c-avatar src="/b.jpg" alt="Bo" />'
+            "</c-avatar.group>"
+        )
+
+        root = soup.find("div", class_="avatar-group")
+        assert root is not None
+        assert "-space-x-6" in root.get("class")
+
+        avatars = root.find_all("div", class_="avatar")
+        assert len(avatars) == 2
+
+    def test_group_class_and_extra_attributes_reach_the_root(
+        self, cotton_render_string
+    ):
+        html = cotton_render_string(
+            '<c-avatar.group class="-space-x-6" data-test="x">'
+            '<c-avatar src="/a.jpg" alt="Ada" />'
+            "</c-avatar.group>"
+        )
+
+        root_classes = _class_attrs_on(html, "div")
+        assert len(root_classes) == 1, (
+            f"expected one class attribute, found {root_classes}"
+        )
+        assert "avatar-group" in root_classes[0]
+        assert "-space-x-6" in root_classes[0]
+
+        attrs = _attrs_on(html, "div")
+        assert _attr_value(attrs, "data-test") == "x"
+
+
+class TestAvatarGroupPageContextDoesNotLeak:
+    """A page variable named ``class`` never fills an empty group's class list."""
+
+    def test_page_context_class_does_not_leak_in(self, cotton_render_string):
+        html = cotton_render_string(
+            "<c-avatar.group></c-avatar.group>",
+            context={"class": "leaked-class"},
+        )
+
+        root_classes = _class_attrs_on(html, "div")
+        assert len(root_classes) == 1
+        assert "leaked-class" not in root_classes[0]

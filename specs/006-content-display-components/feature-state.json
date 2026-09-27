@@ -349,8 +349,19 @@
         },
         {
           "id": "T015",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_avatar.py -q: 17 passed",
+              "uv run pytest tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_render_all.py -q: 58 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/avatar/group.html tests/test_avatar.py: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_avatar.py::TestAvatarGroup",
+              "tests/test_avatar.py::TestAvatarGroupPageContextDoesNotLeak"
+            ]
+          }
         },
         {
           "id": "T016",

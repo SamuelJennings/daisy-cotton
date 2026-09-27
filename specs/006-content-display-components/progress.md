@@ -103,3 +103,10 @@ Did: rebuilt `avatar/index.html` — root `<div class="avatar{avatar-placeholder
 Verified: `uv run pytest tests/test_avatar.py -q` — 14 passed. `uv run pytest tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_render_all.py -q` — 58 passed. `uv run pre-commit run --files daisy_cotton/templates/cotton/avatar/index.html tests/test_avatar.py pyproject.toml` — all hooks passed.
 Next: T015, the avatar group.
 Watch: `cotton_lint`/gallery-annotation checks are red for `avatar/index.html` until T016 adds its annotations — same window US4 (T011-T013) carried.
+
+## 2026-09-27T13:55Z · Implementer US5 · T015
+
+Did: rebuilt `avatar/group.html` — `<c-vars class="" />`, root `<div class="avatar-group {class}">` spreading `{{ attrs }}`, the default slot holding the avatars. `size` and `space_options` (and its `get_item` lookup) are removed; overlap now goes entirely through the caller's `class` (e.g. `-space-x-6`), matching the avatar's own `content_class` pattern rather than a package-owned size scale. Added to `tests/test_avatar.py`: scenario 7 (root carries `avatar-group` and the caller's class in one list, with the avatars inside; extra attributes such as `data-test` reach the root) and a page context carrying `class` that does not leak into an empty group. Annotations deferred to T016.
+Verified: `uv run pytest tests/test_avatar.py -q` — 17 passed. `uv run pytest tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_render_all.py -q` — 58 passed. `uv run pre-commit run --files daisy_cotton/templates/cotton/avatar/group.html tests/test_avatar.py` — all hooks passed.
+Next: T016, the gallery annotations for both templates, the group's composition example, and the CHANGELOG.
+Watch: `cotton_lint`/gallery-annotation checks stay red for both avatar templates until T016.
