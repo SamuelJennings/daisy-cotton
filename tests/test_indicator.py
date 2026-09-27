@@ -1,7 +1,6 @@
 """``<c-indicator>`` and ``<c-indicator.item>``: a badge pinned to a corner."""
 
 from html.parser import HTMLParser
-
 from pathlib import Path
 
 import pytest
