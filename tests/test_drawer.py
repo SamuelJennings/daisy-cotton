@@ -215,11 +215,15 @@ class TestDrawerButton:
         assert attrs["data-x"] == "1"
 
     def test_no_script_or_event_handler(self, cotton_render_string):
-        html = cotton_render_string('<c-drawer.button drawer="nav">Open</c-drawer.button>')
+        html = cotton_render_string(
+            '<c-drawer.button drawer="nav">Open</c-drawer.button>'
+        )
 
         assert "<script" not in html
         assert all(
-            not name.startswith("on") for _, names, _ in parse_tags(html) for name in names
+            not name.startswith("on")
+            for _, names, _ in parse_tags(html)
+            for name in names
         )
 
     def test_inside_a_drawers_page_it_sits_in_the_content_wired_to_the_checkbox(

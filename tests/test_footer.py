@@ -47,9 +47,7 @@ class TestFooterRoot:
         assert footer(soup) is not None
         assert footer(soup)["class"] == ["footer"]
 
-    def test_caller_classes_and_attributes_reach_the_root(
-        self, cotton_render_string
-    ):
+    def test_caller_classes_and_attributes_reach_the_root(self, cotton_render_string):
         html = cotton_render_string('<c-footer class="p-10" data-x="1" />')
 
         assert root_attribute_names(html).count("class") == 1
