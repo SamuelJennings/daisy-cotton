@@ -56,6 +56,49 @@ class TestButtonUnknownValues:
         assert "<button" in html
 
 
+class TestButtonElement:
+    """Scenarios 2-5: the element chosen, its disabled state, and the icon."""
+
+    def test_href_renders_a_link_carrying_the_href_and_btn_class(self):
+        """Scenario 2."""
+        html = render('<c-button href="/next" text="Next" />')
+        assert "<a" in html
+        assert 'href="/next"' in html
+        assert "btn" in html
+        assert "<button" not in html
+
+    def test_no_href_renders_a_plain_button(self):
+        html = render('<c-button text="Next" />')
+        assert "<button" in html
+        assert "<a" not in html
+
+    def test_disabled_renders_the_native_attribute_on_a_button(self):
+        """Scenario 3."""
+        html = render("<c-button disabled>Save</c-button>")
+        assert "<button" in html
+        assert "disabled" in html
+
+    def test_disabled_href_renders_the_link_as_disabled_without_the_disabled_attribute(
+        self,
+    ):
+        """Scenario 4."""
+        html = render('<c-button href="/next" disabled>Save</c-button>')
+        assert "<a" in html
+        assert "btn-disabled" in html
+        assert 'aria-disabled="true"' in html
+        assert 'role="button"' in html
+        assert 'tabindex="-1"' in html
+        assert " disabled" not in html.split(">")[0]
+
+    def test_icon_is_hidden_from_assistive_technology(self):
+        """Scenario 5: the icon is decorative; aria-label names the button."""
+        html = render(
+            '<c-button icon="bi bi-plus" circle aria-label="Add"></c-button>'
+        )
+        assert 'aria-hidden="true"' in html
+        assert 'aria-label="Add"' in html
+
+
 class TestButtonContextLeak:
     """A page variable of the same name as a declared prop never leaks in
     (research R5, D6): every declared name gets an empty default.

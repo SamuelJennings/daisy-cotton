@@ -29,3 +29,20 @@ Verified: `uv run pytest tests/test_button.py tests/test_dropdown.py -q` → 30 
 tests/test_declared_attributes.py -q` → 26 passed.
 Next: T002 (element and states: href/button toggle, disabled, icon `aria-hidden`).
 Watch: `href`, `disabled` element/state logic still to land in T002 per the task split.
+
+## 2026-09-27T09:20Z · Implementer US1 · T002
+
+Did: split `button.html` into an explicit `{% if href %}<a>{% else %}<button>{% endif %}`
+pair (FR-009). A link carries `href`, `btn-disabled`, `aria-disabled="true"`, `role="button"`
+and `tabindex="-1"` when `disabled`, with no native `disabled` attribute; a button carries the
+native `disabled` attribute. The icon is now `<c-icon aria-hidden="true">`, decorative by
+default; an icon-only button's accessible name comes from the caller's `aria-label` (FR-010).
+Added `TestButtonElement` to `tests/test_button.py` for scenarios 2-5.
+Verified: `uv run pytest tests/test_button.py tests/test_dropdown.py
+tests/test_declared_attributes.py -q` → 61 passed. `uv run python manage.py cotton_lint
+--warnings-as-errors` → button 0 errors/0 warnings (exit 0). `uv run pytest
+tests/test_gallery_lint.py -k button -q` → 1 passed.
+Next: T003 (gallery annotations for button, CHANGELOG).
+Watch: the two branches duplicate the class-list construction — Django has no built-in
+capture-to-variable tag and the codebase has no existing pattern for it, so this mirrors
+plan.md's own two-branch design rather than introducing a new abstraction for two callers.
