@@ -61,3 +61,10 @@ Did: README component count and list gain `join`; CHANGELOG Added entry for `joi
 Verified: `git diff` reviewed; no code change, so the join suites from T007 stand.
 Next: T009 footer.
 Watch: the README says "Twenty-two", counting `join` as one component.
+
+## 2026-09-27T01:20Z · Implementer US4+US2+US1 · T009, T010
+
+Did: `footer/index.html` (a `<footer>` with `footer`, `horizontal` and `vertical` through `responsive`, `placement` validated against `center`, `class` merged, attributes spread) and `footer/nav.html` (a `<nav>` named by `aria-label` from `title`, with the title in `<span class="footer-title">` before the slot; neither when no title). Empty defaults throughout. New `tests/test_footer.py` covers both templates, registered in `non-mirror-paths`. Annotations were written with the templates, since the gallery suites require them. The two tasks share one commit because their tests share one module.
+Verified: `uv run pytest tests/test_footer.py` 25 passed; gallery, render-all, declared-attribute and class-merge suites green; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T011 README and CHANGELOG.
+Watch: the footer templates and tests were written together, so the tests were not observed failing before the templates existed.
