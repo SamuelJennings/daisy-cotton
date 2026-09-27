@@ -54,3 +54,10 @@ Did: `join.html` with `join`, `vertical` and `horizontal` through `responsive`, 
 Verified: `uv run pytest tests/test_join.py` 19 passed; gallery annotation, lint, render-all, declared-attribute and class-merge suites green; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T008 README and CHANGELOG.
 Watch: none.
+
+## 2026-09-27T01:12Z · Implementer US4+US2+US1 · T008
+
+Did: README component count and list gain `join`; CHANGELOG Added entry for `join`. The annotation tests were written in T007 with the template.
+Verified: `git diff` reviewed; no code change, so the join suites from T007 stand.
+Next: T009 footer.
+Watch: the README says "Twenty-two", counting `join` as one component.

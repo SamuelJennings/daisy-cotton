@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `breadcrumbs.item`, `button`, `card`, `divider`, `dock` + `dock.item`, `dropdown`, `form.field`,
   `icon`, `link`, `modal`, `mockup.browser` + `mockup.window` + `mockup.phone` + `mockup.code` +
   `mockup.code.line`.
+- `join`: a group of joined items such as buttons, or an input with a button. `vertical` and `horizontal` each
+  take a breakpoint such as `lg`, the group has `role="group"` unless you pass `role`, and children are
+  rendered with no wrapper, so give each one the `join-item` class.
 - `<c-icon>`: a basic primitive that treats `name` as a literal CSS class string
   (`<i class="{{ name }} {{ class }}">`). This package resolves no icon pack of its own — a
   project wanting name-based resolution (an icon font, an SVG sprite, an icon-resolution package)
