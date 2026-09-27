@@ -116,3 +116,13 @@ Gallery 1.0.0 builds a preview from declared defaults only, and the linter rejec
 `mockup.window`'s composition names each speaker in the chat's `header` slot (FR-015), so the `<c-avatar>` in each bubble's `image` slot sits beside that name. `avatar`'s own `alt` prop documents "leave empty unless the avatar is the only thing identifying the person — beside a name it is usually noise", so the composition's four avatars carry `alt=""`. `chat.html`'s own isolated `@slot:image` example has no header alongside it, so it keeps a descriptive `alt` there.
 
 **ADR:** none — applies `avatar`'s own documented rule; local to one gallery example.
+
+## D10 — The hover gallery's template file is `hover_gallery.html`, not `hover-gallery.html`
+
+`COTTON_SNAKE_CASED_NAMES` is unset (default `True`), so django-cotton resolves `<c-hover-gallery>` by
+replacing `-` with `_` in the tag name before looking up the template: `cotton/hover_gallery.html`, falling
+back to `cotton/hover_gallery/index.html`. A file named `hover-gallery.html` never resolves. Verified: the
+new tests failed with `TemplateDoesNotExist: cotton/hover_gallery/index.html` against the hyphenated
+filename, and passed once renamed to the underscore form.
+
+**ADR:** none — a fixed behaviour of the templating library already in use, not a design choice.

@@ -47,3 +47,17 @@ Did: confirmed the diff's own gallery entry (`@description`, `@prop`s and `@slot
 Verified: `uv run pytest tests/test_diff.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_mockup.py tests/test_gallery_links.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q` — 612 passed, 17 skipped (the same pre-existing folder-component gallery defect, issue #96, T002 already recorded — `diff` and `mockup.browser` are not folder components and are not among the skips). `uv run python manage.py cotton_lint --warnings-as-errors` — exit 0, 51/59 clean, 0 errors, 0 warnings. Additionally rendered `mockup.browser`'s annotated default `@slot` by hand through `AnnotationParser().parse()` + `build_default_tag` + the Cotton compiler: no error, the diff figure renders with the given `aria-label`, `item_1` text "BEFORE", `item_2` text "AFTER", and no `role="img"`/`aria-hidden` anywhere.
 Next: US4 done.
 Watch: nothing new.
+
+## 2026-09-27T23:35Z · Implementer US5 · T009
+
+Did: added `hover_gallery.html` (D10: the tag `<c-hover-gallery>` resolves via django-cotton's snake-cased
+lookup to `cotton/hover_gallery.html`, so the file is named with an underscore rather than the hyphen the
+plan illustrates) — a `<figure>` carrying `hover-gallery` and the caller's `class` with no width class of
+its own, holding the default slot, attributes spread (FR-021). Wrote `tests/test_hover_gallery.py` for the
+root's class (with and without a caller class), the slotted images rendering in order, `class`/`data-id` on
+the figure, no `aria-hidden` on the figure or any image, and a page context carrying `class` not leaking in.
+Extended `tests/test_animated_display_no_script.py` with the hover gallery's caller string. Added
+`tests/test_hover_gallery.py` to `pyproject.toml`'s `non-mirror-paths`.
+Verified: `uv run pytest tests/test_hover_gallery.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q` — 350 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — exit 0, 52/60 clean, 0 errors, 0 warnings (the pre-existing `aria_label` heuristic hint on `breadcrumbs`/`carousel`/`diff`/`dock`/`megamenu`/`navbar`, T001/T007). `uv run ruff check`/`uv run ruff format` clean on the new/edited test files. All 7 tests observed failing on `TemplateDoesNotExist` before the template existed (first against the hyphenated filename, again against the underscore one before it was created), then passing after.
+Next: T010 — gallery annotations for `hover-gallery`, the card's `@slot:figure` composition, README and CHANGELOG.
+Watch: nothing new.

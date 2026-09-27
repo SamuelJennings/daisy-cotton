@@ -222,8 +222,22 @@
       "tasks": [
         {
           "id": "T009",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_hover_gallery.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q: 350 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 52/60 clean, 0 errors, 0 warnings",
+              "uv run ruff check tests/test_hover_gallery.py tests/test_animated_display_no_script.py: all checks passed",
+              "uv run ruff format --check tests/test_hover_gallery.py tests/test_animated_display_no_script.py: 2 files already formatted"
+            ],
+            "tests": [
+              "tests/test_hover_gallery.py::TestHoverGalleryRoot",
+              "tests/test_hover_gallery.py::TestHoverGalleryNoAriaHidden",
+              "tests/test_hover_gallery.py::TestHoverGalleryPageContext",
+              "tests/test_animated_display_no_script.py::TestAnimatedDisplayNoScript"
+            ]
+          }
         },
         {
           "id": "T010",

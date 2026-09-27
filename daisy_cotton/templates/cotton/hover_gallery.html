@@ -1,0 +1,5 @@
+{# @description daisyUI's hover gallery: images that appear in turn as the pointer moves across it, drawn from the default slot. daisyUI's rules: at most ten images, all the same size, and set a maximum width on the gallery. Every image stays available to screen readers; only the hover effect needs a pointer. See the card entry for a gallery inside a card. #}
+{# @prop class:text | description:"Extra classes added to the gallery, such as a maximum width." #}
+{# @slot <img src="https://img.daisyui.com/images/stock/daisyui-hat-1.webp" alt="A brimmed felt hat"><img src="https://img.daisyui.com/images/stock/daisyui-hat-2.webp" alt="A knit beanie"><img src="https://img.daisyui.com/images/stock/daisyui-hat-3.webp" alt="A straw sun hat"><img src="https://img.daisyui.com/images/stock/daisyui-hat-4.webp" alt="A baseball cap"> — Four same-size images shown in turn as the pointer moves across the gallery. #}
+<c-vars class="" />
+<figure class="hover-gallery {{ class }}" {{ attrs }}>{{ slot }}</figure>

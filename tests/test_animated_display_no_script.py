@@ -32,6 +32,12 @@ CALLER_STRINGS = {
         '<c-slot name="item_2"><img src="/b.jpg" alt="After"></c-slot>'
         "</c-diff>"
     ),
+    "hover-gallery": (
+        '<c-hover-gallery class="max-w-60">'
+        '<img src="/a.jpg" alt="A">'
+        '<img src="/b.jpg" alt="B">'
+        "</c-hover-gallery>"
+    ),
 }
 
 
