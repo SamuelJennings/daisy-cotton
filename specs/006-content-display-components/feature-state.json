@@ -151,8 +151,18 @@
       "tasks": [
         {
           "id": "T006",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_templatetags/test_daisy_cotton.py -q: 15 passed",
+              "uv run pre-commit run --files daisy_cotton/templatetags/daisy_cotton.py tests/test_templatetags/test_daisy_cotton.py: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_templatetags/test_daisy_cotton.py::TestUniqueId::test_the_id_is_the_prefix_and_eight_lowercase_hex_characters",
+              "tests/test_templatetags/test_daisy_cotton.py::TestUniqueId::test_two_calls_differ"
+            ]
+          }
         },
         {
           "id": "T007",

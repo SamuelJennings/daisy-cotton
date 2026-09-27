@@ -40,3 +40,10 @@ Did: finalised the card's gallery annotations — `size` as `select['xs','sm','m
 Verified: `uv run pytest tests/test_card.py tests/test_modal.py tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_templatetags/ -q` — 214 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — exit 0, 20/21 clean, 0 errors, 0 warnings (the one component with hints is `form/field`, pre-existing and out of this story's scope; hints never block). `uv run pre-commit run --files daisy_cotton/templates/cotton/card/index.html daisy_cotton/templates/cotton/modal.html CHANGELOG.md` — all hooks passed.
 Next: none — US1 (T001–T005) complete pending the story's one-time full verify.
 Watch: none outstanding.
+
+## 2026-09-27T15:20Z · Implementer US2 · T006
+
+Did: added `unique_id` to `daisy_cotton/templatetags/daisy_cotton.py` and its two tests to `tests/test_templatetags/test_daisy_cotton.py`, copied byte for byte from FS-005's diff in the sibling worktree `../005-action-components` (research R6, D1). Merged the test module's docstring and import line with FS-005's version (now names all three tags; adds `import re` and the `unique_id` import alongside the existing `import pytest`).
+Verified: `uv run pytest tests/test_templatetags/test_daisy_cotton.py -q` — 15 passed (confirmed red first: `ImportError: cannot import name 'unique_id'`). `uv run pre-commit run --files daisy_cotton/templatetags/daisy_cotton.py tests/test_templatetags/test_daisy_cotton.py` — all hooks passed.
+Next: T007, the table template and its tests.
+Watch: none outstanding.

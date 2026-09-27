@@ -1,16 +1,18 @@
-"""Unit tests for the ``responsive`` and ``variation`` template tags.
+"""Unit tests for the ``responsive``, ``variation`` and ``unique_id`` template tags.
 
-Both are exercised indirectly through component templates elsewhere (e.g.
-``<c-divider vertical="md">``, ``<c-button size="sm">``), but only for the
-attribute values those components' own tests happen to pass — a bare
-``<c-divider>`` never calls ``responsive`` at all, since its template only
-invokes the tag inside an ``{% if vertical %}`` guard. These tests cover the
-tags' own branches directly.
+``responsive`` and ``variation`` are exercised indirectly through component
+templates elsewhere (e.g. ``<c-divider vertical="md">``, ``<c-button
+size="sm">``), but only for the attribute values those components' own tests
+happen to pass — a bare ``<c-divider>`` never calls ``responsive`` at all,
+since its template only invokes the tag inside an ``{% if vertical %}``
+guard. These tests cover the tags' own branches directly.
 """
+
+import re
 
 import pytest
 
-from daisy_cotton.templatetags.daisy_cotton import responsive, variation
+from daisy_cotton.templatetags.daisy_cotton import responsive, unique_id, variation
 
 
 class TestResponsive:
@@ -47,3 +49,14 @@ class TestVariation:
 
     def test_allowed_accepts_a_list_as_well_as_a_comma_string(self):
         assert variation("sm", "btn", ["sm", "md", "lg"]) == "btn-sm"
+
+
+class TestUniqueId:
+    """FR-019: a caller with no `id` still gets a unique panel identifier."""
+
+    def test_the_id_is_the_prefix_and_eight_lowercase_hex_characters(self):
+        result = unique_id("dropdown")
+        assert re.fullmatch(r"dropdown-[0-9a-f]{8}", result)
+
+    def test_two_calls_differ(self):
+        assert unique_id("dropdown") != unique_id("dropdown")
