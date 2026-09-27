@@ -68,3 +68,10 @@ Did: `footer/index.html` (a `<footer>` with `footer`, `horizontal` and `vertical
 Verified: `uv run pytest tests/test_footer.py` 25 passed; gallery, render-all, declared-attribute and class-merge suites green; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T011 README and CHANGELOG.
 Watch: the footer templates and tests were written together, so the tests were not observed failing before the templates existed.
+
+## 2026-09-27T01:22Z · Implementer US4+US2+US1 · T011
+
+Did: README component count and list gain `footer` + `footer.nav`; CHANGELOG Added entry. Annotations were written and tested in T009/T010.
+Verified: documentation-only change; footer suites from T009/T010 stand.
+Next: T012 drawer.
+Watch: none.
