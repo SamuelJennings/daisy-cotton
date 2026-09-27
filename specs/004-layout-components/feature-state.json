@@ -2,7 +2,7 @@
   "feature": "004-layout-components",
   "branch": "004-layout-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "IMPLEMENT",
+  "state": "CONVERGE",
   "state_history": [
     {
       "state": "QUEUED",
@@ -23,6 +23,11 @@
       "state": "IMPLEMENT",
       "at": "2026-09-27T00:53:36Z",
       "note": "design review applied (D9-D11); plan notification recorded"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-27T01:10:58Z",
+      "note": "all eight stories accepted"
     }
   ],
   "gates": {
@@ -265,7 +270,7 @@
       "priority": "P2",
       "issue": 54,
       "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/004-layout-components",
-      "status": "todo",
+      "status": "done",
       "replans": 0,
       "tasks": [
         {
@@ -303,7 +308,7 @@
       "priority": "P2",
       "issue": 55,
       "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/004-layout-components",
-      "status": "todo",
+      "status": "done",
       "replans": 0,
       "tasks": [
         {
@@ -326,7 +331,7 @@
       "priority": "P3",
       "issue": 56,
       "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/004-layout-components",
-      "status": "todo",
+      "status": "done",
       "replans": 0,
       "tasks": [
         {
@@ -418,7 +423,7 @@
   ],
   "budgets": {
     "converge_cycles": {
-      "used": 0,
+      "used": 1,
       "max": 2
     },
     "review_cycles": {
