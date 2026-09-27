@@ -27,6 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `open` keeps the sidebar open beside the page, from a breakpoint such as `lg` when given one, and the
   `side` slot holds the sidebar. `drawer.button` is a `<label>` for that id that opens the drawer without
   script.
+- `indicator` + `indicator.item`: a badge or other item pinned to a corner of its content. Put items in the
+  `items` slot and the content in the default slot; the items are always written first. `placement` takes
+  one or two words from `top`, `middle`, `bottom`, `start`, `center` and `end` (`top end`, `bottom start`),
+  each checked on its own, so an unknown word adds nothing.
 - `<c-icon>`: a basic primitive that treats `name` as a literal CSS class string
   (`<i class="{{ name }} {{ class }}">`). This package resolves no icon pack of its own — a
   project wanting name-based resolution (an icon font, an SVG sprite, an icon-resolution package)

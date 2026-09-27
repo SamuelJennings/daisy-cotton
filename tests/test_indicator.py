@@ -2,7 +2,25 @@
 
 from html.parser import HTMLParser
 
+from pathlib import Path
+
 import pytest
+from django_cotton_gallery.core.annotations import AnnotationParser
+
+import daisy_cotton
+
+INDICATOR_DIR = (
+    Path(next(iter(daisy_cotton.__path__))).resolve()
+    / "templates"
+    / "cotton"
+    / "indicator"
+)
+
+CORNERS = [
+    f"{row} {column}"
+    for row in ("top", "middle", "bottom")
+    for column in ("start", "center", "end")
+]
 
 PLACEMENT_WORDS = ("start", "center", "end", "top", "middle", "bottom")
 
@@ -179,3 +197,56 @@ class TestIndicatorIgnoresPageContext:
         )
 
         assert placement_classes(soup.find("span")) == set()
+
+
+class TestIndicatorAnnotations:
+    @pytest.fixture
+    def indicator(self):
+        return AnnotationParser().parse((INDICATOR_DIR / "index.html").read_text())
+
+    @pytest.fixture
+    def item(self):
+        return AnnotationParser().parse((INDICATOR_DIR / "item.html").read_text())
+
+    def test_the_default_slot_is_a_button(self, indicator):
+        content = next(s for s in indicator.slots if s.name is None).content
+
+        assert "<button" in content
+
+    def test_the_items_slot_holds_a_badge_item(self, indicator):
+        content = next(s for s in indicator.slots if s.name == "items").content
+
+        assert "<c-indicator.item" in content
+        assert "badge" in content
+
+    def test_the_items_slot_hides_the_count_and_speaks_it_visually_hidden(
+        self, indicator, cotton_render_string_soup
+    ):
+        content = next(s for s in indicator.slots if s.name == "items").content
+
+        soup = cotton_render_string_soup(f"<c-indicator>{content}</c-indicator>")
+
+        item = soup.find(class_="indicator-item")
+        hidden_count = item.find(attrs={"aria-hidden": "true"})
+        spoken = item.find(class_="sr-only")
+        assert hidden_count is not None
+        assert hidden_count.get_text(strip=True).isdigit()
+        assert spoken is not None
+        assert spoken.get_text(strip=True)
+        assert hidden_count.find_next(class_="sr-only") is spoken
+
+    def test_placement_offers_the_nine_corners(self, item):
+        prop = next(p for p in item.props if p.clean_name == "placement")
+
+        assert prop.type == "select"
+        assert list(prop.options) == CORNERS
+        assert not prop.default
+
+    @pytest.mark.parametrize("template", ["indicator", "item"])
+    def test_class_is_documented(self, indicator, item, template):
+        parsed = {"indicator": indicator, "item": item}[template]
+
+        assert "class" in {p.clean_name for p in parsed.props}
+
+    def test_the_item_has_a_default_slot(self, item):
+        assert [s.name for s in item.slots] == [None]

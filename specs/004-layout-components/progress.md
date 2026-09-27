@@ -110,3 +110,10 @@ Did: `indicator/index.html` (`<div class="indicator">` with `{{ items }}` before
 Verified: the new module failed 20 of 20 before the templates existed, then `uv run pytest tests/test_indicator.py` 20 passed.
 Next: T017 annotations, README, CHANGELOG.
 Watch: none.
+
+## 2026-09-27T02:20Z · Implementer US5 · T017
+
+Did: indicator annotations finished: the default `@slot` is a button, `@slot:items` an `indicator.item` badge whose visible count is `aria-hidden` and followed by a `sr-only` phrase ("12 unread messages"); `placement` is a `select` of the nine two-word corners with no default; `class` documented. README lists `indicator` + `indicator.item` (count now twenty-eight); CHANGELOG Added. The `placement` select and the required gallery annotations had already gone in with T016 because the gallery suites fail without them.
+Verified: the new annotation test on the items slot failed first (no `aria-hidden` count, no `sr-only` phrase), then `uv run pytest tests/test_indicator.py` 27 passed. The test reads the slot through the gallery's parser and renders it inside `<c-indicator>`.
+Next: T018 hero.
+Watch: none.
