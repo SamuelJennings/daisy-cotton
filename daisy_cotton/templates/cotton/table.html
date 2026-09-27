@@ -6,7 +6,7 @@
 {# @prop pin-cols:boolean | description:"Keep the first column visible while scrolling. Has no effect without row header cells." #}
 {# @prop content_class:text | description:"Extra classes added to the <table>." #}
 {# @prop class:text | description:"Extra classes added to the scrolling wrapper." #}
-{# @slot <thead><tr><th scope="col">Name</th></tr></thead><tbody><tr><th scope="row">Ada</th></tr></tbody> — Header and body rows, with header cells given scope. #}
+{# @slot <thead><tr><th scope="col">Service</th><th scope="col">Status</th><th scope="col">Shortcut</th></tr></thead><tbody><tr><th scope="row">Search</th><td><c-status variant="success" size="sm" /> Online</td><td><c-kbd>Ctrl</c-kbd> + <c-kbd>K</c-kbd></td></tr></tbody> — Header and body rows, with header cells given scope; a Status column with a dot beside its text and no label, and a Shortcut column with a key combination. #}
 {# @slot:caption — Caption content in place of the attribute, naming the scrolling region for assistive technology. #}
 {% comment %}
   Caller duties this markup can't enforce: give a caption or an aria-label, or

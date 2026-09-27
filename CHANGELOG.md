@@ -54,6 +54,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   emitted when given) and `box`, which puts `timeline-box` on the end part, or the start part when
   given as `box="start"`. Every item carries a leading and a trailing connector line, hidden from
   assistive technology, so consecutive items join and the line stops at the first and last item.
+- `<c-kbd>`: daisyUI's kbd, a `<kbd>` carrying `kbd`, holding `text` then the default slot, with
+  `size` (`xs`–`xl`).
+- `<c-status>`: daisyUI's status, a `<span>` carrying `status`, with `variant` (the eight daisyUI
+  colours) and `size` (`xs`–`xl`). Given `label`, it is exposed to assistive technology as an image
+  named by it; without one, it is hidden from assistive technology.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
