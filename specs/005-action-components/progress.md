@@ -1,18 +1,18 @@
 # Progress: Action components
 
-## 2026-09-27T08:30Z · Plan
+## 2026-09-27T08:46Z · Plan
 
 Did: branch cut from origin/main 73a4826. Verify green on the base (conformance, docs, lint, typecheck, 4s test run, build). Probed daisyUI 5.7.46 in Chromium for the popover dropdown, the FAB and the swap. Wrote plan.md, research.md, tasks.md, decisions D1–D5 and the ledger.
 Next: design review, then batch 1 (US1 button, US2 modal, US3 dropdown).
 Watch: README, CHANGELOG and the template tag module overlap with the open navigation and layout pull requests (D1). The modal's gallery entry cannot open from its trigger in gallery 1.0.0 (D3).
 
-## 2026-09-27T09:00Z · Design review
+## 2026-09-27T08:55Z · Design review
 
 Did: one design reviewer, three lenses. One high finding (a component's `class` leaking onto the trigger it draws) and six low or medium, all verified and applied as plan and task edits (D6, D7). Receipts green.
 Next: batch 1 (US1 button, US2 modal, US3 dropdown).
 Watch: SPEC-002: T001 must update the dropdown test's expected trigger markup in the same task.
 
-## 2026-09-27T09:10Z · Implementer US1 · T001
+## 2026-09-27T09:03Z · Implementer US1 · T001
 
 Did: rewrote `button.html`'s class list — `variant` and `size` (now `xs`–`xl`) validated
 through `{% variation %}`, one class per style boolean (`outline`, `dash`, `soft`, `ghost`,
@@ -30,7 +30,7 @@ tests/test_declared_attributes.py -q` → 26 passed.
 Next: T002 (element and states: href/button toggle, disabled, icon `aria-hidden`).
 Watch: `href`, `disabled` element/state logic still to land in T002 per the task split.
 
-## 2026-09-27T09:20Z · Implementer US1 · T002
+## 2026-09-27T09:05Z · Implementer US1 · T002
 
 Did: split `button.html` into an explicit `{% if href %}<a>{% else %}<button>{% endif %}`
 pair (FR-009). A link carries `href`, `btn-disabled`, `aria-disabled="true"`, `role="button"`
@@ -47,7 +47,7 @@ Watch: the two branches duplicate the class-list construction — Django has no 
 capture-to-variable tag and the codebase has no existing pattern for it, so this mirrors
 plan.md's own two-branch design rather than introducing a new abstraction for two callers.
 
-## 2026-09-27T09:30Z · Implementer US1 · T003
+## 2026-09-27T09:07Z · Implementer US1 · T003
 
 Did: reordered `button.html`'s `@prop` annotations to match `<c-vars>` declaration order,
 added an example (`Save`) to the default `@slot`, and extended `@description` to name the
@@ -66,7 +66,7 @@ Next: T004 (US2, modal structure).
 Watch: US1 (button) done-check satisfied — every acceptance scenario the tests can cover (1-6)
 has a test that fails when the behaviour is removed; scenario 7 (gallery, in-browser) is T013's.
 
-## 2026-09-27T09:45Z · Implementer US2 · T004
+## 2026-09-27T09:08Z · Implementer US2 · T004
 
 Did: rewrote `modal.html`'s structure (FR-012, FR-014, FR-016): a `<dialog>` with the
 caller's `id`, `placement` (top/middle/bottom/start/end) validated through `{% variation %}`,
@@ -84,7 +84,7 @@ tests/test_gallery_lint.py tests/test_gallery_annotations.py -q` → 181 passed.
 manage.py cotton_lint --warnings-as-errors` → 20/21 clean, 0 errors/0 warnings (exit 0).
 Next: T005 (modal naming and closing: title heading, aria-labelledby, closable).
 
-## 2026-09-27T10:00Z · Implementer US2 · T005
+## 2026-09-27T09:10Z · Implementer US2 · T005
 
 Did: `title` renders as an `<h2 id="<id>-title">` and the dialog gets `aria-labelledby`
 pointing at it, only when both `id` and `title` are set — no `aria-labelledby` without a
@@ -102,7 +102,7 @@ manage.py cotton_lint --warnings-as-errors` → 20/21 clean, 0 errors/0 warnings
 `uv run pytest tests/test_render_all.py -k modal -q` → 1 passed.
 Next: T006 (gallery annotations for modal, CHANGELOG).
 
-## 2026-09-27T10:10Z · Implementer US2 · T006
+## 2026-09-27T09:11Z · Implementer US2 · T006
 
 Did: `id` is `required` with no `default:`; `placement` lists all five values; `open`'s
 description says the dialog shown this way is not modal and a trigger cannot reopen it (D4);
@@ -120,7 +120,7 @@ Next: T007 (US3, `unique_id` template tag).
 Watch: US2 (modal) done-check satisfied for scenarios 1-4 and 6; scenarios 5 and 7 (in-browser
 close/focus-return, gallery trigger) are T013's per D3.
 
-## 2026-09-27T10:20Z · Implementer US3 · T007
+## 2026-09-27T09:12Z · Implementer US3 · T007
 
 Did: added `unique_id(prefix)` to `daisy_cotton/templatetags/daisy_cotton.py` — a
 `simple_tag`, usable with `as`, returning `f"{prefix}-{uuid.uuid4().hex[:8]}"` (FR-019,
@@ -130,7 +130,7 @@ no `pyproject.toml` change was needed.
 Verified: `uv run pytest tests/test_templatetags/test_daisy_cotton.py -q` → 9 passed.
 Next: T008 (dropdown/index.html, popover method).
 
-## 2026-09-27T10:35Z · Implementer US3 · T008
+## 2026-09-27T09:16Z · Implementer US3 · T008
 
 Did: rebuilt `dropdown/index.html` on daisyUI's popover method (FR-017-FR-020). A wrapper
 `<div class="inline-block">` holds either the caller's `button` slot or a default
@@ -157,7 +157,7 @@ manage.py cotton_lint --warnings-as-errors` → 20/21 clean, 0 errors/0 warnings
 Next: T009 (gallery annotations for dropdown, CHANGELOG). Checkpoint after T009: batch 1 full
 suite, cotton_lint, pre-commit.
 
-## 2026-09-27T10:45Z · Implementer US3 · T009
+## 2026-09-27T09:17Z · Implementer US3 · T009
 
 Did: `placement`'s `select` now lists all seven single words and all twelve side-and-alignment
 pairs; `@slot:button` has no example and its description names the custom-trigger contract
@@ -198,7 +198,7 @@ Next: T011 (swap gallery annotations, theme-toggle comment, README/CHANGELOG).
 Watch: US4 done-check for scenarios 1, 3-6 satisfied; scenarios 2, 7 and 8 (in-browser
 keyboard, documentation, gallery) are T011's and T013's.
 
-## 2026-09-27T09:35Z · Implementer US4 · T011
+## 2026-09-27T09:28Z · Implementer US4 · T011
 
 Did: `@slot:on ON` and `@slot:off OFF` gained short-word examples; `@slot:indeterminate` keeps
 no example and its description says only a project's own script sets the indeterminate state;
@@ -218,7 +218,7 @@ Watch: US4 done-check satisfied for scenarios 1, 3-6; scenario 2 (in-browser key
 scenario 7's gallery walk are T013's. Scenario 8 (gallery entry showing the styles/states) is
 covered by the annotations above plus T013's browser walk.
 
-## 2026-09-27T09:52Z · Implementer US5 · T012
+## 2026-09-27T09:31Z · Implementer US5 · T012
 
 Did: `fab.html`: a `<div class="fab">` wrapper carrying `class` and pass-through attributes
 only when a custom trigger replaces the default; `flower` maps to `fab-flower`; the default
@@ -247,7 +247,7 @@ Next: batch 2 checkpoint — full suite, cotton_lint, pre-commit.
 Watch: US5 done-check satisfied for scenarios 1, 3-6; scenario 2 (in-browser keyboard) and
 scenario 7's gallery walk are T013's.
 
-## 2026-09-27T09:50Z · Converge
+## 2026-09-27T09:35Z · Converge
 
 Did: all five stories accepted after independent verify and tamper-check. The button now builds one element instead of two branches, and a modal with no id writes no empty `id` (D8). Every decision carries an ADR verdict, none graduated.
 Verified: `uv run pytest` 418 passed, 6 skipped; `cotton_lint --warnings-as-errors` 0 errors 0 warnings; pre-commit clean.
