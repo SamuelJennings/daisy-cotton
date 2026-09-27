@@ -6,11 +6,24 @@ modifier boolean, and the removed `align`, `reverse`, `condition` and `full`
 attributes (`block` replaces `full`).
 """
 
+from pathlib import Path
+
+import pytest
 from django import template
 from django.template.context import Context
 from django_cotton.compiler_regex import CottonCompiler
+from django_cotton_gallery.core.annotations import AnnotationParser
+
+import daisy_cotton
 
 compiler = CottonCompiler()
+
+BUTTON_TEMPLATE = (
+    Path(next(iter(daisy_cotton.__path__))).resolve()
+    / "templates"
+    / "cotton"
+    / "button.html"
+)
 
 
 def render(source, **context):
@@ -97,6 +110,64 @@ class TestButtonElement:
         )
         assert 'aria-hidden="true"' in html
         assert 'aria-label="Add"' in html
+
+
+class TestButtonGalleryAnnotations:
+    """Article XVI, read through the gallery's own `AnnotationParser` (T003):
+    fixed-value props are `select[...]`, every boolean has its own `@prop`,
+    the default slot has an example, and an icon-only button's accessible
+    name is documented.
+    """
+
+    @staticmethod
+    def _parsed():
+        return AnnotationParser().parse(BUTTON_TEMPLATE.read_text())
+
+    def test_variant_is_a_select_of_the_eight_colours(self):
+        prop = next(p for p in self._parsed().props if p.clean_name == "variant")
+        assert prop.type == "select"
+        assert set(prop.options) == {
+            "neutral",
+            "primary",
+            "secondary",
+            "accent",
+            "info",
+            "success",
+            "warning",
+            "error",
+        }
+
+    def test_size_is_a_select_of_the_five_sizes(self):
+        prop = next(p for p in self._parsed().props if p.clean_name == "size")
+        assert prop.type == "select"
+        assert set(prop.options) == {"xs", "sm", "md", "lg", "xl"}
+
+    @pytest.mark.parametrize(
+        "name",
+        [
+            "outline",
+            "dash",
+            "soft",
+            "ghost",
+            "link",
+            "active",
+            "disabled",
+            "wide",
+            "block",
+            "square",
+            "circle",
+        ],
+    )
+    def test_every_boolean_has_its_own_prop(self, name):
+        prop = next(p for p in self._parsed().props if p.clean_name == name)
+        assert prop.type == "boolean"
+
+    def test_the_default_slot_has_an_example(self):
+        [slot] = [s for s in self._parsed().slots if s.name is None]
+        assert slot.content == "Save"
+
+    def test_the_description_names_the_aria_label_an_icon_only_button_needs(self):
+        assert "aria-label" in self._parsed().description
 
 
 class TestButtonContextLeak:

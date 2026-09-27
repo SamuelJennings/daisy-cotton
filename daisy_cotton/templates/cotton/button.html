@@ -1,8 +1,7 @@
-{# @description A button, or a link styled as one when an href is passed. Shows an optional icon and text, then the default slot. #}
+{# @description A button, or a link styled as one when an href is passed. Shows an optional icon and text, then the default slot. An icon-only button has no accessible name of its own — give it one with aria-label. #}
 {# @prop href:text | description:"When given, the button renders as a link with this href instead of a <button>." #}
-{# @prop disabled:boolean | description:"Disable the button. On a link this adds btn-disabled, aria-disabled, role=button and tabindex=-1 instead of the native attribute." #}
 {# @prop text:text | description:"Button label, shown in a span after the icon and before the default slot." #}
-{# @prop icon:text | description:"Icon shown before the text, passed as the name of the icon component." #}
+{# @prop icon:text | description:"Icon shown before the text, passed as the name of the icon component. Always hidden from assistive technology." #}
 {# @prop variant:select['neutral','primary','secondary','accent','info','success','warning','error'] | description:"Colour variant. Leave empty for the default colour." #}
 {# @prop size:select['xs','sm','md','lg','xl'] | description:"Button size." #}
 {# @prop outline:boolean | description:"Draw the button as an outline." #}
@@ -11,12 +10,13 @@
 {# @prop ghost:boolean | description:"Draw the button with no background until hovered." #}
 {# @prop link:boolean | description:"Draw the button styled as a plain link." #}
 {# @prop active:boolean | description:"Force the button's active (pressed) state." #}
+{# @prop disabled:boolean | description:"Disable the button. On a link this adds btn-disabled, aria-disabled, role=button and tabindex=-1 instead of the native attribute." #}
 {# @prop wide:boolean | description:"Widen the button." #}
 {# @prop block:boolean | description:"Stretch the button to the full width of its container." #}
 {# @prop square:boolean | description:"Make the button a fixed-size square, for a single icon." #}
 {# @prop circle:boolean | description:"Make the button a fixed-size circle, for a single icon." #}
 {# @prop class:text | description:"Extra classes added to the button." #}
-{# @slot — Content shown after the icon and text. #}
+{# @slot Save — Content shown after the icon and text. #}
 {% load daisy_cotton %}
 <c-vars href=""
         text=""

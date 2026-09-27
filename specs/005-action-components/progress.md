@@ -46,3 +46,22 @@ Next: T003 (gallery annotations for button, CHANGELOG).
 Watch: the two branches duplicate the class-list construction — Django has no built-in
 capture-to-variable tag and the codebase has no existing pattern for it, so this mirrors
 plan.md's own two-branch design rather than introducing a new abstraction for two callers.
+
+## 2026-09-27T09:30Z · Implementer US1 · T003
+
+Did: reordered `button.html`'s `@prop` annotations to match `<c-vars>` declaration order,
+added an example (`Save`) to the default `@slot`, and extended `@description` to name the
+`aria-label` an icon-only button needs. Added `TestButtonGalleryAnnotations` to
+`tests/test_button.py`, reading the template's annotations through the gallery's own
+`AnnotationParser`: `variant` and `size` are `select` with the full daisyUI list, every style/
+behaviour/modifier boolean has its own `@prop`, the default slot's example is `Save`, and the
+description mentions `aria-label`. Added the button's `CHANGELOG.md` `Changed` entry (every
+removed/renamed attribute and its replacement) — no README change needed, since `button` was
+already listed.
+Verified: `uv run pytest tests/test_button.py tests/test_dropdown.py
+tests/test_declared_attributes.py tests/test_gallery_lint.py tests/test_gallery_annotations.py
+-q` → 216 passed. `uv run python manage.py cotton_lint --warnings-as-errors` → button 0
+errors/0 warnings (exit 0).
+Next: T004 (US2, modal structure).
+Watch: US1 (button) done-check satisfied — every acceptance scenario the tests can cover (1-6)
+has a test that fails when the behaviour is removed; scenario 7 (gallery, in-browser) is T013's.

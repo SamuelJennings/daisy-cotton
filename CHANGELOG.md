@@ -41,3 +41,11 @@ decision.
 - Django 6.1 is supported and tested.
 - The demo project is the component gallery alone: a plain Cotton and daisyUI page with a theme
   switcher, needing no other package behind it.
+- `<c-button>`: `size` accepts daisyUI's full `xs`–`xl` scale (previously `sm`–`lg`); `dash`,
+  `link` and `active` are new style/behaviour booleans; `full` is renamed `block`, daisyUI's own
+  name for the modifier. `align`, `reverse` and `condition` are removed: set layout with `class`,
+  put an icon after the text in the default slot, and wrap the tag in `{% if %}` for a conditional
+  button. The icon is now hidden from assistive technology (`aria-hidden="true"`); an icon-only
+  button needs a caller-supplied `aria-label` for its accessible name. A disabled link (`href` and
+  `disabled` together) now carries `btn-disabled`, `aria-disabled="true"`, `role="button"` and
+  `tabindex="-1"` instead of a native `disabled` attribute, which links cannot carry.

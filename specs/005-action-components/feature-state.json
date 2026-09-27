@@ -95,8 +95,17 @@
         },
         {
           "id": "T003",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_button.py tests/test_dropdown.py tests/test_declared_attributes.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q: 216 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: button 0 errors/0 warnings, exit 0"
+            ],
+            "tests": [
+              "tests/test_button.py::TestButtonGalleryAnnotations"
+            ]
+          }
         }
       ]
     },
