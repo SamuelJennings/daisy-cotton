@@ -82,3 +82,10 @@ Did: `drawer/index.html`: root `drawer`, a `drawer-toggle` checkbox carrying the
 Verified: `uv run pytest tests/test_drawer.py` 13 passed; gallery annotation, lint and render-all suites green; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T013 accessible names.
 Watch: none.
+
+## 2026-09-27T01:34Z · Implementer US4+US2+US1 · T013
+
+Did: the toggle's and the overlay's `aria-label` are written through `{% trans %}` ("Toggle sidebar", "Close sidebar"). Tests assert each is non-empty in the rendered drawer and that both strings sit inside `{% trans %}` with `i18n` loaded. Observed the three new tests fail before the change.
+Verified: `uv run pytest tests/test_drawer.py` 16 passed; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T014 drawer.button.
+Watch: no locale catalogue exists in the package, so the strings render in English.

@@ -161,3 +161,22 @@ class TestDrawerIgnoresPageContext:
         )
 
         assert root(soup)["class"] == ["drawer"]
+
+
+class TestDrawerAccessibleNames:
+    def test_the_toggle_has_an_accessible_name(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup(DRAWER)
+
+        assert root(soup).find("input")["aria-label"].strip()
+
+    def test_the_overlay_has_an_accessible_name(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup(DRAWER)
+
+        assert root(soup).find(class_="drawer-overlay")["aria-label"].strip()
+
+    def test_both_strings_are_translatable_in_the_template_source(self):
+        source = (DRAWER_DIR / "index.html").read_text()
+
+        assert "{% load i18n" in source
+        assert source.count("aria-label=") == 2
+        assert source.count('aria-label="{% trans ') == 2

@@ -8,10 +8,10 @@
 <c-vars id="" open="" placement="" class />
 <div class="drawer {% if open %}{% responsive open 'drawer-open' %}{% endif %} {% variation placement 'drawer' 'end' %} {{ class }}"
      {{ attrs }}>
-  <input id="{{ id }}" type="checkbox" class="drawer-toggle" />
+  <input id="{{ id }}" type="checkbox" class="drawer-toggle" aria-label="{% trans "Toggle sidebar" %}" />
   <div class="drawer-content">{{ slot }}</div>
   <div class="drawer-side">
-    <label for="{{ id }}" class="drawer-overlay"></label>
+    <label for="{{ id }}" aria-label="{% trans "Close sidebar" %}" class="drawer-overlay"></label>
     {{ side }}
   </div>
 </div>
