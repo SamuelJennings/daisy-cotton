@@ -269,8 +269,23 @@
       "tasks": [
         {
           "id": "T011",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_hover_3d.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q: 359 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 53/61 clean, 0 errors, 0 warnings",
+              "uv run ruff check tests/test_hover_3d.py tests/test_animated_display_no_script.py: all checks passed",
+              "uv run ruff format --check tests/test_hover_3d.py tests/test_animated_display_no_script.py: 2 files already formatted"
+            ],
+            "tests": [
+              "tests/test_hover_3d.py::TestHover3dStructure",
+              "tests/test_hover_3d.py::TestHover3dElement",
+              "tests/test_hover_3d.py::TestHover3dClassAndAttrs",
+              "tests/test_hover_3d.py::TestHover3dPageContext",
+              "tests/test_animated_display_no_script.py::TestAnimatedDisplayNoScript"
+            ]
+          }
         },
         {
           "id": "T012",

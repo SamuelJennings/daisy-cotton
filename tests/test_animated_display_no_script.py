@@ -38,6 +38,9 @@ CALLER_STRINGS = {
         '<img src="/b.jpg" alt="B">'
         "</c-hover-gallery>"
     ),
+    "hover-3d": (
+        '<c-hover-3d href="/cards/1"><figure><img src="/a.jpg" alt="A"></figure></c-hover-3d>'
+    ),
 }
 
 

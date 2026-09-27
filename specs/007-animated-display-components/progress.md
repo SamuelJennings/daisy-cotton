@@ -79,3 +79,27 @@ Next: US5 done.
 Watch: the same `<c-hover-3d>`/`<c-text-rotate>` vs gallery-lint filename mismatch (D10/D11's cause) will
 recur the first time US6 or US7 writes either tag into a scanned `.html` composition, not just its own
 component's tests.
+
+## 2026-09-27T21:45:15Z · Implementer US6 · T011
+
+Did: added `hover_3d.html` (D10's underscore-filename rule applies here too: `<c-hover-3d>` resolves via
+django-cotton's snake-cased lookup to `cotton/hover_3d.html`) — the same `href|yesno:"a,div"` element switch
+`button.html` uses, inside `djlint:off`/`on` as there; the root carries `hover-3d`, the caller's `class`
+merged, `{{ attrs }}` spread; the default slot renders first, followed by exactly eight empty
+`<div aria-hidden="true">` zones (FR-023); the root is an `<a>` with `href` when given, a `<div>` otherwise,
+with no `href` attribute when it is absent (FR-024). Wrote `tests/test_hover_3d.py` for nine element
+children with the slot content first (also with whitespace around the slot), the eight hidden zones being
+empty and carrying `aria-hidden="true"`, the `<a>`/`<div>` switch, `class`/attribute passthrough, and a page
+context carrying `href` not leaking in. Extended `tests/test_animated_display_no_script.py` with the hover
+3D card's caller string (linked, so its `<a>` branch is covered too). Added `tests/test_hover_3d.py` to
+`pyproject.toml`'s `non-mirror-paths`.
+Verified: all 9 new tests observed failing on `TemplateDoesNotExist: cotton/hover_3d/index.html` with the
+template moved aside, then passing once it was restored. `uv run pytest tests/test_hover_3d.py
+tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q` —
+359 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — exit 0, 53/61 clean, 0 errors, 0
+warnings (the same pre-existing `aria_label` heuristic hints as before, T001/T007/T010). `uv run ruff
+check`/`uv run ruff format --check` clean on the touched test files.
+Next: T012 — gallery annotations for `hover-3d`, the `mockup.browser` linked-card composition, README and
+CHANGELOG.
+Watch: D11's gallery-lint filename mismatch will hit T012's `mockup.browser` composition the moment it
+writes the tag into that scanned file — call it `<c-hover_3d>` there, as the brief already notes.
