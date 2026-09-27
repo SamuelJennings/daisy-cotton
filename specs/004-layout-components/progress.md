@@ -75,3 +75,10 @@ Did: README component count and list gain `footer` + `footer.nav`; CHANGELOG Add
 Verified: documentation-only change; footer suites from T009/T010 stand.
 Next: T012 drawer.
 Watch: none.
+
+## 2026-09-27T01:30Z · Implementer US4+US2+US1 · T012
+
+Did: `drawer/index.html`: root `drawer`, a `drawer-toggle` checkbox carrying the drawer's `id` (never the root), the page in `drawer-content`, and `drawer-side` holding the `drawer-overlay` label for the same id before the `side` slot; `open` through `responsive`, `placement` validated against `end`. New `tests/test_drawer.py` (registered in `non-mirror-paths`) covers structure, modifiers, two drawers on one page and page-context isolation. The prop annotations the gallery linter needs went in with the template; the accessible names are T013.
+Verified: `uv run pytest tests/test_drawer.py` 13 passed; gallery annotation, lint and render-all suites green; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T013 accessible names.
+Watch: none.

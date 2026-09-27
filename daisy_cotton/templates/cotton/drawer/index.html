@@ -1,0 +1,17 @@
+{# @description A sidebar drawer around the page. The default slot is the page, the side slot is the sidebar, and a checkbox toggles it. #}
+{# @prop id:text | required | example:"nav" | description:"Id of the drawer's toggle checkbox. A drawer.button opens the drawer through this id, so it must be unique on the page." #}
+{# @prop open:boolean | description:"Keep the sidebar open beside the page. Accepts a breakpoint such as lg to keep it open from that width up." #}
+{# @prop placement:select['end'] | description:"Put the sidebar on the end side. Leave empty for the start side." #}
+{# @prop class:text | description:"Extra classes added to the drawer." #}
+{# @slot — The page content. #}
+{% load i18n daisy_cotton %}
+<c-vars id="" open="" placement="" class />
+<div class="drawer {% if open %}{% responsive open 'drawer-open' %}{% endif %} {% variation placement 'drawer' 'end' %} {{ class }}"
+     {{ attrs }}>
+  <input id="{{ id }}" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content">{{ slot }}</div>
+  <div class="drawer-side">
+    <label for="{{ id }}" class="drawer-overlay"></label>
+    {{ side }}
+  </div>
+</div>
