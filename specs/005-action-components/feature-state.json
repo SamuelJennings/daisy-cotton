@@ -58,6 +58,15 @@
         "SPEC-001 high: applied as plan/tasks edits (D6)",
         "SPEC-002..SPEC-007: applied as plan/tasks edits (D7)"
       ]
+    },
+    "review": {
+      "approved_by": "review-panel",
+      "at": "2026-09-27T09:45:25Z",
+      "self_resolved": [
+        "DOC-001 high: fixed (D9)",
+        "DOC-002, TST-001..TST-009 medium/low: fixed (D9)",
+        "ACC-001 low: gallery tool limit, recorded (D9)"
+      ]
     }
   },
   "stories": [
@@ -329,5 +338,9 @@
       "used": 0,
       "max": 120
     }
+  },
+  "pr": {
+    "number": 103,
+    "draft": false
   }
 }

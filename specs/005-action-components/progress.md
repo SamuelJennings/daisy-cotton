@@ -253,3 +253,10 @@ Did: all five stories accepted after independent verify and tamper-check. The bu
 Verified: `uv run pytest` 418 passed, 6 skipped; `cotton_lint --warnings-as-errors` 0 errors 0 warnings; pre-commit clean.
 Next: code review, then the accessibility run and the walkthrough.
 Watch: none.
+
+## 2026-09-27T09:46Z · Review and walkthrough
+
+Did: code review applied (D9): changelog breaks documented, test gaps closed, each surviving mutation now killed. Accessibility run in Chromium clean for the components, every keyboard walk passing. Pull request ready; dev server on port 8023 from this worktree.
+Verified: `uv run pytest` 457 passed, 6 skipped; `cotton_lint --warnings-as-errors` 0 errors 0 warnings; pre-commit clean.
+Next: the maintainer's walkthrough, then the merge gate.
+Watch: port 8023 served the layout components branch before; it now serves this one.
