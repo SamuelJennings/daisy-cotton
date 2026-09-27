@@ -1,0 +1,22 @@
+{# @description daisyUI's carousel: a scrollable, snapping row or column of slides. With no controls of its own it is a focusable, named region, so keyboard users can tab to it and scroll it with the arrow keys, and screen readers announce it as a carousel of slides. Fill the default slot with carousel.item components. See the mockup.browser entry for a named carousel with previous/next and indicator controls. #}
+{# @prop snap:select['start','center','end'] | description:"Where the slides snap to." #}
+{# @prop horizontal:select['sm','md','lg','xl','2xl'] | description:"Scroll horizontally. The bare attribute applies it at every width, which this select cannot set." #}
+{# @prop vertical:select['sm','md','lg','xl','2xl'] | description:"Scroll vertically. The bare attribute applies it at every width, which this select cannot set." #}
+{# @prop aria-label:text | description:"Accessible name of the carousel. No default: the component cannot invent one, so give it one or the region is unnamed." #}
+{# @prop class:text | description:"Extra classes added to the carousel." #}
+{# @slot <c-carousel.item id="slide1"><img class="w-full" src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp" alt="A city skyline at dusk"></c-carousel.item> — The carousel's slides, as carousel.item components. #}
+{% comment %}
+  Give an aria-label, or the region has no name. daisyUI builds previous/next
+  and indicator controls as plain links to a slide's id, written beside the
+  carousel rather than inside it (this component emits none); following one
+  also scrolls the page to the carousel. The gallery's inline preview cannot
+  follow those links, so try them in this entry's raw view.
+{% endcomment %}
+{% load i18n daisy_cotton %}
+<c-vars snap="" horizontal="" vertical="" aria-label="" class="" />
+<div class="carousel {% variation snap "carousel" "start,center,end" %} {% responsive horizontal "carousel-horizontal" %} {% responsive vertical "carousel-vertical" %} {{ class }}"
+     role="region"
+     tabindex="0"
+     aria-roledescription="{% trans "carousel" %}"
+     {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+     {{ attrs }}>{{ slot }}</div>

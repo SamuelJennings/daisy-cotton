@@ -61,8 +61,23 @@
       "tasks": [
         {
           "id": "T001",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_carousel.py tests/test_animated_display_no_script.py -q: 24 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 50/57 clean, 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_carousel.py::TestCarouselRoot",
+              "tests/test_carousel.py::TestCarouselSnap",
+              "tests/test_carousel.py::TestCarouselDirection",
+              "tests/test_carousel.py::TestCarouselTranslation",
+              "tests/test_carousel.py::TestCarouselPageContext",
+              "tests/test_carousel.py::TestCarouselItem",
+              "tests/test_animated_display_no_script.py::TestAnimatedDisplayNoScript"
+            ]
+          }
         },
         {
           "id": "T002",

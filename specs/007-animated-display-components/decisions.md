@@ -104,3 +104,9 @@ One reviewer, three lenses. Verified findings and what was done:
 Gallery 1.0.0 builds a preview from declared defaults only, and the linter rejects an annotation default that differs from `<c-vars>`. `aria-label` has no default, because the component cannot invent a name. So the carousel entry's own preview is an unnamed region. SC-004's named carousel is the `mockup.browser` composition, which the carousel's description names. The pull request lists this as a known gap against SC-004.
 
 **ADR:** none — a limit of the gallery version in use.
+
+## D8 — How the carousel's translation test works
+
+`{% trans "carousel" %}` does not call `django.utils.translation.gettext` directly: `TranslateNode.render` marks the filter expression for translation and resolves it, and `FilterExpression.resolve` (`django/template/base.py`) calls `gettext_lazy`, imported by name into that module at import time. Patching `django.utils.translation.gettext` therefore does nothing — the lazy wrapper already closed over the real function. `tests/test_carousel.py::TestCarouselTranslation` patches `django.template.base.gettext_lazy` itself, which is the name `FilterExpression.resolve` actually looks up at call time, with a function returning a marked string (`"[t]carousel[/t]"`), no `.po`/`.mo` catalog involved. Verified by mutation: hard-coding `aria-roledescription="carousel"` in the template makes the test fail on the unmarked string, then the template was reverted.
+
+**ADR:** none — a testing technique, not a design choice; recorded so later stories' no-script/translation tests don't rediscover it.
