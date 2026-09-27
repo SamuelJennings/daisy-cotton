@@ -215,3 +215,12 @@ class TestModalContextLeak:
         assert "Leaked heading" not in html
         assert "Leaked" not in html
         assert " open" not in html.split(">")[0]
+
+
+class TestModalWithoutId:
+    """A modal given no id writes no empty ``id`` attribute."""
+
+    def test_no_id_attribute_without_an_id(self):
+        html = render("<c-modal>Body</c-modal>")
+
+        assert "id=" not in html.split(">", 1)[0]

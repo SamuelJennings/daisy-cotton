@@ -246,3 +246,10 @@ daisy_cotton/templates/cotton/fab.html --check` → 0 files would be updated.
 Next: batch 2 checkpoint — full suite, cotton_lint, pre-commit.
 Watch: US5 done-check satisfied for scenarios 1, 3-6; scenario 2 (in-browser keyboard) and
 scenario 7's gallery walk are T013's.
+
+## 2026-09-27T09:50Z · Converge
+
+Did: all five stories accepted after independent verify and tamper-check. The button now builds one element instead of two branches, and a modal with no id writes no empty `id` (D8). Every decision carries an ADR verdict, none graduated.
+Verified: `uv run pytest` 418 passed, 6 skipped; `cotton_lint --warnings-as-errors` 0 errors 0 warnings; pre-commit clean.
+Next: code review, then the accessibility run and the walkthrough.
+Watch: none.

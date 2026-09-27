@@ -2,7 +2,7 @@
   "feature": "005-action-components",
   "branch": "005-action-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "IMPLEMENT",
+  "state": "CONVERGE",
   "state_history": [
     {
       "state": "QUEUED",
@@ -23,6 +23,11 @@
       "state": "IMPLEMENT",
       "at": "2026-09-27T08:55:45Z",
       "note": "design review applied (D6, D7); plan notification recorded"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-27T09:34:19Z",
+      "note": "all five stories accepted"
     }
   ],
   "gates": {
@@ -230,7 +235,7 @@
       "priority": "P3",
       "issue": 61,
       "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/005-action-components",
-      "status": "todo",
+      "status": "done",
       "replans": 0,
       "tasks": [
         {
@@ -274,7 +279,7 @@
       "priority": "P3",
       "issue": 62,
       "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/005-action-components",
-      "status": "todo",
+      "status": "done",
       "replans": 0,
       "tasks": [
         {
@@ -304,7 +309,7 @@
   ],
   "budgets": {
     "converge_cycles": {
-      "used": 0,
+      "used": 1,
       "max": 2
     },
     "review_cycles": {

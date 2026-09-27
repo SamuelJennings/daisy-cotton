@@ -146,3 +146,18 @@ One design reviewer, three lenses, verdict request changes with one high finding
   reachable through `class` (SC-001), and `open` covers the same state.
 
 **ADR:** none — a record of review dispositions.
+
+## D8 — Convergence changes made directly
+
+Two changes, each small enough that a dispatch would have cost more than the edit.
+
+- `button.html` builds its element once, choosing `<a>` or `<button>` from `href`, as the template
+  on main did. Batch 1 had written the whole class list twice, once per branch. The suite, the
+  linter and the pre-commit hooks are unchanged by the merge of the two branches.
+- `modal.html` writes `id` only when one is given, instead of an empty `id=""` on a modal with no
+  id. A test covers it and fails without the fix.
+
+Every acceptance scenario that rendered markup can show has a test. The scenarios that need a
+browser (keyboard, Escape, focus return, the gallery entries) are checked in the accessibility run.
+
+**ADR:** none — local edits inside this feature's templates.

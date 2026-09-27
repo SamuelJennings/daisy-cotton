@@ -36,15 +36,12 @@
         circle=""
         class="" />
 {# djlint:off #}
-{% if href %}<a href="{{ href }}" class="btn {% variation variant "btn" "neutral,primary,secondary,accent,info,success,warning,error" %} {% variation size "btn" "xs,sm,md,lg,xl" %}{% if outline %} btn-outline{% endif %}{% if dash %} btn-dash{% endif %}{% if soft %} btn-soft{% endif %}{% if ghost %} btn-ghost{% endif %}{% if link %} btn-link{% endif %}{% if active %} btn-active{% endif %}{% if wide %} btn-wide{% endif %}{% if block %} btn-block{% endif %}{% if square %} btn-square{% endif %}{% if circle %} btn-circle{% endif %}{% if disabled %} btn-disabled{% endif %} {{ class }}"{% if disabled %} aria-disabled="true" role="button" tabindex="-1"{% endif %} {{ attrs }}>
-  {% if icon %}<c-icon name="{{ icon }}" aria-hidden="true" />{% endif %}
-  {% if text %}<span>{{ text }}</span>{% endif %}
-  {{ slot }}
-</a>
-{% else %}<button class="btn {% variation variant "btn" "neutral,primary,secondary,accent,info,success,warning,error" %} {% variation size "btn" "xs,sm,md,lg,xl" %}{% if outline %} btn-outline{% endif %}{% if dash %} btn-dash{% endif %}{% if soft %} btn-soft{% endif %}{% if ghost %} btn-ghost{% endif %}{% if link %} btn-link{% endif %}{% if active %} btn-active{% endif %}{% if wide %} btn-wide{% endif %}{% if block %} btn-block{% endif %}{% if square %} btn-square{% endif %}{% if circle %} btn-circle{% endif %} {{ class }}"{% if disabled %} disabled{% endif %} {{ attrs }}>
-  {% if icon %}<c-icon name="{{ icon }}" aria-hidden="true" />{% endif %}
-  {% if text %}<span>{{ text }}</span>{% endif %}
-  {{ slot }}
-</button>
-{% endif %}
-{# djlint:on #}
+{% with element=href|yesno:"a,button" %}
+  {# djlint:off #}
+  <{{ element }}{% if href %} href="{{ href }}"{% endif %} class="btn {% variation variant "btn" "neutral,primary,secondary,accent,info,success,warning,error" %} {% variation size "btn" "xs,sm,md,lg,xl" %}{% if outline %} btn-outline{% endif %}{% if dash %} btn-dash{% endif %}{% if soft %} btn-soft{% endif %}{% if ghost %} btn-ghost{% endif %}{% if link %} btn-link{% endif %}{% if active %} btn-active{% endif %}{% if wide %} btn-wide{% endif %}{% if block %} btn-block{% endif %}{% if square %} btn-square{% endif %}{% if circle %} btn-circle{% endif %}{% if disabled and href %} btn-disabled{% endif %} {{ class }}"{% if disabled %}{% if href %} aria-disabled="true" role="button" tabindex="-1"{% else %} disabled{% endif %}{% endif %} {{ attrs }}>
+    {% if icon %}<c-icon name="{{ icon }}" aria-hidden="true" />{% endif %}
+    {% if text %}<span>{{ text }}</span>{% endif %}
+    {{ slot }}
+  </{{ element }}>
+  {# djlint:on #}
+{% endwith %}

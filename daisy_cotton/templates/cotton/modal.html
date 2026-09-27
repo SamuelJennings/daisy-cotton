@@ -19,7 +19,7 @@
         content_class=""
         actions=""
         class="" />
-<dialog id="{{ id }}"
+<dialog{% if id %} id="{{ id }}"{% endif %}
         class="modal {% variation placement "modal" "top,middle,bottom,start,end" %} {{ class }}"
         {% if id and title %}aria-labelledby="{{ id }}-title"{% endif %}
         {% if open %}open{% endif %}
