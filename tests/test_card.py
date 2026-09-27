@@ -89,7 +89,7 @@ class TestCardActions:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            '<c-card>Body<c-slot name="actions"><button>Buy</button></c-slot></c-card>'
+            '<c-card><p>Body</p><c-slot name="actions"><button>Buy</button></c-slot></c-card>'
         )
 
         body = soup.find("div", class_="card-body")
