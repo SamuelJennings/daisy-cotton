@@ -26,6 +26,12 @@ CALLER_STRINGS = {
         "Hello"
         "</c-chat>"
     ),
+    "diff": (
+        '<c-diff aria-label="Before and after">'
+        '<c-slot name="item_1"><img src="/a.jpg" alt="Before"></c-slot>'
+        '<c-slot name="item_2"><img src="/b.jpg" alt="After"></c-slot>'
+        "</c-diff>"
+    ),
 }
 
 

@@ -149,6 +149,7 @@ non-mirror-paths = [
     "tests/test_animated_display_no_script.py",
     "tests/test_carousel.py",
     "tests/test_chat.py",
+    "tests/test_diff.py",
     "tests/test_icon.py",
     "tests/test_link.py",
     "tests/test_divider.py",

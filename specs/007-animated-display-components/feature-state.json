@@ -176,8 +176,22 @@
       "tasks": [
         {
           "id": "T007",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_diff.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q: 347 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 51/59 clean, 0 errors, 0 warnings",
+              "uv run ruff check tests/test_diff.py tests/test_animated_display_no_script.py: all checks passed",
+              "uv run ruff format tests/test_diff.py: 1 file reformatted, then re-ran pytest green"
+            ],
+            "tests": [
+              "tests/test_diff.py::TestDiffRoot",
+              "tests/test_diff.py::TestDiffNoRoleOrAriaHidden",
+              "tests/test_diff.py::TestDiffPageContext",
+              "tests/test_animated_display_no_script.py::TestAnimatedDisplayNoScript"
+            ]
+          }
         },
         {
           "id": "T008",

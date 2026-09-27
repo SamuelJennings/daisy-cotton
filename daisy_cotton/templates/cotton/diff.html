@@ -1,0 +1,22 @@
+{# @description daisyUI's diff: an image or content comparison with a draggable resizer. Give an aria-label, or the figure has no name. Dragging the resizer needs a pointer; Tab to the comparison shows the first item and Tab again the second. See the mockup.browser entry for a text comparison. #}
+{# @prop item_1:text | description:"Content shown in diff-item-1, drawn first. Fill the item_1 slot for markup." #}
+{# @prop item_2:text | description:"Content shown in diff-item-2. Fill the item_2 slot for markup." #}
+{# @prop aria-label:text | description:"Accessible name of the comparison. No default: the component cannot invent one, so give it one or the figure is unnamed." #}
+{# @prop class:text | description:"Extra classes added to the diff, such as aspect-16/9 to keep the aspect ratio." #}
+{# @slot:item_1 <img src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a.webp" alt="A pair of trainers"> — The first item, shown in diff-item-1. #}
+{# @slot:item_2 <img src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a-blur.webp" alt="The same trainers, blurred"> — The second item, shown in diff-item-2. #}
+{% comment %}
+  Dragging the resizer needs a pointer. Tab to the figure shows the first
+  item almost fully, Tab again to the first item shows the second (daisyUI
+  5.7's keyboard behaviour, research R3). Give an aria-label, or the
+  comparison has no name.
+{% endcomment %}
+<c-vars item_1="" item_2="" aria-label="" class="" />
+<figure class="diff {{ class }}"
+        tabindex="0"
+        {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+        {{ attrs }}>
+  <div class="diff-item-1" tabindex="0">{{ item_1 }}</div>
+  <div class="diff-item-2">{{ item_2 }}</div>
+  <div class="diff-resizer"></div>
+</figure>
