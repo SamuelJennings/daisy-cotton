@@ -2,7 +2,7 @@
   "feature": "005-action-components",
   "branch": "005-action-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "CONVERGE",
+  "state": "REVIEW",
   "state_history": [
     {
       "state": "QUEUED",
@@ -28,6 +28,11 @@
       "state": "CONVERGE",
       "at": "2026-09-27T09:34:19Z",
       "note": "all five stories accepted"
+    },
+    {
+      "state": "REVIEW",
+      "at": "2026-09-27T09:35:15Z",
+      "note": "converge green; button simplified, modal empty id fixed; no ADR graduated"
     }
   ],
   "gates": {
@@ -313,7 +318,7 @@
       "max": 2
     },
     "review_cycles": {
-      "used": 0,
+      "used": 1,
       "max": 1
     },
     "design_review_cycles": {
