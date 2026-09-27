@@ -101,8 +101,22 @@
         },
         {
           "id": "T003",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_card.py tests/test_modal.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_templatetags/ -q: 69 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/card/index.html tests/test_card.py: all hooks passed",
+              "uv run python manage.py cotton_lint: no findings for card/index.html"
+            ],
+            "tests": [
+              "tests/test_card.py::TestCardSize",
+              "tests/test_card.py::TestCardModifiers"
+            ],
+            "commits": [
+              "38b0d07"
+            ]
+          }
         },
         {
           "id": "T004",

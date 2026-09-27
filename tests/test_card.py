@@ -1,4 +1,5 @@
-"""Tests for <c-card>'s daisyUI structure: root, figure, body, title, actions.
+"""Tests for <c-card>'s daisyUI structure: root, figure, body, title, actions,
+and the size/border/dash/side/image-full modifiers.
 
 The card renders only the parts it is given: a figure before the body, a
 ``card-title`` heading from ``title`` (attribute or slot), and a
@@ -7,6 +8,8 @@ card given none of these emits just the root and the body.
 """
 
 from html.parser import HTMLParser
+
+import pytest
 
 
 class _FirstTagAttrs(HTMLParser):
@@ -159,3 +162,62 @@ class TestCardPageContextDoesNotLeak:
         assert soup.find("h2") is None
         assert soup.find("figure") is None
         assert soup.find("div", class_="card-actions") is None
+
+
+class TestCardSize:
+    """``size`` maps xs-xl to daisyUI's ``card-<size>`` class."""
+
+    @pytest.mark.parametrize("size", ["xs", "sm", "md", "lg", "xl"])
+    def test_each_size_maps_to_its_daisyui_class(self, cotton_render_string, size):
+        html = cotton_render_string(f'<c-card size="{size}">Body</c-card>')
+        root_classes = _class_attrs_on(html, "div")
+        assert f"card-{size}" in root_classes[0]
+
+    def test_an_unknown_size_emits_no_class_and_does_not_raise(
+        self, cotton_render_string
+    ):
+        html = cotton_render_string('<c-card size="xxl">Body</c-card>')
+        root_classes = _class_attrs_on(html, "div")
+        assert "card-xxl" not in root_classes[0]
+
+
+class TestCardModifiers:
+    """``border``, ``dash``, ``side`` and ``image-full`` map to their daisyUI classes."""
+
+    def test_border_adds_card_border(self, cotton_render_string):
+        html = cotton_render_string("<c-card border>Body</c-card>")
+        root_classes = _class_attrs_on(html, "div")
+        assert "card-border" in root_classes[0]
+
+    def test_dash_adds_card_dash(self, cotton_render_string):
+        html = cotton_render_string("<c-card dash>Body</c-card>")
+        root_classes = _class_attrs_on(html, "div")
+        assert "card-dash" in root_classes[0]
+
+    def test_side_true_adds_the_bare_class(self, cotton_render_string):
+        html = cotton_render_string("<c-card side>Body</c-card>")
+        root_classes = _class_attrs_on(html, "div")
+        assert "card-side" in root_classes[0]
+        assert "sm:card-side" not in root_classes[0]
+
+    def test_side_breakpoint_adds_the_prefixed_class(self, cotton_render_string):
+        html = cotton_render_string('<c-card side="sm">Body</c-card>')
+        root_classes = _class_attrs_on(html, "div")
+        assert "sm:card-side" in root_classes[0]
+
+    def test_side_not_a_breakpoint_emits_nothing(self, cotton_render_string):
+        html = cotton_render_string('<c-card side="left">Body</c-card>')
+        root_classes = _class_attrs_on(html, "div")
+        assert "card-side" not in root_classes[0]
+
+    def test_image_full_adds_the_class(self, cotton_render_string):
+        html = cotton_render_string("<c-card image-full>Body</c-card>")
+        root_classes = _class_attrs_on(html, "div")
+        assert "image-full" in root_classes[0]
+
+    def test_image_full_never_reaches_the_root_as_a_raw_attribute(
+        self, cotton_render_string
+    ):
+        html = cotton_render_string("<c-card image-full>Body</c-card>")
+        root = html[: html.index(">") + 1]
+        assert "image-full=" not in root
