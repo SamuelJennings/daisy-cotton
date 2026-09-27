@@ -147,3 +147,93 @@ class TestDividerRootAttributes:
 
         assert "<script" not in html
         assert " on" not in html.replace("\n", " ").split(">")[0]
+
+
+class TestDividerRole:
+    def test_an_unlabelled_divider_is_a_separator(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup("<c-divider />")
+
+        assert soup.find("div")["role"] == "separator"
+
+    def test_a_whitespace_only_slot_counts_as_unlabelled(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup("<c-divider>   \n  </c-divider>")
+
+        assert soup.find("div")["role"] == "separator"
+
+    def test_a_bare_horizontal_divider_says_it_is_vertical(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup("<c-divider horizontal />")
+
+        assert soup.find("div")["aria-orientation"] == "vertical"
+
+    def test_a_responsive_horizontal_divider_has_no_orientation(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup('<c-divider horizontal="md" />')
+
+        assert soup.find("div")["role"] == "separator"
+        assert not soup.find("div").has_attr("aria-orientation")
+
+    def test_a_plain_unlabelled_divider_has_no_orientation(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup("<c-divider />")
+
+        assert not soup.find("div").has_attr("aria-orientation")
+
+    def test_text_removes_the_role(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup('<c-divider text="OR" />')
+
+        assert not soup.find("div").has_attr("role")
+        assert "OR" in soup.get_text()
+
+    def test_a_slot_label_removes_the_role(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup("<c-divider>OR</c-divider>")
+
+        assert not soup.find("div").has_attr("role")
+
+    def test_a_labelled_horizontal_divider_has_no_orientation(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup("<c-divider horizontal>OR</c-divider>")
+
+        assert not soup.find("div").has_attr("aria-orientation")
+
+    def test_a_caller_role_replaces_the_default_once(self, cotton_render_string):
+        html = cotton_render_string('<c-divider role="none" />')
+
+        assert root_attribute_names(html).count("role") == 1
+        assert 'role="none"' in html
+        assert 'role="separator"' not in html
+
+    def test_a_caller_role_on_a_labelled_divider_is_written_once(
+        self, cotton_render_string
+    ):
+        html = cotton_render_string('<c-divider role="heading">OR</c-divider>')
+
+        assert root_attribute_names(html).count("role") == 1
+        assert 'role="heading"' in html
+
+
+class TestDividerIgnoresPageContext:
+    """Declared names default to empty, so a page's own variables of the same
+    name do not rewrite the divider (D9)."""
+
+    def test_page_context_does_not_leak_in(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup(
+            "<c-divider />",
+            {
+                "role": "banner",
+                "text": "Leaked",
+                "variant": "error",
+                "placement": "end",
+            },
+        )
+
+        div = soup.find("div")
+        assert div["role"] == "separator"
+        assert classes(soup) == ["divider"]
+        assert "Leaked" not in soup.get_text()
