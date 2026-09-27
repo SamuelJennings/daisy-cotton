@@ -33,7 +33,7 @@ Eight new Cotton templates for seven daisyUI components: `carousel` with `carous
 | I Test-First | Every acceptance scenario that markup can show gets a test written before the template. In-browser scenarios run at the walkthrough (research R7). | Pass |
 | II Simplicity | Templates only. `variation` and `responsive` cover every modifier. | Pass |
 | III Anti-Abstraction | No base template, no shared include. | Pass |
-| V Security | Every value reaches the page through `{{ }}` autoescaping. The countdown's `value` is written into a `style` attribute unvalidated, by the spec's decision (FR-017): escaping keeps it inside the attribute. | Pass |
+| V Security | Every value reaches the page through `{{ }}` autoescaping. The countdown's `value` is written into a `style` attribute unvalidated, by the spec's decision (FR-017): escaping keeps it inside the attribute, but not inside the `--value` declaration, so a string holding `;` adds CSS declarations. The countdown's description says the value must be a number and never unvalidated user input. | Pass |
 | VI Documentation | README and CHANGELOG lines land in the story that introduces each name. Each component's caller duties and pointer limits live in its annotations and a `{% comment %}` block, as FS-006's did. | Pass |
 | VII Dependency discipline | No new dependency. | Pass |
 | VIII i18n | The carousel's two roledescriptions, "carousel" and "slide", are `{% trans %}` strings. No other component writes a string of its own. | Pass |
@@ -65,7 +65,8 @@ Shared rules, applied everywhere below (FS-006's, unchanged):
 
 - `aria-label` is declared, as the navbar, dock and megamenu declare theirs, so the gallery shows it as a field of its own rather than leaving it to the extra-attributes box. It has no default: the component cannot invent a name (Edge Cases).
 - `carousel/item.html` — `{% load i18n %}`, `<c-vars class="" />`, `<div class="carousel-item {{ class }}" role="group" aria-roledescription="{% trans "slide" %}" {{ attrs }}>{{ slot }}</div>`. `id` reaches the slide through `{{ attrs }}` (scenario 5).
-- The `{% comment %}` block: give an `aria-label`; controls are links to slide ids that the project writes, and following one also scrolls the page to the carousel.
+- The `{% comment %}` block and description: give an `aria-label`; controls are links to slide ids that the project writes, and following one also scrolls the page to the carousel; the gallery's inline preview cannot follow those links, so try them in the entry's raw view; a keyboard user tabs to the carousel and scrolls it with the arrow keys, and screen readers announce it as a carousel of slides (FR-007).
+- The carousel's own gallery preview is unnamed: gallery 1.0.0 previews carry only declared defaults, and `aria-label` has none (decisions D7). The named carousel is the `mockup.browser` composition.
 - Focus indicator: the browser's own ring on a `tabindex="0"` element, checked in the browser (research R7). If none shows, a `focus-visible` outline utility on the root is a fix task.
 
 ### Chat bubble (US2)
@@ -207,8 +208,9 @@ README.md, CHANGELOG.md
 
 One worktree, stories in priority order, one after another: they share `README.md`, `CHANGELOG.md`, `pyproject.toml` and, for the compositions, the host templates' annotations.
 
-1. US1 carousel, US2 chat bubble, US3 countdown.
-2. US4 diff, US5 hover gallery, US6 hover 3D card, US7 text rotate.
+1. US1 carousel, US2 chat bubble, US4 diff.
+2. US5 hover gallery, US6 hover 3D card, US7 text rotate.
+3. US3 countdown, last: its markup waits on the maintainer's ruling on FR-016 (decisions D6).
 
 ## Complexity Tracking
 

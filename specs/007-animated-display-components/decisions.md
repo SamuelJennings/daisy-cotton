@@ -83,3 +83,24 @@ The components in this group exist to show images, and the hover gallery only wo
 Both take their name from `aria-label`, which would reach them through `{{ attrs }}` anyway. Declaring it puts a named field in the gallery's props panel, as the navbar, dock and megamenu do, so the one attribute every example needs is visible rather than left to the extra-attributes box. Neither gets a default: a component cannot invent a name.
 
 **ADR:** none — local to two templates.
+
+## D6 — Design review applied
+
+One reviewer, three lenses. Verified findings and what was done:
+
+- **SPEC-001 (high), the countdown is not readable by screen readers.** With daisyUI 5.7.46's CSS, the element FR-016 puts `aria-live` and `aria-label` on is `visibility:hidden`, so it leaves the accessibility tree, and the digits are drawn by generated content that lists every number from 00 to 99. Chromium's accessibility tree for `<c-countdown value="42">` holds the two lists and no 42. US3-2 and FR-005 cannot be met with FR-016's markup. This is a spec fault, not a plan fault, so it goes to the maintainer and US3 is built last, after his ruling.
+- **SPEC-002 (medium).** The gallery's inline preview is a `srcdoc` frame where a link to `#slide2` navigates the frame to the parent page. The carousel's description says to try the controls in the entry's raw view, and the browser check does so.
+- **SPEC-003 (medium).** Recorded as D7.
+- **SPEC-004 (medium).** FR-007 for the carousel added to T002 and the plan.
+- **SEC-001 (low).** A countdown `value` holding `;` adds CSS declarations inside the `style` attribute. No validation (FR-017). The plan's security row is corrected and the description says the value must be a number.
+- **SPEC-005 (low).** D1 confirmed in the browser: without `role="img"` both items' content is exposed, and the two `tabindex="0"`s move the resizer as research R3 says. The pull request names the reading.
+- **ARCH-001 (low).** T001 names how the translation test works.
+- Review notes carried into tasks: the diff's text example wraps each item's text in one element, the linked 3D card example has no actions, and the text rotate's reduced-motion wording defers to daisyUI's CSS.
+
+**ADR:** none — plan corrections local to this feature.
+
+## D7 — The carousel's own gallery preview is unnamed
+
+Gallery 1.0.0 builds a preview from declared defaults only, and the linter rejects an annotation default that differs from `<c-vars>`. `aria-label` has no default, because the component cannot invent a name. So the carousel entry's own preview is an unnamed region. SC-004's named carousel is the `mockup.browser` composition, which the carousel's description names. The pull request lists this as a known gap against SC-004.
+
+**ADR:** none — a limit of the gallery version in use.
