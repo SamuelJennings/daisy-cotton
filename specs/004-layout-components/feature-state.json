@@ -2,7 +2,7 @@
   "feature": "004-layout-components",
   "branch": "004-layout-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "PLAN",
+  "state": "DESIGN_REVIEW",
   "state_history": [
     {
       "state": "QUEUED",
@@ -13,6 +13,11 @@
       "state": "PLAN",
       "at": "2026-09-27T00:42:42Z",
       "note": "picked up from the queue; branch cut from origin/main 73a4826; verify green on base"
+    },
+    {
+      "state": "DESIGN_REVIEW",
+      "at": "2026-09-27T00:43:16Z",
+      "note": "plan, research, tasks committed; draft PR #102 opened"
     }
   ],
   "gates": {
@@ -224,7 +229,7 @@
       "max": 1
     },
     "design_review_cycles": {
-      "used": 0,
+      "used": 1,
       "max": 1
     },
     "tokens": {
@@ -233,7 +238,7 @@
     }
   },
   "pr": {
-    "number": null,
+    "number": 102,
     "draft": true
   }
 }
