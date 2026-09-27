@@ -47,3 +47,10 @@ Did: added `unique_id` to `daisy_cotton/templatetags/daisy_cotton.py` and its tw
 Verified: `uv run pytest tests/test_templatetags/test_daisy_cotton.py -q` — 15 passed (confirmed red first: `ImportError: cannot import name 'unique_id'`). `uv run pre-commit run --files daisy_cotton/templatetags/daisy_cotton.py tests/test_templatetags/test_daisy_cotton.py` — all hooks passed.
 Next: T007, the table template and its tests.
 Watch: none outstanding.
+
+## 2026-09-27T15:45Z · Implementer US2 · T007
+
+Did: built `table.html` — wrapper `<div class="overflow-x-auto ...">` with `tabindex="0" role="region"`, `aria-labelledby` pointing at the caption's `unique_id`-generated id only when there is a caption, `class` and `{{ attrs }}` (so a caller's own `aria-label` reaches the wrapper when there is no caption); `<table class="table ...">` with `size` through `{% variation %}` against `xs,sm,md,lg,xl`, `zebra`/`pin-rows`/`pin-cols` → `table-zebra`/`table-pin-rows`/`table-pin-cols`, and `content_class`; `caption` (attribute or slot) as the table's first child `<caption id="...">`, the default slot after it; every declared name `=""`. Wrote `tests/test_table.py` for scenarios 1–7 (FR-013–FR-015), an unknown `size`, two tables on one page getting different caption ids, and a page context carrying `caption` that does not leak in. Added `tests/test_table.py` to `pyproject.toml`'s `non-mirror-paths` (a template test, not a mirrored Python module). Gallery annotations are T008's task; `cotton_lint` currently reports 7 `missing-annotation` warnings on `table`, expected until then.
+Verified: confirmed red first — with `table.html` moved aside, all 16 new tests failed on `TemplateDoesNotExist: cotton/table/index.html`. `uv run pytest tests/test_table.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py -q` — 47 passed. `uv run pre-commit run --files daisy_cotton/templates/cotton/table.html tests/test_table.py pyproject.toml` — all hooks passed (one ruff-format pass).
+Next: T008, the gallery annotations, `{% comment %}` block, README and CHANGELOG.
+Watch: none outstanding.

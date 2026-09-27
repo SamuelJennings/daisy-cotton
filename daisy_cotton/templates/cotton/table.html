@@ -1,0 +1,9 @@
+{% load daisy_cotton %}
+<c-vars caption="" size="" zebra="" pin-rows="" pin-cols="" content_class="" class="" />
+{% unique_id "table" as caption_id %}
+<div class="overflow-x-auto {{ class }}" tabindex="0" role="region"{% if caption %} aria-labelledby="{{ caption_id }}"{% endif %} {{ attrs }}>
+  <table class="table {% variation size "table" "xs,sm,md,lg,xl" %}{% if zebra %} table-zebra{% endif %}{% if pin_rows %} table-pin-rows{% endif %}{% if pin_cols %} table-pin-cols{% endif %} {{ content_class }}">
+    {% if caption %}<caption id="{{ caption_id }}">{{ caption }}</caption>{% endif %}
+    {{ slot }}
+  </table>
+</div>

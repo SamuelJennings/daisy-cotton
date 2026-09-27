@@ -166,8 +166,26 @@
         },
         {
           "id": "T007",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_table.py -q (table.html moved aside): 16 failed on TemplateDoesNotExist: cotton/table/index.html",
+              "uv run pytest tests/test_table.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py -q: 47 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/table.html tests/test_table.py pyproject.toml: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_table.py::TestTableStructure",
+              "tests/test_table.py::TestTableWrapperAccessibility",
+              "tests/test_table.py::TestTableAriaLabel",
+              "tests/test_table.py::TestTableModifiers",
+              "tests/test_table.py::TestTableSize",
+              "tests/test_table.py::TestTableClasses",
+              "tests/test_table.py::TestTableCaptionSlot",
+              "tests/test_table.py::TestTableUniqueIds",
+              "tests/test_table.py::TestTablePageContextDoesNotLeak"
+            ]
+          }
         },
         {
           "id": "T008",
