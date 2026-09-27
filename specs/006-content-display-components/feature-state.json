@@ -148,6 +148,21 @@
               "tests/test_gallery_lint.py::TestPackageComponentsLintClean::test_has_no_blocking_findings"
             ]
           }
+        },
+        {
+          "id": "T026",
+          "status": "todo",
+          "attempts": 0
+        },
+        {
+          "id": "T027",
+          "status": "todo",
+          "attempts": 0
+        },
+        {
+          "id": "T029",
+          "status": "todo",
+          "attempts": 0
         }
       ]
     },
@@ -324,6 +339,11 @@
               "tests/test_card.py"
             ]
           }
+        },
+        {
+          "id": "T025",
+          "status": "todo",
+          "attempts": 0
         }
       ]
     },
@@ -527,6 +547,11 @@
               "tests/test_gallery_annotations.py"
             ]
           }
+        },
+        {
+          "id": "T028",
+          "status": "todo",
+          "attempts": 0
         }
       ]
     },

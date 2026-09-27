@@ -68,6 +68,14 @@ Tests render through the Cotton compiler as a caller's template would (the `cott
 
 - [ ] T024 Run axe-core and the scripted keyboard walks (research R8) against every gallery entry this feature touches on the running demo, and record the result in the pull request's test evidence (SC-003, SC-004, scenarios US2-2, US4-2, US4-6, US4-7, US4-9, US8-6). The accordion walks run on the card entry's two groups. The table walk checks the wrapper's focus indicator; if none shows, add a `focus-visible` outline to the wrapper as a fix task.
 
+## Phase 11: Review and accessibility fixes
+
+- [ ] T025 [US4] `collapse.html`: the summary carries `focus-visible:outline-2 focus-visible:-outline-offset-2`, so a keyboard user sees where focus is (the accessibility run found daisyUI draws no focus ring on the summary, FR-006, US4-2). A test asserts both classes on the summary of a collapse and of an accordion.
+- [ ] T026 [US1] `tests/test_card.py`: the actions-at-the-foot test gives the default slot an element (`<p>Body</p>`), so moving `card-actions` above the body fails it (review COR-001).
+- [ ] T027 [US1] `modal.html`: `class`, `actions`, `footer` and `footer_end` declared with empty defaults so a page variable cannot fill them (COR-005); a test that the inner card carries `bg-base-100` (COR-002) and a context-leak test for the four names; the `@description` and footer annotations describe the modal as it now renders (COR-003); a CHANGELOG `Changed` line that the modal's actions render at the foot of the dialog, after the footer row (COR-006).
+- [ ] T028 [US8] `timeline/item.html`: `box` annotated `select['end','start']`, its description saying the bare attribute means end (COR-004). A test that `box="end"` puts `timeline-box` on the end part.
+- [ ] T029 [US1] Card gallery examples: the figure's `alt` describes the image, and the badge-in-button example reads "Cart 3" (a space between the text and the badge). The collapse's and accordion's `title` descriptions say a title is expected, since an empty summary is an unnamed control.
+
 ## Dependencies
 
 - Phases 1–9 touch disjoint templates and test modules. They share `README.md`, `CHANGELOG.md`, `pyproject.toml`'s `non-mirror-paths` and the template tag module, so batches run one after another on one branch.

@@ -136,3 +136,15 @@ Four changes, each small enough that a dispatch would have cost more than the ed
 Every acceptance scenario that rendered markup can show has a test. The scenarios that need a browser (keyboard operation, the accordion's one-open-at-a-time behaviour, the table's scrolling, the timeline's connector, the gallery entries) are checked in the accessibility run.
 
 **ADR:** none — local edits inside this feature.
+
+## D7 — Code review and accessibility run applied
+
+The reviewer approved with two medium and four low findings, all verified but one. The accessibility run found one defect: daisyUI draws no focus ring on a collapse's summary, so a keyboard user could not see where focus was. Everything was fixed in one pass (T025–T029):
+
+- **Focus ring.** The summary carries a `focus-visible` outline, probed in Chromium as a solid 2px ring in the theme's content colour.
+- **COR-001, COR-002, medium.** Two tests could not fail: the card's actions-at-the-foot test used a bare-text body, and nothing asserted the modal's surface colour. Both now fail when the behaviour is removed.
+- **COR-003 to COR-006, low.** The modal declares `class`, `actions`, `footer` and `footer_end` with empty defaults, and its annotations and the CHANGELOG describe it as it now renders. The timeline item's `box` is annotated with its two values.
+
+The review's notes on the card's gallery examples (the figure's `alt`, the spacing in "Cart 3") and on an untitled collapse were applied in the same pass.
+
+**ADR:** none — local fixes inside this feature.
