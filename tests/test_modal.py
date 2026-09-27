@@ -13,6 +13,7 @@ import pytest
 from django import template
 from django.template.context import Context
 from django_cotton.compiler_regex import CottonCompiler
+from django_cotton_gallery.core.annotations import AnnotationParser
 
 import daisy_cotton
 
@@ -149,6 +150,54 @@ class TestModalTranslatableStrings:
     def test_both_close_strings_are_wrapped_in_trans(self):
         source = MODAL_TEMPLATE.read_text()
         assert source.count('{% trans "Close"') == 2
+
+
+class TestModalGalleryAnnotations:
+    """Article XVI, read through the gallery's own `AnnotationParser` (T006)."""
+
+    @staticmethod
+    def _parsed():
+        return AnnotationParser().parse(MODAL_TEMPLATE.read_text())
+
+    def test_id_is_required_with_no_default(self):
+        prop = next(p for p in self._parsed().props if p.clean_name == "id")
+        assert prop.required is True
+        assert prop.has_default is False
+
+    def test_placement_is_a_select_of_the_five_placements(self):
+        prop = next(p for p in self._parsed().props if p.clean_name == "placement")
+        assert prop.type == "select"
+        assert set(prop.options) == {"top", "middle", "bottom", "start", "end"}
+
+    def test_open_description_says_it_is_not_modal_and_the_trigger_cannot_reopen_it(
+        self,
+    ):
+        prop = next(p for p in self._parsed().props if p.clean_name == "open")
+        assert "not modal" in prop.description
+        assert "cannot" in prop.description
+
+    def test_description_says_to_give_title_or_aria_label(self):
+        assert "title" in self._parsed().description
+        assert "aria-label" in self._parsed().description
+
+    def test_the_default_slot_has_a_body_copy_example(self):
+        [slot] = [s for s in self._parsed().slots if s.name is None]
+        assert slot.content
+
+    def test_the_actions_slot_example_shows_a_form_with_a_button(self):
+        slot = next(s for s in self._parsed().slots if s.name == "actions")
+        assert '<form method="dialog">' in slot.content
+        assert "<c-button" in slot.content
+
+    def test_the_trigger_calls_showmodal_on_demo_modal(self):
+        parsed = self._parsed()
+        assert "demo_modal.showModal()" in parsed.trigger
+        assert "<c-button" in parsed.trigger
+
+    def test_the_description_tells_the_viewer_to_set_id_and_switch_open_on(self):
+        description = self._parsed().description
+        assert "demo_modal" in description
+        assert "open" in description
 
 
 class TestModalContextLeak:

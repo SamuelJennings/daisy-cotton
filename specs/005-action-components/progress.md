@@ -101,3 +101,21 @@ tests/test_gallery_lint.py tests/test_gallery_annotations.py -q` → 166 passed.
 manage.py cotton_lint --warnings-as-errors` → 20/21 clean, 0 errors/0 warnings (exit 0).
 `uv run pytest tests/test_render_all.py -k modal -q` → 1 passed.
 Next: T006 (gallery annotations for modal, CHANGELOG).
+
+## 2026-09-27T10:10Z · Implementer US2 · T006
+
+Did: `id` is `required` with no `default:`; `placement` lists all five values; `open`'s
+description says the dialog shown this way is not modal and a trigger cannot reopen it (D4);
+the component `@description` says to give `title` or `aria-label` and how to preview it open
+(set `id` to `demo_modal`, switch `open` on, per D3); the default `@slot` and `@slot:actions`
+now carry examples (body copy, and a `<form method="dialog"><c-button>` pair); added
+`@trigger <c-button onclick="demo_modal.showModal()">Open</c-button>` with D3's description.
+Added `TestModalGalleryAnnotations` to `tests/test_modal.py`, reading the template through the
+gallery's `AnnotationParser`. Added the modal's `CHANGELOG.md` `Changed` entry — no README
+change needed, `modal` was already listed.
+Verified: `uv run pytest tests/test_modal.py tests/test_declared_attributes.py
+tests/test_gallery_lint.py tests/test_gallery_annotations.py -q` → 166 passed. `uv run python
+manage.py cotton_lint --warnings-as-errors` → 20/21 clean, 0 errors/0 warnings (exit 0).
+Next: T007 (US3, `unique_id` template tag).
+Watch: US2 (modal) done-check satisfied for scenarios 1-4 and 6; scenarios 5 and 7 (in-browser
+close/focus-return, gallery trigger) are T013's per D3.

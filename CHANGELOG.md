@@ -49,3 +49,9 @@ decision.
   button needs a caller-supplied `aria-label` for its accessible name. A disabled link (`href` and
   `disabled` together) now carries `btn-disabled`, `aria-disabled="true"`, `role="button"` and
   `tabindex="-1"` instead of a native `disabled` attribute, which links cannot carry.
+- `<c-modal>`: drops the inner `<c-card>` for daisyUI's own plain box, so `class` now lands on the
+  `<dialog>` instead of the card — put an inner surface's own classes in `content_class`. `size`,
+  `icon`, `footer` and `footer_end` are removed: put a `<c-card>` in the default slot for a card
+  inside a modal, and size the box with `content_class`. `position` is renamed `placement` and
+  gains `middle` alongside `top`, `bottom`, `start` and `end`. `title` now renders as a heading
+  that names the dialog (`aria-labelledby`) instead of forwarding to the card.
