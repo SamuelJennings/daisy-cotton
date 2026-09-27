@@ -477,8 +477,24 @@
         },
         {
           "id": "T020",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_timeline.py -q: 23 passed (observed the 13 new item tests fail on TemplateDoesNotExist before the template existed)",
+              "uv run pytest tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py -q: 93 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/timeline/item.html tests/test_timeline.py: ruff-format reformatted tests/test_timeline.py on the first pass; re-ran clean on the second, tests still 23 passed"
+            ],
+            "tests": [
+              "tests/test_timeline.py::TestTimelineItemRoot",
+              "tests/test_timeline.py::TestTimelineItemParts",
+              "tests/test_timeline.py::TestTimelineItemEmptyParts",
+              "tests/test_timeline.py::TestTimelineItemBox",
+              "tests/test_timeline.py::TestTimelineItemConnectors",
+              "tests/test_timeline.py::TestTimelineItemClassAndAttrs",
+              "tests/test_timeline.py::TestTimelineItemPageContextDoesNotLeak"
+            ]
+          }
         },
         {
           "id": "T021",
