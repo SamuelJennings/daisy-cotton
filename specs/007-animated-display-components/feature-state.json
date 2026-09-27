@@ -2,12 +2,17 @@
   "feature": "007-animated-display-components",
   "branch": "007-animated-display-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "QUEUED",
+  "state": "PLAN",
   "state_history": [
     {
       "state": "QUEUED",
       "at": "2026-09-26T14:47:11Z",
       "note": "specification merged in #27; issue graph built"
+    },
+    {
+      "state": "PLAN",
+      "at": "2026-09-27T20:26:12Z",
+      "note": "picked up from the queue; branch cut from origin/main b2146a4; verify green on base"
     }
   ],
   "gates": {
