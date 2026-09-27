@@ -82,3 +82,30 @@ daisyUI's examples put `timeline-box` on the event text, usually at the end, wit
 ## Priorities
 
 Priorities reflect how many adopters need each component: cards, tables and badges on nearly every page (P1); collapse and accordion, avatar, stat and list in most applications (P2); timeline, kbd and status in some (P3).
+
+## D1 — Built on main while three other component pull requests are open
+
+Pull requests #101 (navigation components), #102 (layout components) and #103 (action components) are open and unmerged. This feature depends only on #11, which is delivered, so it is built alongside them rather than after them. This feature branches from main and builds on none of them. All four change the README's component count and list and append to the CHANGELOG, so whichever merges later resolves those lines by hand. #103 rewrites the modal this feature adjusts (research R7). The `responsive` breakpoint check is copied from #102 and `unique_id` from #103 byte for byte, so those two reconcile as identical code.
+
+**ADR:** none — a sequencing note for concurrent branches, nothing downstream inherits it.
+
+## D2 — The pre-existing card test is rewritten
+
+`tests/test_card.py` asserts the `bg-base-100 shadow-sm` surface, which FR-012 removes. It is rewritten to the new contract in T002. The behaviours it guarded that survive (the root is the card, `class` merges into its one class list, extra attributes reach it, the body sits directly inside) are asserted again. `tests/test_modal.py` is not changed: the modal keeps its output on this branch (T004), and its new tests are additions.
+
+**Why:** Article I forbids changing a pre-existing test without a recorded decision. This is it.
+
+**ADR:** none — local to this feature's approved breaking changes, recorded in the CHANGELOG.
+
+## D3 — The modal keeps its contract until the action components land
+
+The spec's edge case says the modal keeps rendering its title, body and actions if this feature lands first. The modal on main also forwards `icon`, `footer` and `footer_end` to the card, all of which the card loses. Rather than drop three documented modal attributes in a feature about content display, the modal declares `title` and `icon` and renders them into the card's `title` slot, and renders `footer` and `footer_end` itself. Its actions now sit at the foot of the card body, where daisyUI puts them. It also adds the `bg-base-100 shadow-sm` surface the card no longer draws, or the dialog would be transparent. #103 replaces all of this with daisyUI's own modal box.
+
+**ADR:** none — a stopgap that the next feature to touch the modal removes.
+
+## D4 — The silhouette avatar is a placeholder too
+
+The spec gives the frame `bg-neutral text-neutral-content` "when showing a placeholder" and puts `avatar-placeholder` on the root for placeholder text. The silhouette is shown in the same situation, when there is no photo, and needs the same centring, which `avatar-placeholder` provides (`.avatar-placeholder>div{display:flex;align-items:center;justify-content:center}`). So any avatar without `src` takes `avatar-placeholder` and the placeholder colours. The old muted `bg-base-300 text-base-content/40` silhouette goes, which also removes an opacity-modified colour class.
+
+**ADR:** none — local to the avatar template.
+
