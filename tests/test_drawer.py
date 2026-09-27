@@ -180,3 +180,65 @@ class TestDrawerAccessibleNames:
         assert "{% load i18n" in source
         assert source.count("aria-label=") == 2
         assert source.count('aria-label="{% trans ') == 2
+
+
+class TestDrawerButton:
+    def test_it_is_a_label_for_the_drawer_with_button_classes(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup(
+            '<c-drawer.button drawer="nav" class="btn-primary">Open</c-drawer.button>'
+        )
+
+        label = soup.find("label")
+        assert label["for"] == "nav"
+        assert {"btn", "drawer-button", "btn-primary"} <= set(label["class"])
+        assert label.get_text() == "Open"
+
+    def test_it_has_no_role_and_no_tabindex(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup(
+            '<c-drawer.button drawer="nav">Open</c-drawer.button>'
+        )
+
+        label = soup.find("label")
+        assert not label.has_attr("role")
+        assert not label.has_attr("tabindex")
+
+    def test_extra_attributes_reach_the_label_once(self, cotton_render_string):
+        html = cotton_render_string(
+            '<c-drawer.button drawer="nav" class="x" data-x="1">Open</c-drawer.button>'
+        )
+
+        tag, names, attrs = parse_tags(html)[0]
+        assert tag == "label"
+        assert names.count("class") == 1
+        assert attrs["data-x"] == "1"
+
+    def test_no_script_or_event_handler(self, cotton_render_string):
+        html = cotton_render_string('<c-drawer.button drawer="nav">Open</c-drawer.button>')
+
+        assert "<script" not in html
+        assert all(
+            not name.startswith("on") for _, names, _ in parse_tags(html) for name in names
+        )
+
+    def test_inside_a_drawers_page_it_sits_in_the_content_wired_to_the_checkbox(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup(
+            '<c-drawer id="nav">'
+            '<c-drawer.button drawer="nav">Open</c-drawer.button>'
+            "</c-drawer>"
+        )
+
+        content = root(soup).find(class_="drawer-content")
+        label = content.find("label", class_="drawer-button")
+        assert label is not None
+        assert label["for"] == root(soup).find("input")["id"]
+
+    def test_it_ignores_the_pages_drawer_variable(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup(
+            "<c-drawer.button>Open</c-drawer.button>", {"drawer": "leaked"}
+        )
+
+        assert soup.find("label")["for"] == ""

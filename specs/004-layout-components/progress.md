@@ -89,3 +89,10 @@ Did: the toggle's and the overlay's `aria-label` are written through `{% trans %
 Verified: `uv run pytest tests/test_drawer.py` 16 passed; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T014 drawer.button.
 Watch: no locale catalogue exists in the package, so the strings render in English.
+
+## 2026-09-27T01:40Z · Implementer US4+US2+US1 · T014
+
+Did: `drawer/button.html`: `<label for="{drawer}" class="btn drawer-button {class}">` with the slot, no `role` and no `tabindex`, `drawer` declared with an empty default. Tests cover the label's `for`, classes, absent role and tabindex, attribute pass-through, the button inside a drawer's page wired to the checkbox id, and the page-context case. The minimum annotations the gallery suites require went in with the template; T015 finishes the drawer's.
+Verified: `uv run pytest tests/test_drawer.py` 22 passed (six new tests observed failing first); gallery, render-all, declared-attribute and class-merge suites green; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T015 gallery annotations.
+Watch: none.
