@@ -41,3 +41,14 @@ decision.
 - Django 6.1 is supported and tested.
 - The demo project is the component gallery alone: a plain Cotton and daisyUI page with a theme
   switcher, needing no other package behind it.
+- `<c-card>` is rebuilt around daisyUI's own card structure. `icon`, `badges`, `footer`, `footer_end`
+  and `tight` are removed: put an icon or a badge in the `title` slot instead, put footer content in
+  the body or the `actions` slot, and use `content_class="p-0"` in place of `tight`. `body_class` is
+  renamed `content_class`. `actions` now renders in a `card-actions` row at the foot of the body
+  instead of the header. The built-in `bg-base-100 shadow-sm` surface is gone; add it through `class`
+  where it is still wanted. Adds `size` (`xs`–`xl`), the booleans `border`, `dash` and `image-full`,
+  `side` (a boolean or a breakpoint, as `card-side` or `<bp>:card-side`), and a `figure` slot rendered
+  in a `<figure>` before the body.
+- `responsive`, the `daisy_cotton` template tag `<c-card>`'s `side` and `<c-divider>`'s `vertical` use,
+  now ignores a string that is not one of `sm`, `md`, `lg`, `xl`, `2xl` and emits no class for it —
+  it previously emitted a class for any non-empty string.
