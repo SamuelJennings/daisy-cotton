@@ -2,7 +2,7 @@
   "feature": "006-content-display-components",
   "branch": "006-content-display-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "PLAN",
+  "state": "DESIGN_REVIEW",
   "state_history": [
     {
       "state": "QUEUED",
@@ -13,6 +13,11 @@
       "state": "PLAN",
       "at": "2026-09-27T12:41:40Z",
       "note": "picked up from the queue; branch cut from origin/main 73a4826; verify green on base"
+    },
+    {
+      "state": "DESIGN_REVIEW",
+      "at": "2026-09-27T12:42:01Z",
+      "note": "plan, research, tasks committed; draft PR #104 opened"
     }
   ],
   "gates": {
@@ -249,7 +254,7 @@
       "max": 1
     },
     "design_review_cycles": {
-      "used": 0,
+      "used": 1,
       "max": 1
     },
     "tokens": {
