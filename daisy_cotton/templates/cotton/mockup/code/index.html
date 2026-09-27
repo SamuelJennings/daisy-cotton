@@ -1,5 +1,5 @@
 {# @description A terminal-style code block. Fill it with mockup.code.line components, one per line of the command or output. #}
 {# @prop class:text | description:"Extra classes added to the code block." #}
-{# @slot — The code lines, as mockup.code.line components. #}
+{# @slot <c-mockup.code.line prefix="$" text="pip install daisy-cotton" /><c-mockup.code.line text="Successfully installed daisy-cotton" /> — The code lines, as mockup.code.line components. #}
 <c-vars class />
 <div class="mockup-code w-full {{ class }}" tabindex="0" {{ attrs }}>{{ slot }}</div>

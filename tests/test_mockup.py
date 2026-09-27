@@ -187,3 +187,47 @@ class TestMockupBrowser:
         )
 
         assert soup.find(class_="input").get_text().strip() == ""
+
+
+class TestMockupAnnotations:
+    """Each mockup's gallery entry shows an example that exercises it."""
+
+    @pytest.fixture
+    def slot_examples(self):
+        from django_cotton_gallery.core.annotations import AnnotationParser
+
+        parser = AnnotationParser()
+        return {
+            path.relative_to(COTTON_DIR / "mockup").as_posix(): next(
+                slot.content
+                for slot in parser.parse(path.read_text()).slots
+                if not slot.name
+            )
+            for path in (COTTON_DIR / "mockup").rglob("*.html")
+        }
+
+    def test_every_mockup_has_a_default_slot_example(self, slot_examples):
+        assert sorted(slot_examples) == [
+            "browser.html",
+            "code/index.html",
+            "code/line.html",
+            "phone.html",
+            "window.html",
+        ]
+        assert all(slot_examples.values())
+
+    def test_the_code_example_has_a_prompt_line_and_an_output_line(self, slot_examples):
+        example = slot_examples["code/index.html"]
+
+        assert 'prefix="$"' in example
+        lines = re.findall(r"<c-mockup\.code\.line[^>]*>", example)
+        assert len(lines) == 2
+        assert sum("prefix=" in line for line in lines) == 1
+
+    def test_every_mockup_declares_class(self):
+        from django_cotton_gallery.core.annotations import AnnotationParser
+
+        parser = AnnotationParser()
+        for path in (COTTON_DIR / "mockup").rglob("*.html"):
+            names = {prop.clean_name for prop in parser.parse(path.read_text()).props}
+            assert "class" in names, path.name

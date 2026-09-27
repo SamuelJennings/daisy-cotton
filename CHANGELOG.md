@@ -45,6 +45,15 @@ decision.
 - `divider`: the `label` slot is removed. Use the `text` attribute or the default slot.
 - `divider`: an unlabelled divider is a `separator` (with `aria-orientation="vertical"` when
   `horizontal` is set); a labelled one has no default role. Pass `role` to replace either.
+- `mockup.code.line` has no default prefix: write `prefix="$"` for a shell prompt. A line with no
+  prefix (or an empty one) renders no `data-prefix` attribute.
+- `mockup.phone`'s display uses the theme's base colours instead of white text on a fixed dark
+  background, and no longer centres its content.
+- `mockup.window` no longer imposes a centred 20rem-high content area; the content sits in a plain
+  `<div>` and lays itself out.
+- Every mockup (`mockup.browser`, `mockup.phone`, `mockup.window`, `mockup.code`, `mockup.code.line`)
+  accepts `class` and passes further attributes to its root element, and `mockup.code` is
+  keyboard-focusable so a long block can be scrolled with the arrow keys.
 - The project is built, locked and developed with uv instead of Poetry. Contributors run `uv sync` and `uv run ...` in place of `poetry install` and `poetry run ...`, and the lockfile is now `uv.lock`. The published package is unchanged.
 - Django 6.1 is supported and tested.
 - The demo project is the component gallery alone: a plain Cotton and daisyUI page with a theme

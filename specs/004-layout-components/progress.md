@@ -40,3 +40,10 @@ Did: `mockup/code/index.html` declares `class`, merges it, spreads attributes an
 Verified: `uv run pytest tests/test_mockup_code.py` 12 passed; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T006 slot examples and changelog.
 Watch: the renamed test may show up in a tamper check as a removed test name; D2 authorises it.
+
+## 2026-09-27T01:50Z · Implementer US3+US8 · T006
+
+Did: each mockup template's default `@slot` carries an example (`mockup.code`'s is a `$` line and an unprefixed output line); `class` is annotated on all five. CHANGELOG Changed entries for the code line prefix, phone display, window wrapper, `class`/attribute support and keyboard focus. Tests read the annotations through the gallery's parser.
+Verified: `uv run pytest tests/test_mockup.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_gallery_links.py tests/test_render_all.py` 203 passed, 6 skipped (folder-component gallery links, issue #96).
+Next: full verify.
+Watch: no page under docs/ or the README describes the divider or the mockups, so no documentation page changed.

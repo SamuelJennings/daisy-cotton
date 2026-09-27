@@ -2,6 +2,6 @@
 {# @prop prefix:text | description:"Marker shown before the line, such as a shell prompt. Leave empty for an output line." #}
 {# @prop text:text | description:"The line's text, shown before the default slot." #}
 {# @prop class:text | description:"Extra classes added to the line, such as a text colour." #}
-{# @slot — Extra content shown after the text. #}
+{# @slot <strong>done</strong> — Extra content shown after the text. #}
 <c-vars prefix="" text="" class />
 <pre{% if prefix %} data-prefix="{{ prefix }}"{% endif %} class="{{ class }}" {{ attrs }}><code>{{ text }}{{ slot }}</code></pre>
