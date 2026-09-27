@@ -124,3 +124,10 @@ Did: `hero.html`: `hero` root with the caller's class and attributes, the slot i
 Verified: `tests/test_hero.py` failed (8 failed, 3 errors) before the template, then `uv run pytest tests/test_hero.py` 11 passed; gallery annotation, lint, render-all, declared-attribute and class-merge suites green; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T019 mask and stack.
 Watch: none.
+
+## 2026-09-27T02:40Z · Implementer US7 · T019
+
+Did: `mask.html` (an `<img>` with `mask`, the shape class, `mask-half-1/2` and an always-present `alt` when `src` is given, a `<div>` around the slot when it is not; `shape` checked against daisyUI's fourteen shapes, `half` against `1,2`) and `stack.html` (`stack`, `placement` checked against `top,bottom,start,end`, children untouched). All declared names default to empty except `class`. Tests in `tests/test_mask_stack.py` cover the image, each of the fourteen shapes, both halves, empty alt, the div form, no shape, unknown shape and half, the four stack placements, an unknown placement, three unhidden children, single class attribute and page-context cases. The gallery suites need minimal annotations on any new template, so the props and a plain slot went in with the templates; T020 finishes them.
+Verified: the new module failed 35 of 35 before the templates existed, then `uv run pytest tests/test_mask_stack.py` 35 passed; gallery annotation, lint, render-all, declared-attribute, class-merge and link suites green; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T020 annotations, README, CHANGELOG.
+Watch: none.

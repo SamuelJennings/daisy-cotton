@@ -1,0 +1,7 @@
+{# @description Piles its children on top of each other, offset so the ones underneath show. Every child stays in the page for assistive technology. Any further attributes reach the stack element. #}
+{# @prop placement:select['top','bottom','start','end'] | description:"The side the pile is offset towards. Leave empty for the default." #}
+{# @prop class:text | description:"Extra classes added to the stack, such as its size." #}
+{# @slot <div>One</div><div>Two</div><div>Three</div> — The items to pile up. #}
+{% load daisy_cotton %}
+<c-vars placement="" class />
+<div class="stack {% variation placement 'stack' 'top,bottom,start,end' %} {{ class }}" {{ attrs }}>{{ slot }}</div>

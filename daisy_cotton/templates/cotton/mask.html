@@ -1,0 +1,15 @@
+{# @description Crops an image or a block of content to a shape. With src it renders an img, without it a div around the slot. Any further attributes reach the element. #}
+{# @prop shape:select['circle','decagon','diamond','heart','hexagon','hexagon-2','pentagon','squircle','star','star-2','triangle','triangle-2','triangle-3','triangle-4'] | description:"The shape to crop to. Leave empty for a mask with no shape." #}
+{# @prop half:select['1','2'] | description:"Show only one half of the shape, the first or the second." #}
+{# @prop src:text | description:"Image URL. When set, the mask is an img; leave empty to mask the slot's content." #}
+{# @prop alt:text | description:"Alternative text for the image. Leave empty for a decorative image." #}
+{# @prop class:text | description:"Extra classes added to the mask, such as its size." #}
+{# @slot Content — The content to crop, used when src is empty. #}
+{% comment %}
+  `alt` is always written on the img, empty by default, so an image the
+  caller did not describe is treated as decorative rather than announced by
+  its file name.
+{% endcomment %}
+{% load daisy_cotton %}
+<c-vars shape="" half="" src="" alt="" class />
+{% if src %}<img src="{{ src }}" alt="{{ alt }}" class="mask {% variation shape 'mask' 'circle,decagon,diamond,heart,hexagon,hexagon-2,pentagon,squircle,star,star-2,triangle,triangle-2,triangle-3,triangle-4' %} {% variation half 'mask-half' '1,2' %} {{ class }}" {{ attrs }} />{% else %}<div class="mask {% variation shape 'mask' 'circle,decagon,diamond,heart,hexagon,hexagon-2,pentagon,squircle,star,star-2,triangle,triangle-2,triangle-3,triangle-4' %} {% variation half 'mask-half' '1,2' %} {{ class }}" {{ attrs }}>{{ slot }}</div>{% endif %}
