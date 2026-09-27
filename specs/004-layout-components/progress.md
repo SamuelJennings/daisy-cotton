@@ -144,3 +144,9 @@ Watch: the mask gallery example is a data: SVG, so it needs no static file or ne
 Did: all eight stories accepted, each re-verified independently. Declared the drawer's `side` and the indicator's `items` slots with empty defaults, added the literal-colour check across every template, and computed the mask's classes once (D12). Progress stamps corrected to the task commit times in UTC.
 Verified: uv run pytest 667 passed, 9 skipped. pre-commit, cotton_lint --warnings-as-errors, build, conformance green. No ADR graduated.
 Next: code review.
+
+## 2026-09-27T01:28Z · Review and walkthrough
+
+Did: code review applied (D13). Accessibility run over 21 gallery previews: no component violations after the overlay fix (D14); drawer keyboard walk passes. Pull request #102 marked ready, description rewritten with the closing block. Dev server on 8023 serves this worktree.
+Verified: uv run pytest 669 passed, 9 skipped. pre-commit, cotton_lint, build, conformance green.
+Next: the maintainer's walkthrough, then the merge gate.
