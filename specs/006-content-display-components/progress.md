@@ -166,3 +166,9 @@ Did: gallery annotations for both templates. `kbd.html`: `@description` names it
 Verified: `uv run python manage.py cotton_lint --warnings-as-errors` — exit 0, 31/32 clean, 0 errors, 0 warnings (`form/field`'s pre-existing hints out of scope). `uv run pytest tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_kbd.py tests/test_status.py tests/test_table.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_render_all.py -q` — 317 passed. Rendered the table's `@slot` composition directly through the Cotton compiler and read the output — the wrapper and `<table>` unchanged, the new `<thead>`/`<tbody>` with the status dot (`aria-hidden="true"`, no `role`/`aria-label`, since no `label` is given) beside "Online" and the two `<kbd>` elements either side of "+". `uv run pre-commit run --files daisy_cotton/templates/cotton/kbd.html daisy_cotton/templates/cotton/status.html daisy_cotton/templates/cotton/table.html README.md CHANGELOG.md` — all hooks passed, no reformatting.
 Next: none — US9 (T022-T023) complete pending the story's one-time full verify.
 Watch: none outstanding.
+
+## Convergence
+
+Did: all nine stories accepted. Added the no-script test across the group, dropped three unused tag-library loads, corrected the README count and the roadmap's data display line (D6). ADR verdicts recorded on every decision.
+Verified: uv run pytest 604 passed, 9 skipped (the folder-component gallery link skips, #96); pre-commit and cotton_lint clean.
+Next: review.

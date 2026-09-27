@@ -123,3 +123,16 @@ One design reviewer, three lenses. Findings and what was done:
 Editorial notes applied in the same pass: the component count, the accordion's deliberate lack of a `class` declaration, the modal's footer row now sitting above its actions, and the gallery select not offering the bare breakpoint form.
 
 **ADR:** none — plan corrections local to this feature.
+
+## D6 — Convergence changes made directly
+
+Four changes, each small enough that a dispatch would have cost more than the edit.
+
+- One test module, `tests/test_content_display_no_script.py`, renders every component in this group from a caller's string with its slots and modifiers filled and asserts there is no `<script>` and no `on*=` attribute (SC-003). The stories had each left this check out. It fails when an `onclick` is added to one template.
+- `collapse.html`, `accordion.html` and `timeline/item.html` no longer load the `daisy_cotton` tag library, which none of them uses.
+- The README's component count is 32 (21 before this feature, 11 added). It had read 29.
+- The roadmap's data display item names the components that now exist.
+
+Every acceptance scenario that rendered markup can show has a test. The scenarios that need a browser (keyboard operation, the accordion's one-open-at-a-time behaviour, the table's scrolling, the timeline's connector, the gallery entries) are checked in the accessibility run.
+
+**ADR:** none — local edits inside this feature.
