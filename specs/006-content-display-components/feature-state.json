@@ -427,8 +427,25 @@
       "tasks": [
         {
           "id": "T018",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_list.py -q: 7 passed (observed all 7 fail on TemplateDoesNotExist/FileNotFoundError before the templates existed)",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 27/28 clean, 0 errors, 0 warnings",
+              "uv run pytest tests/test_gallery_annotations.py tests/test_declared_attributes.py tests/test_render_all.py tests/test_gallery_lint.py -q: 237 passed",
+              "uv run pre-commit run --files CHANGELOG.md README.md pyproject.toml daisy_cotton/templates/cotton/list/index.html daisy_cotton/templates/cotton/list/row.html tests/test_list.py: all hooks passed, no reformatting"
+            ],
+            "tests": [
+              "tests/test_list.py::TestListRoot",
+              "tests/test_list.py::TestListRowRoot",
+              "tests/test_list.py::TestListClassAndAttrs",
+              "tests/test_list.py::TestListRowClassAndAttrs",
+              "tests/test_list.py::TestListPageContextDoesNotLeak",
+              "tests/test_list.py::TestListRowPageContextDoesNotLeak",
+              "tests/test_list.py::TestListDocumentsColumnClasses"
+            ]
+          }
         }
       ]
     },
