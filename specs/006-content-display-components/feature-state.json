@@ -393,8 +393,27 @@
       "tasks": [
         {
           "id": "T017",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_stat.py -q: 16 passed (observed all 16 fail on TemplateDoesNotExist before the templates existed)",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 25/26 clean, 0 errors, 0 warnings",
+              "uv run pytest tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_render_all.py -q: 227 passed",
+              "uv run pre-commit run --files CHANGELOG.md README.md pyproject.toml daisy_cotton/templates/cotton/stat/group.html daisy_cotton/templates/cotton/stat/index.html tests/test_stat.py: ruff-format reformatted tests/test_stat.py on the first pass, clean on the second"
+            ],
+            "tests": [
+              "tests/test_stat.py::TestStatParts",
+              "tests/test_stat.py::TestStatFigure",
+              "tests/test_stat.py::TestStatActions",
+              "tests/test_stat.py::TestStatEmptyParts",
+              "tests/test_stat.py::TestStatClassAndAttrs",
+              "tests/test_stat.py::TestStatPageContextDoesNotLeak",
+              "tests/test_stat.py::TestStatGroup",
+              "tests/test_stat.py::TestStatGroupResponsive",
+              "tests/test_stat.py::TestStatGroupPageContextDoesNotLeak"
+            ]
+          }
         }
       ]
     },
