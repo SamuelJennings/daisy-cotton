@@ -119,3 +119,13 @@ manage.py cotton_lint --warnings-as-errors` → 20/21 clean, 0 errors/0 warnings
 Next: T007 (US3, `unique_id` template tag).
 Watch: US2 (modal) done-check satisfied for scenarios 1-4 and 6; scenarios 5 and 7 (in-browser
 close/focus-return, gallery trigger) are T013's per D3.
+
+## 2026-09-27T10:20Z · Implementer US3 · T007
+
+Did: added `unique_id(prefix)` to `daisy_cotton/templatetags/daisy_cotton.py` — a
+`simple_tag`, usable with `as`, returning `f"{prefix}-{uuid.uuid4().hex[:8]}"` (FR-019,
+research R6). Added `TestUniqueId` to `tests/test_templatetags/test_daisy_cotton.py` for the
+id's shape and that two calls differ. This test module already mirrors its source module, so
+no `pyproject.toml` change was needed.
+Verified: `uv run pytest tests/test_templatetags/test_daisy_cotton.py -q` → 9 passed.
+Next: T008 (dropdown/index.html, popover method).

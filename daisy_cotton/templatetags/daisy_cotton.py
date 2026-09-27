@@ -1,5 +1,7 @@
 """Template tags shared across daisy-cotton's own components."""
 
+import uuid
+
 from django import template
 
 register = template.Library()
@@ -34,3 +36,13 @@ def variation(var, klass, allowed):
         return f"{klass}-{var}"
 
     return ""
+
+
+@register.simple_tag
+def unique_id(prefix):
+    """Return ``"{prefix}-"`` plus eight lowercase hex characters, different
+    on every call.
+
+    E.g. ``unique_id("dropdown")`` -> ``"dropdown-3fa2b91c"``
+    """
+    return f"{prefix}-{uuid.uuid4().hex[:8]}"
