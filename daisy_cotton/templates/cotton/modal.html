@@ -1,6 +1,8 @@
 {# @description A dialog: daisyUI's modal box with a body and an optional actions row. #}
-{# @prop id:text | required | description:"Dialog id, used by a trigger to open it (showModal()) and close it (close())." #}
+{# @prop id:text | required | description:"Dialog id, used by a trigger to open it (showModal()) and close it (close()). Also names the dialog's heading when title is set." #}
+{# @prop title:text | description:"Heading shown in the box, and the dialog's accessible name when id is set. Give this or aria-label." #}
 {# @prop placement:select['top','middle','bottom','start','end'] | description:"Where the dialog sits on screen. Leave empty to centre it." #}
+{# @prop closable:boolean | description:"Show a close button in the top corner that closes the dialog without script." #}
 {# @prop open:boolean | description:"Render the dialog already shown (<dialog open>). This is not modal: Escape does not close it and focus is not trapped, though the backdrop still does. A project that needs a modal dialog shown on load calls showModal() itself." #}
 {# @prop content_class:text | description:"Extra classes added to the modal box." #}
 {# @prop actions:text | description:"Buttons shown in daisyUI's trailing actions row. Given as the actions slot." #}
@@ -9,16 +11,25 @@
 {# @slot:actions — Buttons shown in daisyUI's trailing actions row. #}
 {% load i18n daisy_cotton %}
 <c-vars id=""
+        title=""
         placement=""
+        closable=""
         open=""
         content_class=""
         actions=""
         class="" />
 <dialog id="{{ id }}"
         class="modal {% variation placement "modal" "top,middle,bottom,start,end" %} {{ class }}"
+        {% if id and title %}aria-labelledby="{{ id }}-title"{% endif %}
         {% if open %}open{% endif %}
         {{ attrs }}>
   <div class="modal-box {{ content_class }}">
+    {% if closable %}
+      <form method="dialog" class="absolute end-2 top-2">
+        <c-button size="sm" circle ghost aria-label="{% trans "Close" %}"><span aria-hidden="true">✕</span></c-button>
+      </form>
+    {% endif %}
+    {% if title %}<h2{% if id %} id="{{ id }}-title"{% endif %} class="text-lg font-bold">{{ title }}</h2>{% endif %}
     {{ slot }}
     {% if actions %}<div class="modal-action">{{ actions }}</div>{% endif %}
   </div>

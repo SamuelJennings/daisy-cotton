@@ -138,8 +138,20 @@
         },
         {
           "id": "T005",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_modal.py tests/test_declared_attributes.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q: 166 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 20/21 clean, 0 errors/0 warnings, exit 0",
+              "uv run pytest tests/test_render_all.py -k modal -q: 1 passed"
+            ],
+            "tests": [
+              "tests/test_modal.py::TestModalNaming",
+              "tests/test_modal.py::TestModalClosable",
+              "tests/test_modal.py::TestModalTranslatableStrings"
+            ]
+          }
         },
         {
           "id": "T006",

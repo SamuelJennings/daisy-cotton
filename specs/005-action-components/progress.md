@@ -83,3 +83,21 @@ Verified: `uv run pytest tests/test_modal.py tests/test_declared_attributes.py
 tests/test_gallery_lint.py tests/test_gallery_annotations.py -q` → 181 passed. `uv run python
 manage.py cotton_lint --warnings-as-errors` → 20/21 clean, 0 errors/0 warnings (exit 0).
 Next: T005 (modal naming and closing: title heading, aria-labelledby, closable).
+
+## 2026-09-27T10:00Z · Implementer US2 · T005
+
+Did: `title` renders as an `<h2 id="<id>-title">` and the dialog gets `aria-labelledby`
+pointing at it, only when both `id` and `title` are set — no `aria-labelledby` without a
+title, and a caller's `aria-label` reaches the dialog through `{{ attrs }}` for a modal with
+no title (FR-013). `closable` adds `<form method="dialog">` holding a `<c-button size="sm"
+circle ghost>` whose `aria-label` is `{% trans "Close" %}` and whose glyph is `aria-hidden`
+(FR-015) — a button with no type inside a form submits it, which closes the dialog with no
+script (Article XV). Added `TestModalNaming`, `TestModalClosable` and
+`TestModalTranslatableStrings` to `tests/test_modal.py` for scenarios 1 (naming) and 4, that
+both "Close" strings sit inside `{% trans %}` in the template source, and that two modals with
+different ids get different heading ids.
+Verified: `uv run pytest tests/test_modal.py tests/test_declared_attributes.py
+tests/test_gallery_lint.py tests/test_gallery_annotations.py -q` → 166 passed. `uv run python
+manage.py cotton_lint --warnings-as-errors` → 20/21 clean, 0 errors/0 warnings (exit 0).
+`uv run pytest tests/test_render_all.py -k modal -q` → 1 passed.
+Next: T006 (gallery annotations for modal, CHANGELOG).

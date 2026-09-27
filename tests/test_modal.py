@@ -7,12 +7,23 @@ and `content_class` for the box. `size`, `position`, `icon`, `footer` and
 `footer_end` are removed.
 """
 
+from pathlib import Path
+
 import pytest
 from django import template
 from django.template.context import Context
 from django_cotton.compiler_regex import CottonCompiler
 
+import daisy_cotton
+
 compiler = CottonCompiler()
+
+MODAL_TEMPLATE = (
+    Path(next(iter(daisy_cotton.__path__))).resolve()
+    / "templates"
+    / "cotton"
+    / "modal.html"
+)
 
 
 def render(source, **context):
@@ -90,6 +101,54 @@ class TestModalClassAndContentClass:
     def test_content_class_lands_on_the_box(self):
         html = render('<c-modal id="confirm" content_class="w-11/12">Body</c-modal>')
         assert 'modal-box w-11/12' in html
+
+
+class TestModalNaming:
+    """Scenario 1 (naming half): `title` names the dialog for assistive
+    technology (FR-013).
+    """
+
+    def test_title_renders_as_a_heading_that_names_the_dialog(self):
+        html = render('<c-modal id="confirm" title="Delete item?">Body</c-modal>')
+        assert '<h2 id="confirm-title"' in html
+        assert "Delete item?" in html
+        assert 'aria-labelledby="confirm-title"' in html
+
+    def test_no_title_means_no_aria_labelledby(self):
+        html = render('<c-modal id="confirm">Body</c-modal>')
+        assert "aria-labelledby" not in html
+
+    def test_a_callers_aria_label_reaches_the_dialog_with_no_title(self):
+        html = render('<c-modal id="confirm" aria-label="Delete item?">Body</c-modal>')
+        assert 'aria-label="Delete item?"' in html
+
+    def test_two_modals_with_different_ids_get_different_heading_ids(self):
+        first = render('<c-modal id="one" title="First">Body</c-modal>')
+        second = render('<c-modal id="two" title="Second">Body</c-modal>')
+        assert '<h2 id="one-title"' in first
+        assert '<h2 id="two-title"' in second
+
+
+class TestModalClosable:
+    """Scenario 4: `closable` adds a close button that closes without script."""
+
+    def test_closable_adds_a_close_button_with_the_translatable_name(self):
+        html = render('<c-modal id="confirm" closable>Body</c-modal>')
+        assert '<form method="dialog"' in html
+        assert 'aria-label="Close"' in html
+        assert 'aria-hidden="true"' in html
+
+    def test_without_closable_there_is_no_close_button(self):
+        html = render('<c-modal id="confirm">Body</c-modal>')
+        assert 'aria-label="Close"' not in html
+
+
+class TestModalTranslatableStrings:
+    """Both "Close" strings sit inside {% trans %} in the template source."""
+
+    def test_both_close_strings_are_wrapped_in_trans(self):
+        source = MODAL_TEMPLATE.read_text()
+        assert source.count('{% trans "Close"') == 2
 
 
 class TestModalContextLeak:
