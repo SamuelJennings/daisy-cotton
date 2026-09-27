@@ -48,6 +48,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `<c-list>` and `<c-list.row>`: daisyUI's list, a `<ul>` carrying `list` holding `<c-list.row>`
   items, each an `<li>` carrying `list-row`. A row's own children reach `list-col-grow` and
   `list-col-wrap` through their own `class`, as the row's documentation shows.
+- `<c-timeline>` and `<c-timeline.item>`: daisyUI's timeline. `<c-timeline>` accepts `vertical` and
+  `horizontal` (each a boolean or a breakpoint), and the booleans `compact` and `snap-icon`.
+  `<c-timeline.item>` accepts `start`, `middle` and `end` (each an attribute or a named slot, only
+  emitted when given) and `box`, which puts `timeline-box` on the end part, or the start part when
+  given as `box="start"`. Every item carries a leading and a trailing connector line, hidden from
+  assistive technology, so consecutive items join and the line stops at the first and last item.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
