@@ -189,8 +189,19 @@
         },
         {
           "id": "T008",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 21/22 clean, 0 errors, 0 warnings",
+              "uv run pytest tests/test_table.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q: 161 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/table.html README.md CHANGELOG.md: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py::TestPackageComponentsLintClean",
+              "tests/test_gallery_annotations.py"
+            ]
+          }
         }
       ]
     },

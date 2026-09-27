@@ -1,3 +1,20 @@
+{# @description daisyUI's table: a keyboard-focusable, horizontally scrolling wrapper holding a <table>, named by its caption or an aria-label. #}
+{# @prop caption:text | description:"Caption naming the scrolling region for assistive technology. Fill the caption slot instead for markup." #}
+{# @prop size:select['xs','sm','md','lg','xl'] | description:"Table size." #}
+{# @prop zebra:boolean | description:"Stripe alternating rows." #}
+{# @prop pin-rows:boolean | description:"Keep the header row visible while scrolling. Has no effect without a <thead>." #}
+{# @prop pin-cols:boolean | description:"Keep the first column visible while scrolling. Has no effect without row header cells." #}
+{# @prop content_class:text | description:"Extra classes added to the <table>." #}
+{# @prop class:text | description:"Extra classes added to the scrolling wrapper." #}
+{# @slot <thead><tr><th scope="col">Name</th></tr></thead><tbody><tr><th scope="row">Ada</th></tr></tbody> — Header and body rows, with header cells given scope. #}
+{# @slot:caption — Caption content in place of the attribute, naming the scrolling region for assistive technology. #}
+{% comment %}
+  Caller duties this markup can't enforce: give a caption or an aria-label, or
+  the scrolling region has no accessible name; pin-rows needs a <thead> and
+  pin-cols needs row header cells, or the modifier does nothing; the wrapper
+  is a keyboard stop even when the table fits, which is the cost of letting a
+  keyboard user scroll one that doesn't.
+{% endcomment %}
 {% load daisy_cotton %}
 <c-vars caption="" size="" zebra="" pin-rows="" pin-cols="" content_class="" class="" />
 {% unique_id "table" as caption_id %}

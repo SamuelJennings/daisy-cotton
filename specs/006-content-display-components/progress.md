@@ -54,3 +54,10 @@ Did: built `table.html` — wrapper `<div class="overflow-x-auto ...">` with `ta
 Verified: confirmed red first — with `table.html` moved aside, all 16 new tests failed on `TemplateDoesNotExist: cotton/table/index.html`. `uv run pytest tests/test_table.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py -q` — 47 passed. `uv run pre-commit run --files daisy_cotton/templates/cotton/table.html tests/test_table.py pyproject.toml` — all hooks passed (one ruff-format pass).
 Next: T008, the gallery annotations, `{% comment %}` block, README and CHANGELOG.
 Watch: none outstanding.
+
+## 2026-09-27T16:05Z · Implementer US2 · T008
+
+Did: finished the table's gallery annotations — `@description`, one `@prop` per declared name (`caption` described as naming the scrolling region, `size` as `select['xs','sm','md','lg','xl']`, a `@prop` per boolean noting `pin-rows` needs a `<thead>` and `pin-cols` needs row header cells, `content_class`, `class`), default `@slot` a `<thead>`/`<tbody>` snippet with `<th scope="col">` and `<th scope="row">` (T023 replaces it with the status/shortcut composition once those components exist), `@slot:caption` with no example. Added a `{% comment %}` block naming the three caller duties the markup can't enforce (give a caption or `aria-label`; `pin-rows`/`pin-cols` need a `<thead>`/row header cells; the wrapper is a keyboard stop even when the table fits), matching `dropdown/index.html`'s placement between the annotations and `{% load %}`. README: `table` added to the component list, count to twenty-two. CHANGELOG `Added`: `<c-table>` and `unique_id`.
+Verified: `uv run python manage.py cotton_lint --warnings-as-errors` — exit 0, 21/22 clean, 0 errors, 0 warnings (`form/field`'s three hints are pre-existing and out of scope; hints never block). `uv run pytest tests/test_table.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q` — 161 passed. `uv run pre-commit run --files daisy_cotton/templates/cotton/table.html README.md CHANGELOG.md` — all hooks passed.
+Next: none — US2 (T006–T008) complete pending the story's one-time full verify.
+Watch: none outstanding.

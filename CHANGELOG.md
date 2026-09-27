@@ -25,6 +25,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `<c-icon name="..." />` exactly as it would call that richer version.
 - `responsive` and `variation`, the two generic Cotton-attribute helper tags several of the
   above components use, in a small `daisy_cotton` templatetag library.
+- `<c-table>`: daisyUI's table, wrapped in a keyboard-focusable, horizontally scrolling region
+  named by its `caption` (attribute or slot) or an `aria-label`. Accepts `size` (`xs`–`xl`) and
+  the booleans `zebra`, `pin-rows` and `pin-cols`; extra classes reach the `<table>` through
+  `content_class` and the wrapper through `class`. The caller writes `<thead>`, `<tbody>`, rows
+  and cells directly in the default slot.
+- `unique_id`, a `daisy_cotton` template tag returning a prefix plus eight random lowercase hex
+  characters, different on every call, for elements — such as the table's caption — that need a
+  unique id without the caller supplying one.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
