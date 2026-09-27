@@ -105,9 +105,7 @@ class TestButtonElement:
 
     def test_icon_is_hidden_from_assistive_technology(self):
         """Scenario 5: the icon is decorative; aria-label names the button."""
-        html = render(
-            '<c-button icon="bi bi-plus" circle aria-label="Add"></c-button>'
-        )
+        html = render('<c-button icon="bi bi-plus" circle aria-label="Add"></c-button>')
         assert 'aria-hidden="true"' in html
         assert 'aria-label="Add"' in html
 

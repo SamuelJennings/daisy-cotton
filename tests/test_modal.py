@@ -101,7 +101,7 @@ class TestModalClassAndContentClass:
 
     def test_content_class_lands_on_the_box(self):
         html = render('<c-modal id="confirm" content_class="w-11/12">Body</c-modal>')
-        assert 'modal-box w-11/12' in html
+        assert "modal-box w-11/12" in html
 
 
 class TestModalNaming:
