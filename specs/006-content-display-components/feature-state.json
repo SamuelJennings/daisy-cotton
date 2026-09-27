@@ -2,7 +2,7 @@
   "feature": "006-content-display-components",
   "branch": "006-content-display-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "CONVERGE",
+  "state": "REVIEW",
   "state_history": [
     {
       "state": "QUEUED",
@@ -28,6 +28,11 @@
       "state": "CONVERGE",
       "at": "2026-09-27T14:27:04Z",
       "note": "all nine stories accepted"
+    },
+    {
+      "state": "REVIEW",
+      "at": "2026-09-27T14:28:33Z",
+      "note": "converge green; no-script test added; no ADR graduated"
     }
   ],
   "gates": {
@@ -587,7 +592,7 @@
       "max": 2
     },
     "review_cycles": {
-      "used": 0,
+      "used": 1,
       "max": 1
     },
     "design_review_cycles": {
