@@ -33,6 +33,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `unique_id`, a `daisy_cotton` template tag returning a prefix plus eight random lowercase hex
   characters, different on every call, for elements — such as the table's caption — that need a
   unique id without the caller supplying one.
+- `<c-collapse>` and `<c-accordion>`: daisyUI's collapse, built on `<details>`/`<summary>` with no
+  script. `<c-collapse>` accepts `title` (attribute or slot), the booleans `arrow` and `plus`, and
+  `open`, which renders it already expanded without preventing the user from collapsing it again —
+  daisyUI's state-locking `collapse-open`/`collapse-close` classes are not offered. `name` is not
+  declared, so it passes straight through to `<details>`. `<c-accordion>` is a `<c-collapse>` that
+  requires `name`: items sharing one form an exclusive group, in which opening an item closes the
+  others; in a browser without grouped `<details>` support, more than one can stay open.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is

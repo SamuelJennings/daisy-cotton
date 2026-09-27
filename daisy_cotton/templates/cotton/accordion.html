@@ -1,3 +1,14 @@
+{# @description A collapse used as an accordion item: items sharing a name form one group where opening one closes the others. In a browser without grouped <details> support, more than one item can stay open; give at most one item per group open. Accepts every collapse attribute and slot (arrow, plus, open, class, the title slot). See the card's gallery entry for a working group. #}
+{# @prop name:text | required | description:"Group name. Items sharing one form an exclusive group; an item given no name is not part of a group." #}
+{# @prop title:text | description:"Heading text, re-passed as the collapse's title slot. Fill the title slot instead for rich content." #}
+{# @slot A short answer. — The item's content, forwarded to the collapse. #}
+{# @slot:title — A heading in place of the title attribute, for rich content such as an icon or badge. #}
+{% comment %}
+  Items sharing a name form one group, in which opening one item closes the
+  others. In a browser that does not support grouped <details>, more than one
+  can stay open at a time. If two items in a group are both given open, the
+  browser decides which stays open — open at most one per group.
+{% endcomment %}
 {% load daisy_cotton %}
 <c-vars name="" title="" />
 <c-collapse name="{{ name }}" :attrs="attrs">{% if title %}<c-slot name="title">{{ title }}</c-slot>{% endif %}{{ slot }}</c-collapse>
