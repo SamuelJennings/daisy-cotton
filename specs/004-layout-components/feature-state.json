@@ -1,0 +1,464 @@
+{
+  "feature": "004-layout-components",
+  "branch": "004-layout-components",
+  "repo": "SamuelJennings/daisy-cotton",
+  "state": "PR_READY",
+  "state_history": [
+    {
+      "state": "QUEUED",
+      "at": "2026-09-26T14:44:27Z",
+      "note": "specification merged in #22; issue graph built"
+    },
+    {
+      "state": "PLAN",
+      "at": "2026-09-27T00:42:42Z",
+      "note": "picked up from the queue; branch cut from origin/main 73a4826; verify green on base"
+    },
+    {
+      "state": "DESIGN_REVIEW",
+      "at": "2026-09-27T00:43:16Z",
+      "note": "plan, research, tasks committed; draft PR #102 opened"
+    },
+    {
+      "state": "IMPLEMENT",
+      "at": "2026-09-27T00:53:36Z",
+      "note": "design review applied (D9-D11); plan notification recorded"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-27T01:10:58Z",
+      "note": "all eight stories accepted"
+    },
+    {
+      "state": "REVIEW",
+      "at": "2026-09-27T01:12:49Z",
+      "note": "converge green; empty-default slots and palette check added; no ADR graduated"
+    },
+    {
+      "state": "PR_READY",
+      "at": "2026-09-27T01:28:44Z",
+      "note": "review applied; accessibility run clean; pull request ready; walkthrough sent to the maintainer"
+    }
+  ],
+  "gates": {
+    "spec": {
+      "approved_by": "SamuelJennings",
+      "at": "2026-09-26T14:44:27Z",
+      "self_resolved": [
+        "merge commit 9ee310fd43, pull request #22"
+      ]
+    },
+    "plan": {
+      "approved_by": "notified",
+      "at": "2026-09-27T00:53:24Z"
+    },
+    "merge": {
+      "approved_by": null,
+      "at": null
+    },
+    "design_review": {
+      "approved_by": "design-panel",
+      "at": "2026-09-27T00:53:24Z",
+      "self_resolved": [
+        "SPEC-001, SPEC-002, SPEC-004, SPEC-005, ARCH-001: applied as plan/tasks edits (D9, D10, D11)",
+        "SPEC-003: spec against tool, held for the walkthrough (D8)",
+        "ACC-001: recorded in D4 for the walkthrough",
+        "ARCH-002: pre-existing, out of scope (D11)"
+      ]
+    },
+    "review": {
+      "approved_by": "review-panel",
+      "at": "2026-09-27T01:24:04Z",
+      "self_resolved": [
+        "LAY-001..LAY-005 low: fixed directly (D13)",
+        "LAY-006 low: package-wide, out of scope (D13)"
+      ]
+    }
+  },
+  "stories": [
+    {
+      "id": "US1",
+      "priority": "P1",
+      "issue": 50,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/004-layout-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T012",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_drawer.py: 13 passed at this task"
+            ],
+            "tests": [
+              "tests/test_drawer.py::TestDrawerStructure",
+              "tests/test_drawer.py::TestDrawerModifiers",
+              "tests/test_drawer.py::TestTwoDrawersOnOnePage"
+            ]
+          }
+        },
+        {
+          "id": "T013",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_drawer.py: 16 passed"
+            ],
+            "tests": [
+              "tests/test_drawer.py::TestDrawerAccessibleNames"
+            ]
+          }
+        },
+        {
+          "id": "T014",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_drawer.py: 22 passed"
+            ],
+            "tests": [
+              "tests/test_drawer.py::TestDrawerButton"
+            ]
+          }
+        },
+        {
+          "id": "T015",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_drawer.py: 32 passed",
+              "uv run pytest: 511 passed, 8 skipped"
+            ],
+            "tests": [
+              "tests/test_drawer.py::TestDrawerAnnotations"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US2",
+      "priority": "P1",
+      "issue": 51,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/004-layout-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T009",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_footer.py: 25 passed"
+            ],
+            "tests": [
+              "tests/test_footer.py::TestFooterRoot",
+              "tests/test_footer.py::TestFooterDirection",
+              "tests/test_footer.py::TestFooterPlacement"
+            ]
+          }
+        },
+        {
+          "id": "T010",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_footer.py: 25 passed"
+            ],
+            "tests": [
+              "tests/test_footer.py::TestFooterNav"
+            ]
+          }
+        },
+        {
+          "id": "T011",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_footer.py::TestFooterAnnotations"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US3",
+      "priority": "P1",
+      "issue": 52,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/004-layout-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T001",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_divider.py tests/test_templatetags: 37 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_divider.py::TestDividerDirection",
+              "tests/test_divider.py::TestDividerVariant",
+              "tests/test_divider.py::TestDividerPlacement",
+              "tests/test_divider.py::TestDividerLabel",
+              "tests/test_templatetags/test_daisy_cotton.py::TestResponsive"
+            ]
+          }
+        },
+        {
+          "id": "T002",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_divider.py: 35 passed"
+            ],
+            "tests": [
+              "tests/test_divider.py::TestDividerRole",
+              "tests/test_divider.py::TestDividerIgnoresPageContext"
+            ]
+          }
+        },
+        {
+          "id": "T003",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_divider.py: 42 passed"
+            ],
+            "tests": [
+              "tests/test_divider.py::TestDividerAnnotations"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US4",
+      "priority": "P2",
+      "issue": 53,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/004-layout-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T007",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_join.py: 19 passed"
+            ],
+            "tests": [
+              "tests/test_join.py"
+            ]
+          }
+        },
+        {
+          "id": "T008",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_join.py::TestJoinAnnotations"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US5",
+      "priority": "P2",
+      "issue": 54,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/004-layout-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T016",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_indicator.py: 20 passed (failed 20 before the templates)"
+            ],
+            "tests": [
+              "tests/test_indicator.py::TestIndicatorRoot",
+              "tests/test_indicator.py::TestIndicatorItems",
+              "tests/test_indicator.py::TestIndicatorItemPlacement"
+            ]
+          }
+        },
+        {
+          "id": "T017",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_indicator.py: 27 passed"
+            ],
+            "tests": [
+              "tests/test_indicator.py::TestIndicatorAnnotations"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US6",
+      "priority": "P2",
+      "issue": 55,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/004-layout-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T018",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_hero.py: 11 passed (8 failed, 3 errors before the template)"
+            ],
+            "tests": [
+              "tests/test_hero.py"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US7",
+      "priority": "P3",
+      "issue": 56,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/004-layout-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T019",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_mask_stack.py: 35 passed (35 failed before the templates)"
+            ],
+            "tests": [
+              "tests/test_mask_stack.py::TestMaskImage",
+              "tests/test_mask_stack.py::TestStack"
+            ]
+          }
+        },
+        {
+          "id": "T020",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_mask_stack.py: 42 passed (3 annotation tests failed first)"
+            ],
+            "tests": [
+              "tests/test_mask_stack.py::TestMaskAnnotations",
+              "tests/test_mask_stack.py::TestStackAnnotations"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US8",
+      "priority": "P3",
+      "issue": 57,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/004-layout-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T004",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_mockup.py: 22 passed"
+            ],
+            "tests": [
+              "tests/test_mockup.py::TestMockupRoot",
+              "tests/test_mockup.py::TestMockupPhone",
+              "tests/test_mockup.py::TestMockupWindow",
+              "tests/test_mockup.py::TestMockupBrowser"
+            ]
+          }
+        },
+        {
+          "id": "T005",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_mockup_code.py: 12 passed"
+            ],
+            "tests": [
+              "tests/test_mockup_code.py::TestCodeLinePrefix",
+              "tests/test_mockup_code.py::TestCodeLineRoot",
+              "tests/test_mockup_code.py::TestCodeBlock"
+            ]
+          }
+        },
+        {
+          "id": "T006",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_mockup.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py: green",
+              "uv run pytest (full): 397 passed, 6 skipped",
+              "uv run pre-commit run --all-files: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_mockup.py::TestMockupAnnotations"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "budgets": {
+    "converge_cycles": {
+      "used": 1,
+      "max": 2
+    },
+    "review_cycles": {
+      "used": 1,
+      "max": 1
+    },
+    "design_review_cycles": {
+      "used": 1,
+      "max": 1
+    },
+    "tokens": {
+      "used": 0,
+      "max": 120
+    }
+  },
+  "pr": {
+    "number": 102,
+    "draft": false
+  }
+}

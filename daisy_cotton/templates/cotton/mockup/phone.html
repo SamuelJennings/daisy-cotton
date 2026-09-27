@@ -1,6 +1,8 @@
 {# @description A phone frame with a camera notch, for showing a mobile screen. #}
-{# @slot — The content shown on the phone's display, centred. #}
-<div class="mockup-phone">
-  <div class="mockup-phone-camera"></div>
-  <div class="mockup-phone-display text-white grid place-content-center bg-neutral-900">{{ slot }}</div>
+{# @prop class:text | description:"Extra classes added to the phone frame." #}
+{# @slot <div class="p-4">Screen content</div> — The content shown on the phone's display. #}
+<c-vars class />
+<div class="mockup-phone {{ class }}" {{ attrs }}>
+  <div class="mockup-phone-camera" aria-hidden="true"></div>
+  <div class="mockup-phone-display bg-base-100 text-base-content">{{ slot }}</div>
 </div>

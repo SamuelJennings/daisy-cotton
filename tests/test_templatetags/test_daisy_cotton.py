@@ -9,6 +9,7 @@ guard. These tests cover the tags' own branches directly.
 """
 
 import re
+import pytest
 
 from daisy_cotton.templatetags.daisy_cotton import responsive, unique_id, variation
 
@@ -24,6 +25,14 @@ class TestResponsive:
         assert responsive(False, "divider-horizontal") == ""
         assert responsive("", "divider-horizontal") == ""
         assert responsive(None, "divider-horizontal") == ""
+
+    def test_a_string_that_is_not_a_breakpoint_returns_empty_string(self):
+        assert responsive("true", "divider-horizontal") == ""
+        assert responsive("left", "divider-horizontal") == ""
+
+    @pytest.mark.parametrize("bp", ["sm", "md", "lg", "xl", "2xl"])
+    def test_every_daisyui_breakpoint_is_accepted(self, bp):
+        assert responsive(bp, "divider-horizontal") == f"{bp}:divider-horizontal"
 
 
 class TestVariation:

@@ -1,0 +1,11 @@
+{# @description A group of links inside a footer, named for assistive technology by its title. Any further attributes reach the nav element. #}
+{# @prop title:text | description:"The group's heading text. It also names the navigation landmark. Leave empty for an unnamed group with no heading." #}
+{# @prop class:text | description:"Extra classes added to the group." #}
+{# @slot <a class="link link-hover">About us</a><a class="link link-hover">Contact</a> — The group's links. #}
+{% comment %}
+  The title is a span, not a heading, and names the landmark through
+  aria-label: aria-labelledby would need an id this template cannot make
+  unique.
+{% endcomment %}
+<c-vars title="" class />
+<nav {% if title %}aria-label="{{ title }}" {% endif %}class="{{ class }}" {{ attrs }}>{% if title %}<span class="footer-title">{{ title }}</span>{% endif %}{{ slot }}</nav>

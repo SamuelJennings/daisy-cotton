@@ -6,18 +6,20 @@ from django import template
 
 register = template.Library()
 
+BREAKPOINTS = ("sm", "md", "lg", "xl", "2xl")
+
 
 @register.simple_tag
 def responsive(var, klass):
     """Return a base class if ``var`` is True, a responsive variant if it is
-    a breakpoint name.
+    a breakpoint name. Any other string returns ``""``.
 
     E.g. ``responsive(True, "divider-horizontal")`` -> ``"divider-horizontal"``
          ``responsive("md", "divider-horizontal")`` -> ``"md:divider-horizontal"``
     """
     if var is True:
         return klass
-    elif isinstance(var, str) and var:
+    elif isinstance(var, str) and var in BREAKPOINTS:
         return f"{var}:{klass}"
 
     return ""
