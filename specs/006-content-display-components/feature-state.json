@@ -79,8 +79,25 @@
         },
         {
           "id": "T002",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_card.py tests/test_modal.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py -q: 43 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/card/index.html tests/test_card.py: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_card.py::TestCardTitle",
+              "tests/test_card.py::TestCardFigure",
+              "tests/test_card.py::TestCardActions",
+              "tests/test_card.py::TestCardEmptyParts",
+              "tests/test_card.py::TestCardClasses",
+              "tests/test_card.py::TestCardPageContextDoesNotLeak"
+            ],
+            "commits": [
+              "2ec669d"
+            ]
+          }
         },
         {
           "id": "T003",

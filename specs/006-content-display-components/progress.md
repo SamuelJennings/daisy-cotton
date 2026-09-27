@@ -12,3 +12,10 @@ Did: restricted `responsive()` to daisyUI's breakpoint names via a module-level 
 Verified: `uv run pytest tests/test_templatetags/test_daisy_cotton.py -q` — 13 passed. `uv run pre-commit run --files daisy_cotton/templatetags/daisy_cotton.py tests/test_templatetags/test_daisy_cotton.py` — all hooks passed.
 Next: T002, the card body rewrite.
 Watch: `divider.html` is the only other caller of `responsive`, and its only test value (`md`) is an accepted breakpoint, so it is unaffected.
+
+## 2026-09-27T13:20Z · Implementer US1 · T002
+
+Did: rewrote `card/index.html`'s structure — root `<div class="card {{ class }}">`, a `figure` slot in `<figure>` before the body, `card-body` with `content_class`, `title` (attribute or slot) as `<h2 class="card-title">` at the top, `actions` slot in `card-actions` at the foot; every declared name `=""`; `icon`, `tight`, `badges`, `footer`, `footer_end`, `body_class` and the built-in `bg-base-100 shadow-sm` removed. Rewrote `tests/test_card.py` under D2 to the new contract: scenarios 1–4, 7, 8, plus a page context carrying `title`, `figure` and `actions` that does not leak into an empty card.
+Verified: `uv run pytest tests/test_card.py tests/test_modal.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py -q` — 43 passed (`test_modal.py` untouched and still green — its five tests assert only the modal-box wrapper's width/height classes, not card internals). `uv run pre-commit run --files daisy_cotton/templates/cotton/card/index.html tests/test_card.py` — all hooks passed after ruff-format's own reformat.
+Next: T003, the card's size/border/dash/side/image-full modifiers.
+Watch: `modal.html` still forwards `title`/`icon`/`footer`/`footer_end` to the card through its own leftover `attrs`, which the card no longer declares — those now land as raw, unused attributes on the card's root instead of rendering. No test currently exercises that path; T004 fixes it directly.
