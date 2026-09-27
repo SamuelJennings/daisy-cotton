@@ -1,16 +1,13 @@
-{# @description A small label, usually a status or a count. Shows the text, then the default slot. #}
-{# @prop size:select['sm','lg'] | description:"Badge size. Leave empty for the default size." #}
-{# @prop variant:select['neutral','primary','secondary','accent','info','success','warning','error'] | description:"Colour variant. Leave empty for the default colour." #}
-{# @prop outline:boolean | description:"Draw the badge as an outline." #}
+{# @description A small label, usually a status, a count or a tag. Shows text, then the default slot. #}
 {# @prop text:text | description:"Badge text, shown before the default slot." #}
+{# @prop variant:select['neutral','primary','secondary','accent','info','success','warning','error'] | description:"Colour variant. Leave empty for the default colour." #}
+{# @prop size:select['xs','sm','md','lg','xl'] | description:"Badge size." #}
+{# @prop outline:boolean | description:"Draw the badge as an outline." #}
+{# @prop dash:boolean | description:"Draw the badge with a dashed border." #}
+{# @prop soft:boolean | description:"Use the soft style." #}
+{# @prop ghost:boolean | description:"Draw the badge without a background." #}
 {# @prop class:text | description:"Extra classes added to the badge." #}
-{# @prop :size_opts:text | default:"{'sm': 'badge-sm', 'lg': 'badge-lg'}" | description:"Map from size name to badge size class. Rarely overridden." #}
-{# @slot — Content shown after the text. #}
-{% load cotton %}
-<c-vars size
-        variant
-        outline
-        text
-        class
-        :size_opts="{'sm': 'badge-sm', 'lg': 'badge-lg'}" />
-<div class="badge{% if variant %} badge-{{ variant }}{% endif %}{% if outline %} badge-outline{% endif %}{% if size %} {{ size_opts|get_item:size }}{% endif %} {{ class }}">{{ text }}{{ slot }}</div>
+{# @slot New — Content shown after the text. #}
+{% load daisy_cotton %}
+<c-vars text="" variant="" size="" outline="" dash="" soft="" ghost="" class="" />
+<span class="badge {% variation variant "badge" "neutral,primary,secondary,accent,info,success,warning,error" %} {% variation size "badge" "xs,sm,md,lg,xl" %}{% if outline %} badge-outline{% endif %}{% if dash %} badge-dash{% endif %}{% if soft %} badge-soft{% endif %}{% if ghost %} badge-ghost{% endif %} {{ class }}" {{ attrs }}>{{ text }}{{ slot }}</span>

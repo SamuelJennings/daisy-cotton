@@ -91,7 +91,7 @@ Serves G1, G2 and G3. Out of scope: JavaScript behaviour beyond what daisyUI's C
 
 *multi-feature · advances G1, G2, G3*
 
-Accordion, avatar, aura, badge, card, carousel, chat bubble, collapse, countdown, diff, hover 3D card, hover gallery, kbd, list, stat, status, table, text rotate and timeline. Avatar, badge and card exist. Each component ships accessible and shown in the gallery with its variants and states, as in the groups before it.
+Accordion, avatar, aura, badge, card, carousel, chat bubble, collapse, countdown, diff, hover 3D card, hover gallery, kbd, list, stat, status, table, text rotate and timeline. Accordion, avatar, badge, card, collapse, kbd, list, stat, status, table and timeline exist. Each component ships accessible and shown in the gallery with its variants and states, as in the groups before it.
 
 Serves G1, G2 and G3. Out of scope: rendering querysets or model instances.
 

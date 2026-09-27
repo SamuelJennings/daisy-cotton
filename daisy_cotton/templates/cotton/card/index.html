@@ -1,35 +1,26 @@
-{# @description A card with an optional heading, a body and an optional footer. Every section is optional; it renders only what it is given. #}
-{# @prop title:text | default:"" | description:"Heading text, shown in the card title." #}
-{# @prop icon:text | default:"" | description:"Icon shown before the title, passed as the name of the icon component." #}
-{# @prop tight:boolean | description:"Remove the body padding, for full-bleed tables and lists." #}
+{# @description daisyUI's card: an optional figure, a body and an optional title and actions row. Every part is optional; it renders only what it is given. #}
+{# @prop title:text | description:"Heading text, shown as the card-title. Fill the title slot instead for an icon or badge alongside it." #}
+{# @prop figure:text | description:"Content shown in a <figure> before the body, usually an image. Fill the figure slot for markup." #}
+{# @prop actions:text | description:"Content shown in a card-actions row at the foot of the body, usually buttons. Fill the actions slot for markup." #}
+{# @prop size:select['xs','sm','md','lg','xl'] | description:"Card size." #}
+{# @prop border:boolean | description:"Draw the card with a border instead of a shadow." #}
+{# @prop dash:boolean | description:"Draw the card with a dashed border." #}
+{# @prop side:select['sm','md','lg','xl','2xl'] | description:"Lay the figure beside the body instead of above it. The bare attribute applies it at every width, which this select cannot set." #}
+{# @prop image-full:boolean | description:"Let the figure fill the card and place the body over it." #}
+{# @prop content_class:text | description:"Extra classes added to the card body." #}
 {# @prop class:text | description:"Extra classes added to the card surface." #}
-{# @prop body_class:text | description:"Extra classes added to the card body." #}
-{# @slot — The card body. #}
-{# @slot:badges — Header, just after the title: status badges, counts. #}
-{# @slot:actions — Header, end-aligned: buttons, a dropdown. #}
-{# @slot:footer — Footer, start-aligned. #}
-{# @slot:footer_end — Footer, end-aligned. #}
-<c-vars title="" icon="" tight class body_class />
-<div class="card bg-base-100 shadow-sm {{ class }}" {{ attrs }}>
-  <div class="card-body {% if tight %}p-0{% endif %} {{ body_class }}">
-    {% if title or icon or badges or actions %}
-      <div class="flex items-center gap-3">
-        {% if title or icon %}
-          <h2 class="card-title">
-            {% if icon %}<c-icon name="{{ icon }}" />{% endif %}
-            {% if title %}<span>{{ title }}</span>{% endif %}
-          </h2>
-        {% endif %}
-        {% if badges %}<div class="flex items-center gap-1">{{ badges }}</div>{% endif %}
-        {% if actions %}<div class="flex items-center gap-1 ms-auto">{{ actions }}</div>{% endif %}
-      </div>
-    {% endif %}
+{# @slot <c-accordion name="shipping" title="Do you ship internationally?">Yes, to most countries.</c-accordion><c-accordion name="shipping" title="How long does delivery take?">Three to five business days.</c-accordion><c-accordion name="returns" class="bg-base-100 border border-base-300" title="What is your return policy?">Items can be returned within 30 days.</c-accordion><c-accordion name="returns" class="bg-base-100 border border-base-300" title="Do you offer refunds?">Yes, to the original payment method.</c-accordion> — An FAQ: two accordion groups, one plain and one bordered. #}
+{# @slot:title — A heading with card-title, in place of the title attribute. An icon-only title needs an accessible name of its own. #}
+{# @slot:figure <img src="..." alt="A pair of running shoes" /> — Content in a <figure> before the body. #}
+{# @slot:actions <c-button text="Cart "><c-badge variant="secondary">3</c-badge></c-button> — Content in a card-actions row at the foot of the body. #}
+{% load daisy_cotton %}
+<c-vars title="" figure="" actions="" size="" border="" dash="" side="" image-full="" content_class="" class="" />
+<div class="card {% variation size "card" "xs,sm,md,lg,xl" %}{% if border %} card-border{% endif %}{% if dash %} card-dash{% endif %} {% responsive side "card-side" %}{% if image_full %} image-full{% endif %} {{ class }}"
+     {{ attrs }}>
+  {% if figure %}<figure>{{ figure }}</figure>{% endif %}
+  <div class="card-body {{ content_class }}">
+    {% if title %}<h2 class="card-title">{{ title }}</h2>{% endif %}
     {{ slot }}
-    {% if footer or footer_end %}
-      <div class="flex flex-wrap items-center gap-2 pt-2">
-        {% if footer %}<div class="flex items-center gap-2">{{ footer }}</div>{% endif %}
-        {% if footer_end %}<div class="flex items-center gap-2 ms-auto">{{ footer_end }}</div>{% endif %}
-      </div>
-    {% endif %}
+    {% if actions %}<div class="card-actions">{{ actions }}</div>{% endif %}
   </div>
 </div>

@@ -1,0 +1,5 @@
+{# @description One row of a list, used inside list. Give a child list-col-grow to make it fill the row instead of the second column, or list-col-wrap to let it wrap onto its own line. #}
+{# @prop class:text | description:"Extra classes added to the row." #}
+{# @slot — The row's content: an image, text and actions as daisyUI's own examples show. #}
+<c-vars class="" />
+<li class="list-row {{ class }}" {{ attrs }}>{{ slot }}</li>

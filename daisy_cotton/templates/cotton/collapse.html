@@ -1,0 +1,13 @@
+{# @description daisyUI's collapse: a heading the user expands to reveal hidden content, built on <details> and <summary> with no script. Content stays in the page but is hidden from view and from assistive technology until expanded. #}
+{# @prop title:text | description:"Heading text, shown in collapse-title. A title is expected: leaving both this and the title slot empty renders an unnamed control, an empty summary. Fill the title slot instead for rich content such as an icon or badge." #}
+{# @prop arrow:boolean | description:"Show a chevron that rotates to indicate the expanded state." #}
+{# @prop plus:boolean | description:"Show a plus/minus icon that toggles with the expanded state." #}
+{# @prop open:boolean | description:"Render the collapse already expanded. The user can still collapse it — this does not lock the state, unlike daisyUI's collapse-open and collapse-close classes, which this component does not offer." #}
+{# @prop class:text | description:"Extra classes added to the collapse." #}
+{# @slot A short answer. — Content shown in collapse-content. #}
+{# @slot:title — A heading in place of the title attribute, for rich content such as an icon or badge. #}
+<c-vars title="" arrow="" plus="" open="" class="" />
+<details class="collapse{% if arrow %} collapse-arrow{% endif %}{% if plus %} collapse-plus{% endif %} {{ class }}"{% if open %} open{% endif %} {{ attrs }}>
+  <summary class="collapse-title focus-visible:outline-2 focus-visible:-outline-offset-2">{{ title }}</summary>
+  <div class="collapse-content">{{ slot }}</div>
+</details>

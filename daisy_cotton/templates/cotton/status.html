@@ -1,0 +1,8 @@
+{# @description daisyUI's status: a small coloured dot marking something as online, busy or failing. Given label it is exposed to assistive technology as an image with that name; leave it off when visible text beside the dot already says the same thing, and never show a dot with neither. The table's gallery entry shows a dot beside text with no label. #}
+{# @prop label:text | description:"Accessible name exposing the dot as an image. Leave empty when text beside it already says the same thing; the dot is then hidden from assistive technology." #}
+{# @prop variant:select['neutral','primary','secondary','accent','info','success','warning','error'] | description:"Colour variant. Leave empty for the default colour." #}
+{# @prop size:select['xs','sm','md','lg','xl'] | description:"Status size." #}
+{# @prop class:text | description:"Extra classes added to the status." #}
+{% load daisy_cotton %}
+<c-vars label="" variant="" size="" class="" />
+<span class="status {% variation variant "status" "neutral,primary,secondary,accent,info,success,warning,error" %} {% variation size "status" "xs,sm,md,lg,xl" %} {{ class }}"{% if label %} role="img" aria-label="{{ label }}"{% else %} aria-hidden="true"{% endif %} {{ attrs }}></span>

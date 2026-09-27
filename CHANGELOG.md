@@ -66,7 +66,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   above components use, in a small `daisy_cotton` templatetag library.
 - `unique_id`, a `daisy_cotton` template tag returning a prefix plus eight lowercase hex
   characters, different on every call. `<c-dropdown>` uses it to give its panel an id when the
-  caller gives none.
+  caller gives none, and `<c-table>` to give its caption the id that names the scrolling region.
 - `<c-swap>`: daisyUI's checkbox-driven swap. `rotate`, `flip` and `active` map to `swap-rotate`,
   `swap-flip` and `swap-active`; `label` names the checkbox for assistive technology; `checked`,
   `disabled`, `name` and `value` land on the checkbox, and everything else lands on the wrapper.
@@ -80,6 +80,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `close` and `main_action` slots render in `fab-close`/`fab-main-action`, taking the trigger's
   place while the FAB is open. `class` lands on the wrapper only and never reaches the default
   trigger.
+- `<c-table>`: daisyUI's table, wrapped in a keyboard-focusable, horizontally scrolling region
+  named by its `caption` (attribute or slot) or an `aria-label`. Accepts `size` (`xs`–`xl`) and
+  the booleans `zebra`, `pin-rows` and `pin-cols`; extra classes reach the `<table>` through
+  `content_class` and the wrapper through `class`. The caller writes `<thead>`, `<tbody>`, rows
+  and cells directly in the default slot.
+- `<c-collapse>` and `<c-accordion>`: daisyUI's collapse, built on `<details>`/`<summary>` with no
+  script. `<c-collapse>` accepts `title` (attribute or slot), the booleans `arrow` and `plus`, and
+  `open`, which renders it already expanded without preventing the user from collapsing it again —
+  daisyUI's state-locking `collapse-open`/`collapse-close` classes are not offered. `name` is not
+  declared, so it passes straight through to `<details>`. `<c-accordion>` is a `<c-collapse>` that
+  requires `name`: items sharing one form an exclusive group, in which opening an item closes the
+  others; in a browser without grouped `<details>` support, more than one can stay open.
+- `<c-stat>` and `<c-stat.group>`: daisyUI's stat, always placed inside a group even when it is
+  alone. `<c-stat>` accepts `title`, `value` and `desc` (each an attribute or a named slot),
+  rendered in that order, a `figure` slot and an `actions` slot; a value of `0` still renders.
+  `<c-stat.group>` accepts `vertical` and `horizontal`, each a boolean or a breakpoint, as
+  `stats-vertical`/`stats-horizontal` or their responsive form.
+- `<c-list>` and `<c-list.row>`: daisyUI's list, a `<ul>` carrying `list` holding `<c-list.row>`
+  items, each an `<li>` carrying `list-row`. A row's own children reach `list-col-grow` and
+  `list-col-wrap` through their own `class`, as the row's documentation shows.
+- `<c-timeline>` and `<c-timeline.item>`: daisyUI's timeline. `<c-timeline>` accepts `vertical` and
+  `horizontal` (each a boolean or a breakpoint), and the booleans `compact` and `snap-icon`.
+  `<c-timeline.item>` accepts `start`, `middle` and `end` (each an attribute or a named slot, only
+  emitted when given) and `box`, which puts `timeline-box` on the end part, or the start part when
+  given as `box="start"`. Every item carries a leading and a trailing connector line, hidden from
+  assistive technology, so consecutive items join and the line stops at the first and last item.
+- `<c-kbd>`: daisyUI's kbd, a `<kbd>` carrying `kbd`, holding `text` then the default slot, with
+  `size` (`xs`–`xl`).
+- `<c-status>`: daisyUI's status, a `<span>` carrying `status`, with `variant` (the eight daisyUI
+  colours) and `size` (`xs`–`xl`). Given `label`, it is exposed to assistive technology as an image
+  named by it; without one, it is hidden from assistive technology.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
@@ -161,3 +192,29 @@ decision.
   A `dock.item` with no `href` and no `toggle` is now a `<button type="button">`, its icon is hidden from
   assistive technology, and the drawer-toggle item no longer has `role="button" tabindex="0"`, so it is no
   longer a Tab stop.
+- `<c-card>` is rebuilt around daisyUI's own card structure. `icon`, `badges`, `footer`, `footer_end`
+  and `tight` are removed: put an icon or a badge in the `title` slot instead, put footer content in
+  the body or the `actions` slot, and use `content_class="p-0"` in place of `tight`. `body_class` is
+  renamed `content_class`. `actions` now renders in a `card-actions` row at the foot of the body
+  instead of the header. The built-in `bg-base-100 shadow-sm` surface is gone; add it through `class`
+  where it is still wanted. Adds `size` (`xs`–`xl`), the booleans `border`, `dash` and `image-full`,
+  `side` (a boolean or a breakpoint, as `card-side` or `<bp>:card-side`), and a `figure` slot rendered
+  in a `<figure>` before the body.
+- `responsive`, the `daisy_cotton` template tag behind every attribute that takes a breakpoint,
+  now ignores a string that is not one of `sm`, `md`, `lg`, `xl`, `2xl` and emits no class for it —
+  it previously emitted a class for any non-empty string.
+- `<c-badge>` renders a `<span>` instead of a `<div>`, so it is valid inside a button. `size` gains
+  `xs`, `md` and `xl` alongside the existing `sm` and `lg`; the booleans `dash`, `soft` and `ghost`
+  are added alongside `outline`. Extra attributes, including data attributes, now reach the badge
+  through `{{ attrs }}`, which they previously did not. The internal `size_opts` map and its
+  `get_item` lookup are removed.
+- `<c-avatar>`'s `status` is renamed `online`/`offline` (`avatar-online`/`avatar-offline`), a
+  boolean each instead of one `select`. `size`, `size_options`, `shape` and `variant` are removed:
+  the image frame's width and shape now go through `content_class`, which replaces the
+  `w-12 rounded-full` default (plus `bg-neutral text-neutral-content` whenever there is no `src`,
+  including the silhouette) entirely rather than adding to it. `alt` now defaults to empty instead
+  of `"User avatar"`. The silhouette's muted `bg-base-300 text-base-content/40` colours are gone;
+  it now takes the same neutral placeholder colours as initials text. `<c-avatar.group>`'s `size`
+  and `space_options` (and its `get_item` lookup) are removed; the overlap between avatars, such as
+  `-space-x-6`, now goes entirely through `class`, and the group spreads extra attributes through
+  `{{ attrs }}`, which it previously did not.

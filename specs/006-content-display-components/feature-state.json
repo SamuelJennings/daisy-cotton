@@ -1,0 +1,650 @@
+{
+  "feature": "006-content-display-components",
+  "branch": "006-content-display-components",
+  "repo": "SamuelJennings/daisy-cotton",
+  "state": "PR_READY",
+  "state_history": [
+    {
+      "state": "QUEUED",
+      "at": "2026-09-26T14:46:22Z",
+      "note": "specification merged in #29; issue graph built"
+    },
+    {
+      "state": "PLAN",
+      "at": "2026-09-27T12:41:40Z",
+      "note": "picked up from the queue; branch cut from origin/main 73a4826; verify green on base"
+    },
+    {
+      "state": "DESIGN_REVIEW",
+      "at": "2026-09-27T12:42:01Z",
+      "note": "plan, research, tasks committed; draft PR #104 opened"
+    },
+    {
+      "state": "IMPLEMENT",
+      "at": "2026-09-27T12:54:17Z",
+      "note": "design review applied (D5); plan notification recorded"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-27T14:27:04Z",
+      "note": "all nine stories accepted"
+    },
+    {
+      "state": "REVIEW",
+      "at": "2026-09-27T14:28:33Z",
+      "note": "converge green; no-script test added; no ADR graduated"
+    },
+    {
+      "state": "PR_READY",
+      "at": "2026-09-27T14:53:37Z",
+      "note": "review applied (D7); accessibility run clean; pull request ready; walkthrough sent to the maintainer"
+    }
+  ],
+  "gates": {
+    "spec": {
+      "approved_by": "SamuelJennings",
+      "at": "2026-09-26T14:46:22Z",
+      "self_resolved": [
+        "merge commit 734a5e375d, pull request #29"
+      ]
+    },
+    "plan": {
+      "approved_by": "notified",
+      "at": "2026-09-27T12:54:10Z"
+    },
+    "merge": {
+      "approved_by": null,
+      "at": null
+    },
+    "design_review": {
+      "approved_by": "design-panel",
+      "at": "2026-09-27T12:54:10Z",
+      "self_resolved": [
+        "SPEC-001 high: applied as plan/tasks edits (D5)",
+        "SPEC-002, ARCH-001 medium; SPEC-003, SPEC-004 low: applied as plan/tasks edits (D5)"
+      ]
+    },
+    "review": {
+      "approved_by": "review-panel",
+      "at": "2026-09-27T14:52:31Z",
+      "self_resolved": [
+        "COR-001, COR-002 medium: fixed (D7)",
+        "COR-003..COR-006 low: fixed (D7)",
+        "accessibility run: collapse focus ring fixed (D7)"
+      ]
+    }
+  },
+  "stories": [
+    {
+      "id": "US1",
+      "priority": "P1",
+      "issue": 63,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/006-content-display-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T001",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_templatetags/test_daisy_cotton.py -q: 13 passed",
+              "uv run pre-commit run --files daisy_cotton/templatetags/daisy_cotton.py tests/test_templatetags/test_daisy_cotton.py: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_templatetags/test_daisy_cotton.py::TestResponsive::test_a_string_that_is_not_a_breakpoint_returns_empty_string",
+              "tests/test_templatetags/test_daisy_cotton.py::TestResponsive::test_every_daisyui_breakpoint_is_accepted"
+            ]
+          }
+        },
+        {
+          "id": "T002",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_card.py tests/test_modal.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py -q: 43 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/card/index.html tests/test_card.py: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_card.py::TestCardTitle",
+              "tests/test_card.py::TestCardFigure",
+              "tests/test_card.py::TestCardActions",
+              "tests/test_card.py::TestCardEmptyParts",
+              "tests/test_card.py::TestCardClasses",
+              "tests/test_card.py::TestCardPageContextDoesNotLeak"
+            ]
+          }
+        },
+        {
+          "id": "T003",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_card.py tests/test_modal.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_templatetags/ -q: 69 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/card/index.html tests/test_card.py: all hooks passed",
+              "uv run python manage.py cotton_lint: no findings for card/index.html"
+            ],
+            "tests": [
+              "tests/test_card.py::TestCardSize",
+              "tests/test_card.py::TestCardModifiers"
+            ]
+          }
+        },
+        {
+          "id": "T004",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_modal.py tests/test_card.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py -q: 61 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/modal.html tests/test_modal.py: all hooks passed",
+              "uv run python manage.py cotton_lint: no findings for modal.html"
+            ],
+            "tests": [
+              "tests/test_modal.py::TestModalCardContent"
+            ]
+          }
+        },
+        {
+          "id": "T005",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_card.py tests/test_modal.py tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_templatetags/ -q: 214 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 20/21 clean, 0 errors, 0 warnings",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/card/index.html daisy_cotton/templates/cotton/modal.html CHANGELOG.md: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py::TestPackageComponentsLintClean::test_has_no_blocking_findings"
+            ]
+          }
+        },
+        {
+          "id": "T026",
+          "status": "todo",
+          "attempts": 0
+        },
+        {
+          "id": "T027",
+          "status": "todo",
+          "attempts": 0
+        },
+        {
+          "id": "T029",
+          "status": "todo",
+          "attempts": 0
+        }
+      ]
+    },
+    {
+      "id": "US2",
+      "priority": "P1",
+      "issue": 64,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/006-content-display-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T006",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_templatetags/test_daisy_cotton.py -q: 15 passed",
+              "uv run pre-commit run --files daisy_cotton/templatetags/daisy_cotton.py tests/test_templatetags/test_daisy_cotton.py: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_templatetags/test_daisy_cotton.py::TestUniqueId::test_the_id_is_the_prefix_and_eight_lowercase_hex_characters",
+              "tests/test_templatetags/test_daisy_cotton.py::TestUniqueId::test_two_calls_differ"
+            ]
+          }
+        },
+        {
+          "id": "T007",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_table.py -q (table.html moved aside): 16 failed on TemplateDoesNotExist: cotton/table/index.html",
+              "uv run pytest tests/test_table.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py -q: 47 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/table.html tests/test_table.py pyproject.toml: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_table.py::TestTableStructure",
+              "tests/test_table.py::TestTableWrapperAccessibility",
+              "tests/test_table.py::TestTableAriaLabel",
+              "tests/test_table.py::TestTableModifiers",
+              "tests/test_table.py::TestTableSize",
+              "tests/test_table.py::TestTableClasses",
+              "tests/test_table.py::TestTableCaptionSlot",
+              "tests/test_table.py::TestTableUniqueIds",
+              "tests/test_table.py::TestTablePageContextDoesNotLeak"
+            ]
+          }
+        },
+        {
+          "id": "T008",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 21/22 clean, 0 errors, 0 warnings",
+              "uv run pytest tests/test_table.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q: 161 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/table.html README.md CHANGELOG.md: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py::TestPackageComponentsLintClean",
+              "tests/test_gallery_annotations.py"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US3",
+      "priority": "P1",
+      "issue": 65,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/006-content-display-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T009",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_badge.py tests/test_form_field.py -q: 51 passed",
+              "uv run pytest tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_render_all.py -q: 54 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 21/22 clean, 0 errors, 0 warnings",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/badge.html tests/test_badge.py pyproject.toml: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_badge.py::TestBadgeElement",
+              "tests/test_badge.py::TestBadgeContent",
+              "tests/test_badge.py::TestBadgeVariant",
+              "tests/test_badge.py::TestBadgeSize",
+              "tests/test_badge.py::TestBadgeStyleBooleans",
+              "tests/test_badge.py::TestBadgeInsideButton",
+              "tests/test_badge.py::TestBadgeClassAndAttrs",
+              "tests/test_badge.py::TestBadgePageContextDoesNotLeak"
+            ]
+          }
+        },
+        {
+          "id": "T010",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 21/22 clean, 0 errors, 0 warnings",
+              "uv run pytest tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_card.py -q: 166 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/card/index.html CHANGELOG.md: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py",
+              "tests/test_gallery_annotations.py",
+              "tests/test_card.py"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US4",
+      "priority": "P2",
+      "issue": 66,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/006-content-display-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T011",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_collapse.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_render_all.py -q: 65 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/collapse.html tests/test_collapse.py pyproject.toml: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_collapse.py::TestCollapseStructure",
+              "tests/test_collapse.py::TestCollapseTitleSlot",
+              "tests/test_collapse.py::TestCollapseOpen",
+              "tests/test_collapse.py::TestCollapseModifiers",
+              "tests/test_collapse.py::TestCollapseNamePassthrough",
+              "tests/test_collapse.py::TestCollapsePageContextDoesNotLeak"
+            ]
+          }
+        },
+        {
+          "id": "T012",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_collapse.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_render_all.py -q: 73 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/accordion.html tests/test_collapse.py: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_collapse.py::TestAccordionDrawnByCollapse",
+              "tests/test_collapse.py::TestAccordionGrouping",
+              "tests/test_collapse.py::TestAccordionPageContextDoesNotLeak"
+            ]
+          }
+        },
+        {
+          "id": "T013",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run python manage.py cotton_lint --warnings-as-errors: 23/24 clean, 0 errors, 0 warnings",
+              "uv run pytest tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_collapse.py tests/test_card.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py -q: 249 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/collapse.html daisy_cotton/templates/cotton/accordion.html daisy_cotton/templates/cotton/card/index.html README.md CHANGELOG.md: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py",
+              "tests/test_gallery_annotations.py",
+              "tests/test_card.py"
+            ]
+          }
+        },
+        {
+          "id": "T025",
+          "status": "todo",
+          "attempts": 0
+        }
+      ]
+    },
+    {
+      "id": "US5",
+      "priority": "P2",
+      "issue": 67,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/006-content-display-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T014",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_avatar.py -q: 14 passed",
+              "uv run pytest tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_render_all.py -q: 58 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/avatar/index.html tests/test_avatar.py pyproject.toml: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_avatar.py::TestAvatarRoot",
+              "tests/test_avatar.py::TestAvatarAltDefault",
+              "tests/test_avatar.py::TestAvatarPlaceholder",
+              "tests/test_avatar.py::TestAvatarSilhouette",
+              "tests/test_avatar.py::TestAvatarOnlineOffline",
+              "tests/test_avatar.py::TestAvatarFrameContentClass",
+              "tests/test_avatar.py::TestAvatarClassAndAttrs",
+              "tests/test_avatar.py::TestAvatarPageContextDoesNotLeak"
+            ]
+          }
+        },
+        {
+          "id": "T015",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_avatar.py -q: 17 passed",
+              "uv run pytest tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_render_all.py -q: 58 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/avatar/group.html tests/test_avatar.py: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_avatar.py::TestAvatarGroup",
+              "tests/test_avatar.py::TestAvatarGroupPageContextDoesNotLeak"
+            ]
+          }
+        },
+        {
+          "id": "T016",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 23/24 clean, 0 errors, 0 warnings",
+              "uv run pytest tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_avatar.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py -q: 230 passed",
+              "rendered the avatar group composition example directly through the Cotton compiler and read the output: -space-x-6 group holding a photo (w-12 rounded-full), a placeholder (w-16 rounded-xl, avatar-placeholder), and a silhouette (w-10 rounded, avatar-placeholder, aria-hidden svg)",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/avatar/index.html daisy_cotton/templates/cotton/avatar/group.html CHANGELOG.md: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py::TestPackageComponentsLintClean",
+              "tests/test_gallery_annotations.py",
+              "tests/test_avatar.py"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US6",
+      "priority": "P2",
+      "issue": 68,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/006-content-display-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T017",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_stat.py -q: 16 passed (observed all 16 fail on TemplateDoesNotExist before the templates existed)",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 25/26 clean, 0 errors, 0 warnings",
+              "uv run pytest tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_render_all.py -q: 227 passed",
+              "uv run pre-commit run --files CHANGELOG.md README.md pyproject.toml daisy_cotton/templates/cotton/stat/group.html daisy_cotton/templates/cotton/stat/index.html tests/test_stat.py: ruff-format reformatted tests/test_stat.py on the first pass, clean on the second"
+            ],
+            "tests": [
+              "tests/test_stat.py::TestStatParts",
+              "tests/test_stat.py::TestStatFigure",
+              "tests/test_stat.py::TestStatActions",
+              "tests/test_stat.py::TestStatEmptyParts",
+              "tests/test_stat.py::TestStatClassAndAttrs",
+              "tests/test_stat.py::TestStatPageContextDoesNotLeak",
+              "tests/test_stat.py::TestStatGroup",
+              "tests/test_stat.py::TestStatGroupResponsive",
+              "tests/test_stat.py::TestStatGroupPageContextDoesNotLeak"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US7",
+      "priority": "P2",
+      "issue": 69,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/006-content-display-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T018",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_list.py -q: 7 passed (observed all 7 fail on TemplateDoesNotExist/FileNotFoundError before the templates existed)",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 27/28 clean, 0 errors, 0 warnings",
+              "uv run pytest tests/test_gallery_annotations.py tests/test_declared_attributes.py tests/test_render_all.py tests/test_gallery_lint.py -q: 237 passed",
+              "uv run pre-commit run --files CHANGELOG.md README.md pyproject.toml daisy_cotton/templates/cotton/list/index.html daisy_cotton/templates/cotton/list/row.html tests/test_list.py: all hooks passed, no reformatting"
+            ],
+            "tests": [
+              "tests/test_list.py::TestListRoot",
+              "tests/test_list.py::TestListRowRoot",
+              "tests/test_list.py::TestListClassAndAttrs",
+              "tests/test_list.py::TestListRowClassAndAttrs",
+              "tests/test_list.py::TestListPageContextDoesNotLeak",
+              "tests/test_list.py::TestListRowPageContextDoesNotLeak",
+              "tests/test_list.py::TestListDocumentsColumnClasses"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US8",
+      "priority": "P3",
+      "issue": 70,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/006-content-display-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T019",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_timeline.py -q: 10 passed (observed all 10 fail on TemplateDoesNotExist before the template existed)",
+              "uv run pytest tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py -q: 78 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/timeline/index.html tests/test_timeline.py pyproject.toml: all hooks passed, no reformatting"
+            ],
+            "tests": [
+              "tests/test_timeline.py::TestTimelineRoot",
+              "tests/test_timeline.py::TestTimelineModifiers",
+              "tests/test_timeline.py::TestTimelineClassAndAttrs",
+              "tests/test_timeline.py::TestTimelinePageContextDoesNotLeak"
+            ]
+          }
+        },
+        {
+          "id": "T020",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_timeline.py -q: 23 passed (observed the 13 new item tests fail on TemplateDoesNotExist before the template existed)",
+              "uv run pytest tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py -q: 93 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/timeline/item.html tests/test_timeline.py: ruff-format reformatted tests/test_timeline.py on the first pass; re-ran clean on the second, tests still 23 passed"
+            ],
+            "tests": [
+              "tests/test_timeline.py::TestTimelineItemRoot",
+              "tests/test_timeline.py::TestTimelineItemParts",
+              "tests/test_timeline.py::TestTimelineItemEmptyParts",
+              "tests/test_timeline.py::TestTimelineItemBox",
+              "tests/test_timeline.py::TestTimelineItemConnectors",
+              "tests/test_timeline.py::TestTimelineItemClassAndAttrs",
+              "tests/test_timeline.py::TestTimelineItemPageContextDoesNotLeak"
+            ]
+          }
+        },
+        {
+          "id": "T021",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 29/30 clean, 0 errors, 0 warnings",
+              "uv run pytest tests/test_timeline.py tests/test_gallery_annotations.py tests/test_declared_attributes.py tests/test_render_all.py tests/test_gallery_lint.py -q: 274 passed",
+              "Rendered the timeline's @slot composition directly through the Cotton compiler and read the output: three group/item entries, each with a timeline-start date, a timeline-middle aria-hidden icon and a timeline-box'd timeline-end",
+              "uv run pre-commit run --files CHANGELOG.md README.md daisy_cotton/templates/cotton/timeline/index.html daisy_cotton/templates/cotton/timeline/item.html: all hooks passed, no reformatting"
+            ],
+            "tests": [
+              "tests/test_timeline.py::TestTimelineRoot",
+              "tests/test_timeline.py::TestTimelineModifiers",
+              "tests/test_timeline.py::TestTimelineItemParts",
+              "tests/test_timeline.py::TestTimelineItemBox",
+              "tests/test_timeline.py::TestTimelineItemConnectors",
+              "tests/test_gallery_lint.py",
+              "tests/test_gallery_annotations.py"
+            ]
+          }
+        },
+        {
+          "id": "T028",
+          "status": "todo",
+          "attempts": 0
+        }
+      ]
+    },
+    {
+      "id": "US9",
+      "priority": "P3",
+      "issue": 71,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/006-content-display-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T022",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_kbd.py tests/test_status.py -q: 32 passed (observed 32 failures on TemplateDoesNotExist before the templates existed)",
+              "uv run pytest tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_render_all.py -q: 74 passed",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/kbd.html daisy_cotton/templates/cotton/status.html tests/test_kbd.py tests/test_status.py pyproject.toml: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_kbd.py::TestKbdElement",
+              "tests/test_kbd.py::TestKbdContent",
+              "tests/test_kbd.py::TestKbdSize",
+              "tests/test_kbd.py::TestKbdClassAndAttrs",
+              "tests/test_kbd.py::TestKbdPageContextDoesNotLeak",
+              "tests/test_status.py::TestStatusElement",
+              "tests/test_status.py::TestStatusVariant",
+              "tests/test_status.py::TestStatusSize",
+              "tests/test_status.py::TestStatusAccessibility",
+              "tests/test_status.py::TestStatusClassAndAttrs",
+              "tests/test_status.py::TestStatusPageContextDoesNotLeak"
+            ]
+          }
+        },
+        {
+          "id": "T023",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 31/32 clean, 0 errors, 0 warnings",
+              "uv run pytest tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_kbd.py tests/test_status.py tests/test_table.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_render_all.py -q: 317 passed",
+              "Rendered the table's @slot composition directly through the Cotton compiler and read the output: the status dot carries aria-hidden=true with no role/aria-label (no label given) beside 'Online' text, and the two <kbd> elements render either side of '+'",
+              "uv run pre-commit run --files daisy_cotton/templates/cotton/kbd.html daisy_cotton/templates/cotton/status.html daisy_cotton/templates/cotton/table.html README.md CHANGELOG.md: all hooks passed, no reformatting"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py",
+              "tests/test_gallery_annotations.py",
+              "tests/test_kbd.py",
+              "tests/test_status.py",
+              "tests/test_table.py"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "budgets": {
+    "converge_cycles": {
+      "used": 1,
+      "max": 2
+    },
+    "review_cycles": {
+      "used": 1,
+      "max": 1
+    },
+    "design_review_cycles": {
+      "used": 1,
+      "max": 1
+    },
+    "tokens": {
+      "used": 0,
+      "max": 120
+    }
+  },
+  "pr": {
+    "number": 104,
+    "draft": false
+  }
+}

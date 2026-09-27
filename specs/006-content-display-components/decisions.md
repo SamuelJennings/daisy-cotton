@@ -82,3 +82,80 @@ daisyUI's examples put `timeline-box` on the event text, usually at the end, wit
 ## Priorities
 
 Priorities reflect how many adopters need each component: cards, tables and badges on nearly every page (P1); collapse and accordion, avatar, stat and list in most applications (P2); timeline, kbd and status in some (P3).
+
+## D1 — Built on main while three other component pull requests are open
+
+Pull requests #101 (navigation components), #102 (layout components) and #103 (action components) are open and unmerged. This feature depends only on #11, which is delivered, so it is built alongside them rather than after them. This feature branches from main and builds on none of them. All four change the README's component count and list and append to the CHANGELOG, so whichever merges later resolves those lines by hand. #103 rewrites the modal this feature adjusts (research R7). The `responsive` breakpoint check is copied from #102 and `unique_id` from #103 byte for byte, so those two reconcile as identical code.
+
+**ADR:** none — a sequencing note for concurrent branches, nothing downstream inherits it.
+
+## D2 — The pre-existing card test is rewritten
+
+`tests/test_card.py` asserts the `bg-base-100 shadow-sm` surface, which FR-012 removes. It is rewritten to the new contract in T002. The behaviours it guarded that survive (the root is the card, `class` merges into its one class list, extra attributes reach it, the body sits directly inside) are asserted again. `tests/test_modal.py` is not changed: the modal keeps its output on this branch (T004), and its new tests are additions.
+
+**Why:** Article I forbids changing a pre-existing test without a recorded decision. This is it.
+
+**ADR:** none — local to this feature's approved breaking changes, recorded in the CHANGELOG.
+
+## D3 — The modal keeps its contract until the action components land
+
+The spec's edge case says the modal keeps rendering its title, body and actions if this feature lands first. The modal on main also forwards `icon`, `footer` and `footer_end` to the card, all of which the card loses. Rather than drop three documented modal attributes in a feature about content display, the modal declares `title` and `icon` and renders them into the card's `title` slot, and renders `footer` and `footer_end` itself. Its actions now sit at the foot of the card body, where daisyUI puts them. It also adds the `bg-base-100 shadow-sm` surface the card no longer draws, or the dialog would be transparent. #103 replaces all of this with daisyUI's own modal box.
+
+**ADR:** none — a stopgap that the next feature to touch the modal removes.
+
+## D4 — The silhouette avatar is a placeholder too
+
+The spec gives the frame `bg-neutral text-neutral-content` "when showing a placeholder" and puts `avatar-placeholder` on the root for placeholder text. The silhouette is shown in the same situation, when there is no photo, and needs the same centring, which `avatar-placeholder` provides (`.avatar-placeholder>div{display:flex;align-items:center;justify-content:center}`). So any avatar without `src` takes `avatar-placeholder` and the placeholder colours. The old muted `bg-base-300 text-base-content/40` silhouette goes, which also removes an opacity-modified colour class.
+
+**ADR:** none — local to the avatar template.
+
+
+## D5 — Design review applied
+
+One design reviewer, three lenses. Findings and what was done:
+
+- **SPEC-001, high.** Gallery 1.0.0 renders an entry as one component tag, so an accordion group, a second group, a key combination, a status dot beside text, a badge inside a button and several avatar widths cannot be shown in those components' own entries. Each is shown inside the slot example of a component that holds free markup, where an application would write it: two accordion groups and a badge in a button in the card's entry, a key combination and a status beside text in the table's entry, three avatar widths and shapes in the avatar group's entry (plan "Compositions"). Each item's description names the entry that shows it. The markup-level tests for these scenarios are unchanged.
+- **SPEC-002, medium.** The modal's title slot drew an empty icon for a title-only modal. Each piece is now guarded on its own, with a test.
+- **ARCH-001, medium.** An unnamed Tailwind `group` on the timeline item would let any enclosing `.group` hide its connectors. The group is named `group/item`.
+- **SPEC-003, low.** The stat's `0` guard only matters for a dynamic `:value`, so its test uses `:value="0"`.
+- **SPEC-004, low.** The accessibility run checks the table wrapper's focus indicator.
+
+Editorial notes applied in the same pass: the component count, the accordion's deliberate lack of a `class` declaration, the modal's footer row now sitting above its actions, and the gallery select not offering the bare breakpoint form.
+
+**ADR:** none — plan corrections local to this feature.
+
+## D6 — Convergence changes made directly
+
+Four changes, each small enough that a dispatch would have cost more than the edit.
+
+- One test module, `tests/test_content_display_no_script.py`, renders every component in this group from a caller's string with its slots and modifiers filled and asserts there is no `<script>` and no `on*=` attribute (SC-003). The stories had each left this check out. It fails when an `onclick` is added to one template.
+- `collapse.html`, `accordion.html` and `timeline/item.html` no longer load the `daisy_cotton` tag library, which none of them uses.
+- The README's component count is 32 (21 before this feature, 11 added). It had read 29.
+- The roadmap's data display item names the components that now exist.
+
+Every acceptance scenario that rendered markup can show has a test. The scenarios that need a browser (keyboard operation, the accordion's one-open-at-a-time behaviour, the table's scrolling, the timeline's connector, the gallery entries) are checked in the accessibility run.
+
+**ADR:** none — local edits inside this feature.
+
+## D7 — Code review and accessibility run applied
+
+The reviewer approved with two medium and four low findings, all verified but one. The accessibility run found one defect: daisyUI draws no focus ring on a collapse's summary, so a keyboard user could not see where focus was. Everything was fixed in one pass (T025–T029):
+
+- **Focus ring.** The summary carries a `focus-visible` outline, probed in Chromium as a solid 2px ring in the theme's content colour.
+- **COR-001, COR-002, medium.** Two tests could not fail: the card's actions-at-the-foot test used a bare-text body, and nothing asserted the modal's surface colour. Both now fail when the behaviour is removed.
+- **COR-003 to COR-006, low.** The modal declares `class`, `actions`, `footer` and `footer_end` with empty defaults, and its annotations and the CHANGELOG describe it as it now renders. The timeline item's `box` is annotated with its two values.
+
+The review's notes on the card's gallery examples (the figure's `alt`, the spacing in "Cart 3") and on an untitled collapse were applied in the same pass.
+
+**ADR:** none — local fixes inside this feature.
+
+## D8 — Merged with the navigation, layout and action components
+
+#101, #102 and #103 merged to main while this pull request was open, and main was merged into this branch:
+
+- **The modal is main's.** #103 replaced the card inside the modal with daisyUI's own modal box, so the stopgap in D3 and its tests go. The modal no longer depends on the card.
+- **The template tags are main's.** The `responsive` breakpoint check and `unique_id` were copied unchanged from #102 and #103, so they merged to identical code.
+- **The README's count is 55.** Main read 32, the count after #101, and #102 and #103 had added twelve components without updating it. The figure is now counted from the templates: 44 on main plus 11 here. The list names every component.
+- **CHANGELOG.** Both sides were kept. The duplicate `unique_id` entry is merged into main's, and the line about the modal's actions moving is dropped because it describes the stopgap.
+
+**ADR:** none — a merge of concurrent branches.

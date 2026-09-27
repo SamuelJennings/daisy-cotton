@@ -1,0 +1,11 @@
+{# @description daisyUI's timeline: events in order, vertically or horizontally, each with a date or label, an icon on the line, and a description, optionally in a box. #}
+{# @prop vertical:select['sm','md','lg','xl','2xl'] | description:"Stack the timeline vertically. The bare attribute applies it at every width, which this select cannot set." #}
+{# @prop horizontal:select['sm','md','lg','xl','2xl'] | description:"Lay the timeline out horizontally. The bare attribute applies it at every width, which this select cannot set." #}
+{# @prop compact:boolean | description:"Draw every item's start and end on the same side instead of alternating." #}
+{# @prop snap-icon:boolean | description:"Snap the icon column to whichever part has content, instead of centering it between start and end." #}
+{# @prop class:text | description:"Extra classes added to the timeline." #}
+{# @slot <c-timeline.item start="1984" end="First Macintosh" box><c-slot name="middle"><i class="bi bi-check-circle-fill" aria-hidden="true"></i></c-slot></c-timeline.item><c-timeline.item start="1998" end="iMac G3" box><c-slot name="middle"><i class="bi bi-check-circle-fill" aria-hidden="true"></i></c-slot></c-timeline.item><c-timeline.item start="2001" end="iPod" box><c-slot name="middle"><i class="bi bi-check-circle-fill" aria-hidden="true"></i></c-slot></c-timeline.item> — Three events, each with a date, an icon hidden from assistive technology in the middle, and boxed text. #}
+{% load daisy_cotton %}
+<c-vars vertical="" horizontal="" compact="" snap-icon="" class="" />
+<ul class="timeline {% responsive vertical "timeline-vertical" %} {% responsive horizontal "timeline-horizontal" %}{% if compact %} timeline-compact{% endif %}{% if snap_icon %} timeline-snap-icon{% endif %} {{ class }}"
+    {{ attrs }}>{{ slot }}</ul>

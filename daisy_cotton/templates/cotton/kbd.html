@@ -1,0 +1,8 @@
+{# @description daisyUI's kbd: a key-cap-styled <kbd> for a keyboard shortcut, such as Ctrl or K. The table's gallery entry shows a key combination beside a service name. #}
+{# @prop text:text | description:"Key text, shown before the default slot." #}
+{# @prop size:select['xs','sm','md','lg','xl'] | description:"Kbd size." #}
+{# @prop class:text | description:"Extra classes added to the kbd." #}
+{# @slot K — Content shown after the text. #}
+{% load daisy_cotton %}
+<c-vars text="" size="" class="" />
+<kbd class="kbd {% variation size "kbd" "xs,sm,md,lg,xl" %} {{ class }}" {{ attrs }}>{{ text }}{{ slot }}</kbd>

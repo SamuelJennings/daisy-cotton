@@ -1,0 +1,17 @@
+{# @description One event in a timeline, used inside timeline. A leading and a trailing hr, both hidden from assistive technology, bracket every item so consecutive events share one connector line that stops at the first and last item. #}
+{# @prop start:text | description:"Content shown in timeline-start, usually a date. Fill the start slot instead for markup." #}
+{# @prop middle:text | description:"Content shown in timeline-middle, usually an icon on the line. Fill the middle slot instead for markup." #}
+{# @prop end:text | description:"Content shown in timeline-end, usually a label or description. Fill the end slot instead for markup." #}
+{# @prop box:select['end','start'] | description:"Wrap the given part in timeline-box. The bare attribute means end; give box=\"start\" to wrap the start part instead." #}
+{# @prop class:text | description:"Extra classes added to the item." #}
+{# @slot:start — A date or label in timeline-start, in place of the start attribute. #}
+{# @slot:middle — Content in timeline-middle, usually an icon. #}
+{# @slot:end — A label or description in timeline-end, in place of the end attribute. #}
+<c-vars start="" middle="" end="" box="" class="" />
+<li class="group/item {{ class }}" {{ attrs }}>
+  <hr class="group-first/item:hidden" aria-hidden="true" />
+  {% if start %}<div class="timeline-start{% if box == "start" %} timeline-box{% endif %}">{{ start }}</div>{% endif %}
+  {% if middle %}<div class="timeline-middle">{{ middle }}</div>{% endif %}
+  {% if end %}<div class="timeline-end{% if box and box != "start" %} timeline-box{% endif %}">{{ end }}</div>{% endif %}
+  <hr class="group-last/item:hidden" aria-hidden="true" />
+</li>

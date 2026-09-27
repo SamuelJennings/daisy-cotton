@@ -9,6 +9,7 @@ guard. These tests cover the tags' own branches directly.
 """
 
 import re
+
 import pytest
 
 from daisy_cotton.templatetags.daisy_cotton import responsive, unique_id, variation

@@ -1,0 +1,20 @@
+{# @description daisyUI's stat: title, value and description text, in that order, with an optional figure such as an icon and optional actions. A stat is always placed inside a stats group, even when it is alone. A value given as a number reaches the template as a number and renders as text; formatting it is the caller's job. #}
+{# @prop title:text | description:"Heading text, shown in stat-title. Fill the title slot instead for rich content such as an icon or badge." #}
+{# @prop value:text | description:"The figure itself, shown in stat-value. Fill the value slot instead for rich content. 0 renders; formatting a number is the caller's job." #}
+{# @prop desc:text | description:"Description text, shown in stat-desc. Fill the desc slot instead for rich content." #}
+{# @prop figure:text | description:"Content shown in stat-figure, such as an icon. Fill the figure slot for markup." #}
+{# @prop actions:text | description:"Content shown in stat-actions, usually buttons. Fill the actions slot for markup." #}
+{# @prop class:text | description:"Extra classes added to the stat." #}
+{# @slot:figure <i class="bi bi-download" aria-hidden="true"></i> — Content in stat-figure, such as an icon hidden from assistive technology. #}
+{# @slot:title — A heading in place of the title attribute, for rich content such as an icon or badge. #}
+{# @slot:value — The value in place of the attribute, for rich content. #}
+{# @slot:desc — Description text in place of the attribute, for rich content. #}
+{# @slot:actions <button class="btn btn-sm btn-primary">Withdraw</button> — Content in stat-actions, usually buttons. #}
+<c-vars title="" value="" desc="" figure="" actions="" class="" />
+<div class="stat {{ class }}" {{ attrs }}>
+  {% if figure %}<div class="stat-figure">{{ figure }}</div>{% endif %}
+  {% if title %}<div class="stat-title">{{ title }}</div>{% endif %}
+  {% if value or value == 0 %}<div class="stat-value">{{ value }}</div>{% endif %}
+  {% if desc %}<div class="stat-desc">{{ desc }}</div>{% endif %}
+  {% if actions %}<div class="stat-actions">{{ actions }}</div>{% endif %}
+</div>

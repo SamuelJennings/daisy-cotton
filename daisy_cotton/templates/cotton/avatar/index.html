@@ -1,26 +1,15 @@
-{# @description A user avatar: a photo, or initials, or a plain silhouette when neither is given, with an optional online or offline indicator. #}
-{# @prop src:text | description:"URL of a profile photo. Falls back to the placeholder text, then to a silhouette. This package resolves no URL itself; pass the resolved URL in." #}
-{# @prop alt:text | default:"User avatar" | description:"Alt text of the photo." #}
-{# @prop size:text | default:"md" | description:"One of xs, sm, md, lg, xl or xxl, or any Tailwind width class such as w-16." #}
-{# @prop :size_options:text | description:"Dynamic attribute: the map from each size name to its width class. Set on the component itself; the caller normally leaves it alone." #}
-{# @prop shape:select['rounded','rounded-xl','rounded-full'] | default:"rounded-full" | description:"Corner shape." #}
-{# @prop variant:select['neutral','primary','secondary','accent','info','success','warning','error'] | default:"primary" | description:"Background colour of the initials. The silhouette is always muted." #}
-{# @prop status:select['online','offline'] | description:"Presence indicator. Leave empty to show none." #}
-{# @prop placeholder:text | description:"Initials or short text shown when there is no photo." #}
-{# @prop class:text | description:"Extra classes added to the avatar wrapper." #}
-{% load cotton %}
-<c-vars src
-        alt="User avatar"
-        size="md"
-        :size_options="{'xs': 'w-6', 'sm': 'w-8', 'md': 'w-12', 'lg': 'w-16', 'xl': 'w-24', 'xxl': 'w-32'}"
-        shape="rounded-full"
-        variant="primary"
-        status
-        placeholder
-        class />
-<div class="avatar{% if not src %} avatar-placeholder{% endif %}{% if status %} avatar-{{ status }}{% endif %}{% if class %} {{ class }}{% endif %}"
+{# @description daisyUI's avatar: a photo, initials, or a silhouette when neither is given, with an optional online or offline indicator. Give alt when the avatar is the only thing identifying the person — beside a name it is usually noise. Width, shape and placeholder colour go through content_class, not a size or variant attribute. #}
+{# @prop src:text | description:"URL of a profile photo. Falls back to placeholder text, then to a silhouette. This package resolves no URL itself; pass the resolved URL in." #}
+{# @prop alt:text | description:"Alt text of the photo. Leave empty unless the avatar is the only thing identifying the person." #}
+{# @prop placeholder:text | description:"Initials or short text shown when there is no src." #}
+{# @prop online:boolean | description:"Presence indicator: avatar-online." #}
+{# @prop offline:boolean | description:"Presence indicator: avatar-offline." #}
+{# @prop content_class:text | description:"Extra classes for the image frame, replacing the w-12 rounded-full default (plus bg-neutral text-neutral-content with no src) entirely. Sets the avatar's width and shape." #}
+{# @prop class:text | description:"Extra classes added to the avatar." #}
+<c-vars src="" alt="" placeholder="" online="" offline="" content_class="" class="" />
+<div class="avatar{% if not src %} avatar-placeholder{% endif %}{% if online %} avatar-online{% endif %}{% if offline %} avatar-offline{% endif %} {{ class }}"
      {{ attrs }}>
-  <div class="{% firstof size_options|get_item:size size %} {{ shape }}{% if src %}{% elif placeholder %} bg-{{ variant }} text-{{ variant }}-content{% else %} bg-base-300 text-base-content/40{% endif %}">
+  <div class="{% if content_class %}{{ content_class }}{% else %}w-12 rounded-full{% if not src %} bg-neutral text-neutral-content{% endif %}{% endif %}">
     {% if src %}
       <img src="{{ src }}" alt="{{ alt }}" />
     {% elif placeholder %}
@@ -30,8 +19,9 @@
            width="80%"
            height="80%"
            fill="currentColor"
-           class="bi bi-person-fill"
-           viewBox="0 0 16 16">
+           viewBox="0 0 16 16"
+           aria-hidden="true"
+           focusable="false">
         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
       </svg>
     {% endif %}
