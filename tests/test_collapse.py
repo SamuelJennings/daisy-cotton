@@ -185,6 +185,30 @@ class TestCollapsePageContextDoesNotLeak:
         assert root.get("open") is None
 
 
+class TestCollapseFocusRing:
+    """FR-006, US4-2: the summary carries a focus-visible outline, since
+    daisyUI draws no focus ring of its own on collapse-title (research R5,
+    the accessibility run)."""
+
+    def test_collapse_summary_carries_the_focus_visible_outline(
+        self, cotton_render_string
+    ):
+        html = cotton_render_string('<c-collapse title="Details">Content</c-collapse>')
+        root_classes = _class_attrs_on(html, "summary")
+        assert "focus-visible:outline-2" in root_classes[0]
+        assert "focus-visible:-outline-offset-2" in root_classes[0]
+
+    def test_accordion_summary_carries_the_focus_visible_outline(
+        self, cotton_render_string
+    ):
+        html = cotton_render_string(
+            '<c-accordion name="faq" title="Question">Answer</c-accordion>'
+        )
+        root_classes = _class_attrs_on(html, "summary")
+        assert "focus-visible:outline-2" in root_classes[0]
+        assert "focus-visible:-outline-offset-2" in root_classes[0]
+
+
 class TestAccordionDrawnByCollapse:
     """AS8: <c-accordion> is drawn by <c-collapse> and accepts every collapse
     attribute and slot — arrow, plus, open, class and the title slot all
