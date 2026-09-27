@@ -114,11 +114,11 @@ Shared rules, applied everywhere below (FS-006's, unchanged):
 
 ### Hover gallery (US5)
 
-`hover-gallery.html` — `<c-vars class="" />`, `<figure class="hover-gallery {{ class }}" {{ attrs }}>{{ slot }}</figure>`. No width of its own (FR-021). The description carries FR-022's three rules and that every image stays available to screen readers.
+`hover_gallery.html` — `<c-vars class="" />`, `<figure class="hover-gallery {{ class }}" {{ attrs }}>{{ slot }}</figure>`. No width of its own (FR-021). The description carries FR-022's three rules and that every image stays available to screen readers.
 
 ### Hover 3D card (US6)
 
-`hover-3d.html` — `<c-vars href="" class="" />`.
+`hover_3d.html` — `<c-vars href="" class="" />`.
 
 ```
 {% with element=href|yesno:"a,div" %}
@@ -131,7 +131,7 @@ Shared rules, applied everywhere below (FS-006's, unchanged):
 
 ### Text rotate (US7)
 
-`text-rotate.html` — `<c-vars content_class="" class="" />`.
+`text_rotate.html` — `<c-vars content_class="" class="" />`.
 
 ```
 <span class="text-rotate {{ class }}" {{ attrs }}><span{% if content_class %} class="{{ content_class }}"{% endif %}>{{ slot }}</span></span>
@@ -190,9 +190,9 @@ daisy_cotton/templates/cotton/
 ├── chat.html                                 # new (US2)
 ├── countdown.html                            # new (US3)
 ├── diff.html                                 # new (US4)
-├── hover-gallery.html                        # new (US5)
-├── hover-3d.html                             # new (US6)
-├── text-rotate.html                          # new (US7)
+├── hover_gallery.html                        # new (US5)
+├── hover_3d.html                             # new (US6)
+├── text_rotate.html                          # new (US7)
 ├── mockup/browser.html, mockup/window.html, hero.html, card/index.html   # annotations only
 tests/
 ├── test_carousel.py, test_chat.py, test_countdown.py, test_diff.py,
@@ -202,7 +202,7 @@ pyproject.toml                # new test modules in non-mirror-paths
 README.md, CHANGELOG.md
 ```
 
-**Structure Decision**: a component with a part is a folder (`carousel/index.html` + `carousel/item.html`), matching `stat/`. The others are single files. The carousel is a folder component, so its sidebar link is one of the skipped cases in `tests/test_gallery_links.py` until the gallery's index-file fix ships, which that test handles with no edit.
+**Structure Decision**: Cotton resolves a hyphenated tag to an underscored file name, so `<c-hover-gallery>`, `<c-hover-3d>` and `<c-text-rotate>` live in `hover_gallery.html`, `hover_3d.html` and `text_rotate.html` (decisions D10). A component with a part is a folder (`carousel/index.html` + `carousel/item.html`), matching `stat/`. The others are single files. The carousel is a folder component, so its sidebar link is one of the skipped cases in `tests/test_gallery_links.py` until the gallery's index-file fix ships, which that test handles with no edit.
 
 ## Story order
 
