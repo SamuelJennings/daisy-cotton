@@ -58,6 +58,15 @@
         "SPEC-001 high: applied as plan/tasks edits (D5)",
         "SPEC-002, ARCH-001 medium; SPEC-003, SPEC-004 low: applied as plan/tasks edits (D5)"
       ]
+    },
+    "review": {
+      "approved_by": "review-panel",
+      "at": "2026-09-27T14:52:31Z",
+      "self_resolved": [
+        "COR-001, COR-002 medium: fixed (D7)",
+        "COR-003..COR-006 low: fixed (D7)",
+        "accessibility run: collapse focus ring fixed (D7)"
+      ]
     }
   },
   "stories": [

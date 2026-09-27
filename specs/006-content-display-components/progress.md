@@ -207,3 +207,9 @@ Did: card's `@slot:figure` example alt now reads "A pair of running shoes" inste
 Verified: `uv run python manage.py cotton_lint --warnings-as-errors` — 31/32 clean, 0 errors, 0 warnings. `uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_card.py tests/test_collapse.py -q` — 233 passed. `uv run pre-commit run --files daisy_cotton/templates/cotton/card/index.html daisy_cotton/templates/cotton/collapse.html daisy_cotton/templates/cotton/accordion.html` — all hooks passed (no ruff hooks apply to `.html`).
 Next: none — FIX-1 (T025-T029) complete pending the story's one-time full verify.
 Watch: a pre-existing uncommitted formatting-only diff in `tests/test_content_display_no_script.py` (outside this story's file scope) was present in the worktree before this run started and is still there; left untouched throughout, noted in concerns.
+
+## 2026-09-27T14:52Z · Review
+
+Did: one reviewer, approve, two medium and four low findings, all fixed with the collapse focus ring from the accessibility run (T025-T029, D7). Each remedy verified by breaking it: the suite fails.
+Verified: uv run pytest 609 passed, 9 skipped. Accessibility run clean apart from the theme's soft-badge contrast.
+Next: walkthrough.
