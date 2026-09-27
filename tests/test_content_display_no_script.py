@@ -44,11 +44,15 @@ CALLER_STRINGS = {
 class TestContentDisplayNoScript:
     """The rendered output of every component carries no script."""
 
-    @pytest.mark.parametrize("source", CALLER_STRINGS.values(), ids=CALLER_STRINGS.keys())
+    @pytest.mark.parametrize(
+        "source", CALLER_STRINGS.values(), ids=CALLER_STRINGS.keys()
+    )
     def test_rendered_output_has_no_script_element(self, cotton_render_string, source):
         assert "<script" not in cotton_render_string(source).lower()
 
-    @pytest.mark.parametrize("source", CALLER_STRINGS.values(), ids=CALLER_STRINGS.keys())
+    @pytest.mark.parametrize(
+        "source", CALLER_STRINGS.values(), ids=CALLER_STRINGS.keys()
+    )
     def test_rendered_output_has_no_event_handler_attribute(
         self, cotton_render_string, source
     ):
