@@ -61,3 +61,21 @@ Extended `tests/test_animated_display_no_script.py` with the hover gallery's cal
 Verified: `uv run pytest tests/test_hover_gallery.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q` — 350 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — exit 0, 52/60 clean, 0 errors, 0 warnings (the pre-existing `aria_label` heuristic hint on `breadcrumbs`/`carousel`/`diff`/`dock`/`megamenu`/`navbar`, T001/T007). `uv run ruff check`/`uv run ruff format` clean on the new/edited test files. All 7 tests observed failing on `TemplateDoesNotExist` before the template existed (first against the hyphenated filename, again against the underscore one before it was created), then passing after.
 Next: T010 — gallery annotations for `hover-gallery`, the card's `@slot:figure` composition, README and CHANGELOG.
 Watch: nothing new.
+
+## 2026-09-27T23:50Z · Implementer US5 · T010
+
+Did: `hover_gallery.html`'s `@description` (written with the template in T009) already carries daisyUI's
+three rules, that every image stays available to screen readers and only the hover effect needs a pointer,
+and names the card entry for a gallery inside a card; added the missing "a decorative image takes alt=\"\""
+sentence (Edge Cases), and its `@slot` already holds four same-size daisyUI hat images with alt (D10). The
+`card` entry's `@slot:figure` is now a gallery of the same four hat images with alt, inside a `<c-vars>`
+`<figure>` before the body — its example calls `<c-hover_gallery>` rather than `<c-hover-gallery>` (D11: the
+gallery lint's unknown-component check compares literally against the catalog's filename-derived tag,
+`hover_gallery`, with no hyphen/underscore folding; both forms render identically). README: count 59 → 60,
+`hover-gallery` added to the alphabetical list between `hero` and `icon`. CHANGELOG: an `Added` entry for
+`<c-hover-gallery>`.
+Verified: `uv run pytest tests/test_hover_gallery.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_card.py tests/test_gallery_links.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q` — 615 passed, 17 skipped (the same pre-existing folder-component gallery defect, issue #96, T002 already recorded — `hover_gallery` and `card` are not folder components and are not among the skips). `uv run python manage.py cotton_lint --warnings-as-errors` — exit 0, 52/60 clean, 0 errors, 0 warnings. `uv run ruff check`/`uv run ruff format --check` clean on the touched test files. Additionally rendered the card's annotated `@slot:figure` by hand through `AnnotationParser().parse()` + the Cotton compiler: no error, the card's figure holds a `hover-gallery` figure with the four hat images and their alt text, in order.
+Next: US5 done.
+Watch: the same `<c-hover-3d>`/`<c-text-rotate>` vs gallery-lint filename mismatch (D10/D11's cause) will
+recur the first time US6 or US7 writes either tag into a scanned `.html` composition, not just its own
+component's tests.

@@ -126,3 +126,22 @@ new tests failed with `TemplateDoesNotExist: cotton/hover_gallery/index.html` ag
 filename, and passed once renamed to the underscore form.
 
 **ADR:** none — a fixed behaviour of the templating library already in use, not a design choice.
+
+## D11 — The card's `@slot:figure` example calls `<c-hover_gallery>`, not `<c-hover-gallery>`
+
+The gallery's own unknown-component lint (`django_cotton_gallery.core.linter._scanners.scan_unknown_components`)
+compares a template's `<c-X>` references against `known_tags` built verbatim from each catalog component's
+file name (`Component.path`, from `scanner.py`'s `file.stem`) — it does not apply django-cotton's own
+hyphen-to-underscore normalization. D10 already named the component's file `hover_gallery.html`, so the
+catalog's only known tag for it is `hover_gallery`; a `<c-hover-gallery>` reference anywhere the lint scans
+(a `.html` file under `cotton/`) is flagged `unknown-component`, even though it renders correctly. `card`'s
+`@slot:figure` annotation is one such scanned file, so its example calls `<c-hover_gallery>`. Both forms
+render identically — Cotton's own resolver folds `-` to `_` before ever comparing to the gallery's
+underscore-only view — so this changes nothing about what the gallery entry shows. Verified by rendering the
+annotation's parsed `content` by hand through `AnnotationParser` + the Cotton compiler: the card's figure
+holds a `hover-gallery` figure with the four hat images and their alt text, in order.
+
+**ADR:** none — a workaround for the same underlying gallery-linter limitation D10 names, not a design
+choice. Flagged in `concerns`: US6 (`hover-3d`) and US7 (`text-rotate`) will hit the identical mismatch the
+first time either tag is written into a scanned `.html` file (a gallery composition), not just their own
+component's tests.

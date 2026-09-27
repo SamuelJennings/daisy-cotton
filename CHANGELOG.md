@@ -129,6 +129,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `diff-resizer`, in that order. Both items stay available to assistive technology whatever the
   resizer's position; dragging it needs a pointer. `aria-label` has no default: the component cannot
   invent a name.
+- `<c-hover-gallery>`: daisyUI's hover gallery, a `<figure>` carrying `hover-gallery` holding the
+  default slot of images, with no width class of its own. Every image stays available to assistive
+  technology; only the hover effect needs a pointer.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
