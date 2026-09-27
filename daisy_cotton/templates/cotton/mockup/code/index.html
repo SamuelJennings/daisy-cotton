@@ -1,3 +1,5 @@
 {# @description A terminal-style code block. Fill it with mockup.code.line components, one per line of the command or output. #}
+{# @prop class:text | description:"Extra classes added to the code block." #}
 {# @slot — The code lines, as mockup.code.line components. #}
-<div class="mockup-code w-full">{{ slot }}</div>
+<c-vars class />
+<div class="mockup-code w-full {{ class }}" tabindex="0" {{ attrs }}>{{ slot }}</div>

@@ -33,3 +33,10 @@ Did: `mockup/browser.html`, `phone.html` and `window.html` declare `class`, merg
 Verified: `uv run pytest tests/test_mockup.py` 22 passed; gallery, render-all and class-merge suites green; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T005 code mockup.
 Watch: none.
+
+## 2026-09-27T01:40Z · Implementer US3+US8 · T005
+
+Did: `mockup/code/index.html` declares `class`, merges it, spreads attributes and sets `tabindex="0"`. `mockup/code/line.html` declares `prefix`, `text` and `class` with empty defaults, writes `data-prefix` only when a prefix is given, and puts `class` and attributes on the `<pre>`. The two prefix tests and the module docstring in `tests/test_mockup_code.py` are rewritten as decisions.md D2 describes (the first is renamed `test_a_line_has_no_prefix_by_default`, since its old name states the retired behaviour); new tests cover the root behaviour.
+Verified: `uv run pytest tests/test_mockup_code.py` 12 passed; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T006 slot examples and changelog.
+Watch: the renamed test may show up in a tamper check as a removed test name; D2 authorises it.
