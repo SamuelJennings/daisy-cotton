@@ -64,6 +64,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   from the megamenu's id (given as `megamenu`) and the item's `key`.
 - `responsive` and `variation`, the two generic Cotton-attribute helper tags several of the
   above components use, in a small `daisy_cotton` templatetag library.
+- `unique_id`, a `daisy_cotton` template tag returning a prefix plus eight lowercase hex
+  characters, different on every call. `<c-dropdown>` uses it to give its panel an id when the
+  caller gives none.
+- `<c-swap>`: daisyUI's checkbox-driven swap. `rotate`, `flip` and `active` map to `swap-rotate`,
+  `swap-flip` and `swap-active`; `label` names the checkbox for assistive technology; `checked`,
+  `disabled`, `name` and `value` land on the checkbox, and everything else lands on the wrapper.
+  `on` and `off` slots always render in `swap-on`/`swap-off`, and an `indeterminate` slot renders
+  in `swap-indeterminate` when given. The checkbox accepts extra classes through `input_class` —
+  a theme toggle is `input_class="theme-controller" value="dark"`; the theme controller has no
+  component of its own, since a plain `<c-swap>` already covers it.
+- `<c-fab>`: daisyUI's floating action button. The default trigger is a large circular
+  `<c-button>` receiving the FAB's own extra attributes and explicitly focusable, so a click
+  opens it in every browser; a `button` slot replaces it entirely. `flower` maps to `fab-flower`;
+  `close` and `main_action` slots render in `fab-close`/`fab-main-action`, taking the trigger's
+  place while the FAB is open. `class` lands on the wrapper only and never reaches the default
+  trigger.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
@@ -102,6 +118,33 @@ decision.
 - Django 6.1 is supported and tested.
 - The demo project is the component gallery alone: a plain Cotton and daisyUI page with a theme
   switcher, needing no other package behind it.
+- `<c-button>`: `size` accepts daisyUI's full `xs`–`xl` scale (previously `sm`–`lg`); `dash`,
+  `soft`, `link`, `active`, `wide`, `square` and `circle` are new booleans (on main they reached the
+  element as raw attributes and did nothing); `full` is renamed `block`, daisyUI's own
+  name for the modifier. `align`, `reverse` and `condition` are removed: set layout with `class`,
+  put an icon after the text in the default slot, and wrap the tag in `{% if %}` for a conditional
+  button. The icon is now hidden from assistive technology (`aria-hidden="true"`); an icon-only
+  button needs a caller-supplied `aria-label` for its accessible name. A disabled link (`href` and
+  `disabled` together) now carries `btn-disabled`, `aria-disabled="true"`, `role="button"` and
+  `tabindex="-1"` instead of a native `disabled` attribute, which links cannot carry.
+- `<c-modal>`: drops the inner `<c-card>` for daisyUI's own plain box, so `class` now lands on the
+  `<dialog>` instead of the card — put an inner surface's own classes in `content_class`. `size`,
+  `icon`, `footer` and `footer_end` are removed: put a `<c-card>` in the default slot for a card
+  inside a modal, and size the box with `content_class`. The `actions` slot now renders in
+  daisyUI's actions row at the foot of the box instead of the card header. `position` is renamed `placement` and
+  gains `middle` alongside `top`, `bottom`, `start` and `end`. `title` now renders as a heading
+  that names the dialog (`aria-labelledby`) instead of forwarding to the card.
+- `<c-dropdown>`: moves to daisyUI's popover method — the trigger is a real `<button>` with
+  `popovertarget`, and the browser handles opening, closing on Escape and on an outside click,
+  and reporting the open state, with no script. `valign` and `halign` are replaced by a single
+  `placement` taking one side and one alignment, e.g. `placement="top end"`. `full` and `hover`
+  are removed: the popover method offers neither. `class` now lands on the wrapper only and
+  never reaches the default trigger. The panel no longer carries `dropdown-content`, `tabindex`,
+  `z-50` or a border — put those in `content_class` if a project needs them. `id` now names the
+  panel instead of passing through to the wrapper or the trigger. A custom `button` slot trigger
+  opens the panel only if it is a button carrying `popovertarget` set to the dropdown's `id`,
+  `type="button"` and `style="anchor-name: --<id>"`, so a dropdown with a custom trigger needs an
+  `id`. A `<div tabindex="0" role="button">` trigger no longer opens anything.
 - `link` no longer defaults `href` to `#`: without an `href` it renders an anchor with no `href` attribute.
   Write `href="#"` to keep the old result. Its `variant` accepts daisyUI's eight link colours
   (`neutral`, `primary`, `secondary`, `accent`, `info`, `success`, `warning`, `error`) and adds no class for any other value.
