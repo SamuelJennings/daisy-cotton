@@ -217,3 +217,32 @@ Next: T012 (FAB).
 Watch: US4 done-check satisfied for scenarios 1, 3-6; scenario 2 (in-browser keyboard) and
 scenario 7's gallery walk are T013's. Scenario 8 (gallery entry showing the styles/states) is
 covered by the annotations above plus T013's browser walk.
+
+## 2026-09-27T09:52Z · Implementer US5 · T012
+
+Did: `fab.html`: a `<div class="fab">` wrapper carrying `class` and pass-through attributes
+only when a custom trigger replaces the default; `flower` maps to `fab-flower`; the default
+trigger is `<c-button type="button" size="lg" circle tabindex="0" :attrs="attrs" />`, written
+before `:attrs` so a caller's `size`, `variant`, `icon` and `aria-label` override the defaults
+(research R4); `close` and `main_action` slots render in `fab-close`/`fab-main-action` only when
+given; the default slot's actions render as direct children after them; a `button` slot
+replaces the default trigger entirely. Every declared name has an empty default, and the FAB's
+own `class` never reaches the default trigger (D6).
+Gallery annotations: `@description` tells the viewer to type `icon="bi bi-plus-lg"
+aria-label="Actions"` in the attributes field (D5); the default `@slot` shows three actions
+(two icon-only, one labelled); `@slot:close` and `@slot:main_action` have no example and give
+the markup; `@slot:button` names the focusability/tabindex contract.
+Added `tests/test_fab.py` for scenarios 1 and 3-6, and a page context carrying `close`,
+`main_action` and `button` that does not leak in (FR-025-FR-027). Added the module to
+`pyproject.toml`'s `non-mirror-paths`. README lists `fab` in the component count and list.
+CHANGELOG `Added` records the FAB's trigger, `flower`, `close`/`main_action` and `class`
+behaviour.
+Verified: confirmed RED first (moved `fab.html` aside, `uv run pytest tests/test_fab.py -q` →
+17 failed on `TemplateDoesNotExist`, restored the template) then GREEN — `uv run pytest
+tests/test_fab.py tests/test_gallery_lint.py tests/test_gallery_annotations.py
+tests/test_declared_attributes.py -q` → 195 passed. `uv run python manage.py cotton_lint
+--warnings-as-errors` → 22/23 clean, 0 errors/0 warnings (exit 0). `uv run djlint
+daisy_cotton/templates/cotton/fab.html --check` → 0 files would be updated.
+Next: batch 2 checkpoint — full suite, cotton_lint, pre-commit.
+Watch: US5 done-check satisfied for scenarios 1, 3-6; scenario 2 (in-browser keyboard) and
+scenario 7's gallery walk are T013's.

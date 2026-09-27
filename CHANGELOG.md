@@ -35,6 +35,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   in `swap-indeterminate` when given. The checkbox accepts extra classes through `input_class` —
   a theme toggle is `input_class="theme-controller" value="dark"`; the theme controller has no
   component of its own, since a plain `<c-swap>` already covers it.
+- `<c-fab>`: daisyUI's floating action button. The default trigger is a large circular
+  `<c-button>` receiving the FAB's own extra attributes and explicitly focusable, so a click
+  opens it in every browser; a `button` slot replaces it entirely. `flower` maps to `fab-flower`;
+  `close` and `main_action` slots render in `fab-close`/`fab-main-action`, taking the trigger's
+  place while the FAB is open. `class` lands on the wrapper only and never reaches the default
+  trigger.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is

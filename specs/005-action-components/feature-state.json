@@ -279,8 +279,25 @@
       "tasks": [
         {
           "id": "T012",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_fab.py tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_declared_attributes.py -q: 195 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 22/23 clean, 0 errors/0 warnings, exit 0",
+              "uv run djlint daisy_cotton/templates/cotton/fab.html --check: 0 files would be updated"
+            ],
+            "tests": [
+              "tests/test_fab.py::TestFabTrigger",
+              "tests/test_fab.py::TestFabNoActions",
+              "tests/test_fab.py::TestFabFlower",
+              "tests/test_fab.py::TestFabCloseAndMainAction",
+              "tests/test_fab.py::TestFabCustomTrigger",
+              "tests/test_fab.py::TestFabClassAndWrapper",
+              "tests/test_fab.py::TestFabGalleryAnnotations",
+              "tests/test_fab.py::TestFabContextLeak"
+            ]
+          }
         }
       ]
     }
