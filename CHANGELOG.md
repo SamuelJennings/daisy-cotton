@@ -45,6 +45,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   rendered in that order, a `figure` slot and an `actions` slot; a value of `0` still renders.
   `<c-stat.group>` accepts `vertical` and `horizontal`, each a boolean or a breakpoint, as
   `stats-vertical`/`stats-horizontal` or their responsive form.
+- `<c-list>` and `<c-list.row>`: daisyUI's list, a `<ul>` carrying `list` holding `<c-list.row>`
+  items, each an `<li>` carrying `list-row`. A row's own children reach `list-col-grow` and
+  `list-col-wrap` through their own `class`, as the row's documentation shows.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
