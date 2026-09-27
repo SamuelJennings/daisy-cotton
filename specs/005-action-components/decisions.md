@@ -52,3 +52,65 @@ daisyUI's FAB opens while its trigger has focus, and its examples use `<div tabi
 ## Priorities
 
 Priorities reflect how many adopters need each component: the button everywhere (P1), the modal and dropdown in most applications (P2), the swap and FAB in some (P3).
+
+## D1 — Built on main while two other component pull requests are open
+
+Pull requests #101 (navigation components) and #102 (layout components) are open and unmerged.
+This feature branches from main and builds on neither. All three change the README's component
+count and list and append to the CHANGELOG, so whichever merges later resolves those lines by
+hand. None touches another's templates. #102 narrows the `responsive` tag in the same template tag
+module this feature adds `unique_id` to, which is a line-level merge.
+
+**ADR:** none — a sequencing note for concurrent branches, nothing downstream inherits it.
+
+## D2 — The pre-existing button, dropdown and modal tests are rewritten
+
+`tests/test_button.py` asserts `condition`, which the approved spec removes (FR-011).
+`tests/test_dropdown.py` asserts `valign`, `halign`, `full`, `hover`, the `dropdown-content` panel
+and the focus-method trigger, all of which FR-017 and FR-020 replace. `tests/test_modal.py`
+asserts `position`, `size` and the inner card, which FR-014 and FR-016 remove. Each module is
+rewritten to the new contract in its story (T001, T004, T008). The behaviours they guarded that
+survive (`size` sets the button's size, an undeclared attribute passes through, `class` and
+`content_class` land where they should) are asserted again in the new modules.
+
+**Why:** Article I forbids changing a pre-existing test without a recorded decision. This is it.
+
+**ADR:** none — local to this feature's approved breaking changes, recorded in the CHANGELOG.
+
+## D3 — The modal's gallery entry cannot open the dialog from its trigger
+
+The gallery 1.0.0 puts a `@trigger` inside the component's default slot (research R3), so the
+modal's trigger sits inside the closed dialog where nothing can reach it. This is already true on
+main. Scenario US2-7 asks for each placement, the closable variant and a modal with actions to be
+opened from a trigger button in the gallery. The entry does the closest the tool allows: the
+`@trigger` annotation shows the trigger's markup, and the `open` toggle shows each placement, the
+close button and the actions row rendered. The in-browser check of opening from a trigger,
+Escape and focus return runs in the accessibility run instead (T013), against the same template.
+
+**Falls short of US2-7** as written. This goes to Sam at the walkthrough.
+
+**Revisit if:** a gallery release renders a trigger outside the component tag.
+
+**ADR:** none — a workaround for one tool version, recorded here and in research R3.
+
+## D4 — `open` shows the dialog without making it modal
+
+`<dialog open>` is the only way to show a dialog from markup alone. The browser then treats it as
+non-modal: Escape does not close it and focus is not trapped. The backdrop and the close button
+still close it, because both are `method="dialog"` forms. Scenario US2-6 asks only that the
+modal is already shown, which this does. A project that needs the re-rendered dialog to be modal
+calls `showModal()` on load, which is the project's script, not the package's. The `open`
+description says so.
+
+**ADR:** none — a property of the HTML element, documented on the prop.
+
+## D5 — Forwarded trigger attributes are typed into the gallery by hand
+
+The dropdown's and FAB's default triggers are drawn from the attributes the caller gives the
+component (FR-018, FR-026). The gallery lists only declared props and has no way to prefill the
+extra-attributes field, so their previews open with an unlabelled trigger. Declaring `text`,
+`icon`, `variant` and the rest on each component to fill the gallery would duplicate half the
+button's vocabulary and still leave the other half forwarded. The descriptions tell the viewer
+which attributes to type (`text="Options"`, or `icon="bi bi-plus-lg" aria-label="Actions"`).
+
+**ADR:** none — an annotation choice for two components.
