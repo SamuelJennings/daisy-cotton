@@ -2,7 +2,19 @@
 
 from html.parser import HTMLParser
 
+from pathlib import Path
+
 import pytest
+from django_cotton_gallery.core.annotations import AnnotationParser
+
+import daisy_cotton
+
+DIVIDER = (
+    Path(next(iter(daisy_cotton.__path__))).resolve()
+    / "templates"
+    / "cotton"
+    / "divider.html"
+)
 
 COLOURS = [
     "neutral",
@@ -237,3 +249,39 @@ class TestDividerIgnoresPageContext:
         assert div["role"] == "separator"
         assert classes(soup) == ["divider"]
         assert "Leaked" not in soup.get_text()
+
+
+class TestDividerAnnotations:
+    @pytest.fixture
+    def parsed(self):
+        return AnnotationParser().parse(DIVIDER.read_text())
+
+    def test_variant_offers_the_eight_colours(self, parsed):
+        prop = next(p for p in parsed.props if p.clean_name == "variant")
+
+        assert prop.type == "select"
+        assert list(prop.options) == COLOURS
+
+    def test_placement_offers_start_and_end(self, parsed):
+        prop = next(p for p in parsed.props if p.clean_name == "placement")
+
+        assert prop.type == "select"
+        assert list(prop.options) == ["start", "end"]
+
+    @pytest.mark.parametrize("name", ["horizontal", "vertical"])
+    def test_direction_props_are_toggles_that_name_the_breakpoint_form(
+        self, parsed, name
+    ):
+        prop = next(p for p in parsed.props if p.clean_name == name)
+
+        assert prop.type == "boolean"
+        assert "breakpoint" in prop.description
+
+    def test_the_old_position_prop_is_gone(self, parsed):
+        assert "position" not in {p.clean_name for p in parsed.props}
+
+    def test_text_role_and_class_are_documented(self, parsed):
+        assert {"text", "role", "class"} <= {p.clean_name for p in parsed.props}
+
+    def test_the_default_slot_is_the_only_slot(self, parsed):
+        assert len(parsed.slots) == 1

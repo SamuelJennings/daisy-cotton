@@ -37,6 +37,14 @@ decision.
 
 ### Changed
 
+- `divider`: `vertical` now emits `divider-vertical`, as daisyUI names it. Write `horizontal` to get
+  what `vertical` used to give. Both accept a breakpoint such as `md`; a value that is not a
+  breakpoint emits nothing.
+- `divider`: `position` is renamed `placement`, and `variant` and `placement` ignore values daisyUI
+  does not define.
+- `divider`: the `label` slot is removed. Use the `text` attribute or the default slot.
+- `divider`: an unlabelled divider is a `separator` (with `aria-orientation="vertical"` when
+  `horizontal` is set); a labelled one has no default role. Pass `role` to replace either.
 - The project is built, locked and developed with uv instead of Poetry. Contributors run `uv sync` and `uv run ...` in place of `poetry install` and `poetry run ...`, and the lockfile is now `uv.lock`. The published package is unchanged.
 - Django 6.1 is supported and tested.
 - The demo project is the component gallery alone: a plain Cotton and daisyUI page with a theme

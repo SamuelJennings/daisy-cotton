@@ -19,3 +19,10 @@ Did: `role` declared; an unlabelled divider (no `text`, blank slot) gets `role="
 Verified: `uv run pytest tests/test_divider.py` 35 passed; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T003 annotations and changelog.
 Watch: a caller `role` on an unlabelled horizontal divider gets no `aria-orientation`; the caller owns the role's semantics.
+
+## 2026-09-27T01:20Z · Implementer US3+US8 · T003
+
+Did: divider annotations (`placement` and `variant` as selects, direction toggles naming the breakpoint form, `text`, `role`, `class`, one `@slot`) were written with the template in T001/T002; this task adds tests that read them through the gallery's parser, and the CHANGELOG entries under Changed.
+Verified: `uv run pytest tests/test_divider.py` 42 passed.
+Next: T004 mockups.
+Watch: none.
