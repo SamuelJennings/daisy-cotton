@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   rendered with no wrapper, so give each one the `join-item` class.
 - `footer` + `footer.nav`: a `<footer>` that takes `horizontal` and `vertical` (each with a breakpoint such
   as `sm`) and `placement="center"`, and link groups that are `<nav>` landmarks named by their `title`.
+- `drawer` + `drawer.button`: a sidebar drawer. `id` names its toggle checkbox (never the root element),
+  `open` keeps the sidebar open beside the page, from a breakpoint such as `lg` when given one, and the
+  `side` slot holds the sidebar. `drawer.button` is a `<label>` for that id that opens the drawer without
+  script.
 - `<c-icon>`: a basic primitive that treats `name` as a literal CSS class string
   (`<i class="{{ name }} {{ class }}">`). This package resolves no icon pack of its own — a
   project wanting name-based resolution (an icon font, an SVG sprite, an icon-resolution package)

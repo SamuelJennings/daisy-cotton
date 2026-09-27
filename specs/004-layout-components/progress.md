@@ -96,3 +96,10 @@ Did: `drawer/button.html`: `<label for="{drawer}" class="btn drawer-button {clas
 Verified: `uv run pytest tests/test_drawer.py` 22 passed (six new tests observed failing first); gallery, render-all, declared-attribute and class-merge suites green; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T015 gallery annotations.
 Watch: none.
+
+## 2026-09-27T01:50Z · Implementer US4+US2+US1 · T015
+
+Did: drawer annotations completed: `id` required with no default, `open` toggle naming the `lg` breakpoint form, `placement` select `end`, `class`; `@trigger` the `demo-drawer` opener; default `@slot` the page (responsive divider pattern, `<c-join vertical horizontal="sm">` of three buttons, `<c-footer vertical horizontal="sm">` with two groups); `@slot:side` a menu list; the description tells the viewer to set `id` to `demo-drawer`. `drawer.button` annotations name `drawer` as required and the focus-ring condition. README lists `drawer` + `drawer.button` (count now twenty-six); CHANGELOG Added. Tests read the annotations through the gallery's parser. I also rendered the trigger, page and side example inside `<c-drawer id="demo-drawer">` through the Cotton compiler and read the output: the opener sits in `drawer-content`, its `for` matches the checkbox, divider, join and footer carry their `sm` modifiers.
+Verified: `uv run pytest tests/test_drawer.py` 32 passed; gallery annotation, lint, link and render-all suites 211 passed, 8 skipped; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: full verify and report.
+Watch: the skip count rises from 6 to 8 because `footer` and `drawer` are folder components, which `tests/test_gallery_links.py` already skips with a reason (issue #96).
