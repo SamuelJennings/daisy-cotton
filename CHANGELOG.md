@@ -60,3 +60,8 @@ decision.
 - `responsive`, the `daisy_cotton` template tag `<c-card>`'s `side` and `<c-divider>`'s `vertical` use,
   now ignores a string that is not one of `sm`, `md`, `lg`, `xl`, `2xl` and emits no class for it —
   it previously emitted a class for any non-empty string.
+- `<c-badge>` renders a `<span>` instead of a `<div>`, so it is valid inside a button. `size` gains
+  `xs`, `md` and `xl` alongside the existing `sm` and `lg`; the booleans `dash`, `soft` and `ghost`
+  are added alongside `outline`. Extra attributes, including data attributes, now reach the badge
+  through `{{ attrs }}`, which they previously did not. The internal `size_opts` map and its
+  `get_item` lookup are removed.

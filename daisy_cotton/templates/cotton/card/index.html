@@ -12,7 +12,7 @@
 {# @slot A short paragraph of body copy. — The card body. #}
 {# @slot:title — A heading with card-title, in place of the title attribute. An icon-only title needs an accessible name of its own. #}
 {# @slot:figure <img src="..." alt="..." /> — Content in a <figure> before the body. #}
-{# @slot:actions <c-button text="Buy" /> — Content in a card-actions row at the foot of the body. #}
+{# @slot:actions <c-button text="Cart"><c-badge variant="secondary">3</c-badge></c-button> — Content in a card-actions row at the foot of the body. #}
 {% load daisy_cotton %}
 <c-vars title="" figure="" actions="" size="" border="" dash="" side="" image-full="" content_class="" class="" />
 <div class="card {% variation size "card" "xs,sm,md,lg,xl" %}{% if border %} card-border{% endif %}{% if dash %} card-dash{% endif %} {% responsive side "card-side" %}{% if image_full %} image-full{% endif %} {{ class }}"
