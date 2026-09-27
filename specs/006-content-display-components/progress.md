@@ -172,3 +172,38 @@ Watch: none outstanding.
 Did: all nine stories accepted. Added the no-script test across the group, dropped three unused tag-library loads, corrected the README count and the roadmap's data display line (D6). ADR verdicts recorded on every decision.
 Verified: uv run pytest 604 passed, 9 skipped (the folder-component gallery link skips, #96); pre-commit and cotton_lint clean.
 Next: review.
+
+## 2026-09-27T14:44Z · Implementer FIX-1 · T025
+
+Did: `collapse.html`'s summary carries `focus-visible:outline-2 focus-visible:-outline-offset-2` (review R5/FR-006/US4-2 — daisyUI draws no focus ring of its own on collapse-title). New `TestCollapseFocusRing` in `tests/test_collapse.py`: one test for a bare collapse's summary, one for an accordion's (drawn through the collapse), both observed failing before the class was added.
+Verified: `uv run pytest tests/test_collapse.py -q` — 17 passed (the 2 new tests observed failing on the missing classes before the template change). `uv run python manage.py cotton_lint --warnings-as-errors` — 31/32 clean, 0 errors, 0 warnings. `uv run pre-commit run --files daisy_cotton/templates/cotton/collapse.html tests/test_collapse.py` — ruff-format reformatted the test file on the first pass; re-ran `pytest tests/test_collapse.py -q` after, still 17 passed; second pre-commit pass clean.
+Next: T026.
+Watch: a pre-existing uncommitted formatting-only diff in `tests/test_content_display_no_script.py` (outside this story's file scope) was present in the worktree before this task started; left untouched, noted in concerns.
+
+## 2026-09-27T14:46Z · Implementer FIX-1 · T026
+
+Did: gave `tests/test_card.py`'s actions-at-the-foot test a `<p>Body</p>` element instead of bare text, so BeautifulSoup's `find_all(recursive=False)` returns it as a sibling of the actions div (COR-001 — bare text is not returned by that call, so the actions div was the last element child wherever it sat in the template). Probed on a scratch copy of `card/index.html` (swapped `card-actions` above `{{ slot }}`, `/tmp/card-index-backup.html`): the updated test failed with `assert <p>Body</p> is <div class="card-actions">...`; reverted the probe and the test passed again against the real (unchanged) template.
+Verified: `uv run pytest tests/test_card.py -q` — 21 passed. `uv run pre-commit run --files tests/test_card.py` — all hooks passed, no reformatting. `git diff daisy_cotton/templates/cotton/card/index.html` — empty; only the test changed.
+Next: T027.
+Watch: none outstanding.
+
+## 2026-09-27T14:46Z · Implementer FIX-1 · T027
+
+Did: `modal.html`'s `<c-vars>` gains empty defaults for `class`, `footer`, `footer_end` and `actions` (COR-005 — undeclared, each fell back to a same-named page variable when the caller gave none). New `TestModalCardSurface` asserts the inner card carries `bg-base-100` (COR-002; probed by removing `bg-base-100 shadow-sm` from a backup-restored scratch edit of `modal.html` and watching the test fail, then reverted). New `TestModalPageContextDoesNotLeak` asserts a page-level `class`/`actions`/`footer`/`footer_end` does not reach the modal (observed failing on `class` before the `<c-vars>` fix). Rewrote the `@description` (COR-003 — no longer says title/icon are "not modal props" when both are declared `@prop`s) and the `footer`/`footer_end`/`actions` annotations (new `@prop` for each, `@slot:footer`/`@slot:footer_end` reworded to say they render in a row above the actions). One CHANGELOG `Changed` line (COR-006).
+Verified: `uv run pytest tests/test_modal.py -q` — 12 passed (all pre-existing tests unmodified). `uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_declared_attributes.py tests/test_render_all.py tests/test_class_attribute_merge.py -q` — 269 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — 31/32 clean, 0 errors, 0 warnings. `uv run pre-commit run --files daisy_cotton/templates/cotton/modal.html tests/test_modal.py CHANGELOG.md` — all hooks passed, no reformatting.
+Next: T028.
+Watch: none outstanding.
+
+## 2026-09-27T14:47Z · Implementer FIX-1 · T028
+
+Did: `timeline/item.html`'s `box` annotated `select['end','start']` instead of `boolean` (COR-004 — it takes the string `"start"`, or any other truthy value read as end, not a boolean; matches how the other value-bearing modifiers, card side and stat.group's vertical/horizontal, are annotated). New `test_box_end_adds_timeline_box_to_the_end_part` in `TestTimelineItemBox` — the bare-boolean/`box="start"` pair was already tested; `box="end"` was not.
+Verified: `uv run pytest tests/test_timeline.py -q` — 24 passed (the new `box="end"` test passed against the existing, already-correct template — the fix here is documentation only, no template behaviour changed). `uv run python manage.py cotton_lint --warnings-as-errors` — 31/32 clean, 0 errors, 0 warnings. `uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py -q` — 195 passed. `uv run pre-commit run --files daisy_cotton/templates/cotton/timeline/item.html tests/test_timeline.py` — ruff-format reformatted the test file on the first pass; re-ran `pytest tests/test_timeline.py -q` after, still 24 passed; second pre-commit pass clean.
+Next: T029.
+Watch: none outstanding.
+
+## 2026-09-27T14:47Z · Implementer FIX-1 · T029
+
+Did: card's `@slot:figure` example alt now reads "A pair of running shoes" instead of the placeholder ellipsis; the `@slot:actions` example's button text is `"Cart "` (a trailing space), so the composed accessible name reads "Cart 3" instead of "Cart3" — verified by rendering both the old and new markup through the Cotton compiler directly and reading the output (`<span>Cart</span><span class="badge...">3</span>` versus `<span>Cart </span><span class="badge...">3</span>`). The collapse's and accordion's `title` `@prop` descriptions now say a title is expected, since a control with neither the attribute nor the title slot renders an unnamed `<summary>`. Annotation-only changes; no markup or `<c-vars>` touched.
+Verified: `uv run python manage.py cotton_lint --warnings-as-errors` — 31/32 clean, 0 errors, 0 warnings. `uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_card.py tests/test_collapse.py -q` — 233 passed. `uv run pre-commit run --files daisy_cotton/templates/cotton/card/index.html daisy_cotton/templates/cotton/collapse.html daisy_cotton/templates/cotton/accordion.html` — all hooks passed (no ruff hooks apply to `.html`).
+Next: none — FIX-1 (T025-T029) complete pending the story's one-time full verify.
+Watch: a pre-existing uncommitted formatting-only diff in `tests/test_content_display_no_script.py` (outside this story's file scope) was present in the worktree before this run started and is still there; left untouched throughout, noted in concerns.
