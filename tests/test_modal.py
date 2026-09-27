@@ -71,3 +71,56 @@ class TestModalCardHeight:
     def test_card_gets_full_height_utility(self):
         html = render('<c-modal id="m" position="start">Body</c-modal>')
         assert "h-full" in html
+
+
+class TestModalCardContent:
+    """Title, icon, actions, footer and footer_end forward into the inner card,
+    adjusted to the card's new structure (plan "The modal", research R7)."""
+
+    def test_title_and_icon_render_in_the_cards_title_heading(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup(
+            '<c-modal id="m" title="Confirm" icon="bi bi-info-circle">Body</c-modal>'
+        )
+
+        heading = soup.find("h2", class_="card-title")
+        assert heading is not None
+        assert heading.find("i", class_="bi bi-info-circle") is not None
+        assert "Confirm" in heading.get_text()
+
+    def test_icon_never_reaches_the_card_as_a_raw_attribute(self, cotton_render_string):
+        html = cotton_render_string(
+            '<c-modal id="m" icon="bi bi-info-circle">Body</c-modal>'
+        )
+
+        assert "icon=" not in html
+
+    def test_a_title_only_modal_draws_no_empty_icon(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup(
+            '<c-modal id="m" title="Confirm">Body</c-modal>'
+        )
+
+        heading = soup.find("h2", class_="card-title")
+        assert heading is not None
+        assert heading.find("i") is None
+
+    def test_footer_and_footer_end_render(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup(
+            '<c-modal id="m">'
+            '<c-slot name="footer"><span>Left</span></c-slot>'
+            '<c-slot name="footer_end"><span>Right</span></c-slot>'
+            "Body</c-modal>"
+        )
+
+        assert soup.find("span", string="Left") is not None
+        assert soup.find("span", string="Right") is not None
+
+    def test_actions_render_in_card_actions(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup(
+            '<c-modal id="m"><c-slot name="actions"><button>Save</button></c-slot>Body</c-modal>'
+        )
+
+        actions = soup.find("div", class_="card-actions")
+        assert actions is not None
+        assert actions.find("button").get_text() == "Save"
