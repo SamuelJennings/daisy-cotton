@@ -6,7 +6,7 @@
 
 ## Summary
 
-Twelve new Cotton components (`table`, `collapse`, `accordion`, `list`, `list.row`, `stat`, `stat.group`, `timeline`, `timeline.item`, `kbd`, `status`) and four existing ones rebuilt to the constitution's attribute vocabulary and accessibility bar (`card`, `badge`, `avatar`, `avatar.group`). Each renders daisyUI 5's documented markup, ships no script and carries its gallery annotations. The card moves to daisyUI's figure, body, title and actions structure, and the modal that draws its box with the card is adjusted so it keeps rendering what it rendered before. The only new Python is the `unique_id` tag that names a table's scrolling region by its caption.
+Eleven new Cotton components (`table`, `collapse`, `accordion`, `list`, `list.row`, `stat`, `stat.group`, `timeline`, `timeline.item`, `kbd`, `status`) and four existing ones rebuilt to the constitution's attribute vocabulary and accessibility bar (`card`, `badge`, `avatar`, `avatar.group`). Each renders daisyUI 5's documented markup, ships no script and carries its gallery annotations. The card moves to daisyUI's figure, body, title and actions structure, and the modal that draws its box with the card is adjusted so it keeps rendering what it rendered before. The only new Python is the `unique_id` tag that names a table's scrolling region by its caption.
 
 ## Technical Context
 
@@ -73,7 +73,7 @@ Shared rules, applied everywhere below:
 
 - `icon`, `tight`, `badges`, `footer`, `footer_end`, `body_class` and `bg-base-100 shadow-sm` go (FR-012).
 
-**The modal (research R7).** `modal.html` keeps its public contract on this branch. It declares `title=""` and `icon=""` so they no longer reach the card as raw attributes, and hands the card a `title` slot holding `<c-icon name="{{ icon }}" />` and `<span>{{ title }}</span>` when either is given. `actions` is forwarded as today and now renders in `card-actions` at the foot of the body. `footer` and `footer_end` are rendered by the modal itself, after its body inside the card's default slot, in the same flex row the card used to draw. `class="w-full h-full {{ class }}"` stays, so the existing modal tests stand, and the modal gains a surface class the card no longer adds: `bg-base-100 shadow-sm`, on the `<c-card>` call. The modal's annotations are updated to match. FS-005 replaces this modal wholesale, and whichever lands second reconciles.
+**The modal (research R7).** `modal.html` keeps its public contract on this branch. It declares `title=""` and `icon=""` so they no longer reach the card as raw attributes, and hands the card a `title` slot, inside `{% if title or icon %}`, holding `{% if icon %}<c-icon name="{{ icon }}" />{% endif %}{% if title %}<span>{{ title }}</span>{% endif %}`, so a title-only modal draws no empty icon. `actions` is forwarded as today and now renders in `card-actions` at the foot of the body. `footer` and `footer_end` are rendered by the modal itself, after its body inside the card's default slot, in the same flex row the card used to draw. That row now sits above the actions, which the card renders last. `class="w-full h-full {{ class }}"` stays, so the existing modal tests stand, and the modal gains a surface class the card no longer adds: `bg-base-100 shadow-sm`, on the `<c-card>` call. The modal's annotations are updated to match. FS-005 replaces this modal wholesale, and whichever lands second reconciles.
 
 ### Table (US2)
 
@@ -123,7 +123,7 @@ Shared rules, applied everywhere below:
 <c-collapse name="{{ name }}" :attrs="attrs">{% if title %}<c-slot name="title">{{ title }}</c-slot>{% endif %}{{ slot }}</c-collapse>
 ```
 
-- Every other collapse attribute (`arrow`, `plus`, `open`, `class`) reaches the collapse through `:attrs` (FR-020, scenario 8). `title`, as attribute or slot, is re-passed as the collapse's `title` slot.
+- Every other collapse attribute (`arrow`, `plus`, `open`, `class`) reaches the collapse through `:attrs` (FR-020, scenario 8). The accordion deliberately does not declare `class`, the one exception to the "Root" rule: declaring it would strand it on the accordion instead of passing it to the collapse. `title`, as attribute or slot, is re-passed as the collapse's `title` slot.
 - The `{% comment %}` block says items sharing a `name` form one group, that an older browser lets more than one open, and to open at most one item per group.
 
 ### Avatar and avatar group (US5)
@@ -177,16 +177,16 @@ Shared rules, applied everywhere below:
 `timeline/item.html` — `<c-vars start="" middle="" end="" box="" class="" />`.
 
 ```
-<li class="group {{ class }}" {{ attrs }}>
-  <hr class="group-first:hidden" aria-hidden="true" />
+<li class="group/item {{ class }}" {{ attrs }}>
+  <hr class="group-first/item:hidden" aria-hidden="true" />
   {% if start %}<div class="timeline-start{% if box == "start" %} timeline-box{% endif %}">{{ start }}</div>{% endif %}
   {% if middle %}<div class="timeline-middle">{{ middle }}</div>{% endif %}
   {% if end %}<div class="timeline-end{% if box and box != "start" %} timeline-box{% endif %}">{{ end }}</div>{% endif %}
-  <hr class="group-last:hidden" aria-hidden="true" />
+  <hr class="group-last/item:hidden" aria-hidden="true" />
 </li>
 ```
 
-- Connectors per research R4. Consecutive items each draw their half of the line between them, which is daisyUI's own markup.
+- Connectors per research R4. The group is named (`group/item`), so an enclosing `.group` on the page cannot hide the connectors and a caller's own `group-hover:` inside the item still refers to their group. Consecutive items each draw their half of the line between them, which is daisyUI's own markup.
 
 ### Kbd and status (US9)
 
@@ -200,7 +200,14 @@ Shared rules, applied everywhere below:
 
 ### Gallery entries (FR-004, FR-005)
 
-Every template carries `@description`, a `@prop` per `<c-vars>` name and `@slot` / `@slot:name` per slot, in the order FS-002 set: description, props in declaration order, default slot, named slots in render order. Fixed-value props are `select[…]` with daisyUI's full list, which gives the gallery's variants matrix every colour and size. Booleans are toggles. Breakpoint-valued props are `select['sm','md','lg','xl','2xl']` with a description saying the bare attribute applies it at every width. One-line examples must not contain `#}` or a spaced em dash (FS-004 plan). Every image example has `alt`, every icon-only control an `aria-label`, and every icon `aria-hidden="true"` (SC-004).
+Every template carries `@description`, a `@prop` per `<c-vars>` name and `@slot` / `@slot:name` per slot, in the order FS-002 set: description, props in declaration order, default slot, named slots in render order. Fixed-value props are `select[…]` with daisyUI's full list, which gives the gallery's variants matrix every colour and size. Booleans are toggles. Breakpoint-valued props are `select['sm','md','lg','xl','2xl']` with a description saying the bare attribute applies it at every width, which the gallery's select cannot set. One-line examples must not contain `#}` or a spaced em dash (FS-004 plan). Every image example has `alt`, every icon-only control an `aria-label`, and every icon `aria-hidden="true"` (SC-004).
+
+**Compositions (design review SPEC-001).** Gallery 1.0.0 renders each entry as one component tag with the annotated slots inside it (`django_cotton_gallery/core/preview/tag_builder.py:27-35, 60-72`), so a combination of several components can only be shown inside the slot example of a component that holds free markup. Each goes where an application would actually write it, and the item's own `@description` names the entry that shows it:
+
+- **Accordion groups** (US4-6, US4-7, US4-9): the card's default `@slot` is a short FAQ, two accordion groups with different names, one of bordered items (`class="bg-base-100 border border-base-300"`) and one plain. The accordion entry shows one item with the collapse attributes typed into the extra-attributes field.
+- **A badge inside a button** (US3-6): the card's `@slot:actions` is a `<c-button>` holding a `<c-badge>`.
+- **A key combination and a status dot beside text** (US9-5): the table's `@slot` is a small service list with a "Status" column (a status dot beside its text, no `label`) and a "Shortcut" column (`<c-kbd>Ctrl</c-kbd> + <c-kbd>K</c-kbd>`).
+- **Several avatar widths and shapes** (US5-8): the avatar group's `@slot` holds three avatars, each with its own `content_class` (`w-12 rounded-full`, `w-16 rounded-xl`, `w-10 rounded`), one photo, one placeholder, one silhouette.
 
 ### Documentation
 
@@ -258,4 +265,4 @@ One worktree, three dispatch batches on the same branch. Stories touch their own
 | Addition | Why | Simpler alternative rejected because |
 |---|---|---|
 | `unique_id` template tag | FR-014: the table's region is named by its caption, which needs an id | `aria-label` copied from the caption breaks on a slot holding markup and doubles up with a caller's own `aria-label` (research R6). |
-| Timeline `group` utilities | FR-032: no connector past the first or last item | A component cannot know its position, and daisyUI's CSS does not hide the end connectors (research R4). |
+| Timeline `group/item` utilities | FR-032: no connector past the first or last item | A component cannot know its position, and daisyUI's CSS does not hide the end connectors (research R4). |

@@ -109,3 +109,17 @@ The spec gives the frame `bg-neutral text-neutral-content` "when showing a place
 
 **ADR:** none — local to the avatar template.
 
+
+## D5 — Design review applied
+
+One design reviewer, three lenses. Findings and what was done:
+
+- **SPEC-001, high.** Gallery 1.0.0 renders an entry as one component tag, so an accordion group, a second group, a key combination, a status dot beside text, a badge inside a button and several avatar widths cannot be shown in those components' own entries. Each is shown inside the slot example of a component that holds free markup, where an application would write it: two accordion groups and a badge in a button in the card's entry, a key combination and a status beside text in the table's entry, three avatar widths and shapes in the avatar group's entry (plan "Compositions"). Each item's description names the entry that shows it. The markup-level tests for these scenarios are unchanged.
+- **SPEC-002, medium.** The modal's title slot drew an empty icon for a title-only modal. Each piece is now guarded on its own, with a test.
+- **ARCH-001, medium.** An unnamed Tailwind `group` on the timeline item would let any enclosing `.group` hide its connectors. The group is named `group/item`.
+- **SPEC-003, low.** The stat's `0` guard only matters for a dynamic `:value`, so its test uses `:value="0"`.
+- **SPEC-004, low.** The accessibility run checks the table wrapper's focus indicator.
+
+Editorial notes applied in the same pass: the component count, the accordion's deliberate lack of a `class` declaration, the modal's footer row now sitting above its actions, and the gallery select not offering the bare breakpoint form.
+
+**ADR:** none — plan corrections local to this feature.
