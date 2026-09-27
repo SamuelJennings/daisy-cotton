@@ -1,0 +1,4 @@
+{% load daisy_cotton %}
+<c-vars vertical="" horizontal="" compact="" snap-icon="" class="" />
+<ul class="timeline {% responsive vertical "timeline-vertical" %} {% responsive horizontal "timeline-horizontal" %}{% if compact %} timeline-compact{% endif %}{% if snap_icon %} timeline-snap-icon{% endif %} {{ class }}"
+    {{ attrs }}>{{ slot }}</ul>
