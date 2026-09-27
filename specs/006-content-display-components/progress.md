@@ -82,3 +82,10 @@ Did: built `collapse.html` — `<c-vars title="" arrow="" plus="" open="" class=
 Verified: `uv run pytest tests/test_collapse.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_render_all.py -q` — 65 passed. `uv run pre-commit run --files daisy_cotton/templates/cotton/collapse.html tests/test_collapse.py pyproject.toml` — all hooks passed.
 Next: T012, the accordion.
 Watch: none outstanding.
+
+## 2026-09-27T15:55Z · Implementer US4 · T012
+
+Did: built `accordion.html` — `<c-vars name="" title="" />`, `<c-collapse name="{{ name }}" :attrs="attrs">` re-passing `title` (attribute or slot) as the collapse's `title` slot, holding the default slot. The accordion declares no `class` (D5): declaring it would strand it on the accordion instead of forwarding it, so it, `arrow`, `plus`, `open` and every other collapse attribute reach the collapse through `:attrs`. Added to `tests/test_collapse.py`: scenario 8 (arrow/plus/open/class/title slot/default slot all reach the collapse's markup), scenarios 6–7 at the markup level (three items sharing a name each carry it on `<details>`; two groups carry their own, distinct names — the browser's own grouping behaviour on `<details name="...">` isn't something a template render can exercise), and a page context carrying `name`/`title` that does not leak in.
+Verified: `uv run pytest tests/test_collapse.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_render_all.py -q` — 73 passed. `uv run pre-commit run --files daisy_cotton/templates/cotton/accordion.html tests/test_collapse.py` — all hooks passed after one ruff-format pass.
+Next: T013, the gallery annotations, the card's FAQ composition, README and CHANGELOG.
+Watch: none outstanding.

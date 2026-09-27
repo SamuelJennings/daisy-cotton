@@ -52,6 +52,26 @@ def _class_attrs_on(html, tag):
     ]
 
 
+class _AllTagAttrs(HTMLParser):
+    """Collect the raw attribute list of every ``<tag>`` start tag, in order."""
+
+    def __init__(self, tag):
+        super().__init__()
+        self.tag = tag
+        self.occurrences = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag == self.tag:
+            self.occurrences.append(attrs)
+
+
+def _iter_all_attrs(html, tag):
+    """The flattened ``(name, value)`` pairs of every ``<tag ...>`` open tag, in order."""
+    parser = _AllTagAttrs(tag)
+    parser.feed(html)
+    return [pair for attrs in parser.occurrences for pair in attrs]
+
+
 class TestCollapseStructure:
     """AS1: a root carrying ``collapse``, a ``<summary>`` carrying
     ``collapse-title`` holding ``title``, and the default slot in
@@ -163,3 +183,88 @@ class TestCollapsePageContextDoesNotLeak:
 
         root = soup.find("details", class_="collapse")
         assert root.get("open") is None
+
+
+class TestAccordionDrawnByCollapse:
+    """AS8: <c-accordion> is drawn by <c-collapse> and accepts every collapse
+    attribute and slot — arrow, plus, open, class and the title slot all
+    reach the collapse's markup (FR-020)."""
+
+    def test_arrow_plus_open_and_class_reach_the_collapse(self, cotton_render_string):
+        html = cotton_render_string(
+            '<c-accordion name="faq" arrow plus open class="border">Answer</c-accordion>'
+        )
+        root_attrs = _attrs_on(html, "details")
+        root_classes = _class_attrs_on(html, "details")
+
+        assert "collapse-arrow" in root_classes[0]
+        assert "collapse-plus" in root_classes[0]
+        assert "border" in root_classes[0]
+        assert any(name == "open" for name, _ in root_attrs)
+
+    def test_title_attribute_reaches_the_collapse_summary(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup(
+            '<c-accordion name="faq" title="Question">Answer</c-accordion>'
+        )
+        summary = soup.find("summary", class_="collapse-title")
+        assert summary is not None
+        assert summary.get_text(strip=True) == "Question"
+
+    def test_default_slot_reaches_the_collapse_content(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup(
+            '<c-accordion name="faq" title="Question">Answer</c-accordion>'
+        )
+        content = soup.find("div", class_="collapse-content")
+        assert content is not None
+        assert content.get_text(strip=True) == "Answer"
+
+
+class TestAccordionGrouping:
+    """AS6/AS7 at the markup level: items sharing a name carry it on
+    <details>, and two groups carry their own, distinct names. Whether the
+    browser actually keeps only one item per group open is the native
+    <details name="..."> behaviour this markup relies on, not something a
+    template render can exercise."""
+
+    def test_three_items_sharing_a_name_each_carry_it(self, cotton_render_string):
+        html = cotton_render_string(
+            '<c-accordion name="faq" title="Q1">A1</c-accordion>'
+            '<c-accordion name="faq" title="Q2">A2</c-accordion>'
+            '<c-accordion name="faq" title="Q3">A3</c-accordion>'
+        )
+        names = [
+            value for name, value in _iter_all_attrs(html, "details") if name == "name"
+        ]
+        assert names == ["faq", "faq", "faq"]
+
+    def test_two_groups_carry_their_own_names(self, cotton_render_string):
+        html = cotton_render_string(
+            '<c-accordion name="faq">A1</c-accordion>'
+            '<c-accordion name="settings">A2</c-accordion>'
+        )
+        names = [
+            value for name, value in _iter_all_attrs(html, "details") if name == "name"
+        ]
+        assert names == ["faq", "settings"]
+
+
+class TestAccordionPageContextDoesNotLeak:
+    """A page variable sharing a declared name never fills an empty
+    accordion part."""
+
+    def test_page_context_name_and_title_do_not_leak_in(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup(
+            "<c-accordion>Answer</c-accordion>",
+            context={"name": "leaked", "title": "Page title"},
+        )
+
+        root = soup.find("details", class_="collapse")
+        assert root.get("name") != "leaked"
+
+        summary = soup.find("summary", class_="collapse-title")
+        assert summary is not None
+        assert summary.get_text(strip=True) == ""

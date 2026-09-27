@@ -1,0 +1,3 @@
+{% load daisy_cotton %}
+<c-vars name="" title="" />
+<c-collapse name="{{ name }}" :attrs="attrs">{% if title %}<c-slot name="title">{{ title }}</c-slot>{% endif %}{{ slot }}</c-collapse>
