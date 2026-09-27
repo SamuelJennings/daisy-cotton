@@ -124,3 +124,40 @@ class TestModalCardContent:
         actions = soup.find("div", class_="card-actions")
         assert actions is not None
         assert actions.find("button").get_text() == "Save"
+
+
+class TestModalCardSurface:
+    """COR-002: the inner card draws a surface, or a positioned dialog is
+    transparent since the wrapper itself (modal-box) is bg-transparent."""
+
+    def test_inner_card_carries_bg_base_100(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup('<c-modal id="m">Body</c-modal>')
+
+        card = soup.find("div", class_="card")
+        assert card is not None
+        assert "bg-base-100" in card.get("class", [])
+
+
+class TestModalPageContextDoesNotLeak:
+    """COR-005: a page variable sharing class, actions, footer or footer_end
+    never fills an empty modal part."""
+
+    def test_page_context_class_actions_footer_and_footer_end_do_not_leak_in(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup(
+            '<c-modal id="m">Body</c-modal>',
+            context={
+                "class": "leaked-class",
+                "actions": "<button>Leaked</button>",
+                "footer": "<span>LeakedFooter</span>",
+                "footer_end": "<span>LeakedFooterEnd</span>",
+            },
+        )
+
+        card = soup.find("div", class_="card")
+        assert card is not None
+        assert "leaked-class" not in card.get("class", [])
+        assert soup.find("div", class_="card-actions") is None
+        assert soup.find(string="LeakedFooter") is None
+        assert soup.find(string="LeakedFooterEnd") is None

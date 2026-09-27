@@ -101,3 +101,5 @@ decision.
   and `space_options` (and its `get_item` lookup) are removed; the overlap between avatars, such as
   `-space-x-6`, now goes entirely through `class`, and the group spreads extra attributes through
   `{{ attrs }}`, which it previously did not.
+- `<c-modal>`'s actions now render in a `card-actions` row at the foot of the dialog body, after
+  the `footer`/`footer_end` row.
