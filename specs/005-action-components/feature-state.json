@@ -235,8 +235,22 @@
       "tasks": [
         {
           "id": "T010",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_swap.py -q: 15 passed",
+              "uv run djlint daisy_cotton/templates/cotton/swap.html --check: 0 files would be updated"
+            ],
+            "tests": [
+              "tests/test_swap.py::TestSwapStructure",
+              "tests/test_swap.py::TestSwapModifiers",
+              "tests/test_swap.py::TestSwapIndeterminate",
+              "tests/test_swap.py::TestSwapCheckboxAttributes",
+              "tests/test_swap.py::TestSwapGalleryAnnotations",
+              "tests/test_swap.py::TestSwapContextLeak"
+            ]
+          }
         },
         {
           "id": "T011",

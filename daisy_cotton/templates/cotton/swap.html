@@ -1,0 +1,38 @@
+{# @description A checkbox-driven swap: content flips between the on and off slots when its checkbox is toggled. #}
+{# @prop label:text | description:"Accessible name for the checkbox." #}
+{# @prop rotate:boolean | description:"Flip the content with a rotation instead of a swap." #}
+{# @prop flip:boolean | description:"Flip the content with a horizontal flip instead of a swap." #}
+{# @prop active:boolean | description:"Force the swap into its active (on) state, for a project's own script to toggle." #}
+{# @prop checked:boolean | description:"Start the checkbox checked." #}
+{# @prop disabled:boolean | description:"Disable the checkbox." #}
+{# @prop name:text | description:"Checkbox name, for a swap used inside a form." #}
+{# @prop value:text | description:"Checkbox value, for a swap used inside a form." #}
+{# @prop input_class:text | description:"Extra classes added to the checkbox." #}
+{# @prop on:text | description:"Content shown when the checkbox is checked." #}
+{# @prop off:text | description:"Content shown when the checkbox is unchecked." #}
+{# @prop indeterminate:text | description:"Content shown while the checkbox is indeterminate." #}
+{# @prop class:text | description:"Extra classes added to the wrapper." #}
+{# @slot:on — Content shown when the checkbox is checked. #}
+{# @slot:off — Content shown when the checkbox is unchecked. #}
+{# @slot:indeterminate — Content shown while the checkbox is indeterminate. #}
+<c-vars label=""
+        rotate=""
+        flip=""
+        active=""
+        checked=""
+        disabled=""
+        name=""
+        value=""
+        input_class=""
+        on=""
+        off=""
+        indeterminate=""
+        class="" />
+{# djlint:off #}
+<label class="swap{% if rotate %} swap-rotate{% endif %}{% if flip %} swap-flip{% endif %}{% if active %} swap-active{% endif %} {{ class }}" {{ attrs }}>
+  <input type="checkbox"{% if label %} aria-label="{{ label }}"{% endif %}{% if name %} name="{{ name }}"{% endif %}{% if value %} value="{{ value }}"{% endif %}{% if checked %} checked{% endif %}{% if disabled %} disabled{% endif %}{% if input_class %} class="{{ input_class }}"{% endif %} />
+  <div class="swap-on">{{ on }}</div>
+  <div class="swap-off">{{ off }}</div>
+  {% if indeterminate %}<div class="swap-indeterminate">{{ indeterminate }}</div>{% endif %}
+</label>
+{# djlint:on #}

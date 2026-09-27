@@ -178,3 +178,22 @@ warnings (exit 0).
 Next: batch 1 checkpoint — full suite, cotton_lint, pre-commit.
 Watch: US3 (dropdown) done-check satisfied for scenarios 1, 2, 5 and 6; scenarios 3, 4 and 7
 (in-browser keyboard/outside-click, gallery) are T013's.
+
+## 2026-09-27T09:27Z · Implementer US4 · T010
+
+Did: `swap.html`: a `<label class="swap">` wrapper carrying `class` and attributes, `rotate`,
+`flip` and `active` mapping to `swap-rotate`/`swap-flip`/`swap-active`; a checkbox carrying
+`aria-label` from `label`, and `checked`, `disabled`, `name`, `value` and `input_class` only
+when given; `on` and `off` slots always rendered in `swap-on`/`swap-off`; `indeterminate`
+rendered in `swap-indeterminate` only when given. Every declared name has an empty default.
+Added `tests/test_swap.py` for scenarios 1, 3-6, that `name` and `value` never reach the
+wrapper, and that a page context carrying `on`, `off` and `label` does not leak in
+(FR-021-FR-023). Added `tests/test_swap.py` to `pyproject.toml`'s
+`[tool.forge.conformance] non-mirror-paths`.
+Verified: confirmed RED first (moved `swap.html` aside, `uv run pytest tests/test_swap.py -q`
+→ 15 failed on `TemplateDoesNotExist`, restored the template) then GREEN — `uv run pytest
+tests/test_swap.py -q` → 15 passed. `uv run djlint daisy_cotton/templates/cotton/swap.html
+--check` → 0 files would be updated.
+Next: T011 (swap gallery annotations, theme-toggle comment, README/CHANGELOG).
+Watch: US4 done-check for scenarios 1, 3-6 satisfied; scenarios 2, 7 and 8 (in-browser
+keyboard, documentation, gallery) are T011's and T013's.
