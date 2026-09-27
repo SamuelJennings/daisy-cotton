@@ -236,6 +236,16 @@ class TestTimelineItemBox:
         assert start is not None and "timeline-box" in start.get("class", [])
         assert end is not None and "timeline-box" not in end.get("class", [])
 
+    def test_box_end_adds_timeline_box_to_the_end_part(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup(
+            '<c-timeline.item start="1984" end="First Macintosh" box="end" />'
+        )
+
+        start = soup.find("div", class_="timeline-start")
+        end = soup.find("div", class_="timeline-end")
+        assert end is not None and "timeline-box" in end.get("class", [])
+        assert start is not None and "timeline-box" not in start.get("class", [])
+
 
 class TestTimelineItemConnectors:
     """FR-032, US8-6: a leading and a trailing hr, both hidden from
