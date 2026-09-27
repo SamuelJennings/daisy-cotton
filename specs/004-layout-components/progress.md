@@ -47,3 +47,10 @@ Did: each mockup template's default `@slot` carries an example (`mockup.code`'s 
 Verified: `uv run pytest tests/test_mockup.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_gallery_links.py tests/test_render_all.py` 203 passed, 6 skipped (folder-component gallery links, issue #96).
 Next: full verify.
 Watch: no page under docs/ or the README describes the divider or the mockups, so no documentation page changed.
+
+## 2026-09-27T01:10Z · Implementer US4+US2+US1 · T007
+
+Did: `join.html` with `join`, `vertical` and `horizontal` through `responsive`, `role` written once (the caller's, else `group`), `class` merged, attributes spread, children rendered with no wrapper; empty defaults on every declared name but `class`. Annotations were written with the template, since the gallery suites require them. New `tests/test_join.py`, registered in `non-mirror-paths`.
+Verified: `uv run pytest tests/test_join.py` 19 passed; gallery annotation, lint, render-all, declared-attribute and class-merge suites green; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T008 README and CHANGELOG.
+Watch: none.
