@@ -75,3 +75,10 @@ Did: replaced the card's `@slot:actions` example — a plain `<c-button>` (T005'
 Verified: rendered the composition directly through the Cotton compiler and read the output — a single `<span class="badge badge-secondary ...">3</span>` inside the `<button>`, no block element. `uv run python manage.py cotton_lint --warnings-as-errors` — exit 0, 21/22 clean, 0 errors, 0 warnings (`form/field`'s pre-existing hints out of scope). `uv run pytest tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_card.py -q` — 166 passed. `uv run pre-commit run --files daisy_cotton/templates/cotton/card/index.html CHANGELOG.md` — all hooks passed (no files needed reformatting).
 Next: none — US3 (T009–T010) complete pending the story's one-time full verify.
 Watch: none outstanding.
+
+## 2026-09-27T15:40Z · Implementer US4 · T011
+
+Did: built `collapse.html` — `<c-vars title="" arrow="" plus="" open="" class="" />`, a root `<details class="collapse{arrow/plus}{class}">` with native `open` (never `collapse-open`/`collapse-close`), a `<summary class="collapse-title">` always emitted (holding `title`, attribute or slot), and `collapse-content` holding the default slot. `name` is not declared, so it passes through `{{ attrs }}` to `<details>` — how the accordion's group name will reach it in T012. New `tests/test_collapse.py`: scenarios 1, 3, 4, 5, `name` passthrough, and a page context carrying `title`/`open` that does not leak in. Added `tests/test_collapse.py` to `[tool.forge.conformance] non-mirror-paths`. Annotations deferred to T013 (tasks.md's own split, as the table's T007/T008 did).
+Verified: `uv run pytest tests/test_collapse.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_render_all.py -q` — 65 passed. `uv run pre-commit run --files daisy_cotton/templates/cotton/collapse.html tests/test_collapse.py pyproject.toml` — all hooks passed.
+Next: T012, the accordion.
+Watch: none outstanding.

@@ -1,0 +1,6 @@
+{% load daisy_cotton %}
+<c-vars title="" arrow="" plus="" open="" class="" />
+<details class="collapse{% if arrow %} collapse-arrow{% endif %}{% if plus %} collapse-plus{% endif %} {{ class }}"{% if open %} open{% endif %} {{ attrs }}>
+  <summary class="collapse-title">{{ title }}</summary>
+  <div class="collapse-content">{{ slot }}</div>
+</details>
