@@ -129,3 +129,30 @@ id's shape and that two calls differ. This test module already mirrors its sourc
 no `pyproject.toml` change was needed.
 Verified: `uv run pytest tests/test_templatetags/test_daisy_cotton.py -q` → 9 passed.
 Next: T008 (dropdown/index.html, popover method).
+
+## 2026-09-27T10:35Z · Implementer US3 · T008
+
+Did: rebuilt `dropdown/index.html` on daisyUI's popover method (FR-017-FR-020). A wrapper
+`<div class="inline-block">` holds either the caller's `button` slot or a default
+`<c-button type="button" :attrs="attrs" popovertarget="<panel id>" style="anchor-name:
+--<panel id>">`, written after `:attrs` so a caller's forwarded `popovertarget`/`style` cannot
+override the anchor (SPEC-003 — confirmed empirically: Cotton's `:attrs` spread does a
+`dict.update()` in tag-source order, so a literal attribute written after it wins). The panel
+is `<div id="<panel id>" popover class="dropdown ... bg-base-100 rounded-box min-w-52
+shadow-sm <content_class>" style="position-anchor: --<panel id>">`, with `<panel id>` the
+caller's `id` or a `unique_id "dropdown"` (T007). `placement` splits on whitespace and each
+word is validated independently through `{% variation %}`. Removed `valign`, `halign`, `full`,
+`hover`, the panel's `dropdown-content`/`tabindex`/`z-50`/border classes. Rewrote
+`tests/test_dropdown.py` under D2 for scenarios 1, 2, 5, 6, every side/alignment pair, an
+unknown placement word, a caller `id`, a caller `style` that leaves the anchor, `class` on the
+wrapper and absent from the default trigger, and a context-leak test. One pre-existing
+assertion (`id="sort"` reaching the wrapper) no longer applies: `id` is now a declared prop
+naming the panel, not a generic passthrough attribute, so that test now demonstrates
+fall-through with `x-data` instead — the underlying "extra attributes fall through" behaviour
+is unchanged, only the specific attribute example.
+Verified: `uv run pytest tests/test_button.py tests/test_modal.py tests/test_dropdown.py
+tests/test_templatetags/ tests/test_declared_attributes.py tests/test_gallery_lint.py
+tests/test_gallery_annotations.py tests/test_render_all.py -q` → 277 passed. `uv run python
+manage.py cotton_lint --warnings-as-errors` → 20/21 clean, 0 errors/0 warnings (exit 0).
+Next: T009 (gallery annotations for dropdown, CHANGELOG). Checkpoint after T009: batch 1 full
+suite, cotton_lint, pre-commit.

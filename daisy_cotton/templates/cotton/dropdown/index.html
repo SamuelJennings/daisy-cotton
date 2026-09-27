@@ -1,32 +1,40 @@
-{# @description A daisyUI dropdown: a trigger and a panel that opens beside it. By default the trigger is a button built from the dropdown's own extra attributes. #}
-{# @prop valign:select['top','bottom','left','right'] | default:"bottom" | description:"Side of the trigger the panel opens on." #}
-{# @prop halign:select['start','center','end'] | default:"start" | description:"Alignment of the panel along the trigger." #}
-{# @prop full:boolean | description:"Stretch the panel to the width of the trigger; otherwise it sizes to its content with a minimum width. The default trigger button is stretched to full width too." #}
-{# @prop hover:boolean | description:"Open on hover instead of on click." #}
-{# @prop class:text | description:"Extra classes added to the dropdown wrapper. The default trigger button gets them too." #}
+{# @description A daisyUI dropdown built on the popover method: a trigger button opens a popover panel with no script. By default the trigger is a button built from the dropdown's own extra attributes. #}
+{# @prop id:text | description:"Panel id, and the base of the trigger's anchor name. A custom trigger (the button slot) needs this to target the panel itself." #}
+{# @prop placement:select['top','bottom','left','right','start','center','end'] | description:"One side and one alignment, e.g. \"top end\". Leave empty for the browser's default placement." #}
 {# @prop content_class:text | description:"Extra classes added to the panel." #}
+{# @prop button:text | description:"A custom trigger. When given, extra attributes fall through to the dropdown wrapper instead of a button, and the caller owns the trigger's popovertarget, type=\"button\" and anchor style." #}
+{# @prop class:text | description:"Extra classes added to the dropdown wrapper." #}
 {# @slot — The panel content. #}
-{# @slot:button — A custom trigger. When given, extra attributes fall through to the dropdown wrapper instead of a button, and the caller owns the trigger's tabindex and role. #}
+{# @slot:button — A custom trigger. #}
 {% comment %}
   Trigger: by default, any extra attributes on the dropdown (text, icon,
   variant, size) are forwarded to an inner button that becomes the trigger.
 
-  Positioning is done entirely in CSS by daisyUI's own dropdown classes. That
-  is fine for a dropdown with room to open in its declared direction, and wrong
-  wherever it does not have that room: a panel near the edge of the viewport or
-  inside a scrolling ancestor can open off-screen or clipped. A project that
-  needs smart placement (Floating UI or similar) layers it on top of this
-  markup; it is not this package's concern.
+  Positioning uses the popover method: the trigger's `popovertarget` opens
+  the panel, and CSS anchor positioning (`anchor-name` on the trigger,
+  `position-anchor` on the panel) places it. A browser without anchor
+  positioning support still opens and closes the panel, but it may not sit
+  beside its trigger — that is a limit of the method, not a bug here.
+
+  A custom trigger (the `button` slot) must carry `popovertarget` set to the
+  dropdown's `id` and `type="button"`, plus `style="anchor-name: --<id>"` for
+  placement, so a dropdown with a custom trigger needs an `id`.
 {% endcomment %}
 {% load daisy_cotton %}
-<c-vars valign="bottom" halign="start" full hover class content_class />
-<div class="dropdown {% variation valign "dropdown" "top,bottom,left,right" %} {% variation halign "dropdown" "start,center,end" %}{% if hover %} dropdown-hover{% endif %} {{ class }}"
-     {% if button %}{{ attrs }}{% endif %}>
+<c-vars id=""
+        placement=""
+        content_class=""
+        button=""
+        class="" />
+{% unique_id "dropdown" as generated_id %}{% firstof id generated_id as panel_id %}
+<div class="inline-block {{ class }}" {% if button %}{{ attrs }}{% endif %}>
   {% if button %}
     {{ button }}
   {% else %}
-    <c-button tabindex="0" role="button" :attrs="attrs" />
+    <c-button type="button" :attrs="attrs" popovertarget="{{ panel_id }}" style="anchor-name: --{{ panel_id }}" />
   {% endif %}
-  <div tabindex="0"
-       class="dropdown-content bg-base-100 rounded-box z-50 min-w-52{% if full %} w-full{% endif %} shadow-lg border border-base-300 {{ content_class }}">{{ slot }}</div>
+  <div id="{{ panel_id }}"
+       popover
+       class="dropdown {% for word in placement.split %}{% variation word "dropdown" "top,bottom,left,right,start,center,end" %} {% endfor %}bg-base-100 rounded-box min-w-52 shadow-sm {{ content_class }}"
+       style="position-anchor: --{{ panel_id }}">{{ slot }}</div>
 </div>
