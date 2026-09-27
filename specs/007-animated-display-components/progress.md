@@ -103,3 +103,28 @@ Next: T012 — gallery annotations for `hover-3d`, the `mockup.browser` linked-c
 CHANGELOG.
 Watch: D11's gallery-lint filename mismatch will hit T012's `mockup.browser` composition the moment it
 writes the tag into that scanned file — call it `<c-hover_3d>` there, as the brief already notes.
+
+## 2026-09-27T21:47:28Z · Implementer US6 · T012
+
+Did: expanded `hover_3d.html`'s `@description` with FR-025's wording — the content must be one element
+with no buttons, links or inputs of its own, a linked card's accessible name comes from the content's text
+or image alt or from `aria-label`, the tilt needs a pointer, and whether it respects reduced motion is up
+to daisyUI's CSS. `mockup.browser`'s default `@slot` example gains a linked `<c-hover_3d href="/cards/1">`
+wrapping a `<c-card>` with an image figure (the daisyUI `creditcard.webp` stock image, D4) and a title, no
+`actions` slot (D6: no interactive content inside); it uses `<c-hover_3d>` rather than `<c-hover-3d>`
+because `mockup/browser.html` is a scanned `.html` file and the gallery lint's unknown-component check
+compares literally against the catalog's filename-derived tag, `hover_3d` (D10/D11's cause, watched for in
+T011). README: "Sixty" -> "Sixty-one", `hover-3d` added alphabetically before `hover-gallery`. CHANGELOG:
+an `Added` entry for `<c-hover-3d>`.
+Verified: `uv run pytest tests/test_mockup.py tests/test_gallery_lint.py tests/test_gallery_annotations.py
+tests/test_hover_3d.py tests/test_animated_display_no_script.py tests/test_card.py tests/test_render_all.py
+tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q` —
+608 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — exit 0, 53/61 clean, 0 errors, 0
+warnings (same pre-existing `aria_label` heuristic hints). Additionally rendered `mockup.browser`'s
+annotated default `@slot` by hand through `AnnotationParser().parse()` + the Cotton compiler: no error, the
+`<c-hover_3d>` root is an `<a href="/cards/1">` wrapping a `<c-card>` whose figure holds the credit-card
+image and alt, a `card-title` of "Rewards card", and no `card-actions` element. No new test file this task
+(T012's work is documentation content the generic gallery lint/annotation suites already discover
+dynamically, the same pattern T010 followed for the hover gallery).
+Next: US6 done.
+Watch: nothing new.

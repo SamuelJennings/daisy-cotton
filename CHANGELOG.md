@@ -132,6 +132,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `<c-hover-gallery>`: daisyUI's hover gallery, a `<figure>` carrying `hover-gallery` holding the
   default slot of images, with no width class of its own. Every image stays available to assistive
   technology; only the hover effect needs a pointer.
+- `<c-hover-3d>`: daisyUI's hover 3D card, an `<a>` with `href` or a `<div>` without one, carrying
+  `hover-3d`, holding the default slot followed by eight empty `<div aria-hidden="true">` zones that
+  track the pointer. The content must be one element with no buttons, links or inputs of its own; a
+  linked card takes its accessible name from the content's text or image alt, or from `aria-label`.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
