@@ -63,23 +63,58 @@
       "tasks": [
         {
           "id": "T012",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_drawer.py: 13 passed at this task"
+            ],
+            "tests": [
+              "tests/test_drawer.py::TestDrawerStructure",
+              "tests/test_drawer.py::TestDrawerModifiers",
+              "tests/test_drawer.py::TestTwoDrawersOnOnePage"
+            ]
+          }
         },
         {
           "id": "T013",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_drawer.py: 16 passed"
+            ],
+            "tests": [
+              "tests/test_drawer.py::TestDrawerAccessibleNames"
+            ]
+          }
         },
         {
           "id": "T014",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_drawer.py: 22 passed"
+            ],
+            "tests": [
+              "tests/test_drawer.py::TestDrawerButton"
+            ]
+          }
         },
         {
           "id": "T015",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_drawer.py: 32 passed",
+              "uv run pytest: 511 passed, 8 skipped"
+            ],
+            "tests": [
+              "tests/test_drawer.py::TestDrawerAnnotations"
+            ]
+          }
         }
       ]
     },
@@ -93,18 +128,44 @@
       "tasks": [
         {
           "id": "T009",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_footer.py: 25 passed"
+            ],
+            "tests": [
+              "tests/test_footer.py::TestFooterRoot",
+              "tests/test_footer.py::TestFooterDirection",
+              "tests/test_footer.py::TestFooterPlacement"
+            ]
+          }
         },
         {
           "id": "T010",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_footer.py: 25 passed"
+            ],
+            "tests": [
+              "tests/test_footer.py::TestFooterNav"
+            ]
+          }
         },
         {
           "id": "T011",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_footer.py::TestFooterAnnotations"
+            ]
+          }
         }
       ]
     },
@@ -173,13 +234,29 @@
       "tasks": [
         {
           "id": "T007",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_join.py: 19 passed"
+            ],
+            "tests": [
+              "tests/test_join.py"
+            ]
+          }
         },
         {
           "id": "T008",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_join.py::TestJoinAnnotations"
+            ]
+          }
         }
       ]
     },
