@@ -99,7 +99,9 @@ class TestCarouselSnap:
         assert div["class"] == ["carousel", "carousel-end"]
 
     def test_unknown_snap_adds_no_class(self, cotton_render_string):
-        div = parse(cotton_render_string('<c-carousel snap="middle">x</c-carousel>')).div
+        div = parse(
+            cotton_render_string('<c-carousel snap="middle">x</c-carousel>')
+        ).div
         assert div["class"] == ["carousel"]
 
 
@@ -162,9 +164,7 @@ class TestCarouselTranslation:
 class TestCarouselPageContext:
     """Page variables named like the carousel's props never leak in."""
 
-    def test_page_snap_vertical_and_aria_label_do_not_leak(
-        self, cotton_render_string
-    ):
+    def test_page_snap_vertical_and_aria_label_do_not_leak(self, cotton_render_string):
         html = cotton_render_string(
             "<c-carousel>x</c-carousel>",
             {"snap": "center", "vertical": True, "aria_label": "Leaked"},
