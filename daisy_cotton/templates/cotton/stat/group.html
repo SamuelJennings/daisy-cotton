@@ -1,0 +1,8 @@
+{# @description daisyUI's stats: a row of stat items that stacks on small screens. #}
+{# @prop vertical:select['sm','md','lg','xl','2xl'] | description:"Stack the stats vertically. The bare attribute applies it at every width, which this select cannot set." #}
+{# @prop horizontal:select['sm','md','lg','xl','2xl'] | description:"Lay the stats out horizontally. The bare attribute applies it at every width, which this select cannot set." #}
+{# @prop class:text | description:"Extra classes added to the group." #}
+{# @slot <c-stat title="Downloads" value="31K" desc="Jan 1st" /><c-stat title="New Users" value="4,200"><c-slot name="figure"><i class="bi bi-people" aria-hidden="true"></i></c-slot></c-stat><c-stat title="Balance" value="$89,400"><c-slot name="actions"><button class="btn btn-sm btn-primary">Withdraw</button></c-slot></c-stat> — Three stats: one plain, one with a figure holding an icon hidden from assistive technology, one with actions. #}
+{% load daisy_cotton %}
+<c-vars vertical="" horizontal="" class="" />
+<div class="stats {% responsive vertical "stats-vertical" %} {% responsive horizontal "stats-horizontal" %} {{ class }}" {{ attrs }}>{{ slot }}</div>

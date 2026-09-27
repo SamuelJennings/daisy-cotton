@@ -151,6 +151,7 @@ non-mirror-paths = [
     "tests/test_modal.py",
     "tests/test_collapse.py",
     "tests/test_avatar.py",
+    "tests/test_stat.py",
     "tests/test_breadcrumbs_href_attribute.py",
     "tests/test_form_field.py",
     "tests/test_gallery_annotations.py",

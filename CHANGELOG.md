@@ -40,6 +40,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   declared, so it passes straight through to `<details>`. `<c-accordion>` is a `<c-collapse>` that
   requires `name`: items sharing one form an exclusive group, in which opening an item closes the
   others; in a browser without grouped `<details>` support, more than one can stay open.
+- `<c-stat>` and `<c-stat.group>`: daisyUI's stat, always placed inside a group even when it is
+  alone. `<c-stat>` accepts `title`, `value` and `desc` (each an attribute or a named slot),
+  rendered in that order, a `figure` slot and an `actions` slot; a value of `0` still renders.
+  `<c-stat.group>` accepts `vertical` and `horizontal`, each a boolean or a breakpoint, as
+  `stats-vertical`/`stats-horizontal` or their responsive form.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
