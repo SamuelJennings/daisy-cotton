@@ -131,3 +131,10 @@ Did: `mask.html` (an `<img>` with `mask`, the shape class, `mask-half-1/2` and a
 Verified: the new module failed 35 of 35 before the templates existed, then `uv run pytest tests/test_mask_stack.py` 35 passed; gallery annotation, lint, render-all, declared-attribute, class-merge and link suites green; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T020 annotations, README, CHANGELOG.
 Watch: none.
+
+## 2026-09-27T02:50Z · Implementer US7 · T020
+
+Did: mask annotations finished: `shape` is `required` with no default and lists the fourteen shapes, `half` is `select['1','2']`, `src`, `alt` and `class` documented, and the default `@slot` is an inline `data:` SVG image with alt text. Stack: `placement` select of the four sides, `class`, and the default `@slot` three cards. README lists `mask` and `stack` (count now thirty-one); CHANGELOG Added for both.
+Verified: three annotation tests failed first (shape not required, slot not an image with alt text, slot not three cards), then `uv run pytest tests/test_mask_stack.py` 42 passed; gallery annotation, lint and render-all suites green; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: full verify and report.
+Watch: the mask gallery example is a data: SVG, so it needs no static file or network.

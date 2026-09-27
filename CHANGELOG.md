@@ -34,6 +34,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `hero`: the hero container. The slot lands inside `hero-content`, `overlay` adds a `hero-overlay` element
   hidden from assistive technology behind the content, and a `style` attribute such as
   `style="background-image: url(hero.jpg)"` reaches the root unchanged. Composed hero sections stay in your own markup.
+- `mask`: crops an image or a block of content to one of daisyUI's fourteen shapes (`circle`, `heart`,
+  `hexagon`, `squircle`, `star` and the rest), with `half="1"` or `half="2"` for one half of the shape. With
+  `src` it renders an `<img>` that always carries `alt` (empty unless you set it); without `src` it wraps
+  the slot in a `<div>`. An unknown `shape` or `half` adds nothing.
+- `stack`: piles its children on top of each other, offset towards `placement` (`top`, `bottom`, `start`
+  or `end`). Children are rendered untouched and stay visible to assistive technology.
 - `<c-icon>`: a basic primitive that treats `name` as a literal CSS class string
   (`<i class="{{ name }} {{ class }}">`). This package resolves no icon pack of its own — a
   project wanting name-based resolution (an icon font, an SVG sprite, an icon-resolution package)

@@ -1,8 +1,14 @@
 """``<c-mask>`` and ``<c-stack>``: a shaped image or container, and a pile of children."""
 
 from html.parser import HTMLParser
+from pathlib import Path
 
 import pytest
+from django_cotton_gallery.core.annotations import AnnotationParser
+
+import daisy_cotton
+
+COTTON = Path(next(iter(daisy_cotton.__path__))).resolve() / "templates" / "cotton"
 
 SHAPES = [
     "circle",
@@ -191,3 +197,52 @@ class TestStack:
         soup = cotton_render_string_soup("<c-stack />", {"placement": "top"})
 
         assert stack(soup)["class"] == ["stack"]
+
+
+class TestMaskAnnotations:
+    @pytest.fixture
+    def parsed(self):
+        return AnnotationParser().parse((COTTON / "mask.html").read_text())
+
+    def test_shape_is_required_and_offers_the_fourteen_shapes(self, parsed):
+        prop = next(p for p in parsed.props if p.clean_name == "shape")
+
+        assert prop.required
+        assert not prop.default
+        assert prop.type == "select"
+        assert list(prop.options) == SHAPES
+
+    def test_half_offers_one_and_two(self, parsed):
+        prop = next(p for p in parsed.props if p.clean_name == "half")
+
+        assert prop.type == "select"
+        assert list(prop.options) == ["1", "2"]
+
+    def test_src_alt_and_class_are_documented(self, parsed):
+        assert {"src", "alt", "class"} <= {p.clean_name for p in parsed.props}
+
+    def test_the_default_slot_is_an_image_with_alt_text(self, parsed):
+        assert len(parsed.slots) == 1
+        content = parsed.slots[0].content
+        assert "<img" in content
+        assert 'alt="' in content
+        assert 'alt=""' not in content
+
+
+class TestStackAnnotations:
+    @pytest.fixture
+    def parsed(self):
+        return AnnotationParser().parse((COTTON / "stack.html").read_text())
+
+    def test_placement_offers_the_four_sides(self, parsed):
+        prop = next(p for p in parsed.props if p.clean_name == "placement")
+
+        assert prop.type == "select"
+        assert list(prop.options) == PLACEMENTS
+
+    def test_class_is_documented(self, parsed):
+        assert "class" in {p.clean_name for p in parsed.props}
+
+    def test_the_default_slot_holds_three_cards(self, parsed):
+        assert len(parsed.slots) == 1
+        assert parsed.slots[0].content.count("card") >= 3

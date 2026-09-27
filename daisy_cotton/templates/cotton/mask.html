@@ -1,10 +1,10 @@
 {# @description Crops an image or a block of content to a shape. With src it renders an img, without it a div around the slot. Any further attributes reach the element. #}
-{# @prop shape:select['circle','decagon','diamond','heart','hexagon','hexagon-2','pentagon','squircle','star','star-2','triangle','triangle-2','triangle-3','triangle-4'] | description:"The shape to crop to. Leave empty for a mask with no shape." #}
+{# @prop shape:select['circle','decagon','diamond','heart','hexagon','hexagon-2','pentagon','squircle','star','star-2','triangle','triangle-2','triangle-3','triangle-4'] | required | example:"squircle" | description:"The shape to crop to. Without one the element is only marked as a mask and shows no crop." #}
 {# @prop half:select['1','2'] | description:"Show only one half of the shape, the first or the second." #}
 {# @prop src:text | description:"Image URL. When set, the mask is an img; leave empty to mask the slot's content." #}
 {# @prop alt:text | description:"Alternative text for the image. Leave empty for a decorative image." #}
 {# @prop class:text | description:"Extra classes added to the mask, such as its size." #}
-{# @slot Content — The content to crop, used when src is empty. #}
+{# @slot <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Crect width='160' height='160' fill='%23888'/%3E%3C/svg%3E" alt="Grey placeholder square" /> — The content to crop, used when src is empty. Here it is an image, so the crop shows on the gallery's default shape. #}
 {% comment %}
   `alt` is always written on the img, empty by default, so an image the
   caller did not describe is treated as decorative rather than announced by
