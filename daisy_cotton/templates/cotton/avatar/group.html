@@ -1,2 +1,5 @@
+{# @description A row of overlapping avatars. #}
+{# @prop class:text | description:"Extra classes added to the group, such as the overlap (for example -space-x-6, as daisyUI's examples use). This is Tailwind's own class, so it needs the project's Tailwind build to see it, like any class a caller writes." #}
+{# @slot <c-avatar src="..." alt="Ada Lovelace" content_class="w-12 rounded-full" /><c-avatar placeholder="BM" content_class="w-16 rounded-xl" /><c-avatar content_class="w-10 rounded" /> — Several avatar widths and shapes: one photo, one placeholder, one silhouette. #}
 <c-vars class="" />
 <div class="avatar-group {{ class }}" {{ attrs }}>{{ slot }}</div>

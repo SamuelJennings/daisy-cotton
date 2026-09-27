@@ -1,3 +1,11 @@
+{# @description daisyUI's avatar: a photo, initials, or a silhouette when neither is given, with an optional online or offline indicator. Give alt when the avatar is the only thing identifying the person — beside a name it is usually noise. Width, shape and placeholder colour go through content_class, not a size or variant attribute. #}
+{# @prop src:text | description:"URL of a profile photo. Falls back to placeholder text, then to a silhouette. This package resolves no URL itself; pass the resolved URL in." #}
+{# @prop alt:text | description:"Alt text of the photo. Leave empty unless the avatar is the only thing identifying the person." #}
+{# @prop placeholder:text | description:"Initials or short text shown when there is no src." #}
+{# @prop online:boolean | description:"Presence indicator: avatar-online." #}
+{# @prop offline:boolean | description:"Presence indicator: avatar-offline." #}
+{# @prop content_class:text | description:"Extra classes for the image frame, replacing the w-12 rounded-full default (plus bg-neutral text-neutral-content with no src) entirely. Sets the avatar's width and shape." #}
+{# @prop class:text | description:"Extra classes added to the avatar." #}
 <c-vars src="" alt="" placeholder="" online="" offline="" content_class="" class="" />
 <div class="avatar{% if not src %} avatar-placeholder{% endif %}{% if online %} avatar-online{% endif %}{% if offline %} avatar-offline{% endif %} {{ class }}"
      {{ attrs }}>

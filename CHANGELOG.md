@@ -72,3 +72,13 @@ decision.
   are added alongside `outline`. Extra attributes, including data attributes, now reach the badge
   through `{{ attrs }}`, which they previously did not. The internal `size_opts` map and its
   `get_item` lookup are removed.
+- `<c-avatar>`'s `status` is renamed `online`/`offline` (`avatar-online`/`avatar-offline`), a
+  boolean each instead of one `select`. `size`, `size_options`, `shape` and `variant` are removed:
+  the image frame's width and shape now go through `content_class`, which replaces the
+  `w-12 rounded-full` default (plus `bg-neutral text-neutral-content` whenever there is no `src`,
+  including the silhouette) entirely rather than adding to it. `alt` now defaults to empty instead
+  of `"User avatar"`. The silhouette's muted `bg-base-300 text-base-content/40` colours are gone;
+  it now takes the same neutral placeholder colours as initials text. `<c-avatar.group>`'s `size`
+  and `space_options` (and its `get_item` lookup) are removed; the overlap between avatars, such as
+  `-space-x-6`, now goes entirely through `class`, and the group spreads extra attributes through
+  `{{ attrs }}`, which it previously did not.
