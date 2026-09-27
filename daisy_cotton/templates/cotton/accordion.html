@@ -1,6 +1,6 @@
 {# @description A collapse used as an accordion item: items sharing a name form one group where opening one closes the others. In a browser without grouped <details> support, more than one item can stay open; give at most one item per group open. Accepts every collapse attribute and slot (arrow, plus, open, class, the title slot). See the card's gallery entry for a working group. #}
 {# @prop name:text | required | description:"Group name. Items sharing one form an exclusive group; an item given no name is not part of a group." #}
-{# @prop title:text | description:"Heading text, re-passed as the collapse's title slot. Fill the title slot instead for rich content." #}
+{# @prop title:text | description:"Heading text, re-passed as the collapse's title slot. A title is expected: leaving both this and the title slot empty renders an unnamed control, an empty summary. Fill the title slot instead for rich content." #}
 {# @slot A short answer. — The item's content, forwarded to the collapse. #}
 {# @slot:title — A heading in place of the title attribute, for rich content such as an icon or badge. #}
 {% comment %}
