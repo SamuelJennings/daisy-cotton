@@ -103,3 +103,10 @@ Did: drawer annotations completed: `id` required with no default, `open` toggle 
 Verified: `uv run pytest tests/test_drawer.py` 32 passed; gallery annotation, lint, link and render-all suites 211 passed, 8 skipped; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: full verify and report.
 Watch: the skip count rises from 6 to 8 because `footer` and `drawer` are folder components, which `tests/test_gallery_links.py` already skips with a reason (issue #96).
+
+## 2026-09-27T02:10Z · Implementer US5 · T016
+
+Did: `indicator/index.html` (`<div class="indicator">` with `{{ items }}` before `{{ slot }}`) and `indicator/item.html` (`<span class="indicator-item">`, each space-separated `placement` word validated on its own, `placement` defaulting to empty). Tests in `tests/test_indicator.py` cover the items slot ahead of the content whichever order the caller writes them, the span and its classes, several items with their own classes, an indicator with no items, the nine corners' words, an unknown word (alone and beside a known one), single class attribute and the page-context case. The minimum annotations the gallery suites require went in with the templates; T017 finishes them.
+Verified: the new module failed 20 of 20 before the templates existed, then `uv run pytest tests/test_indicator.py` 20 passed.
+Next: T017 annotations, README, CHANGELOG.
+Watch: none.
