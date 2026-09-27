@@ -118,18 +118,48 @@
       "tasks": [
         {
           "id": "T001",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_divider.py tests/test_templatetags: 37 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors 0 warnings"
+            ],
+            "tests": [
+              "tests/test_divider.py::TestDividerDirection",
+              "tests/test_divider.py::TestDividerVariant",
+              "tests/test_divider.py::TestDividerPlacement",
+              "tests/test_divider.py::TestDividerLabel",
+              "tests/test_templatetags/test_daisy_cotton.py::TestResponsive"
+            ]
+          }
         },
         {
           "id": "T002",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_divider.py: 35 passed"
+            ],
+            "tests": [
+              "tests/test_divider.py::TestDividerRole",
+              "tests/test_divider.py::TestDividerIgnoresPageContext"
+            ]
+          }
         },
         {
           "id": "T003",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_divider.py: 42 passed"
+            ],
+            "tests": [
+              "tests/test_divider.py::TestDividerAnnotations"
+            ]
+          }
         }
       ]
     },
@@ -218,18 +248,49 @@
       "tasks": [
         {
           "id": "T004",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_mockup.py: 22 passed"
+            ],
+            "tests": [
+              "tests/test_mockup.py::TestMockupRoot",
+              "tests/test_mockup.py::TestMockupPhone",
+              "tests/test_mockup.py::TestMockupWindow",
+              "tests/test_mockup.py::TestMockupBrowser"
+            ]
+          }
         },
         {
           "id": "T005",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_mockup_code.py: 12 passed"
+            ],
+            "tests": [
+              "tests/test_mockup_code.py::TestCodeLinePrefix",
+              "tests/test_mockup_code.py::TestCodeLineRoot",
+              "tests/test_mockup_code.py::TestCodeBlock"
+            ]
+          }
         },
         {
           "id": "T006",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_mockup.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py: green",
+              "uv run pytest (full): 397 passed, 6 skipped",
+              "uv run pre-commit run --all-files: all hooks passed"
+            ],
+            "tests": [
+              "tests/test_mockup.py::TestMockupAnnotations"
+            ]
+          }
         }
       ]
     }
