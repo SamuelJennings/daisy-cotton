@@ -1,0 +1,10 @@
+{# @description The page footer landmark, laid out as columns of links, a copyright line or both. Put footer.nav groups inside it, or any free-form content. Any further attributes reach the footer element. #}
+{# @prop horizontal:boolean | description:"Lay the footer content out in a row. Accepts a breakpoint such as sm to apply it from that width up." #}
+{# @prop vertical:boolean | description:"Stack the footer content in a column. Accepts a breakpoint such as sm to apply it from that width up." #}
+{# @prop placement:select['center'] | description:"Centre the footer content. Leave empty to align it to the start." #}
+{# @prop class:text | description:"Extra classes added to the footer." #}
+{# @slot <aside><p>Copyright 2026 Example Ltd</p></aside><c-footer.nav title="Company"><a class="link link-hover">About</a></c-footer.nav><c-footer.nav title="Legal"><a class="link link-hover">Terms</a></c-footer.nav> — A copyright line and footer.nav groups, or any content. #}
+{% load daisy_cotton %}
+<c-vars horizontal="" vertical="" placement="" class />
+<footer class="footer {% if horizontal %}{% responsive horizontal 'footer-horizontal' %}{% endif %} {% if vertical %}{% responsive vertical 'footer-vertical' %}{% endif %} {% variation placement 'footer' 'center' %} {{ class }}"
+        {{ attrs }}>{{ slot }}</footer>

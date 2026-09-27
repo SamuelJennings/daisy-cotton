@@ -1,0 +1,11 @@
+{# @description The hero container: a large block that centres its content, optionally over a dimmed background image. Set the background image with a style attribute, such as style="background-image: url(hero.jpg)". Any further attributes reach the hero element. #}
+{# @prop overlay:boolean | description:"Dim the background image with daisyUI's overlay behind the content." #}
+{# @prop class:text | description:"Extra classes added to the hero, such as min-h-screen." #}
+{# @slot <div class="max-w-md"><h1 class="text-5xl font-bold">Hello there</h1><p class="py-6">Provident cupiditate voluptatem et in.</p><button class="btn btn-primary">Get started</button></div> — The hero's content, such as a heading, a paragraph and a button. #}
+{% comment %}
+  The container only. A composed hero section (heading, copy, calls to
+  action) is the project's markup in the slot. The background image is the
+  caller's style attribute, which reaches the root through attrs.
+{% endcomment %}
+<c-vars overlay="" class />
+<div class="hero {{ class }}" {{ attrs }}>{% if overlay %}<div class="hero-overlay" aria-hidden="true"></div>{% endif %}<div class="hero-content">{{ slot }}</div></div>

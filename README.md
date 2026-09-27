@@ -46,7 +46,7 @@ INSTALLED_APPS = [
 **What this deliberately is not.**
 
 - **Not an application shell.** No settings, no menu system, no icon registry, no views.
-- **Not page-level layout.** Heroes, sections and other compositions are built from these components, not shipped with them.
+- **Not page-level layout.** The `hero` container ships, but composed hero sections (the heading, copy and calls to action inside it) and other page sections stay with the project, built from these components.
 - **Not a CSS framework.** daisyUI, its themes and Tailwind's preflight come from the project.
 - **Not a JavaScript layer.** The package ships no scripts. A project that wants behaviour daisyUI's CSS doesn't give, such as smarter dropdown placement, adds it by overriding the component.
 - **Not coupled to Django objects.** Components take plain values. Wiring one up to a form, a paginator or the messages framework is the project's job.

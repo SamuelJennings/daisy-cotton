@@ -1,12 +1,12 @@
 {# @description A browser window frame with an address bar, for showing a page or screenshot. #}
 {# @prop url:text | description:"Address shown in the address bar." #}
 {# @prop class:text | description:"Extra classes added to the frame." #}
-{# @slot — The page content shown inside the frame. #}
-<c-vars url class />
-<div class="mockup-browser bg-base-100 w-full border border-base-300 {{ class }}"
+{# @slot <div class="p-4">Page content</div> — The page content shown inside the frame. #}
+<c-vars url="" class />
+<div class="mockup-browser border border-base-300 bg-base-100 w-full {{ class }}"
      {{ attrs }}>
   <div class="mockup-browser-toolbar">
     <div class="input">{{ url }}</div>
   </div>
-  {{ slot }}
+  <div>{{ slot }}</div>
 </div>

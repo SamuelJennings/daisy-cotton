@@ -1,0 +1,11 @@
+{# @description An item pinned to a corner of an indicator. Give it the classes of what it shows, such as badge and badge-primary. Any further attributes reach the span element. #}
+{# @prop placement:select['top start','top center','top end','middle start','middle center','middle end','bottom start','bottom center','bottom end'] | description:"Where the item sits, one word or two from top, middle, bottom, start, center and end. Leave empty for daisyUI's default top end corner." #}
+{# @prop class:text | description:"Extra classes added to the item." #}
+{# @slot 12 — The item's content, such as a count. #}
+{% comment %}
+  Each space-separated placement word is validated on its own, so an unknown
+  word adds nothing and does not hide the known one beside it.
+{% endcomment %}
+{% load daisy_cotton %}
+<c-vars placement="" class />
+<span class="indicator-item {% for p in placement.split %}{% variation p 'indicator' 'start,center,end,top,middle,bottom' %} {% endfor %}{{ class }}" {{ attrs }}>{{ slot }}</span>
