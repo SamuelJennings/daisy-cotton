@@ -2,6 +2,8 @@
 
 Thanks for helping. This page covers setting up, running the component gallery, running the checks, and what a finished component looks like.
 
+Two pages set the rules every change follows: [testing](docs/contributing/standards/testing.md), for what gets a test and how tests are structured, and [code documentation](docs/contributing/standards/code-documentation.md), for docstrings, component annotations and comments.
+
 ## Set up
 
 The project is built and developed with [uv](https://docs.astral.sh/uv/). From a checkout:
