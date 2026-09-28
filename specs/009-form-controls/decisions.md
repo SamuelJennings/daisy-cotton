@@ -86,3 +86,9 @@ The removal is P1, but its CHANGELOG examples use every control, and an example 
 The review approved the plan with three medium and three low findings, all applied as plan and task edits. The errors' wrapper carries `grid`, because daisyUI's description line is `inline-flex` and only the fieldset's direct children stack. `type` and the toggle's `role` are written by the template and documented as not for the caller, since a second one would be a duplicate attribute. SC-004 is shown by mapping each removed `form.field` test to the CHANGELOG example that rebuilds it. The ADR edit only removes `form.field` from the list. The removal test asserts `TemplateDoesNotExist` naming `form/field`. The no-script, no-invalid-state-of-its-own and page-context rules are each one parametrised test in `tests/test_form_controls.py` rather than a copy per component. The review's notes also brought in the CHANGELOG's form-rendering sentence, the roadmap's fieldset line and a sentence on whitespace-only slots.
 
 **ADR:** none — local to this feature's templates, tests and documentation.
+
+## D6 — The described field gets its own fieldset in the gallery composition
+
+As built, the composition's `account-email` fieldset held every control, so the email's description and error rendered below all of them. That fieldset now holds only the email field it describes, and the other examples follow it inside the outer fieldset. The outer preview's description sample changed so it no longer repeats the inner one. It was an annotation-only edit, made directly at the story's acceptance rather than dispatched again.
+
+**ADR:** none — a gallery example.
