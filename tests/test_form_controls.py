@@ -36,11 +36,25 @@ CALLER_STRINGS = {
         "<p>Fields</p>"
         "</c-fieldset>"
     ),
+    "textarea": (
+        '<c-textarea variant="primary" size="lg" ghost name="bio" rows="3">'
+        "Hello"
+        "</c-textarea>"
+    ),
+    "select": (
+        '<c-select variant="primary" size="lg" ghost name="plan">'
+        '<c-slot name="start"><span class="label">Plan</span></c-slot>'
+        '<c-slot name="end"><kbd>Enter</kbd></c-slot>'
+        '<option value="a">A</option>'
+        "</c-select>"
+    ),
 }
 
 # A bare control: no variant and no aria-invalid given, so neither may appear.
 NO_OWN_INVALID_STATE = {
     "input": '<c-input name="q" />',
+    "textarea": '<c-textarea name="bio" />',
+    "select": '<c-select name="plan" />',
 }
 
 # The bare component, and a page context naming every declared attribute with
@@ -73,6 +87,26 @@ PAGE_CONTEXT_LEAK = {
             "description": "leaked-description",
             "errors": "leaked-errors",
             "id": "leaked-id",
+            "class": "leaked-class",
+        },
+    ),
+    "textarea": (
+        "<c-textarea />",
+        {
+            "variant": "leaked-variant",
+            "size": "leaked-size",
+            "ghost": "leaked-ghost",
+            "class": "leaked-class",
+        },
+    ),
+    "select": (
+        "<c-select />",
+        {
+            "variant": "leaked-variant",
+            "size": "leaked-size",
+            "ghost": "leaked-ghost",
+            "start": "leaked-start",
+            "end": "leaked-end",
             "class": "leaked-class",
         },
     ),

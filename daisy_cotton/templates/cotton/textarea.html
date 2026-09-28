@@ -1,0 +1,11 @@
+{# @description A native multi-line text box. Its value is the slot exactly as the caller wrote it, with nothing added around it. A control still needs a c-label, an aria-label or an aria-labelledby for its accessible name. See the fieldset gallery entry for labelled, disabled and invalid examples. #}
+{# @prop variant:select['neutral','primary','secondary','accent','info','success','warning','error'] | description:"Colour variant." #}
+{# @prop size:select['xs','sm','md','lg','xl'] | description:"Textarea size. daisyUI's scale, not the native rows or cols attributes." #}
+{# @prop ghost:boolean | description:"Draw the textarea with no background until focused." #}
+{# @prop class:text | description:"Extra classes added to the textarea." #}
+{# @slot Hello — The textarea's value, exactly as the caller wrote it. #}
+{% load daisy_cotton %}
+<c-vars variant="" size="" ghost="" class="" />
+{# djlint:off #}
+<textarea class="textarea {% variation variant "textarea" "neutral,primary,secondary,accent,info,success,warning,error" %} {% variation size "textarea" "xs,sm,md,lg,xl" %}{% if ghost %} textarea-ghost{% endif %} {{ class }}" {{ attrs }}>{{ slot }}</textarea>
+{# djlint:on #}
