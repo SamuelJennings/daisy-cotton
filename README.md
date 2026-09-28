@@ -10,11 +10,23 @@ Built on [daisyUI](https://daisyui.com/) and [django-cotton](https://django-cott
 
 Version 0.0.1, pre-1.0: names, attributes and the set of classes a component emits can change between minor versions. The [CHANGELOG](https://github.com/SamuelJennings/daisy-cotton/blob/main/CHANGELOG.md) is how a project finds out what has landed.
 
-Sixty-three components are built so far: `accordion`, `alert`, `avatar`, `badge`, `breadcrumbs`, `button`, `card`, `carousel`, `chat`, `collapse`, `countdown`, `diff`, `divider`, `dock`, `drawer`, `dropdown`, `fab`, `footer`, `form.field`, `hero`, `hover-3d`, `hover-gallery`, `icon`, `indicator`, `join`, `kbd`, `link`, `list`, `mask`, `megamenu`, `menu`, `modal`, `navbar`, `stack`, `stat`, `status`, `steps`, `swap`, `table`, `tabs`, `text-rotate`, `timeline` and `mockup.*`. Pagination has no component: daisyUI builds it from `join` and `btn` and gives it no class of its own, so write it with those two. Aura has no component either: it only decorates another element, so wrap the component to highlight in a `<div class="aura">` with daisyUI's style and size classes. Each one is documented live in the component gallery (`python manage.py runserver` from a checkout). More land as the need arises.
+Sixty-nine components are built so far: `accordion`, `alert`, `avatar`, `badge`, `breadcrumbs`, `button`, `card`, `carousel`, `chat`, `collapse`, `countdown`, `diff`, `divider`, `dock`, `drawer`, `dropdown`, `fab`, `footer`, `form.field`, `hero`, `hover-3d`, `hover-gallery`, `icon`, `indicator`, `join`, `kbd`, `link`, `list`, `loading`, `mask`, `megamenu`, `menu`, `modal`, `navbar`, `progress`, `radial-progress`, `skeleton`, `stack`, `stat`, `status`, `steps`, `swap`, `table`, `tabs`, `text-rotate`, `timeline`, `toast`, `tooltip` and `mockup.*`. Pagination has no component: daisyUI builds it from `join` and `btn` and gives it no class of its own, so write it with those two. Aura has no component either: it only decorates another element, so wrap the component to highlight in a `<div class="aura">` with daisyUI's style and size classes. Each one is documented live in the component gallery (`python manage.py runserver` from a checkout). More land as the need arises.
 
 `<c-icon>` renders `name` as a literal CSS class string and resolves nothing itself — a project wanting name-based icon resolution provides its own override (see [docs/adr/0001](https://github.com/SamuelJennings/daisy-cotton/blob/main/docs/adr/0001-icon-is-an-extension-point.md)).
 
-`<c-alert>`'s `dismissible` and `delay` need [Alpine.js](https://alpinejs.dev/) on the page — this package doesn't ship or load it. Without Alpine, the alert still renders and reads fine, but the dismiss button does nothing and `delay` never fires.
+`<c-alert>` takes `variant` (info, success, warning, error), `soft`/`outline`/`dash` for style, and `horizontal`/`vertical` for direction, each accepting a breakpoint such as `sm`; a caller-given `role` replaces the default `role="alert"`, so `role="status"` gives a polite announcement instead of an interruption. Its icon and dismiss button are drawn by `<c-icon>` and `<c-button>`; the dismiss button's accessible name is the translatable "Dismiss" with its glyph hidden from assistive technology. `dismissible` and `delay` need [Alpine.js](https://alpinejs.dev/) on the page — this package doesn't ship or load it. Without Alpine, the alert still renders and reads fine, but the dismiss button does nothing and `delay` never fires.
+
+`<c-toast>` pins its content to a corner or edge of the screen and has no role or live region of its own, so put alerts inside it and each keeps its own. A project rendering Django's messages framework writes:
+
+```django
+<c-toast placement="top end">
+  {% for message in messages %}
+    <c-alert variant="{{ message.level_tag }}" dismissible>{{ message }}</c-alert>
+  {% endfor %}
+</c-toast>
+```
+
+Django's `debug` level tag has no matching alert colour, so a debug message falls back to the plain alert.
 
 ## Requirements
 

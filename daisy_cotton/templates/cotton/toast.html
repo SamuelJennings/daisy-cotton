@@ -1,0 +1,9 @@
+{# @description A positioning wrapper for one or more alerts, carrying no role or live region of its own — the alerts inside keep their own roles, and a live region on the wrapper too would announce each one twice. daisyUI fixes it to the viewport at its placement, and two toasts sharing a placement overlap. See the README's messages-framework example for a project rendering its own messages into one. #}
+{# @prop placement:select['top','middle','bottom','start','center','end','top start','top center','top end','middle start','middle center','middle end','bottom start','bottom center','bottom end'] | description:"One vertical position (top, middle, bottom) and one horizontal position (start, center, end). Leave empty for daisyUI's default (bottom end)." #}
+{# @prop class:text | description:"Extra classes added to the wrapper." #}
+{# @slot <c-alert variant="info" icon="bi bi-info-circle">New version available.</c-alert><c-alert variant="success" role="status">Changes saved.</c-alert><c-alert variant="warning" dismissible>Session about to expire.</c-alert> — Alerts stacked inside the toast, each keeping its own role. #}
+{% load daisy_cotton %}
+<c-vars placement="" class="" />
+{# djlint:off #}
+<div class="toast {% for word in placement.split %}{% variation word "toast" "top,middle,bottom,start,center,end" %} {% endfor %}{{ class }}" {{ attrs }}>{{ slot }}</div>
+{# djlint:on #}

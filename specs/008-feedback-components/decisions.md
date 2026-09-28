@@ -53,3 +53,51 @@ daisyUI calls both the tooltip's and the toast's class groups "placement". Follo
 ## Priorities
 
 Priorities reflect how many adopters need each component. The alert and loading indicator appear in nearly every application (P1). Tooltips, progress bars and toasts appear in most (P2). Skeletons are polish (P3). Progress and radial progress share a story because they show the same thing in two shapes.
+
+## D1 — The spec still holds after FS-001 to FS-007
+
+Seven features were delivered after this spec landed. Read against their specs: FS-003, FS-004 and FS-006 made the naming rulings this spec already follows (`horizontal`/`vertical` taking a breakpoint, `placement` for placement, `label` for an accessible name), FS-005 kept `<c-button>`'s `text`, `icon` and pass-through attributes that the alert's dismiss control relies on, and FS-001 made the demo load Alpine.js. None of them delivers a feedback component or changes a behaviour this spec describes.
+
+**ADR:** none — a check made once for this feature.
+
+## D2 — The tooltip's hint follows its trigger
+
+daisyUI's example puts `tooltip-content` before the trigger. Its CSS only needs the content to be a direct child of the wrapper (research R3), so the order is free, and the component puts the trigger first. A screen reader moving through the page then meets the control before the text that describes it.
+
+**ADR:** none — local to the tooltip template.
+
+## D3 — The radial progress's value is required with an empty default
+
+FR-020 makes `value` required. It is declared `value=""` and annotated `required`, the pattern the modal's `id` uses, so a page variable named `value` cannot leak in. The gallery preview therefore draws an empty ring, and the values the spec asks the gallery to show are in the `mockup.phone` composition. The visible percentage is written only when a value is given, so the empty preview shows no stray "%".
+
+**ADR:** none — local to the radial progress template.
+
+## D4 — Where the multi-instance examples live
+
+As FS-007 D3: the loading indicator inside a button and the tooltip linked to its trigger go into the `mockup.browser` product page, and progress bars, radial progress rings and the skeleton card placeholder into a mobile upload screen in `mockup.phone`, whose slot example held only placeholder text. An alert with an icon and a dismissible alert are shown in the toast's own slot example, which is where an application would put them.
+
+**ADR:** none — follows the approach FS-006 set for the gallery.
+
+## D5 — Design review applied
+
+The review approved the plan with two medium and four low findings, all applied as plan and task edits: a progress bound to `None` emits no value; the radial progress tests its slot after stripping whitespace and writes `aria-valuenow` only with a value; the alert's `delay` goes through `add:0` so only a number reaches `x-init`; the tooltip and toast carry their notes in the description and README rather than template comments. SC-004's "every gallery example" is read as the composed examples: the bare progress and radial progress previews carry only declared defaults, and `label` has none, so they are unnamed by construction and their descriptions tell the developer to type `label`, as the FAB's does for its trigger.
+
+**ADR:** none — local to this feature's templates and gallery entries.
+
+## D6 — `<c-radial_progress>` inside gallery-scanned markup
+
+The gallery's catalog registers a component under its file stem — `radial_progress`, not `radial-progress` — and its unknown-component lint check compares a source tag against that literal set with no hyphen/underscore normalization, so `<c-radial-progress>` inside `mockup.phone`'s `@slot` example reads as a reference to a component that does not exist, even though Cotton itself resolves the hyphen form to `radial_progress.html` at render time and the component's own tests use it freely. `card/index.html`'s existing `<c-hover_gallery>` is the same rule already applied. `mockup.phone`'s composition is written `<c-radial_progress>` for this reason; the README and CHANGELOG still name it `radial-progress`, the display form the gallery and daisyUI's own naming use.
+
+**ADR:** none — a lint tool's known-tags limitation, not a design choice; recorded so the next template that composes with `radial-progress` in scanned markup does not rediscover it.
+
+## D7 — The demo loads Alpine's browser build
+
+The browser check found that no dismiss button worked in the gallery. The demo loaded `https://cdn.jsdelivr.net/npm/alpinejs@3`, which jsDelivr resolves to Alpine's CommonJS build (`dist/module.cjs.js`), and in a browser that throws "module is not defined", so Alpine never started. The spec assumes the demo runs Alpine so the dismissible alert works in the gallery, and FS-001 required it. The URL now names Alpine's browser build, `alpinejs@3/dist/cdn.min.js`, with a test in `tests/test_demo.py` that failed first. It was made directly rather than dispatched: one URL and one test, found during the browser check.
+
+**ADR:** none — a fix to the demo's asset URL.
+
+## D8 — Code review applied
+
+The review approved with two medium and two low findings, all verified and all fixed with a test written first: a non-numeric `delay` now adds no timer at all (it used to render an empty argument, which a browser runs as an immediate dismissal); the alert's icon no longer picks up the alert's `class`; the radial progress has tests for a value bound to 0 and for the value attributes surviving custom centre content; and the loading and alert tests no longer pin the English name or the glyph. The tooltip's `content` slot is now tested after stripping whitespace, as the radial progress's slot is. Made directly rather than dispatched: each fix is one line of template and one test.
+
+**ADR:** none — fixes local to this feature's templates.

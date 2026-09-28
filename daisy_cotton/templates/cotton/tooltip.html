@@ -1,0 +1,18 @@
+{# @description A tooltip wrapping a trigger, its hint shown on hover and on keyboard focus. Wrap a focusable trigger, such as a button or link — on plain text the hint shows on hover only. The hint always renders as an element with role="tooltip" so it reaches assistive technology; give id and put aria-describedby with that id on the trigger. A tooltip is a description, not a name — an icon-only trigger still needs its own aria-label. Escape does not dismiss it without a project script. See the mockup.browser entry for a linked example. #}
+{# @prop tip:text | description:"The hint text, shown unless the content slot is given." #}
+{# @prop content:text | description:"Rich hint content, replacing tip." #}
+{# @prop placement:select['top','bottom','left','right','start','center','end','top start','top center','top end','bottom start','bottom center','bottom end','left start','left center','left end','right start','right center','right end'] | description:"One side and one alignment, e.g. \"bottom end\". Leave empty for daisyUI's default placement." #}
+{# @prop variant:select['primary','secondary','accent','info','success','warning','error'] | description:"Colour variant." #}
+{# @prop open:boolean | description:"Force the hint to show without hover or focus." #}
+{# @prop id:text | description:"Id placed on the tooltip-content element (never the wrapper), so a trigger can reference it with aria-describedby." #}
+{# @prop class:text | description:"Extra classes added to the wrapper." #}
+{# @slot <c-button circle icon="bi bi-share" aria-label="Share" /> — The trigger, wrapped by the tooltip. #}
+{# @slot:content <kbd>Ctrl</kbd>+C to copy — Rich hint content, replacing tip. #}
+{% load daisy_cotton %}
+<c-vars tip="" content="" placement="" variant="" open="" id="" class="" />
+{# djlint:off #}
+<div class="tooltip {% for word in placement.split %}{% variation word "tooltip" "top,bottom,left,right,start,center,end" %} {% endfor %}{% variation variant "tooltip" "primary,secondary,accent,info,success,warning,error" %}{% if open %} tooltip-open{% endif %} {{ class }}" {{ attrs }}>
+  {{ slot }}
+  <div class="tooltip-content" role="tooltip"{% if id %} id="{{ id }}"{% endif %}>{% if content.strip %}{{ content }}{% else %}{{ tip }}{% endif %}</div>
+</div>
+{# djlint:on #}

@@ -146,6 +146,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   0 through 999 and any other value is rendered as given, so it must be a number, never unvalidated user
   input. A script that animates it updates `--value`, the visible text and the hidden copy together.
   `hero`'s example shows a days, hours, minutes and seconds clock of four labelled countdowns.
+- `<c-loading>`: daisyUI's loading indicator, a `<span>` carrying `loading` and `role="status"`, named
+  by `label` or the translatable "Loading". Each of `spinner`, `dots`, `ring`, `ball`, `bars` and
+  `infinity` adds its own class; with none given daisyUI draws the spinner, and giving more than one
+  emits every class named. `size` takes the five daisyUI sizes; colour it with a text utility such as
+  `text-primary` in `class`.
+- `<c-tooltip>`: a wrapper carrying `tooltip` around the default slot (the trigger), followed by a
+  `tooltip-content` element with `role="tooltip"` holding `tip` or, when given, the `content` slot —
+  never `data-tip`, which CSS-generated text does not reliably expose to assistive technology.
+  `placement` takes one side (`top`, `bottom`, `left`, `right`) and one alignment (`start`, `center`,
+  `end`), `variant` takes daisyUI's seven tooltip colours, and `open` forces the hint to show. `id`
+  lands on the `tooltip-content` element rather than the wrapper, so a trigger can reference it with
+  `aria-describedby`.
+- `<c-progress>`: a native `<progress>` carrying `progress`, `variant` taking daisyUI's eight colours,
+  `max` defaulting to `100`, `value` emitted for emptiness rather than truthiness so a bound `0` still
+  renders `value="0"` and a bound `None` renders no attribute at all, and `aria-label` from `label`.
+- `<c-radial-progress>`: a `<div>` carrying `radial-progress` and `role="progressbar"`, with
+  `aria-valuenow`/`aria-valuemin`/`aria-valuemax` and a `style` beginning `--value:<value>;` (a
+  caller's `style` appended after it). `value` is required, with an empty default so a page variable
+  named `value` can never leak in; the visible `<value>%` is replaced by the default slot when given.
+  Size and thickness are set with `[--size:…]`/`[--thickness:…]` classes in `class`.
+- `<c-toast>`: a `<div>` carrying `toast` around one or more alerts, with no `role` or live-region
+  attribute of its own — the alerts inside keep their own roles, and a live region on the wrapper
+  too would announce each message twice. `placement` takes one vertical position (`top`, `middle`,
+  `bottom`) and one horizontal position (`start`, `center`, `end`), each word validated on its own.
+  Placing the toast on the page and keeping two toasts from sharing a placement is the project's
+  job; the README shows a project rendering Django's messages framework into one.
+- `<c-skeleton>`: a `<div>` carrying `skeleton`, hidden from assistive technology unless `text` is
+  given. Size it with `h-*`/`w-*` utility classes in `class`. `text` given as a bare attribute adds
+  `skeleton-text` and leaves the default slot as the content; given a string it adds `skeleton-text`
+  and renders that string as the content instead.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
@@ -222,6 +252,14 @@ decision.
   `<a>` with no span, and the current item's span has no class. A project that styled
   `.daisy-cotton-breadcrumb-text` now targets `.breadcrumbs li > a` and `.breadcrumbs li > span`, or writes its
   own span in the item's slot.
+- `<c-alert>`: adds `horizontal` and `vertical`, each taking a breakpoint such as `sm`. `variant`
+  now ignores a value daisyUI does not define, instead of emitting an invalid class. A caller-given
+  `role` now replaces the default `role="alert"` instead of being written a second time, so
+  `role="status"` gives a polite announcement. The dismiss button is now drawn by `<c-button>`,
+  with the translatable accessible name "Dismiss" and its `✕` glyph hidden from assistive
+  technology; it was a plain `<button>` named only by that glyph. The icon is now hidden from
+  assistive technology. `delay` now accepts only a whole number of milliseconds: any other value is
+  ignored and the alert stays until dismissed. A page variable named after one of the alert's attributes no longer leaks into it.
 - `dock` renders as a `<nav>` named `Dock` by default (translated; an `aria-label` passed by the caller replaces
   it) instead of a `<div>`, and no longer adds `bg-transparent backdrop-blur`; pass them through `class` to keep them.
   A `dock.item` with no `href` and no `toggle` is now a `<button type="button">`, its icon is hidden from
