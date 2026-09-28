@@ -88,3 +88,10 @@ Did: wrote `skeleton.html` — a `<div>` carrying `skeleton`, `skeleton-text` an
 Verified: `uv run pytest tests/test_skeleton.py tests/test_feedback_no_script.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q` — 627 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — 61/69 clean, 0 errors, 0 warnings.
 Next: T012 (`mockup.phone` card placeholder composition, README, CHANGELOG remain).
 Watch: none.
+
+## 2026-09-28T21:17:11Z · Implementer US6 · T012
+
+Did: gallery annotations for `skeleton` were already complete in T011 (`@description` naming the sizing utilities, the `text` toggle, the accessibility split between a shape and a text skeleton, and the `mockup.phone` entry; `@slot` with no sample since a sample would render as hidden text inside a shape). Added a card placeholder to `mockup.phone`'s default `@slot` example, below the existing mobile upload screen: a `card` with an image skeleton, then a `card-body` holding an avatar skeleton (`rounded-full`) beside two text-line skeletons; sanity-rendered the composition through the Cotton compiler to confirm valid output. README component count Sixty-eight → Sixty-nine with `skeleton` listed alphabetically after `radial-progress`. CHANGELOG `### Added` bullet for `skeleton`.
+Verified: `uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_skeleton.py tests/test_feedback_no_script.py tests/test_mockup.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q` — 648 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — 61/69 clean, 0 errors, 0 warnings.
+Next: US6 complete; this was the last story.
+Watch: none.

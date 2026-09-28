@@ -172,6 +172,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `bottom`) and one horizontal position (`start`, `center`, `end`), each word validated on its own.
   Placing the toast on the page and keeping two toasts from sharing a placement is the project's
   job; the README shows a project rendering Django's messages framework into one.
+- `<c-skeleton>`: a `<div>` carrying `skeleton`, hidden from assistive technology unless `text` is
+  given. Size it with `h-*`/`w-*` utility classes in `class`. `text` given as a bare attribute adds
+  `skeleton-text` and leaves the default slot as the content; given a string it adds `skeleton-text`
+  and renders that string as the content instead.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
