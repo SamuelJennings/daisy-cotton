@@ -30,6 +30,12 @@ CALLER_STRINGS = {
         '<c-input placeholder="Email" />'
         "</c-label>"
     ),
+    "fieldset": (
+        '<c-fieldset legend="Shipping" description="We never share it." '
+        'errors="Pick a shipping option." id="shipping" class="my-fieldset">'
+        "<p>Fields</p>"
+        "</c-fieldset>"
+    ),
 }
 
 # A bare control: no variant and no aria-invalid given, so neither may appear.
@@ -57,6 +63,16 @@ PAGE_CONTEXT_LEAK = {
         {
             "text": "leaked-text",
             "floating": "leaked-floating",
+            "class": "leaked-class",
+        },
+    ),
+    "fieldset": (
+        "<c-fieldset />",
+        {
+            "legend": "leaked-legend",
+            "description": "leaked-description",
+            "errors": "leaked-errors",
+            "id": "leaked-id",
             "class": "leaked-class",
         },
     ),

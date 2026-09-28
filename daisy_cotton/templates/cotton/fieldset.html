@@ -1,0 +1,14 @@
+{# @description daisyUI's fieldset: a legend naming a group of controls, the group itself, a description line and error messages. The legend names the group, not a control inside it, so a fieldset holding one control still gives that control its own c-label. With id, the description carries <id>-description and the errors carry <id>-errors, so a control names both in aria-describedby; without id, neither is emitted. A description or error message containing HTML is escaped; a named slot of the same name takes markup instead. A named slot filled with whitespace only still renders its element. See the fieldset gallery entry for a composition naming every control. #}
+{# @prop legend:text | description:"Group heading, rendered as the first child. Also fillable as the legend slot." #}
+{# @prop description:text | description:"Help text rendered as a description line after the slot. Also fillable as the description slot. Empty renders nothing." #}
+{# @prop errors:text | description:"A string or a list of strings (a Django ErrorList works), each rendered as an error-coloured description line after the description. Also fillable as the errors slot. Empty renders nothing." #}
+{# @prop id:text | description:"Fieldset id. When given, the description and errors carry <id>-description and <id>-errors for aria-describedby." #}
+{# @prop class:text | description:"Extra classes added to the fieldset." #}
+{# @slot:legend Account — The group heading, as an alternative to the legend attribute. #}
+{# @slot A single control, or a composition of nested fieldsets and controls. #}
+{# @slot:description We only use this to send receipts. — Help text, as an alternative to the description attribute. #}
+{# @slot:errors — Error messages, as an alternative to the errors attribute. #}
+<c-vars legend="" description="" errors="" id="" class="" />
+{# djlint:off #}
+<fieldset class="fieldset {{ class }}"{% if id %} id="{{ id }}"{% endif %} {{ attrs }}>{% if legend %}<legend class="fieldset-legend">{{ legend }}</legend>{% endif %}{{ slot }}{% if description %}<p class="label"{% if id %} id="{{ id }}-description"{% endif %}>{{ description }}</p>{% endif %}{% if errors %}<div class="grid"{% if id %} id="{{ id }}-errors"{% endif %}>{% if errors == errors|stringformat:"s" %}<p class="label text-error">{{ errors }}</p>{% else %}{% for error in errors %}<p class="label text-error">{{ error }}</p>{% endfor %}{% endif %}</div>{% endif %}</fieldset>
+{# djlint:on #}
