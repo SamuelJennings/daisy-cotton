@@ -279,8 +279,18 @@
         },
         {
           "id": "T010",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_toast.py tests/test_feedback_no_script.py tests/test_render_all.py -q: 476 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 60/68 clean, 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_gallery_annotations.py::TestPackageTemplateAnnotations",
+              "tests/test_gallery_lint.py"
+            ]
+          }
         }
       ]
     },

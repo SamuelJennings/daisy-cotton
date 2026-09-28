@@ -166,6 +166,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   caller's `style` appended after it). `value` is required, with an empty default so a page variable
   named `value` can never leak in; the visible `<value>%` is replaced by the default slot when given.
   Size and thickness are set with `[--size:…]`/`[--thickness:…]` classes in `class`.
+- `<c-toast>`: a `<div>` carrying `toast` around one or more alerts, with no `role` or live-region
+  attribute of its own — the alerts inside keep their own roles, and a live region on the wrapper
+  too would announce each message twice. `placement` takes one vertical position (`top`, `middle`,
+  `bottom`) and one horizontal position (`start`, `center`, `end`), each word validated on its own.
+  Placing the toast on the page and keeping two toasts from sharing a placement is the project's
+  job; the README shows a project rendering Django's messages framework into one.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is

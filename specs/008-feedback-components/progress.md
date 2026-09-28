@@ -74,3 +74,10 @@ Did: wrote `toast.html` — a `<div>` carrying `toast` around the default slot, 
 Verified: `uv run pytest tests/test_toast.py tests/test_feedback_no_script.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q` — 626 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — 60/68 clean, 0 errors, 0 warnings.
 Next: T010 (gallery annotations already written in this task; README, CHANGELOG remain).
 Watch: none.
+
+## 2026-09-28T21:09:04Z · Implementer US5 · T010
+
+Did: gallery annotations for `toast` were already complete in T009 (`@description` naming the toast a positioning wrapper with no role of its own, warning that placing it and keeping two toasts from sharing a placement is the project's job, and pointing to the README's messages-framework example; `@slot` holding three alerts — an info alert with an icon, a success alert with `role="status"`, and a dismissible warning). README component count Sixty-seven → Sixty-eight with `toast` listed alphabetically between `timeline` and `tooltip`, and a messages-framework example (`{% for message in messages %}<c-alert variant="{{ message.level_tag }}" dismissible>{{ message }}</c-alert>{% endfor %}` inside `<c-toast placement="top end">`, noting that Django's `debug` level tag falls back to the plain alert) added beside the alert's Alpine paragraph. CHANGELOG `### Added` bullet for `toast`.
+Verified: `uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_toast.py tests/test_feedback_no_script.py tests/test_render_all.py -q` — 476 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — 60/68 clean, 0 errors, 0 warnings.
+Next: US5 complete; US6 skeleton follows.
+Watch: none.
