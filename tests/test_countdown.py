@@ -5,6 +5,14 @@ attributes reach ``<c-vars>`` the way they do in a real page.
 """
 
 from html.parser import HTMLParser
+from pathlib import Path
+
+from bs4 import BeautifulSoup
+from django_cotton_gallery.core.annotations import AnnotationParser
+
+import daisy_cotton
+
+COTTON_DIR = Path(next(iter(daisy_cotton.__path__))).resolve() / "templates" / "cotton"
 
 
 class _StartTags(HTMLParser):
@@ -159,3 +167,88 @@ class TestCountdownPageContext:
         soup = cotton_render_string_soup("<c-countdown />", {"class": "Leaked"})
         root, _ = countdown_and_copy(soup)
         assert "Leaked" not in root["class"]
+
+
+class TestCountdownGalleryAnnotations:
+    """The gallery entry, read through the gallery's own ``AnnotationParser``."""
+
+    @staticmethod
+    def _parsed():
+        return AnnotationParser().parse((COTTON_DIR / "countdown.html").read_text())
+
+    def test_the_value_prop_is_text_with_a_default_of_zero(self):
+        value = next(p for p in self._parsed().props if p.clean_name == "value")
+        assert value.type == "text"
+        assert value.default == "0"
+
+    def test_the_component_has_no_slot(self):
+        assert self._parsed().slots == ()
+
+    def test_the_description_states_the_range_and_what_a_screen_reader_reads(self):
+        description = self._parsed().description
+        assert "0 through 999" in description
+        assert "screen reader reads the number as rendered" in description
+
+    def test_the_description_names_the_three_things_a_script_updates_together(self):
+        description = self._parsed().description
+        assert "--value" in description
+        assert "visible text" in description
+        assert "hidden copy" in description
+
+    def test_the_description_says_zero_padding_needs_an_override(self):
+        description = self._parsed().description
+        assert "--digits" in description
+        assert "override" in description
+
+    def test_the_description_warns_that_the_value_must_be_a_number(self):
+        description = self._parsed().description
+        assert "never unvalidated user input" in description
+        assert "semicolon" in description
+
+    def test_the_description_names_the_hero_entry_for_a_clock(self):
+        assert "hero entry" in self._parsed().description
+
+
+class TestHeroCountdownClock:
+    """The hero entry's default slot shows a labelled days, hours, minutes and seconds clock."""
+
+    @staticmethod
+    def _rendered_slot(cotton_render_string):
+        slot = AnnotationParser().parse((COTTON_DIR / "hero.html").read_text()).slots[0]
+        return BeautifulSoup(cotton_render_string(slot.content), "html.parser")
+
+    def test_the_clock_is_four_countdowns_each_with_a_visible_label(
+        self, cotton_render_string
+    ):
+        soup = self._rendered_slot(cotton_render_string)
+        clock = []
+        for countdown in soup.find_all("span", class_="countdown"):
+            labels = countdown.parent.find_all(string=True, recursive=False)
+            clock.append(
+                (
+                    countdown.get_text(),
+                    "".join(labels).strip(),
+                )
+            )
+        assert clock == [
+            ("15", "days"),
+            ("10", "hours"),
+            ("24", "min"),
+            ("59", "sec"),
+        ]
+
+    def test_each_clock_countdown_has_its_hidden_copy(self, cotton_render_string):
+        soup = self._rendered_slot(cotton_render_string)
+        copies = [
+            countdown.find_next_sibling("span", class_="sr-only").get_text()
+            for countdown in soup.find_all("span", class_="countdown")
+        ]
+        assert copies == ["15", "10", "24", "59"]
+
+    def test_the_rotating_heading_sentence_and_call_to_action_remain(
+        self, cotton_render_string
+    ):
+        soup = self._rendered_slot(cotton_render_string)
+        assert len(soup.select("h1 .text-rotate")) == 1
+        assert len(soup.select("p .text-rotate")) == 1
+        assert soup.select_one(".btn.btn-primary").get_text() == "Get started"

@@ -1,4 +1,4 @@
-{# @description daisyUI's countdown: a number that animates when it changes. #}
+{# @description daisyUI's countdown: a number that animates from one value to the next. daisyUI animates 0 through 999; a value outside that range or that is not a number is rendered as given. A screen reader reads the number as rendered, never each change, because the animated span is hidden from assistive technology and a visually hidden copy of the value follows it. A script that animates the number must update the --value variable, the visible text and the hidden copy together. Zero-padding with --digits needs an override of the component. The value must be a number, never unvalidated user input, because a semicolon adds CSS declarations to the style attribute. See the hero entry for a days, hours, minutes and seconds clock. #}
 {# @prop value:text | default:"0" | description:"The number to show." #}
 {# @prop class:text | description:"Extra classes added to the countdown, such as font-mono or text-4xl." #}
 {% comment %}

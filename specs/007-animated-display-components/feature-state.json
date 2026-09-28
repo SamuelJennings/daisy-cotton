@@ -174,8 +174,18 @@
         },
         {
           "id": "T006",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_countdown.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_hero.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py tests/test_text_rotate.py -q: 616 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 55/63 clean, 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_countdown.py::TestCountdownGalleryAnnotations",
+              "tests/test_countdown.py::TestHeroCountdownClock"
+            ]
+          }
         }
       ]
     },

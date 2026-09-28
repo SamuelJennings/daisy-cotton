@@ -140,6 +140,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `<span>` that holds up to six slotted lines shown one at a time in a ten-second loop, `content_class`
   reaching that inner span. A `duration-*` class on the root changes the loop's length; the loop pauses
   only while the pointer is over it, and every line stays readable to a screen reader.
+- `<c-countdown>`: daisyUI's countdown, a `<span>` carrying `countdown` wrapping one inner `<span>` that
+  sets `--value` and shows the number, hidden from assistive technology, followed by a visually hidden
+  copy of the number so a screen reader reads it as rendered. `value` defaults to `0`; daisyUI animates
+  0 through 999 and any other value is rendered as given, so it must be a number, never unvalidated user
+  input. A script that animates it updates `--value`, the visible text and the hidden copy together.
+  `hero`'s example shows a days, hours, minutes and seconds clock of four labelled countdowns.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
