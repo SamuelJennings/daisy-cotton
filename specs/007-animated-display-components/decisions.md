@@ -151,3 +151,9 @@ component's tests.
 The maintainer's ruling on D6's SPEC-001: no script of any kind, and a screen reader gets the number as rendered rather than an animated count. The spec's FR-016, FR-018, User Story 3 and its countdown clarification and edge case now say so. The animated span carries `aria-hidden="true"` and a visually hidden copy of the value follows the countdown span. The copy cannot sit inside it, because daisyUI hides every direct child of `.countdown` and `visibility` is inherited. `aria-live` and `aria-label` go: nothing in the package changes the number, and a project that animates it and wants changes announced overrides the component.
 
 **ADR:** none — local to the countdown template, and recorded in the spec itself.
+
+## D13 — Convergence
+
+Every FR and SC has a task with a test or a browser check behind it (T015's check ran on all seven components and the four host entries, progress.md). No migrations. The cleanup pass found nothing to simplify: every template is the markup the plan names. One template comment that cited a planning document was reworded. The gallery linter's handling of hyphenated tags (D11) is filed as #107, alongside #96.
+
+**ADR:** none — local to this feature.
