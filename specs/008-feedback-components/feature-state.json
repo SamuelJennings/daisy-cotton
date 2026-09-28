@@ -158,13 +158,40 @@
       "tasks": [
         {
           "id": "T005",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_tooltip.py tests/test_feedback_no_script.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q: 575 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 57/65 clean, 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_tooltip.py::TestTooltipRoot",
+              "tests/test_tooltip.py::TestTooltipPlacement",
+              "tests/test_tooltip.py::TestTooltipVariant",
+              "tests/test_tooltip.py::TestTooltipOpen",
+              "tests/test_tooltip.py::TestTooltipContentSlot",
+              "tests/test_tooltip.py::TestTooltipId",
+              "tests/test_tooltip.py::TestTooltipClassAndAttrs",
+              "tests/test_tooltip.py::TestTooltipPageContextDoesNotLeak"
+            ]
+          }
         },
         {
           "id": "T006",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_mockup.py tests/test_render_all.py tests/test_tooltip.py tests/test_feedback_no_script.py -q: 486 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 57/65 clean, 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_gallery_annotations.py::TestPackageTemplateAnnotations",
+              "tests/test_gallery_lint.py",
+              "tests/test_mockup.py"
+            ]
+          }
         }
       ]
     },
