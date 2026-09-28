@@ -90,12 +90,13 @@ Shared rules, applied everywhere below (FS-006's, unchanged):
 `countdown.html` — `<c-vars value="0" class="" />`.
 
 ```
-<span class="countdown {{ class }}" {{ attrs }}><span style="--value:{{ value }};" aria-live="polite" aria-label="{{ value }}">{{ value }}</span></span>
+<span class="countdown {{ class }}" {{ attrs }}><span style="--value:{{ value }};" aria-hidden="true">{{ value }}</span></span><span class="sr-only">{{ value }}</span>
 ```
 
 - `value` defaults to `0` rather than empty, so the gallery preview draws a number and a bare `<c-countdown />` is valid markup (decisions.md D2).
 - `--digits` is not offered. It is a CSS variable, not a class (SC-001 counts classes), and no FR asks for it. The description says a project wanting zero-padding overrides the component.
-- The `{% comment %}` block and description carry FR-018 (0–999, the three things a script updates together) and the edge case about a seconds counter announcing every second.
+- The hidden copy sits after the `countdown` span, not inside it: daisyUI makes every direct child of `.countdown` `visibility:hidden` and fills it with the 00–99 lists, and `visibility` is inherited, so anything inside is hidden too (research R3, decisions D12). `sr-only` is Tailwind's, written literally in the template like the other utilities the templates use. `class` and pass-through attributes stay on the `countdown` span.
+- The `{% comment %}` block and description carry FR-018: 0–999, a screen reader reads the number as rendered rather than each change, and a script animating it updates `--value`, the visible text and the hidden copy together.
 
 ### Diff (US4)
 

@@ -37,7 +37,7 @@ Out of scope: any JavaScript. The countdown's number changes only when a script 
 - Q: Does the carousel emit previous, next or indicator controls? → A: No. daisyUI builds them as ordinary links to each slide's `id`, outside the carousel's own markup. A slide accepts an `id`, and the carousel's gallery entry shows both of daisyUI's control patterns built with `<c-button href="#…">`. The component stays at daisyUI's markup, and a project that wants scripted controls is not stuck with link-based ones.
 - Q: How does a keyboard user move through a carousel with no controls? → A: The carousel is a scrollable region, so it is focusable and named. Once focused, the arrow keys scroll it. It carries `role="region"`, `tabindex="0"` and a translatable `aria-roledescription` of "carousel", and takes its name from `aria-label`. Each slide is a group with the roledescription "slide".
 - Q: What does the chat bubble take as attributes and what as slots? → A: `placement` (`start` or `end`, daisyUI's own name for the class group, defaulting to `start` because daisyUI requires one) and `variant` for the bubble colour. The message is the default slot. `image`, `header` and `footer` are named slots rendered in `chat-image`, `chat-header` and `chat-footer`. An avatar goes in the `image` slot as `<c-avatar>`, so the chat bubble does not copy the avatar's attributes.
-- Q: Where do the countdown's accessibility attributes go? → A: On the inner number element, as daisyUI's markup shows: `aria-live="polite"` and an `aria-label` carrying the same number as the text. Other attributes land on the root element as usual.
+- Q: How does a screen reader read the countdown? → A: As the number it renders, never as an animated count. daisyUI's CSS hides the element that holds the number and draws the digits as generated text listing every number from 00 to 99, so the animated number is hidden from assistive technology and a visually hidden copy of the value follows it. The component carries no `aria-live`: it ships no script, and announcing each change is a project's to add if it animates the number.
 - Q: What does the countdown do with a value outside 0–999 or a value that is not a number? → A: It renders the value as given and raises no error. daisyUI animates only 0 through 999, and the documentation says so. Autoescaping keeps any value from breaking out of the `style` attribute.
 - Q: What are the diff's slots called? → A: `item_1` and `item_2`, daisyUI's part names with the underscore the other components use where daisyUI has a hyphen (`main_action` for `fab-main-action`). The component emits the resizer handle itself.
 - Q: How are the hover gallery's images and the text rotate's lines passed in? → A: As the default slot. The caller writes the `<img>` elements, each with its own `alt`, or the line elements, each with its own classes. A list attribute would have to reinvent `alt`, sizes and per-line styling as attributes.
@@ -87,19 +87,19 @@ A developer building a messaging, support or comment view needs a bubble for eac
 
 ### User Story 3 - Countdown (Priority: P2)
 
-A developer needs a number that animates when it changes, for timers, clocks and counters, and that a screen reader announces when a script updates it.
+A developer needs a number that animates when it changes, for timers, clocks and counters, and that a screen reader reads as the number shown.
 
 **Why this priority**: Timers and countdown clocks are common on event, sale and quiz pages.
 
-**Independent Test**: Render `<c-countdown value="42">` and check the markup, then change the value from a script in a browser and check that the number transitions and is announced.
+**Independent Test**: Render `<c-countdown value="42">` and check the markup, then read it with the browser's accessibility tree and check that it gives 42 and nothing else.
 
 **Acceptance Scenarios**:
 
-1. **Given** `<c-countdown value="42">`, **When** it renders, **Then** it is a `<span>` with `countdown` wrapping an inner `<span>` whose `style` sets `--value:42;`, whose text is `42`, and which carries `aria-live="polite"` and `aria-label="42"`.
-2. **Given** a rendered countdown in a browser, **When** a script sets a new number on the inner element's `--value`, text and `aria-label`, **Then** daisyUI's transition plays and a screen reader announces the new number.
+1. **Given** `<c-countdown value="42">`, **When** it renders, **Then** it is a `<span>` with `countdown` wrapping an inner `<span>` whose `style` sets `--value:42;`, whose text is `42` and which carries `aria-hidden="true"`, followed by a visually hidden `<span>` holding `42`.
+2. **Given** a rendered countdown in a browser, **When** a screen reader reads it, **Then** it reads the number, 42, and not daisyUI's list of digits.
 3. **Given** `value="1000"` or `value="abc"`, **When** it renders, **Then** the value is rendered as given with no error, and the documentation states that daisyUI animates only 0 through 999.
 4. **Given** `class="font-mono text-4xl"`, **When** it renders, **Then** those classes land on the root element.
-5. **Given** the countdown's documentation, **When** a developer wants a live timer, **Then** it names the three things a script must update together: the `--value` variable, the text and the `aria-label`.
+5. **Given** the countdown's documentation, **When** a developer wants a live timer, **Then** it says a screen reader reads the number as rendered, and names what a project's script updates together: the `--value` variable, the visible text and the hidden copy.
 6. **Given** the countdown's gallery entry, **When** a developer opens it, **Then** single values and a days, hours, minutes and seconds clock built from several labelled countdowns are shown.
 
 ---
@@ -186,7 +186,7 @@ A developer writing a headline wants one word or phrase in it to cycle through u
 - Following a link to a slide's `id` also scrolls the page so the carousel is in view. This comes from daisyUI's link-based controls, and the gallery entry notes it.
 - A chat bubble with every named slot empty renders only the root and the bubble.
 - A chat bubble's side is visual only. The documentation says to name the speaker in the `header` slot, so a screen-reader user can tell who said what.
-- A countdown's `aria-live` announces every change, so a seconds counter speaks once a second. That is daisyUI's documented markup, and the documentation says a project can override the component for a quieter timer.
+- A countdown that a project's script animates is not announced as it changes. A screen reader reads the number present when it reaches it. A project that wants changes announced overrides the component.
 - A hover gallery given more than ten images, or images of different sizes, renders them all. daisyUI's CSS shows only the first ten, and mixed sizes misalign. The component does not count or measure images.
 - A decorative image in a hover gallery or diff takes `alt=""`. The gallery entries show meaningful alt text.
 - Interactive content inside a hover 3D card, or a text rotate with more than six lines, renders as given. daisyUI's rules forbid both, and the documentation says so.
@@ -222,9 +222,9 @@ A developer writing a headline wants one word or phrase in it to cycle through u
 
 **Countdown**
 
-- **FR-016**: `<c-countdown>` MUST render a `<span>` with `countdown` wrapping an inner `<span>` whose `style` sets `--value` to `value`, whose text is `value`, and which carries `aria-live="polite"` and `aria-label` set to `value`. *(US3)*
+- **FR-016**: `<c-countdown>` MUST render a `<span>` with `countdown` wrapping an inner `<span>` whose `style` sets `--value` to `value`, whose text is `value`, and which is hidden from assistive technology, followed by a visually hidden `<span>` holding `value`, so a screen reader reads the number. It MUST NOT carry `aria-live`. *(US3)*
 - **FR-017**: `value` MUST be rendered as given, escaped, with no validation and no error for values outside 0–999 or values that are not numbers. *(US3)*
-- **FR-018**: The countdown's documentation MUST state daisyUI's 0–999 range and name the three things a script updates together: `--value`, the text and `aria-label`. *(US3)*
+- **FR-018**: The countdown's documentation MUST state daisyUI's 0–999 range, that a screen reader reads the number as rendered rather than each change, and name the three things a script updates together: `--value`, the visible text and the hidden copy. *(US3)*
 
 **Diff**
 

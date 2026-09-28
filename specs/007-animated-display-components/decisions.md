@@ -145,3 +145,9 @@ holds a `hover-gallery` figure with the four hat images and their alt text, in o
 choice. Flagged in `concerns`: US6 (`hover-3d`) and US7 (`text-rotate`) will hit the identical mismatch the
 first time either tag is written into a scanned `.html` file (a gallery composition), not just their own
 component's tests.
+
+## D12 — The countdown gives screen readers the rendered number
+
+The maintainer's ruling on D6's SPEC-001: no script of any kind, and a screen reader gets the number as rendered rather than an animated count. The spec's FR-016, FR-018, User Story 3 and its countdown clarification and edge case now say so. The animated span carries `aria-hidden="true"` and a visually hidden copy of the value follows the countdown span. The copy cannot sit inside it, because daisyUI hides every direct child of `.countdown` and `visibility` is inherited. `aria-live` and `aria-label` go: nothing in the package changes the number, and a project that animates it and wants changes announced overrides the component.
+
+**ADR:** none — local to the countdown template, and recorded in the spec itself.
