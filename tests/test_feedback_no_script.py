@@ -31,6 +31,12 @@ CALLER_STRINGS = {
         'class="mt-4"><i class="bi bi-cloud-upload" aria-hidden="true"></i>'
         "</c-radial-progress>"
     ),
+    "toast": (
+        '<c-toast placement="top center" class="mt-4">'
+        '<c-alert variant="info" icon="bi bi-info-circle">New version.</c-alert>'
+        '<c-alert variant="warning" dismissible delay="4000">Expiring soon.</c-alert>'
+        "</c-toast>"
+    ),
 }
 
 
