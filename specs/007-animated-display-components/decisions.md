@@ -53,3 +53,117 @@ The hover gallery, the hover 3D card, the diff resizer and the text rotate's pau
 ## Priorities
 
 Priorities reflect how many adopters need each component: the carousel in most kinds of project (P1), the chat bubble and countdown in many (P2), and the diff, hover gallery, hover 3D card and text rotate in some (P3).
+
+## D1 — The diff leaves out daisyUI's `role="img"`
+
+daisyUI's diff example puts `role="img"` on both items. An element with that role exposes none of its children, and these carry no name of their own, so a screen reader would get neither item's image alt nor its text. FR-005 and FR-020 require both items' content to stay available. FR-019's "any further attributes daisyUI's documented diff markup carries" is read as the two `tabindex="0"`s, which give keyboard users a way to see each item, and not the role (research R3, R4).
+
+**ADR:** none — local to the diff template.
+
+## D2 — The countdown's value defaults to 0
+
+The spec gives `value` no default. With an empty one, `<c-countdown />` and the gallery preview would render `--value:;` and draw nothing. A counter's natural starting point is 0, a non-empty default still keeps a page variable named `value` from leaking in, and FR-017 is unaffected: whatever the caller gives is rendered as given.
+
+**ADR:** none — local to the countdown template.
+
+## D3 — Multi-instance gallery scenarios are shown in host entries
+
+The gallery renders one preview per component (research R6), and FS-001 rules out a demo page of the project's own. Scenarios that need several instances or markup beside the component (the carousel's indicator row, a conversation, a countdown clock, a gallery inside a card, a linked 3D card, a text comparison, an inline and a centred text rotate) are written into the slot examples of `mockup.browser`, `mockup.window`, `hero` and `card`, and each component's description names where. This is how FS-006 showed its accordion groups.
+
+**ADR:** none — follows the approach FS-006 already set for the gallery.
+
+## D4 — Gallery examples use daisyUI's stock images
+
+The components in this group exist to show images, and the hover gallery only works with images of one size. The existing `src="..."` placeholders draw broken images. Examples use the stock images daisyUI's own documentation uses for these components (research R8). They appear only in annotations, which the gallery reads, so the package ships no reference to them in rendered output.
+
+**ADR:** none — a choice of example content.
+
+## D5 — The carousel and the diff declare `aria-label`
+
+Both take their name from `aria-label`, which would reach them through `{{ attrs }}` anyway. Declaring it puts a named field in the gallery's props panel, as the navbar, dock and megamenu do, so the one attribute every example needs is visible rather than left to the extra-attributes box. Neither gets a default: a component cannot invent a name.
+
+**ADR:** none — local to two templates.
+
+## D6 — Design review applied
+
+One reviewer, three lenses. Verified findings and what was done:
+
+- **SPEC-001 (high), the countdown is not readable by screen readers.** With daisyUI 5.7.46's CSS, the element FR-016 puts `aria-live` and `aria-label` on is `visibility:hidden`, so it leaves the accessibility tree, and the digits are drawn by generated content that lists every number from 00 to 99. Chromium's accessibility tree for `<c-countdown value="42">` holds the two lists and no 42. US3-2 and FR-005 cannot be met with FR-016's markup. This is a spec fault, not a plan fault, so it goes to the maintainer and US3 is built last, after his ruling.
+- **SPEC-002 (medium).** The gallery's inline preview is a `srcdoc` frame where a link to `#slide2` navigates the frame to the parent page. The carousel's description says to try the controls in the entry's raw view, and the browser check does so.
+- **SPEC-003 (medium).** Recorded as D7.
+- **SPEC-004 (medium).** FR-007 for the carousel added to T002 and the plan.
+- **SEC-001 (low).** A countdown `value` holding `;` adds CSS declarations inside the `style` attribute. No validation (FR-017). The plan's security row is corrected and the description says the value must be a number.
+- **SPEC-005 (low).** D1 confirmed in the browser: without `role="img"` both items' content is exposed, and the two `tabindex="0"`s move the resizer as research R3 says. The pull request names the reading.
+- **ARCH-001 (low).** T001 names how the translation test works.
+- Review notes carried into tasks: the diff's text example wraps each item's text in one element, the linked 3D card example has no actions, and the text rotate's reduced-motion wording defers to daisyUI's CSS.
+
+**ADR:** none — plan corrections local to this feature.
+
+## D7 — The carousel's own gallery preview is unnamed
+
+Gallery 1.0.0 builds a preview from declared defaults only, and the linter rejects an annotation default that differs from `<c-vars>`. `aria-label` has no default, because the component cannot invent a name. So the carousel entry's own preview is an unnamed region. SC-004's named carousel is the `mockup.browser` composition, which the carousel's description names. The pull request lists this as a known gap against SC-004.
+
+**ADR:** none — a limit of the gallery version in use.
+
+## D8 — How the carousel's translation test works
+
+`{% trans "carousel" %}` does not call `django.utils.translation.gettext` directly: `TranslateNode.render` marks the filter expression for translation and resolves it, and `FilterExpression.resolve` (`django/template/base.py`) calls `gettext_lazy`, imported by name into that module at import time. Patching `django.utils.translation.gettext` therefore does nothing — the lazy wrapper already closed over the real function. `tests/test_carousel.py::TestCarouselTranslation` patches `django.template.base.gettext_lazy` itself, which is the name `FilterExpression.resolve` actually looks up at call time, with a function returning a marked string (`"[t]carousel[/t]"`), no `.po`/`.mo` catalog involved. Verified by mutation: hard-coding `aria-roledescription="carousel"` in the template makes the test fail on the unmarked string, then the template was reverted.
+
+**ADR:** none — a testing technique, not a design choice; recorded so later stories' no-script/translation tests don't rediscover it.
+
+## D9 — The two-sided conversation's avatars carry no alt text of their own
+
+`mockup.window`'s composition names each speaker in the chat's `header` slot (FR-015), so the `<c-avatar>` in each bubble's `image` slot sits beside that name. `avatar`'s own `alt` prop documents "leave empty unless the avatar is the only thing identifying the person — beside a name it is usually noise", so the composition's four avatars carry `alt=""`. `chat.html`'s own isolated `@slot:image` example has no header alongside it, so it keeps a descriptive `alt` there.
+
+**ADR:** none — applies `avatar`'s own documented rule; local to one gallery example.
+
+## D10 — The hover gallery's template file is `hover_gallery.html`, not `hover-gallery.html`
+
+`COTTON_SNAKE_CASED_NAMES` is unset (default `True`), so django-cotton resolves `<c-hover-gallery>` by
+replacing `-` with `_` in the tag name before looking up the template: `cotton/hover_gallery.html`, falling
+back to `cotton/hover_gallery/index.html`. A file named `hover-gallery.html` never resolves. Verified: the
+new tests failed with `TemplateDoesNotExist: cotton/hover_gallery/index.html` against the hyphenated
+filename, and passed once renamed to the underscore form.
+
+**ADR:** none — a fixed behaviour of the templating library already in use, not a design choice.
+
+## D11 — The card's `@slot:figure` example calls `<c-hover_gallery>`, not `<c-hover-gallery>`
+
+The gallery's own unknown-component lint (`django_cotton_gallery.core.linter._scanners.scan_unknown_components`)
+compares a template's `<c-X>` references against `known_tags` built verbatim from each catalog component's
+file name (`Component.path`, from `scanner.py`'s `file.stem`) — it does not apply django-cotton's own
+hyphen-to-underscore normalization. D10 already named the component's file `hover_gallery.html`, so the
+catalog's only known tag for it is `hover_gallery`; a `<c-hover-gallery>` reference anywhere the lint scans
+(a `.html` file under `cotton/`) is flagged `unknown-component`, even though it renders correctly. `card`'s
+`@slot:figure` annotation is one such scanned file, so its example calls `<c-hover_gallery>`. Both forms
+render identically — Cotton's own resolver folds `-` to `_` before ever comparing to the gallery's
+underscore-only view — so this changes nothing about what the gallery entry shows. Verified by rendering the
+annotation's parsed `content` by hand through `AnnotationParser` + the Cotton compiler: the card's figure
+holds a `hover-gallery` figure with the four hat images and their alt text, in order.
+
+**ADR:** none — a workaround for the same underlying gallery-linter limitation D10 names, not a design
+choice. Flagged in `concerns`: US6 (`hover-3d`) and US7 (`text-rotate`) will hit the identical mismatch the
+first time either tag is written into a scanned `.html` file (a gallery composition), not just their own
+component's tests.
+
+## D12 — The countdown gives screen readers the rendered number
+
+The maintainer's ruling on D6's SPEC-001: no script of any kind, and a screen reader gets the number as rendered rather than an animated count. The spec's FR-016, FR-018, User Story 3 and its countdown clarification and edge case now say so. The animated span carries `aria-hidden="true"` and a visually hidden copy of the value follows the countdown span. The copy cannot sit inside it, because daisyUI hides every direct child of `.countdown` and `visibility` is inherited. `aria-live` and `aria-label` go: nothing in the package changes the number, and a project that animates it and wants changes announced overrides the component.
+
+**ADR:** none — local to the countdown template, and recorded in the spec itself.
+
+## D13 — Convergence
+
+Every FR and SC has a task with a test or a browser check behind it. The browser check ran on the six components before the countdown, then on the countdown and the hero clock after it (progress.md). No migrations. The cleanup pass found nothing to simplify: every template is the markup the plan names. One template comment that cited a planning document was reworded. The gallery linter's handling of hyphenated tags (D11) is filed as #107, alongside #96.
+
+**ADR:** none — local to this feature.
+
+## D14 — Code review applied
+
+One reviewer, correctness and spec. Verdict: approve.
+
+- **REV-001 (medium), declined.** It asked for tests asserting the wording of each component's description and the README's aura sentence. The maintainer's standing rule is that copy is never pinned by a test (it is his to change at the walkthrough). The countdown story's tests that asserted description wording and the example clock's numbers and labels are removed or reduced to behaviour: four countdowns, each with a visible label and a hidden copy equal to its number.
+- **REV-002 (low), fixed.** The browser check now covers the countdown and the hero clock, and waits out daisyUI's transition before reading the diff's resizer. D13 says what ran.
+- Notes applied: research R3 points at D12, the plan's hero composition uses the underscored spelling the annotation needs, and the task boxes are ticked. The doubled `djlint:off` in `hover_3d.html` matches `button.html`, which it copies, and stays.
+
+**ADR:** none — local to this feature.

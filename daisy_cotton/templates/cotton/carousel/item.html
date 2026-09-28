@@ -1,0 +1,6 @@
+{# @description One slide of a carousel, used inside carousel. Give it an id to link to it from a previous/next or indicator control the caller writes beside the carousel. #}
+{# @prop class:text | description:"Extra classes added to the slide, such as w-full for a full-width slide." #}
+{# @slot <img class="w-full" src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp" alt="A city skyline at dusk"> — The slide's content, such as an image. #}
+{% load i18n %}
+<c-vars class="" />
+<div class="carousel-item {{ class }}" role="group" aria-roledescription="{% trans "slide" %}" {{ attrs }}>{{ slot }}</div>

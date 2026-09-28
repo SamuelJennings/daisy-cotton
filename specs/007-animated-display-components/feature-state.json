@@ -1,0 +1,420 @@
+{
+  "feature": "007-animated-display-components",
+  "branch": "007-animated-display-components",
+  "repo": "SamuelJennings/daisy-cotton",
+  "state": "PR_READY",
+  "state_history": [
+    {
+      "state": "QUEUED",
+      "at": "2026-09-26T14:47:11Z",
+      "note": "specification merged in #27; issue graph built"
+    },
+    {
+      "state": "PLAN",
+      "at": "2026-09-27T20:26:12Z",
+      "note": "picked up from the queue; branch cut from origin/main b2146a4; verify green on base"
+    },
+    {
+      "state": "DESIGN_REVIEW",
+      "at": "2026-09-27T20:27:16Z",
+      "note": "plan, research, tasks committed; draft PR #105 opened"
+    },
+    {
+      "state": "IMPLEMENT",
+      "at": "2026-09-27T20:34:43Z",
+      "note": "design review applied (D6, D7); plan notification sent; US3 waits on the maintainer's FR-016 ruling"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-28T10:17:12Z",
+      "note": "all seven stories accepted"
+    },
+    {
+      "state": "REVIEW",
+      "at": "2026-09-28T10:18:35Z",
+      "note": "converge green; issue #107 filed; no ADR graduated"
+    },
+    {
+      "state": "PR_READY",
+      "at": "2026-09-28T10:30:30Z",
+      "note": "review applied (D14); browser check clean; pull request ready; walkthrough sent to the maintainer"
+    }
+  ],
+  "gates": {
+    "spec": {
+      "approved_by": "SamuelJennings",
+      "at": "2026-09-26T14:47:11Z",
+      "self_resolved": [
+        "merge commit b92883a02f, pull request #27"
+      ]
+    },
+    "plan": {
+      "approved_by": "notified",
+      "at": "2026-09-27T20:34:33Z"
+    },
+    "merge": {
+      "approved_by": null,
+      "at": null
+    },
+    "design_review": {
+      "approved_by": "design-panel",
+      "at": "2026-09-27T20:34:33Z",
+      "self_resolved": [
+        "SPEC-001 high: spec fault, put to the maintainer; US3 built last (D6)",
+        "SPEC-002..SPEC-004 medium, SEC-001, SPEC-005, ARCH-001 low: applied as plan/tasks edits (D6, D7)"
+      ]
+    },
+    "review": {
+      "approved_by": "review-panel",
+      "at": "2026-09-28T10:29:33Z",
+      "self_resolved": [
+        "medium: declined, wording is not pinned by tests (D14)",
+        "low: browser check extended to the countdown and hero (D14)"
+      ]
+    }
+  },
+  "stories": [
+    {
+      "id": "US1",
+      "priority": "P1",
+      "issue": 72,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/007-animated-display-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T001",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_carousel.py tests/test_animated_display_no_script.py -q: 24 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 50/57 clean, 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_carousel.py::TestCarouselRoot",
+              "tests/test_carousel.py::TestCarouselSnap",
+              "tests/test_carousel.py::TestCarouselDirection",
+              "tests/test_carousel.py::TestCarouselTranslation",
+              "tests/test_carousel.py::TestCarouselPageContext",
+              "tests/test_carousel.py::TestCarouselItem",
+              "tests/test_animated_display_no_script.py::TestAnimatedDisplayNoScript"
+            ]
+          }
+        },
+        {
+          "id": "T002",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_carousel.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_mockup.py tests/test_gallery_links.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q: 601 passed, 17 skipped",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 50/57 clean, 0 errors, 0 warnings",
+              "manual: built and rendered carousel, carousel.item and mockup.browser's annotated default @slot through AnnotationParser + build_default_tag + the Cotton compiler, no errors (the carousel and its gallery entry are currently 404 in test_gallery_links.py under the pre-existing folder-component defect, issue #96, so this closed that gap)"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py::TestPackageComponentsLintClean",
+              "tests/test_gallery_annotations.py",
+              "tests/test_mockup.py",
+              "tests/test_gallery_links.py::TestGallerySidebarLinks::test_sidebar_link_opens_its_component"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US2",
+      "priority": "P2",
+      "issue": 73,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/007-animated-display-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T003",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_chat.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q: 343 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 51/58 clean, 0 errors, 0 warnings",
+              "uv run ruff check tests/test_chat.py tests/test_animated_display_no_script.py: all checks passed",
+              "uv run ruff format tests/test_chat.py: 1 file reformatted, then re-ran pytest green"
+            ],
+            "tests": [
+              "tests/test_chat.py::TestChatRoot",
+              "tests/test_chat.py::TestChatVariant",
+              "tests/test_chat.py::TestChatNamedSlots",
+              "tests/test_chat.py::TestChatPageContext",
+              "tests/test_animated_display_no_script.py::TestAnimatedDisplayNoScript"
+            ]
+          }
+        },
+        {
+          "id": "T004",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_chat.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_mockup.py tests/test_gallery_links.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q: 604 passed, 17 skipped",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 51/58 clean, 0 errors, 0 warnings",
+              "manual: rendered mockup.window's annotated default @slot through the Cotton compiler directly, no errors, confirmed four chat bubbles alternating start/end, avatars in chat-image, names+times in chat-header, Delivered/Seen in chat-footer on the two sent bubbles"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py::TestPackageComponentsLintClean",
+              "tests/test_gallery_annotations.py",
+              "tests/test_mockup.py"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US3",
+      "priority": "P2",
+      "issue": 74,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/007-animated-display-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T005",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_countdown.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q: 587 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 55/63 clean, 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_countdown.py::TestCountdownMarkup",
+              "tests/test_countdown.py::TestCountdownRootAttributes",
+              "tests/test_countdown.py::TestCountdownValues",
+              "tests/test_countdown.py::TestCountdownPageContext",
+              "tests/test_animated_display_no_script.py"
+            ]
+          }
+        },
+        {
+          "id": "T006",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_countdown.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_hero.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py tests/test_text_rotate.py -q: 616 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 55/63 clean, 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_countdown.py::TestCountdownGalleryAnnotations",
+              "tests/test_countdown.py::TestHeroCountdownClock"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US4",
+      "priority": "P3",
+      "issue": 75,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/007-animated-display-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T007",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_diff.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q: 347 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 51/59 clean, 0 errors, 0 warnings",
+              "uv run ruff check tests/test_diff.py tests/test_animated_display_no_script.py: all checks passed",
+              "uv run ruff format tests/test_diff.py: 1 file reformatted, then re-ran pytest green"
+            ],
+            "tests": [
+              "tests/test_diff.py::TestDiffRoot",
+              "tests/test_diff.py::TestDiffNoRoleOrAriaHidden",
+              "tests/test_diff.py::TestDiffPageContext",
+              "tests/test_animated_display_no_script.py::TestAnimatedDisplayNoScript"
+            ]
+          }
+        },
+        {
+          "id": "T008",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_diff.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_mockup.py tests/test_gallery_links.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q: 612 passed, 17 skipped",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 51/59 clean, 0 errors, 0 warnings",
+              "manual: rendered mockup.browser's annotated default @slot through AnnotationParser().parse() + build_default_tag + the Cotton compiler, no error, confirmed the diff figure's aria-label, item_1/item_2 text and no role=img/aria-hidden anywhere"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py::TestPackageComponentsLintClean",
+              "tests/test_gallery_annotations.py",
+              "tests/test_mockup.py"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US5",
+      "priority": "P3",
+      "issue": 76,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/007-animated-display-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T009",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_hover_gallery.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q: 350 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 52/60 clean, 0 errors, 0 warnings",
+              "uv run ruff check tests/test_hover_gallery.py tests/test_animated_display_no_script.py: all checks passed",
+              "uv run ruff format --check tests/test_hover_gallery.py tests/test_animated_display_no_script.py: 2 files already formatted"
+            ],
+            "tests": [
+              "tests/test_hover_gallery.py::TestHoverGalleryRoot",
+              "tests/test_hover_gallery.py::TestHoverGalleryNoAriaHidden",
+              "tests/test_hover_gallery.py::TestHoverGalleryPageContext",
+              "tests/test_animated_display_no_script.py::TestAnimatedDisplayNoScript"
+            ]
+          }
+        },
+        {
+          "id": "T010",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_hover_gallery.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_card.py tests/test_gallery_links.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q: 615 passed, 17 skipped",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 52/60 clean, 0 errors, 0 warnings",
+              "uv run ruff check tests/: all checks passed",
+              "uv run ruff format --check tests/: 55 files already formatted"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py::TestPackageComponentsLintClean",
+              "tests/test_gallery_annotations.py",
+              "tests/test_card.py::TestCardFigure"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US6",
+      "priority": "P3",
+      "issue": 77,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/007-animated-display-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T011",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_hover_3d.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q: 359 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 53/61 clean, 0 errors, 0 warnings",
+              "uv run ruff check tests/test_hover_3d.py tests/test_animated_display_no_script.py: all checks passed",
+              "uv run ruff format --check tests/test_hover_3d.py tests/test_animated_display_no_script.py: 2 files already formatted"
+            ],
+            "tests": [
+              "tests/test_hover_3d.py::TestHover3dStructure",
+              "tests/test_hover_3d.py::TestHover3dElement",
+              "tests/test_hover_3d.py::TestHover3dClassAndAttrs",
+              "tests/test_hover_3d.py::TestHover3dPageContext",
+              "tests/test_animated_display_no_script.py::TestAnimatedDisplayNoScript"
+            ]
+          }
+        },
+        {
+          "id": "T012",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_mockup.py tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_hover_3d.py tests/test_animated_display_no_script.py tests/test_card.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q: 608 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 53/61 clean, 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_gallery_lint.py::TestPackageComponentsLintClean",
+              "tests/test_gallery_annotations.py",
+              "tests/test_mockup.py::TestMockupAnnotations"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US7",
+      "priority": "P3",
+      "issue": 78,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/007-animated-display-components",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T013",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_text_rotate.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py -q: 365 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 54/62 clean, 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_text_rotate.py::TestTextRotateRoot",
+              "tests/test_text_rotate.py::TestTextRotateNoAriaHidden",
+              "tests/test_text_rotate.py::TestTextRotatePageContext",
+              "tests/test_animated_display_no_script.py"
+            ]
+          }
+        },
+        {
+          "id": "T014",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_text_rotate.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_hero.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q: 582 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 54/62 clean, 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_hero.py::TestHeroAnnotations::test_the_default_slot_holds_a_heading_copy_and_a_button",
+              "tests/test_gallery_lint.py::TestPackageComponentsLintClean",
+              "tests/test_gallery_annotations.py"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "budgets": {
+    "converge_cycles": {
+      "used": 1,
+      "max": 2
+    },
+    "review_cycles": {
+      "used": 1,
+      "max": 1
+    },
+    "design_review_cycles": {
+      "used": 1,
+      "max": 1
+    },
+    "tokens": {
+      "used": 0,
+      "max": 120
+    }
+  },
+  "pr": {
+    "number": 105,
+    "draft": false
+  }
+}
