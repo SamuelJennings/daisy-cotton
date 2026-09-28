@@ -53,3 +53,27 @@ daisyUI calls both the tooltip's and the toast's class groups "placement". Follo
 ## Priorities
 
 Priorities reflect how many adopters need each component. The alert and loading indicator appear in nearly every application (P1). Tooltips, progress bars and toasts appear in most (P2). Skeletons are polish (P3). Progress and radial progress share a story because they show the same thing in two shapes.
+
+## D1 — The spec still holds after FS-001 to FS-007
+
+Seven features were delivered after this spec landed. Read against their specs: FS-003, FS-004 and FS-006 made the naming rulings this spec already follows (`horizontal`/`vertical` taking a breakpoint, `placement` for placement, `label` for an accessible name), FS-005 kept `<c-button>`'s `text`, `icon` and pass-through attributes that the alert's dismiss control relies on, and FS-001 made the demo load Alpine.js. None of them delivers a feedback component or changes a behaviour this spec describes.
+
+**ADR:** none — a check made once for this feature.
+
+## D2 — The tooltip's hint follows its trigger
+
+daisyUI's example puts `tooltip-content` before the trigger. Its CSS only needs the content to be a direct child of the wrapper (research R3), so the order is free, and the component puts the trigger first. A screen reader moving through the page then meets the control before the text that describes it.
+
+**ADR:** none — local to the tooltip template.
+
+## D3 — The radial progress's value is required with an empty default
+
+FR-020 makes `value` required. It is declared `value=""` and annotated `required`, the pattern the modal's `id` uses, so a page variable named `value` cannot leak in. The gallery preview therefore draws an empty ring, and the values the spec asks the gallery to show are in the `mockup.phone` composition. The visible percentage is written only when a value is given, so the empty preview shows no stray "%".
+
+**ADR:** none — local to the radial progress template.
+
+## D4 — Where the multi-instance examples live
+
+As FS-007 D3: the loading indicator inside a button and the tooltip linked to its trigger go into the `mockup.browser` product page, and progress bars, radial progress rings and the skeleton card placeholder into a mobile upload screen in `mockup.phone`, whose slot example held only placeholder text. An alert with an icon and a dismissible alert are shown in the toast's own slot example, which is where an application would put them.
+
+**ADR:** none — follows the approach FS-006 set for the gallery.
