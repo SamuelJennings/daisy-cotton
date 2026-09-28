@@ -2,7 +2,7 @@
   "feature": "007-animated-display-components",
   "branch": "007-animated-display-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "CONVERGE",
+  "state": "REVIEW",
   "state_history": [
     {
       "state": "QUEUED",
@@ -28,6 +28,11 @@
       "state": "CONVERGE",
       "at": "2026-09-28T10:17:12Z",
       "note": "all seven stories accepted"
+    },
+    {
+      "state": "REVIEW",
+      "at": "2026-09-28T10:18:35Z",
+      "note": "converge green; issue #107 filed; no ADR graduated"
     }
   ],
   "gates": {
@@ -383,7 +388,7 @@
       "max": 2
     },
     "review_cycles": {
-      "used": 0,
+      "used": 1,
       "max": 1
     },
     "design_review_cycles": {
