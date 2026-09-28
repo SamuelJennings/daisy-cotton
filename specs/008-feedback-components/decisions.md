@@ -83,3 +83,9 @@ As FS-007 D3: the loading indicator inside a button and the tooltip linked to it
 The review approved the plan with two medium and four low findings, all applied as plan and task edits: a progress bound to `None` emits no value; the radial progress tests its slot after stripping whitespace and writes `aria-valuenow` only with a value; the alert's `delay` goes through `add:0` so only a number reaches `x-init`; the tooltip and toast carry their notes in the description and README rather than template comments. SC-004's "every gallery example" is read as the composed examples: the bare progress and radial progress previews carry only declared defaults, and `label` has none, so they are unnamed by construction and their descriptions tell the developer to type `label`, as the FAB's does for its trigger.
 
 **ADR:** none — local to this feature's templates and gallery entries.
+
+## D6 — `<c-radial_progress>` inside gallery-scanned markup
+
+The gallery's catalog registers a component under its file stem — `radial_progress`, not `radial-progress` — and its unknown-component lint check compares a source tag against that literal set with no hyphen/underscore normalization, so `<c-radial-progress>` inside `mockup.phone`'s `@slot` example reads as a reference to a component that does not exist, even though Cotton itself resolves the hyphen form to `radial_progress.html` at render time and the component's own tests use it freely. `card/index.html`'s existing `<c-hover_gallery>` is the same rule already applied. `mockup.phone`'s composition is written `<c-radial_progress>` for this reason; the README and CHANGELOG still name it `radial-progress`, the display form the gallery and daisyUI's own naming use.
+
+**ADR:** none — a lint tool's known-tags limitation, not a design choice; recorded so the next template that composes with `radial-progress` in scanned markup does not rediscover it.

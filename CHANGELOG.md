@@ -158,6 +158,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `end`), `variant` takes daisyUI's seven tooltip colours, and `open` forces the hint to show. `id`
   lands on the `tooltip-content` element rather than the wrapper, so a trigger can reference it with
   `aria-describedby`.
+- `<c-progress>`: a native `<progress>` carrying `progress`, `variant` taking daisyUI's eight colours,
+  `max` defaulting to `100`, `value` emitted for emptiness rather than truthiness so a bound `0` still
+  renders `value="0"` and a bound `None` renders no attribute at all, and `aria-label` from `label`.
+- `<c-radial-progress>`: a `<div>` carrying `radial-progress` and `role="progressbar"`, with
+  `aria-valuenow`/`aria-valuemin`/`aria-valuemax` and a `style` beginning `--value:<value>;` (a
+  caller's `style` appended after it). `value` is required, with an empty default so a page variable
+  named `value` can never leak in; the visible `<value>%` is replaced by the default slot when given.
+  Size and thickness are set with `[--size:…]`/`[--thickness:…]` classes in `class`.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
