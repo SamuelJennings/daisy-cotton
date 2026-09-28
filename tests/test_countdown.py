@@ -39,8 +39,6 @@ def countdown_and_copy(soup):
 
 
 class TestCountdownMarkup:
-    """The countdown is an animated span plus a visually hidden copy beside it."""
-
     def test_root_wraps_one_inner_span_carrying_the_value(
         self, cotton_render_string_soup
     ):
@@ -76,8 +74,6 @@ class TestCountdownMarkup:
 
 
 class TestCountdownRootAttributes:
-    """class merges into the root and further attributes are spread on it."""
-
     def test_class_merges_into_the_countdown_span(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             '<c-countdown value="42" class="font-mono text-4xl" />'
@@ -102,8 +98,6 @@ class TestCountdownRootAttributes:
 
 
 class TestCountdownValues:
-    """value is rendered as given, escaped, in all three places."""
-
     def test_value_above_the_range_is_rendered_in_all_three_places(
         self, cotton_render_string_soup
     ):
@@ -153,8 +147,6 @@ class TestCountdownValues:
 
 
 class TestCountdownPageContext:
-    """A page variable named value or class never leaks into the countdown."""
-
     def test_page_value_does_not_leak(self, cotton_render_string_soup):
         soup = cotton_render_string_soup("<c-countdown />", {"value": "Leaked"})
         root, copy = countdown_and_copy(soup)
@@ -170,8 +162,6 @@ class TestCountdownPageContext:
 
 
 class TestCountdownGalleryAnnotations:
-    """The gallery entry, read through the gallery's own ``AnnotationParser``."""
-
     @staticmethod
     def _parsed():
         return AnnotationParser().parse((COTTON_DIR / "countdown.html").read_text())
@@ -186,8 +176,6 @@ class TestCountdownGalleryAnnotations:
 
 
 class TestHeroCountdownClock:
-    """The hero entry's default slot shows a labelled days, hours, minutes and seconds clock."""
-
     @staticmethod
     def _rendered_slot(cotton_render_string):
         slot = AnnotationParser().parse((COTTON_DIR / "hero.html").read_text()).slots[0]

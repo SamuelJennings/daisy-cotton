@@ -12,8 +12,6 @@ def parse(html):
 
 
 class TestDiffRoot:
-    """The diff is a figure holding both items and an empty resizer, in order."""
-
     def test_root_carries_diff_class_and_tabindex(self, cotton_render_string):
         html = cotton_render_string(
             "<c-diff>"
@@ -94,8 +92,6 @@ class TestDiffRoot:
 
 
 class TestDiffNoRoleOrAriaHidden:
-    """Both items stay in the accessibility tree (research R4, D1)."""
-
     def test_no_element_carries_role_img(self, cotton_render_string):
         html = cotton_render_string(
             "<c-diff>"
@@ -116,8 +112,6 @@ class TestDiffNoRoleOrAriaHidden:
 
 
 class TestDiffPageContext:
-    """Page variables named like the diff's props never leak in."""
-
     def test_page_item_1_item_2_and_aria_label_do_not_leak(self, cotton_render_string):
         html = cotton_render_string(
             "<c-diff>x</c-diff>",

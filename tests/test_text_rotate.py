@@ -12,8 +12,6 @@ def parse(html):
 
 
 class TestTextRotateRoot:
-    """The text rotate is a span wrapping one inner span that holds the lines in order."""
-
     def test_root_carries_text_rotate_class_and_the_callers_class(
         self, cotton_render_string
     ):
@@ -69,8 +67,6 @@ class TestTextRotateRoot:
 
 
 class TestTextRotateNoAriaHidden:
-    """Every line stays in the accessibility tree; only the loop needs no pointer to run."""
-
     def test_no_element_carries_aria_hidden(self, cotton_render_string):
         html = cotton_render_string(
             "<c-text-rotate><span>One</span><span>Two</span></c-text-rotate>"
@@ -79,8 +75,6 @@ class TestTextRotateNoAriaHidden:
 
 
 class TestTextRotatePageContext:
-    """A page variable named content_class or class never leaks into the text rotate."""
-
     def test_page_content_class_does_not_leak(self, cotton_render_string):
         html = cotton_render_string(
             "<c-text-rotate><span>One</span><span>Two</span></c-text-rotate>",

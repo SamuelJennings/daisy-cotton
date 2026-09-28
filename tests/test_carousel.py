@@ -13,8 +13,6 @@ def parse(html):
 
 
 class TestCarouselRoot:
-    """The carousel is a focusable, named region carrying daisyUI's class only."""
-
     def test_root_is_a_region_with_carousel_class_and_tabindex(
         self, cotton_render_string
     ):
@@ -82,8 +80,6 @@ class TestCarouselRoot:
 
 
 class TestCarouselSnap:
-    """``snap`` maps to daisyUI's alignment classes."""
-
     def test_start_maps_to_carousel_start(self, cotton_render_string):
         div = parse(cotton_render_string('<c-carousel snap="start">x</c-carousel>')).div
         assert div["class"] == ["carousel", "carousel-start"]
@@ -106,8 +102,6 @@ class TestCarouselSnap:
 
 
 class TestCarouselDirection:
-    """``horizontal`` and ``vertical`` go through the ``responsive`` tag."""
-
     def test_bare_vertical_gives_the_class(self, cotton_render_string):
         div = parse(cotton_render_string("<c-carousel vertical>x</c-carousel>")).div
         assert div["class"] == ["carousel", "carousel-vertical"]
@@ -132,17 +126,6 @@ class TestCarouselDirection:
 
 
 class TestCarouselTranslation:
-    """The roledescriptions are wrapped for translation, not hard-coded strings.
-
-    ``{% trans %}`` marks its argument for translation by setting
-    ``FilterExpression.translate`` and resolving it through
-    ``django.template.base.gettext_lazy`` (see ``FilterExpression.resolve``).
-    Patching that name, with no .po/.mo catalog involved, proves the
-    roledescriptions are template-tag output rather than a literal string:
-    a hard-coded ``aria-roledescription="carousel"`` would still read
-    "carousel" here, not the patched marker.
-    """
-
     def test_roledescriptions_are_resolved_through_gettext(
         self, cotton_render_string, monkeypatch
     ):
@@ -162,8 +145,6 @@ class TestCarouselTranslation:
 
 
 class TestCarouselPageContext:
-    """Page variables named like the carousel's props never leak in."""
-
     def test_page_snap_vertical_and_aria_label_do_not_leak(self, cotton_render_string):
         html = cotton_render_string(
             "<c-carousel>x</c-carousel>",
@@ -175,8 +156,6 @@ class TestCarouselPageContext:
 
 
 class TestCarouselItem:
-    """The item is a carousel-item group carrying the slide roledescription."""
-
     def test_root_carries_carousel_item_and_role_group(self, cotton_render_string):
         item = parse(cotton_render_string("<c-carousel.item>x</c-carousel.item>")).div
         assert item["class"] == ["carousel-item"]

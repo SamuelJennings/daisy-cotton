@@ -12,8 +12,6 @@ def parse(html):
 
 
 class TestChatRoot:
-    """The root carries chat, a placement class, class and attributes."""
-
     def test_root_carries_chat_and_default_placement_start(self, cotton_render_string):
         div = parse(cotton_render_string("<c-chat>Hello</c-chat>")).div
         assert div["class"] == ["chat", "chat-start"]
@@ -40,8 +38,6 @@ class TestChatRoot:
 
 
 class TestChatVariant:
-    """``variant`` maps to daisyUI's eight chat-bubble colours."""
-
     def test_variant_primary_maps_to_chat_bubble_primary(self, cotton_render_string):
         html = cotton_render_string('<c-chat variant="primary">Hi</c-chat>')
         bubble = parse(html).find(class_="chat-bubble")
@@ -74,8 +70,6 @@ class TestChatVariant:
 
 
 class TestChatNamedSlots:
-    """``image``, ``header`` and ``footer`` render only when given."""
-
     def test_image_header_footer_render_in_their_own_elements(
         self, cotton_render_string
     ):
@@ -126,8 +120,6 @@ class TestChatNamedSlots:
 
 
 class TestChatPageContext:
-    """Page variables named like the chat's props never leak in."""
-
     def test_page_image_header_footer_and_variant_do_not_leak(
         self, cotton_render_string
     ):
