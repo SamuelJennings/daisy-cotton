@@ -186,9 +186,6 @@ class TestIndicatorItemPlacement:
 
 
 class TestIndicatorIgnoresPageContext:
-    """Declared names default to empty, so a page's own variables of the same
-    name do not rewrite the item (D9)."""
-
     def test_page_context_does_not_leak_in(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             "<c-indicator.item>1</c-indicator.item>",
@@ -198,7 +195,6 @@ class TestIndicatorIgnoresPageContext:
         assert placement_classes(soup.find("span")) == set()
 
     def test_a_page_items_variable_is_not_rendered(self, cotton_render_string_soup):
-        """A list view's own ``items`` must not appear in the indicator."""
         soup = cotton_render_string_soup(
             "<c-indicator>Inbox</c-indicator>", {"items": "PAGE-ITEMS"}
         )

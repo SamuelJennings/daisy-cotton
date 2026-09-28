@@ -151,9 +151,6 @@ class TestTwoDrawersOnOnePage:
 
 
 class TestDrawerIgnoresPageContext:
-    """Declared names default to empty, so a page's own variables of the same
-    name do not rewrite the drawer (D9)."""
-
     def test_page_context_does_not_leak_in(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             '<c-drawer id="nav" />',
@@ -190,8 +187,6 @@ class TestDrawerAccessibleNames:
     def test_the_overlay_carries_readable_text_not_an_aria_label(
         self, cotton_render_string_soup
     ):
-        """ARIA does not allow aria-label on a <label>, so the overlay's name is
-        visually hidden text inside it (D14)."""
         soup = cotton_render_string_soup(DRAWER)
         overlay = root(soup).find(class_="drawer-overlay")
 

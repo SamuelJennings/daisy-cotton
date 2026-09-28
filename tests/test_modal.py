@@ -36,10 +36,6 @@ PLACEMENTS = ["top", "middle", "bottom", "start", "end"]
 
 
 class TestModalStructure:
-    """Scenario 1 (structure half): a dialog with the caller's id and class,
-    its box holding the body.
-    """
-
     def test_dialog_carries_the_callers_id_and_the_modal_class(self):
         html = render('<c-modal id="confirm">Body</c-modal>')
         assert '<dialog id="confirm"' in html
@@ -52,8 +48,6 @@ class TestModalStructure:
 
 
 class TestModalActions:
-    """Scenario 2: an `actions` slot renders in daisyUI's trailing actions row."""
-
     def test_actions_slot_renders_in_the_actions_row(self):
         html = render(
             '<c-modal id="confirm">Body<c-slot name="actions">'
@@ -68,8 +62,6 @@ class TestModalActions:
 
 
 class TestModalPlacement:
-    """Scenario 3: `placement` maps to daisyUI's modal placement classes."""
-
     @pytest.mark.parametrize("placement", PLACEMENTS)
     def test_every_placement_emits_its_daisyui_class(self, placement):
         html = render(f'<c-modal id="confirm" placement="{placement}">Body</c-modal>')
@@ -82,8 +74,6 @@ class TestModalPlacement:
 
 
 class TestModalOpen:
-    """Scenario 6: `open` renders the dialog already shown."""
-
     def test_open_renders_the_open_attribute(self):
         html = render('<c-modal id="confirm" open>Body</c-modal>')
         assert "<dialog" in html
@@ -105,10 +95,6 @@ class TestModalClassAndContentClass:
 
 
 class TestModalNaming:
-    """Scenario 1 (naming half): `title` names the dialog for assistive
-    technology (FR-013).
-    """
-
     def test_title_renders_as_a_heading_that_names_the_dialog(self):
         html = render('<c-modal id="confirm" title="Delete item?">Body</c-modal>')
         assert '<h2 id="confirm-title"' in html
@@ -131,8 +117,6 @@ class TestModalNaming:
 
 
 class TestModalClosable:
-    """Scenario 4: `closable` adds a close button that closes without script."""
-
     def test_closable_adds_a_close_button_with_the_translatable_name(self):
         html = render('<c-modal id="confirm" closable>Body</c-modal>')
         assert '<form method="dialog"' in html
@@ -145,16 +129,12 @@ class TestModalClosable:
 
 
 class TestModalTranslatableStrings:
-    """Both "Close" strings sit inside {% trans %} in the template source."""
-
     def test_both_close_strings_are_wrapped_in_trans(self):
         source = MODAL_TEMPLATE.read_text()
         assert source.count('{% trans "Close"') == 2
 
 
 class TestModalGalleryAnnotations:
-    """Article XVI, read through the gallery's own `AnnotationParser` (T006)."""
-
     @staticmethod
     def _parsed():
         return AnnotationParser().parse(MODAL_TEMPLATE.read_text())
@@ -201,10 +181,6 @@ class TestModalGalleryAnnotations:
 
 
 class TestModalContextLeak:
-    """A page variable of the same name as a declared prop never leaks in
-    (research R5, D6).
-    """
-
     def test_a_page_context_title_actions_and_open_do_not_leak_in(self):
         html = render(
             '<c-modal id="confirm">Body</c-modal>',
@@ -218,8 +194,6 @@ class TestModalContextLeak:
 
 
 class TestModalWithoutId:
-    """A modal given no id writes no empty ``id`` attribute."""
-
     def test_no_id_attribute_without_an_id(self):
         html = render("<c-modal>Body</c-modal>")
 
@@ -227,8 +201,6 @@ class TestModalWithoutId:
 
 
 class TestModalCloseMechanics:
-    """FR-015: the close button and the backdrop close the dialog without script."""
-
     def test_the_close_button_is_a_btn_inside_a_dialog_form(
         self, cotton_render_string_soup
     ):

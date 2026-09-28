@@ -1,4 +1,4 @@
-"""No component template names a literal colour (Article XIII).
+"""No component template names a literal colour (Article XII).
 
 A literal Tailwind shade (``bg-neutral-900``), ``white``/``black`` or a hex
 value ignores the project's active daisyUI theme. The check reads every

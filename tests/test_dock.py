@@ -12,8 +12,6 @@ def parse(html):
 
 
 class TestDockRoot:
-    """The dock is a named navigation landmark carrying daisyUI's classes only."""
-
     def test_root_is_a_nav_with_the_dock_class(self, cotton_render_string):
         nav = parse(cotton_render_string("<c-dock>x</c-dock>")).find("nav")
         assert nav is not None
@@ -56,8 +54,6 @@ class TestDockRoot:
 
 
 class TestDockItemLink:
-    """An item with an ``href`` is a link."""
-
     def test_active_link_has_dock_active_and_aria_current(self, cotton_render_string):
         a = parse(
             cotton_render_string('<c-dock.item href="/" label="Home" active />')
@@ -109,8 +105,6 @@ class TestDockItemLink:
 
 
 class TestDockItemButton:
-    """An item with neither ``href`` nor ``toggle`` is a button."""
-
     def test_renders_a_button_of_type_button(self, cotton_render_string):
         button = parse(cotton_render_string('<c-dock.item label="Add" />')).button
         assert button["type"] == "button"
@@ -134,8 +128,6 @@ class TestDockItemButton:
 
 
 class TestDockItemToggle:
-    """An item with ``toggle`` is a label that flips a drawer checkbox."""
-
     def test_renders_a_label_for_the_drawer(self, cotton_render_string):
         label = parse(
             cotton_render_string('<c-dock.item toggle="drawer" label="Menu" />')
@@ -177,8 +169,6 @@ class TestDockItemToggle:
 
 
 class TestDockItemPageContext:
-    """Page variables named like props never reach a plain dock item."""
-
     def test_page_active_does_not_mark_an_item_current(self, cotton_render_string):
         button = parse(
             cotton_render_string('<c-dock.item label="A" />', {"active": "x"})
@@ -201,8 +191,6 @@ class TestDockItemPageContext:
 
 
 class TestDockItemToggleIcon:
-    """The toggle's icon is decorative and does not inherit the item's class."""
-
     def test_icon_is_hidden_from_assistive_technology(self, cotton_render_string):
         html = cotton_render_string(
             '<c-dock.item toggle="drawer" icon="i-menu" aria-label="Open menu" />'

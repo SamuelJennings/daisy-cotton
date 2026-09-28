@@ -49,8 +49,6 @@ def _class_attrs_on(html, tag):
 
 
 class TestKbdElement:
-    """FR-033: the kbd is a ``<kbd>`` carrying ``kbd``."""
-
     def test_renders_a_kbd_element_carrying_kbd(self, cotton_render_string_soup):
         soup = cotton_render_string_soup("<c-kbd>K</c-kbd>")
 
@@ -59,8 +57,6 @@ class TestKbdElement:
 
 
 class TestKbdContent:
-    """FR-033: ``text`` renders, then the default slot (US9-2)."""
-
     def test_text_attribute_is_the_kbds_content(self, cotton_render_string_soup):
         soup = cotton_render_string_soup('<c-kbd text="Ctrl" />')
 
@@ -75,8 +71,6 @@ class TestKbdContent:
 
 
 class TestKbdSize:
-    """FR-033: ``size`` maps xs-xl to daisyUI's ``kbd-<size>`` class (US9-1)."""
-
     @pytest.mark.parametrize("size", ["xs", "sm", "md", "lg", "xl"])
     def test_each_size_maps_to_its_daisyui_class(self, cotton_render_string, size):
         html = cotton_render_string(f'<c-kbd size="{size}">K</c-kbd>')
@@ -94,9 +88,6 @@ class TestKbdSize:
 
 
 class TestKbdClassAndAttrs:
-    """``class`` merges into the kbd's single class list, and other
-    attributes reach the kbd (FR-002)."""
-
     def test_class_merges_and_extra_attributes_reach_the_kbd(
         self, cotton_render_string
     ):
@@ -114,8 +105,6 @@ class TestKbdClassAndAttrs:
 
 
 class TestKbdPageContextDoesNotLeak:
-    """A page variable sharing a declared name never fills an empty kbd."""
-
     def test_page_context_text_and_size_do_not_leak_in(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             "<c-kbd />",

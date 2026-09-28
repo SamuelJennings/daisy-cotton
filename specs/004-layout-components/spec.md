@@ -21,7 +21,7 @@ come out of this feature with the same attribute vocabulary, accessibility defau
 coverage as the new components.
 
 Every component emits the markup and classes daisyUI documents, takes its colours from the
-semantic palette, names its attributes as `CONSTITUTION.md` Article XIV requires, and ships no
+semantic palette, names its attributes as `CONSTITUTION.md` Article XIII requires, and ships no
 JavaScript. The drawer opens and closes through daisyUI's own checkbox toggle, so it needs no
 script.
 
@@ -230,7 +230,7 @@ check the markup, colours and accessibility.
 - **FR-004**: Modifiers MUST use daisyUI's names: `variant` for colour, `placement` for placement (taking daisyUI's placement suffixes such as `start`, `end`, `top`, `bottom`, `center`), and the boolean direction modifiers `horizontal` and `vertical`. A direction modifier or `open` given with no value MUST emit daisyUI's class. Given a breakpoint name (`sm`, `md`, `lg`, `xl`, `2xl`), it MUST emit that class behind the breakpoint prefix. A value daisyUI does not define MUST emit no modifier class and MUST NOT raise. (All stories)
 - **FR-005**: Components in this feature MUST NOT ship or require JavaScript. (All stories)
 - **FR-006**: Any accessible name the package writes itself (the drawer's toggle and overlay) MUST be translatable. (US1)
-- **FR-007**: Every component in FR-001 MUST carry the gallery annotations Article XVI requires, and `cotton_lint --warnings-as-errors` MUST pass. (All stories)
+- **FR-007**: Every component in FR-001 MUST carry the gallery annotations Article XV requires, and `cotton_lint --warnings-as-errors` MUST pass. (All stories)
 - **FR-008**: The component gallery MUST show each component in FR-001 in each of its variants and states: every colour, direction, placement, shape and open state it supports, plus a responsive example wherever it accepts a breakpoint. (All stories)
 - **FR-009**: The README MUST list the new components, and the CHANGELOG MUST record the new components and every changed attribute on `divider` and the mockups. The README's scope note that heroes are not shipped MUST be reworded to match what ships: the `hero` container ships, and composed hero sections built from it stay with the project. (All stories)
 

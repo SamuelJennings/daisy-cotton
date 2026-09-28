@@ -12,8 +12,6 @@ def parse(html):
 
 
 class TestTabsRoot:
-    """The root carries daisyUI's tabs classes and a tablist role."""
-
     def test_bare_root_is_a_tablist_with_the_tabs_class(self, cotton_render_string):
         root = parse(cotton_render_string("<c-tabs>x</c-tabs>")).div
         assert root["class"] == ["tabs"]
@@ -69,8 +67,6 @@ class TestTabsRoot:
 
 
 class TestTabLink:
-    """A tab given an ``href`` is a link."""
-
     def test_link_tab_carries_href_and_the_tab_class(self, cotton_render_string):
         a = parse(cotton_render_string('<c-tabs.tab href="/a" text="A" />')).a
         assert a["href"] == "/a"
@@ -119,8 +115,6 @@ class TestTabLink:
 
 
 class TestTabButton:
-    """A tab with neither ``href`` nor ``name`` is a button with the tab role."""
-
     def test_button_tab_shape(self, cotton_render_string):
         b = parse(cotton_render_string('<c-tabs.tab text="A" />')).button
         assert b["type"] == "button"
@@ -155,8 +149,6 @@ class TestTabButton:
 
 
 class TestTabRadio:
-    """A tab given a ``name`` is a radio input followed by its panel."""
-
     SET = (
         '<c-tabs><c-tabs.tab name="g" text="One" active>panel one</c-tabs.tab>'
         '<c-tabs.tab name="g" text="Two">panel two</c-tabs.tab>'
@@ -217,8 +209,6 @@ class TestTabRadio:
 
 
 class TestTabsPageContext:
-    """Page variables named like props never reach a plain tabs row or tab."""
-
     def test_page_links_does_not_drop_the_tablist_role(self, cotton_render_string):
         root = parse(cotton_render_string("<c-tabs>x</c-tabs>", {"links": True})).div
         assert root["role"] == "tablist"

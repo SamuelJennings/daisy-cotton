@@ -12,8 +12,6 @@ def parse(html):
 
 
 class TestStepsRoot:
-    """The root is an ordered list carrying daisyUI's steps classes."""
-
     def test_bare_root_is_an_ol_with_the_steps_class(self, cotton_render_string):
         ol = parse(cotton_render_string("<c-steps>x</c-steps>")).find("ol")
         assert ol is not None
@@ -52,8 +50,6 @@ class TestStepsRoot:
 
 
 class TestStep:
-    """One step is a list item with a colour, a current marker and content."""
-
     def test_bare_step_is_a_li_with_the_step_class(self, cotton_render_string):
         li = parse(cotton_render_string('<c-steps.step text="Cart" />')).li
         assert li["class"] == ["step"]
@@ -142,8 +138,6 @@ class TestStep:
 
 
 class TestStepPageContext:
-    """Page variables named like props never reach a plain step."""
-
     def test_page_current_does_not_mark_a_step_in_progress(self, cotton_render_string):
         li = parse(
             cotton_render_string('<c-steps.step text="A" />', {"current": "x"})

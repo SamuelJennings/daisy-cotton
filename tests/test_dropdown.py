@@ -69,8 +69,6 @@ def panel_ids(html):
 
 
 class TestDropdownTrigger:
-    """Scenario 1: the default trigger is a `<c-button>` targeting the panel."""
-
     def test_extra_attributes_configure_the_default_inner_button(self):
         html = render(
             f'<c-dropdown text="Options" icon="bi bi-gear" variant="primary">{PANEL}'
@@ -93,7 +91,6 @@ class TestDropdownTrigger:
         assert "an item" in html
 
     def test_a_slot_trigger_replaces_the_default_trigger(self):
-        """Scenario 6."""
         html = render(
             '<c-dropdown><c-slot name="button">'
             '<div tabindex="0" role="button" class="btn">Menu</div>'
@@ -106,10 +103,6 @@ class TestDropdownTrigger:
         )
 
     def test_with_a_slot_trigger_extra_attributes_fall_through_to_the_wrapper(self):
-        """`id` is the panel identifier, not a generic passthrough attribute
-        under the new contract, so a genuinely undeclared attribute
-        (`x-data`) demonstrates the fall-through instead.
-        """
         html = render(
             '<c-dropdown x-data="{value: 1}">'
             '<c-slot name="button"><button type="button">Sort</button></c-slot>'
@@ -120,8 +113,6 @@ class TestDropdownTrigger:
 
 
 class TestDropdownPanelIdentity:
-    """Scenario 2: each dropdown links its own trigger to its own panel."""
-
     def test_two_dropdowns_with_no_id_get_different_panel_ids(self):
         first = render(f"<c-dropdown>{PANEL}</c-dropdown>")
         second = render(f"<c-dropdown>{PANEL}</c-dropdown>")
@@ -142,8 +133,6 @@ class TestDropdownPanelIdentity:
 
 
 class TestDropdownPlacement:
-    """Scenario 5: `placement` maps to daisyUI's dropdown placement classes."""
-
     @every_pair
     def test_every_side_and_alignment_pair_emits_its_daisyui_classes(
         self, side, alignment
@@ -168,8 +157,6 @@ class TestDropdownPlacement:
 
 
 class TestDropdownStyleAnchor:
-    """SPEC-003: a caller's `style` cannot remove the default trigger's anchor."""
-
     def test_a_callers_style_leaves_the_anchor_in_place(self):
         html = render(f'<c-dropdown style="color:red">{PANEL}</c-dropdown>')
 
@@ -178,8 +165,6 @@ class TestDropdownStyleAnchor:
 
 
 class TestDropdownClassAndContentClass:
-    """D6: the dropdown's own `class` never reaches the trigger it draws."""
-
     def test_class_lands_on_the_wrapper_and_not_on_the_default_trigger(self):
         html = render(f'<c-dropdown class="mt-4">{PANEL}</c-dropdown>')
 
@@ -195,8 +180,6 @@ class TestDropdownClassAndContentClass:
 
 
 class TestDropdownGalleryAnnotations:
-    """Article XVI, read through the gallery's own `AnnotationParser` (T009)."""
-
     @staticmethod
     def _parsed():
         return AnnotationParser().parse(DROPDOWN_TEMPLATE.read_text())
@@ -223,10 +206,6 @@ class TestDropdownGalleryAnnotations:
 
 
 class TestDropdownContextLeak:
-    """A page variable of the same name as a declared prop never leaks in
-    (research R5, D6).
-    """
-
     def test_a_page_context_button_id_and_placement_do_not_leak_in(self):
         html = render(
             f"<c-dropdown>{PANEL}</c-dropdown>",
@@ -241,8 +220,6 @@ class TestDropdownContextLeak:
 
 
 class TestDropdownPanelClass:
-    """FR-017: the panel carries daisyUI's `dropdown` class, which positions it."""
-
     def test_the_panel_carries_the_dropdown_class(self):
         html = render(f'<c-dropdown text="Options">{PANEL}</c-dropdown>')
         assert re.search(r'<div id="[^"]+"\s+popover\s+class="dropdown[ "]', html)

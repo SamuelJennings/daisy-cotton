@@ -98,8 +98,6 @@ class AnnotationRules:
 
 
 class TestAnnotationRules:
-    """The four rules, proven against scratch sources."""
-
     def test_one_description_passes(self):
         source = "{# @description A thing. #}\n<div></div>\n"
         assert AnnotationRules.description_problems(source) == []
@@ -218,8 +216,6 @@ def template_id(path):
 
 @pytest.mark.parametrize("path", TEMPLATES, ids=template_id)
 class TestPackageTemplateAnnotations:
-    """Every template the package ships passes all four rules."""
-
     def test_has_exactly_one_description(self, path):
         problems = AnnotationRules.description_problems(path.read_text())
         assert not problems, f"{template_id(path)}: {problems}"
@@ -238,7 +234,5 @@ class TestPackageTemplateAnnotations:
 
 
 class TestPackageTemplates:
-    """The templates the rules run over are not empty."""
-
     def test_templates_were_discovered(self):
         assert TEMPLATES, f"no templates found under {COTTON_DIR}"

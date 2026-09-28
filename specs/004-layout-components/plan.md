@@ -100,7 +100,7 @@ Shared rules, applied everywhere below:
 </div>
 ```
 
-`id` is declared, so it reaches the checkbox and never the root: two elements with one id would break every `for`. `placement` validated against `end` only (FR-011). Named slot `side`. `@trigger` is the opener's markup, `<c-drawer.button drawer="demo-drawer">…</c-drawer.button>`, as `modal.html`'s trigger is. The gallery prepends it to the default slot, so it lands inside `drawer-content` where the focus ring applies (Article XVI, research R2).
+`id` is declared, so it reaches the checkbox and never the root: two elements with one id would break every `for`. `placement` validated against `end` only (FR-011). Named slot `side`. `@trigger` is the opener's markup, `<c-drawer.button drawer="demo-drawer">…</c-drawer.button>`, as `modal.html`'s trigger is. The gallery prepends it to the default slot, so it lands inside `drawer-content` where the focus ring applies (Article XV, research R2).
 
 `drawer/button.html` — `<c-vars drawer class />`, `drawer` annotated `required`. `<label for="{{ drawer }}" class="btn drawer-button {{ class }}" {{ attrs }}>{{ slot }}</label>`. A `<label>`, because daisyUI's focus ring targets `label.drawer-button` inside `.drawer-content` (research R2). `btn` is daisyUI's documented opener class (D4). No `role`, no `tabindex`: the Tab stop is the checkbox (research R2).
 

@@ -60,9 +60,6 @@ def class_attrs_on(html, tag):
 
 
 class TestClassAttributeMerge:
-    """A caller-supplied ``class`` merges into the built-in classes instead
-    of producing a second, browser-ignored ``class`` attribute."""
-
     def test_divider_merges_caller_class(self):
         html = render('<c-divider class="my-8">Order lines</c-divider>')
         attrs = class_attrs_on(html, "div")

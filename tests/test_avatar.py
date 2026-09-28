@@ -52,9 +52,6 @@ def _class_attrs_on(html, tag):
 
 
 class TestAvatarRoot:
-    """FR-021, AS1: a root carrying ``avatar``, an image frame, and an
-    ``<img>`` with the given source and alt text."""
-
     def test_root_carries_avatar_and_image_renders_in_the_frame(
         self, cotton_render_string_soup
     ):
@@ -76,8 +73,6 @@ class TestAvatarRoot:
 
 
 class TestAvatarAltDefault:
-    """FR-022, AS2: ``alt`` defaults to empty."""
-
     def test_src_with_no_alt_renders_empty_alt(self, cotton_render_string_soup):
         soup = cotton_render_string_soup('<c-avatar src="/p.jpg" />')
 
@@ -87,9 +82,6 @@ class TestAvatarAltDefault:
 
 
 class TestAvatarPlaceholder:
-    """FR-021, AS3: given ``placeholder`` and no ``src``, the root carries
-    ``avatar-placeholder`` and the frame shows the placeholder text."""
-
     def test_placeholder_text_renders_with_avatar_placeholder_on_root(
         self, cotton_render_string_soup
     ):
@@ -107,9 +99,6 @@ class TestAvatarPlaceholder:
 
 
 class TestAvatarSilhouette:
-    """FR-021, AS4: given neither ``src`` nor ``placeholder``, the frame
-    shows a silhouette hidden from assistive technology."""
-
     def test_silhouette_renders_hidden_from_assistive_technology(
         self, cotton_render_string_soup
     ):
@@ -128,8 +117,6 @@ class TestAvatarSilhouette:
 
 
 class TestAvatarOnlineOffline:
-    """FR-022, AS5: ``online``/``offline`` map to ``avatar-online``/``avatar-offline``."""
-
     def test_online_adds_avatar_online(self, cotton_render_string):
         html = cotton_render_string('<c-avatar src="/p.jpg" online />')
         assert "avatar-online" in _class_attrs_on(html, "div")[0]
@@ -140,10 +127,6 @@ class TestAvatarOnlineOffline:
 
 
 class TestAvatarFrameContentClass:
-    """FR-023, AS6: the frame defaults to ``w-12 rounded-full``, plus
-    ``bg-neutral text-neutral-content`` with no ``src``; ``content_class``
-    replaces those defaults entirely."""
-
     def test_frame_defaults_with_src(self, cotton_render_string_soup):
         soup = cotton_render_string_soup('<c-avatar src="/p.jpg" />')
 
@@ -202,9 +185,6 @@ class TestAvatarFrameContentClass:
 
 
 class TestAvatarClassAndAttrs:
-    """``class`` merges into the root's single class list, and other
-    attributes reach the root."""
-
     def test_class_merges_and_extra_attributes_reach_the_root(
         self, cotton_render_string
     ):
@@ -225,8 +205,6 @@ class TestAvatarClassAndAttrs:
 
 
 class TestAvatarPageContextDoesNotLeak:
-    """A page variable sharing a declared name never fills an empty avatar."""
-
     def test_page_context_src_alt_and_placeholder_do_not_leak_in(
         self, cotton_render_string_soup
     ):
@@ -249,9 +227,6 @@ class TestAvatarPageContextDoesNotLeak:
 
 
 class TestAvatarGroup:
-    """FR-024, AS7: the group's root carries ``avatar-group`` and the
-    caller's ``class`` in one class list, with the avatars inside."""
-
     def test_group_root_carries_avatar_group_and_caller_class(
         self, cotton_render_string_soup
     ):
@@ -290,8 +265,6 @@ class TestAvatarGroup:
 
 
 class TestAvatarGroupPageContextDoesNotLeak:
-    """A page variable named ``class`` never fills an empty group's class list."""
-
     def test_page_context_class_does_not_leak_in(self, cotton_render_string):
         html = cotton_render_string(
             "<c-avatar.group></c-avatar.group>",

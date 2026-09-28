@@ -4,7 +4,7 @@ Ambiguities in issue #15 that were resolved while writing the spec, with the rea
 
 ## The accordion is included, as a thin layer over the collapse
 
-The README's *Scope & philosophy* gives no component to anything daisyUI builds from other components, and daisyUI's accordion is the `collapse` classes used in a group. The maintainer ruled it in anyway, because adopters expect an accordion in any component library. To keep the cost of that exception low, `<c-accordion>` is drawn by `<c-collapse>` (Article XV) and adds only the required group `name`.
+The README's *Scope & philosophy* gives no component to anything daisyUI builds from other components, and daisyUI's accordion is the `collapse` classes used in a group. The maintainer ruled it in anyway, because adopters expect an accordion in any component library. To keep the cost of that exception low, `<c-accordion>` is drawn by `<c-collapse>` (Article XIV) and adds only the required group `name`.
 
 ## Collapse and accordion use `<details>`, not radio inputs or focus
 
@@ -45,7 +45,7 @@ The avatar group's computed class was also built by joining strings, which Tailw
 
 The avatar is the one exception to the rule above. Without a width on its image frame, a photo renders at its natural size, which is never what a caller wants. So the frame defaults to `w-12 rounded-full` (plus `bg-neutral text-neutral-content` for a placeholder, daisyUI's own placeholder example colours), and `content_class` replaces the defaults rather than adding to them. That avoids the conflicting-utility problem while keeping a sensible default.
 
-`size`, `shape` and `variant` go because daisyUI has no avatar size or colour modifier, and Article XIV reserves those names for daisyUI's modifiers. The modal lost `size` in #14 for the same reason. `status="online"` becomes the boolean `online` because daisyUI's modifiers are `avatar-online` and `avatar-offline`.
+`size`, `shape` and `variant` go because daisyUI has no avatar size or colour modifier, and Article XIII reserves those names for daisyUI's modifiers. The modal lost `size` in #14 for the same reason. `status="online"` becomes the boolean `online` because daisyUI's modifiers are `avatar-online` and `avatar-offline`.
 
 ## The avatar's `alt` defaults to empty
 
@@ -53,11 +53,11 @@ The old default, "User avatar", is read aloud for every avatar, usually right be
 
 ## `content_class` names every inner surface
 
-Article XIV sends `class` to the root. The card body, the avatar frame and the table are inner elements callers regularly need to style. The dropdown and modal already call this attribute `content_class`, and Article XIV says to reuse an existing name for the same idea before coining one. The card's `body_class` is renamed to match.
+Article XIII sends `class` to the root. The card body, the avatar frame and the table are inner elements callers regularly need to style. The dropdown and modal already call this attribute `content_class`, and Article XIII says to reuse an existing name for the same idea before coining one. The card's `body_class` is renamed to match.
 
 ## The table's wrapper is the root
 
-daisyUI wraps its table in an `overflow-x-auto` element so it scrolls on narrow screens. Under Article XIV that wrapper is the root, so `class` and pass-through attributes land there, and the `<table>` takes `content_class`. A scrollable region must be reachable by keyboard (WCAG 2.1.1), so the wrapper is focusable. A focusable region needs a name, and the natural one is the table's caption, which also names the table. A caller who does not want a visible caption gives `aria-label`, which passes through to the wrapper.
+daisyUI wraps its table in an `overflow-x-auto` element so it scrolls on narrow screens. Under Article XIII that wrapper is the root, so `class` and pass-through attributes land there, and the `<table>` takes `content_class`. A scrollable region must be reachable by keyboard (WCAG 2.1.1), so the wrapper is focusable. A focusable region needs a name, and the natural one is the table's caption, which also names the table. A caller who does not want a visible caption gives `aria-label`, which passes through to the wrapper.
 
 ## The table takes caller-written rows
 
@@ -69,7 +69,7 @@ A coloured dot conveys meaning by colour alone, which fails WCAG 1.4.1 when noth
 
 ## `stat.group` names the container
 
-daisyUI calls the container `stats` and each item `stat`. The package already has a pattern for one item plus its container: `avatar` and `avatar.group`. Following it keeps the item's name short, since the item is what callers configure, and reuses a name the package already has, as Article XIV asks.
+daisyUI calls the container `stats` and each item `stat`. The package already has a pattern for one item plus its container: `avatar` and `avatar.group`. Following it keeps the item's name short, since the item is what callers configure, and reuses a name the package already has, as Article XIII asks.
 
 ## Responsive modifiers take a breakpoint value
 

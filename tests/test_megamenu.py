@@ -12,8 +12,6 @@ def parse(html):
 
 
 class TestMegamenuRoot:
-    """The root is a popover navigation landmark with a small-screen toggle."""
-
     def test_root_is_a_popover_nav_with_the_id(self, cotton_render_string):
         nav = parse(cotton_render_string('<c-megamenu id="mm">x</c-megamenu>')).nav
         assert nav["id"] == "mm"
@@ -74,8 +72,6 @@ class TestMegamenuRoot:
 
 
 class TestMegamenuToggle:
-    """The toggle is a button, rendered through the button component."""
-
     def test_toggle_is_a_button_hidden_from_small_up_and_pointing_at_the_id(
         self, cotton_render_string
     ):
@@ -111,8 +107,6 @@ class TestMegamenuToggle:
 
 
 class TestMegamenuItem:
-    """Each item is a button paired with the panel it opens."""
-
     THREE = (
         '<c-megamenu id="mm">'
         '<c-megamenu.item megamenu="mm" key="a" text="A">panel a</c-megamenu.item>'

@@ -52,8 +52,6 @@ class TestVariation:
 
 
 class TestUniqueId:
-    """FR-019: a caller with no `id` still gets a unique panel identifier."""
-
     def test_the_id_is_the_prefix_and_eight_lowercase_hex_characters(self):
         result = unique_id("dropdown")
         assert re.fullmatch(r"dropdown-[0-9a-f]{8}", result)

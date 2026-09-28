@@ -36,7 +36,7 @@ Out of scope: any JavaScript. Where a component needs behaviour daisyUI's CSS do
 - Q: What are the dropdown's placement and the modal's position called? → A: `placement`, daisyUI's own name for both class groups. It replaces the dropdown's `valign` and `halign` and the modal's `position`. A dropdown takes one side and one alignment together, for example `placement="top end"`.
 - Q: Does the modal keep wrapping its content in a card? → A: No. It renders daisyUI's own modal structure, a box with an actions row. It keeps a `title`, which becomes the heading that names the dialog. The card-only slots (`footer`, `footer_end`) and the `icon` attribute go. A project that wants a card inside a modal puts `<c-card>` in the default slot.
 - Q: Does the modal keep `size`? → A: No. daisyUI has no modal size modifier, and the constitution reserves `size` for daisyUI's size scale. Width comes from classes on the box.
-- Q: Which element receives `class` and pass-through attributes when a component has an inner surface (the dropdown panel, the modal box, the swap checkbox)? → A: The root element, per Article XIV. The dropdown panel and the modal box accept extra classes through `content_class`, the name the dropdown already uses for its panel.
+- Q: Which element receives `class` and pass-through attributes when a component has an inner surface (the dropdown panel, the modal box, the swap checkbox)? → A: The root element, per Article XIII. The dropdown panel and the modal box accept extra classes through `content_class`, the name the dropdown already uses for its panel.
 - Q: Which swap attributes reach the checkbox rather than the wrapper? → A: The control's state and form attributes (`checked`, `disabled`, `name`, `value`) and its accessible name. Everything else goes to the wrapper.
 - Q: What does the FAB's trigger look like by default? → A: daisyUI's documented FAB trigger, a large circular button. As with the dropdown, `<c-button>` draws the trigger from attributes forwarded to it, and a `button` slot replaces it entirely.
 
@@ -163,11 +163,11 @@ A developer needs a floating action button in a corner of the screen that reveal
 **Every component in the group**
 
 - **FR-001**: Button, dropdown, FAB, modal and swap MUST each exist as a Cotton component (`<c-button>`, `<c-dropdown>`, `<c-fab>`, `<c-modal>`, `<c-swap>`) emitting the markup and classes daisyUI documents. *(US1–US5)*
-- **FR-002**: Each MUST follow Article XIV: `variant` for colour, `size` on daisyUI's `xs`–`xl` scale where daisyUI has a size modifier, daisyUI's modifier names as boolean attributes, `class` merged into the root element's class list, and every other attribute passed through to the root element unless this spec names another element for it. *(US1–US5)*
-- **FR-003**: Each MUST carry the gallery annotations Article XVI requires, including `@trigger` for the modal, and `cotton_lint --warnings-as-errors` MUST pass. *(US1–US5)*
+- **FR-002**: Each MUST follow Article XIII: `variant` for colour, `size` on daisyUI's `xs`–`xl` scale where daisyUI has a size modifier, daisyUI's modifier names as boolean attributes, `class` merged into the root element's class list, and every other attribute passed through to the root element unless this spec names another element for it. *(US1–US5)*
+- **FR-003**: Each MUST carry the gallery annotations Article XV requires, including `@trigger` for the modal, and `cotton_lint --warnings-as-errors` MUST pass. *(US1–US5)*
 - **FR-004**: Each MUST have a gallery entry that renders its variants and states, so a developer can choose attributes without reading the template. *(US1–US5)*
 - **FR-005**: Each MUST emit accessible markup by default: correct roles and states, keyboard reach and a visible focus indicator. Icons that only decorate MUST be hidden from assistive technology. *(US1–US5)*
-- **FR-006**: A component that draws a button MUST do so through `<c-button>` (Article XV). *(US3, US5)*
+- **FR-006**: A component that draws a button MUST do so through `<c-button>` (Article XIV). *(US3, US5)*
 - **FR-007**: Every removed or renamed attribute or slot on the button, dropdown and modal MUST be listed in the CHANGELOG with its replacement, and the README MUST describe the components as they now are. *(US1–US3)*
 
 **Button**

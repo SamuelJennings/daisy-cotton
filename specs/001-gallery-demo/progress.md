@@ -134,7 +134,7 @@ Watch: nothing.
 
 ## 2026-09-26T00:39:00Z · Implementer US3 · T012
 
-Did: AGENTS.md's Article XII line now says "any host project" rather than
+Did: AGENTS.md's Article XI line now says "any host project" rather than
 naming django-mvp (its `django-mvp/shared` CI-toolchain reference stays, per
 decisions.md). docs/brainstorm.md's "Why this package exists" and prior-art
 sections restated without naming django-mvp or daisy-cotton-blocks as a

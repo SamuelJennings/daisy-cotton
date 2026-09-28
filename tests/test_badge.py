@@ -50,8 +50,6 @@ def _attr_value(attrs, name):
 
 
 class TestBadgeElement:
-    """FR-016: the badge is a ``<span>`` carrying ``badge``, not a ``<div>``."""
-
     def test_renders_a_span_carrying_badge(self, cotton_render_string_soup):
         soup = cotton_render_string_soup("<c-badge>New</c-badge>")
 
@@ -61,8 +59,6 @@ class TestBadgeElement:
 
 
 class TestBadgeContent:
-    """FR-016: ``text`` renders, then the default slot."""
-
     def test_text_attribute_is_the_badges_content(self, cotton_render_string_soup):
         soup = cotton_render_string_soup('<c-badge text="New" />')
 
@@ -77,8 +73,6 @@ class TestBadgeContent:
 
 
 class TestBadgeVariant:
-    """FR-017: ``variant`` maps to daisyUI's eight colours."""
-
     @pytest.mark.parametrize(
         "variant",
         [
@@ -110,8 +104,6 @@ class TestBadgeVariant:
 
 
 class TestBadgeSize:
-    """FR-017: ``size`` maps xs-xl to daisyUI's ``badge-<size>`` class."""
-
     @pytest.mark.parametrize("size", ["xs", "sm", "md", "lg", "xl"])
     def test_each_size_maps_to_its_daisyui_class(self, cotton_render_string, size):
         html = cotton_render_string(f'<c-badge size="{size}">Paid</c-badge>')
@@ -129,9 +121,6 @@ class TestBadgeSize:
 
 
 class TestBadgeStyleBooleans:
-    """FR-017: ``outline``, ``dash``, ``soft`` and ``ghost`` each map to
-    their daisyUI class."""
-
     def test_outline_adds_badge_outline(self, cotton_render_string):
         html = cotton_render_string("<c-badge outline>Paid</c-badge>")
         assert "badge-outline" in _class_attrs_on(html, "span")[0]
@@ -164,9 +153,6 @@ class TestBadgeStyleBooleans:
 
 
 class TestBadgeInsideButton:
-    """AS4: a badge inside a ``<c-button>`` is valid HTML, with no block
-    element inside the button."""
-
     def test_badge_inside_a_button_is_a_span_with_no_block_element(
         self, cotton_render_string_soup
     ):
@@ -187,9 +173,6 @@ class TestBadgeInsideButton:
 
 
 class TestBadgeClassAndAttrs:
-    """``class`` merges into the badge's single class list, and other
-    attributes reach the badge (scenario 5)."""
-
     def test_class_merges_and_extra_attributes_reach_the_badge(
         self, cotton_render_string
     ):
@@ -209,8 +192,6 @@ class TestBadgeClassAndAttrs:
 
 
 class TestBadgePageContextDoesNotLeak:
-    """A page variable sharing a declared name never fills an empty badge."""
-
     def test_page_context_text_and_variant_do_not_leak_in(
         self, cotton_render_string_soup
     ):

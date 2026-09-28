@@ -171,9 +171,6 @@ class TestFooterNav:
 
 
 class TestFooterIgnoresPageContext:
-    """Declared names default to empty, so a page's own variables of the same
-    name do not rewrite the footer (D9)."""
-
     def test_footer_ignores_the_pages_placement_and_direction(
         self, cotton_render_string_soup
     ):

@@ -8,7 +8,7 @@ daisyUI describes aura as a light effect around the border of an important butto
 
 ## The carousel does not emit controls
 
-daisyUI's carousel is one container and its items. The indicator buttons and previous/next arrows in its examples are links to each item's `id`, written beside the carousel rather than inside it. Emitting them would add attributes for button style, placement and labels (tie-break 3), and would tie every adopter to link-based controls that also scroll the page (tie-break 2). A slide accepts an `id`, and the gallery entry shows both patterns built with `<c-button href>`, which satisfies Article XV and shows adopters the markup to copy.
+daisyUI's carousel is one container and its items. The indicator buttons and previous/next arrows in its examples are links to each item's `id`, written beside the carousel rather than inside it. Emitting them would add attributes for button style, placement and labels (tie-break 3), and would tie every adopter to link-based controls that also scroll the page (tie-break 2). A slide accepts an `id`, and the gallery entry shows both patterns built with `<c-button href>`, which satisfies Article XIV and shows adopters the markup to copy.
 
 ## The carousel is a focusable, named region
 
@@ -16,7 +16,7 @@ With no controls, keyboard users need another way to move through the slides. A 
 
 ## `snap` for the carousel's alignment
 
-daisyUI lists `carousel-start`, `carousel-center` and `carousel-end` under the generic heading "modifier" and describes them in its examples as where the items snap to. Article XIV asks for daisyUI's own word, and "snap" is the only one it uses for the concept. `placement` would suggest the carousel's position on the page, which is not what the class does.
+daisyUI lists `carousel-start`, `carousel-center` and `carousel-end` under the generic heading "modifier" and describes them in its examples as where the items snap to. Article XIII asks for daisyUI's own word, and "snap" is the only one it uses for the concept. `placement` would suggest the carousel's position on the page, which is not what the class does.
 
 ## Direction follows the layout components
 
@@ -24,7 +24,7 @@ The layout components spec rules that direction is two booleans named as daisyUI
 
 ## The chat bubble's avatar is a slot
 
-daisyUI puts avatar content inside `chat-image`. Accepting `src`, `alt` and `size` on the chat bubble would copy `<c-avatar>`'s attributes, which then drift when the avatar changes. An `image` slot holding `<c-avatar>` keeps one definition of an avatar (Article XV) and lets a project put an icon or initials there instead.
+daisyUI puts avatar content inside `chat-image`. Accepting `src`, `alt` and `size` on the chat bubble would copy `<c-avatar>`'s attributes, which then drift when the avatar changes. An `image` slot holding `<c-avatar>` keeps one definition of an avatar (Article XIV) and lets a project put an icon or initials there instead.
 
 ## The chat bubble defaults to `start`
 
@@ -44,7 +44,7 @@ A hover gallery's images need `alt`, and sometimes `width`, `height` and `loadin
 
 ## `content_class` on the text rotate
 
-daisyUI centres the lines with a class on the inner element, which the caller cannot reach through `class` (Article XIV sends that to the root). Every other component with one inner element a caller styles names that attribute `content_class`, so the text rotate uses the same name rather than a second one for the same idea.
+daisyUI centres the lines with a class on the inner element, which the caller cannot reach through `class` (Article XIII sends that to the root). Every other component with one inner element a caller styles names that attribute `content_class`, so the text rotate uses the same name rather than a second one for the same idea.
 
 ## Pointer-only effects
 

@@ -99,9 +99,6 @@ class TestHeroBackground:
 
 
 class TestHeroIgnoresPageContext:
-    """Declared names default to empty, so a page's own variables of the same
-    name do not rewrite the hero (D9)."""
-
     def test_page_context_does_not_leak_in(self, cotton_render_string_soup):
         soup = cotton_render_string_soup("<c-hero>Hi</c-hero>", {"overlay": True})
 

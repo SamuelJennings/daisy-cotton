@@ -13,8 +13,6 @@ from demo import settings as demo_settings
 
 
 class TestRootRedirectsToGallery:
-    """`/` has no page of its own; it hands the visitor to the gallery."""
-
     def test_root_redirects_to_gallery_index(self, client: Client) -> None:
         response = client.get("/")
         assert response.status_code == 302
@@ -22,8 +20,6 @@ class TestRootRedirectsToGallery:
 
 
 class TestPreviewAssetsScopedToRawPage:
-    """The raw page is where a lone component renders with its full stack."""
-
     def test_raw_page_includes_the_head_partial_script(self, client: Client) -> None:
         response = client.get(
             reverse("django_cotton_gallery:component_raw", args=["button"])
@@ -55,8 +51,6 @@ class TestPreviewAssetsScopedToRawPage:
 
 
 class TestGalleryHasNoExtraCssOrJs:
-    """The demo's assets arrive only through the head/body partials (D1)."""
-
     def test_no_extra_css_configured(self) -> None:
         assert not getattr(demo_settings, "DJANGO_COTTON_GALLERY_EXTRA_CSS", ())
 
@@ -65,8 +59,6 @@ class TestGalleryHasNoExtraCssOrJs:
 
 
 class TestNoHostPackageInstalled:
-    """The demo installs none of the former host package's dependency chain."""
-
     def test_flex_menu_not_installed(self) -> None:
         assert "flex_menu" not in demo_settings.INSTALLED_APPS
 

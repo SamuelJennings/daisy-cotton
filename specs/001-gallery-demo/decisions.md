@@ -25,7 +25,7 @@ django-easy-icons stays in ADR 0001 as an example of an override a project might
 
 ## Demo and tests are in scope too
 
-The issue lists six documents. Article XII names the demo, the tests and the dependency list as well, and the test settings currently import django-mvp's configuration from the demo settings, so dropping the dependency forces the change anyway.
+The issue lists six documents. Article XI names the demo, the tests and the dependency list as well, and the test settings currently import django-mvp's configuration from the demo settings, so dropping the dependency forces the change anyway.
 
 ## Themes
 

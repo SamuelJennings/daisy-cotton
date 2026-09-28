@@ -53,9 +53,6 @@ def _class_attrs_on(html, tag):
 
 
 class TestStatParts:
-    """FR-025, AS1-2: title, value and desc, each an attribute or a named
-    slot, sit in stat-title, stat-value and stat-desc, in that order."""
-
     def test_title_value_desc_attributes_render_in_that_order(
         self, cotton_render_string_soup
     ):
@@ -105,8 +102,6 @@ class TestStatParts:
 
 
 class TestStatFigure:
-    """FR-025, AS3: a figure slot renders in stat-figure, before the text parts."""
-
     def test_figure_slot_renders_in_stat_figure_before_the_title(
         self, cotton_render_string_soup
     ):
@@ -127,8 +122,6 @@ class TestStatFigure:
 
 
 class TestStatActions:
-    """FR-025, AS4: an actions slot renders in stat-actions."""
-
     def test_actions_slot_renders_in_stat_actions(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             '<c-stat title="Balance">'
@@ -142,8 +135,6 @@ class TestStatActions:
 
 
 class TestStatEmptyParts:
-    """FR-025, AS5: a stat with no desc, figure or actions emits no empty part."""
-
     def test_no_empty_desc_figure_or_actions(self, cotton_render_string_soup):
         soup = cotton_render_string_soup('<c-stat title="Downloads" value="31K" />')
 
@@ -161,9 +152,6 @@ class TestStatEmptyParts:
 
 
 class TestStatClassAndAttrs:
-    """``class`` merges into the stat's single class list, and other
-    attributes reach the root."""
-
     def test_class_merges_and_extra_attributes_reach_the_root(
         self, cotton_render_string
     ):
@@ -183,9 +171,6 @@ class TestStatClassAndAttrs:
 
 
 class TestStatPageContextDoesNotLeak:
-    """FR-025, FR-026: a page variable sharing a declared name never fills
-    an empty stat part."""
-
     def test_page_context_title_value_and_desc_do_not_leak_in(
         self, cotton_render_string_soup
     ):
@@ -206,8 +191,6 @@ class TestStatPageContextDoesNotLeak:
 
 
 class TestStatGroup:
-    """FR-026, AS6: the group's root carries stats, holding the stats inside."""
-
     def test_group_root_carries_stats_holding_stats_inside(
         self, cotton_render_string_soup
     ):
@@ -245,9 +228,6 @@ class TestStatGroup:
 
 
 class TestStatGroupResponsive:
-    """FR-026, AS7: vertical/horizontal map to stats-vertical/stats-horizontal,
-    each also accepting a breakpoint."""
-
     def test_vertical_true_adds_the_bare_class(self, cotton_render_string):
         html = cotton_render_string("<c-stat.group vertical></c-stat.group>")
         root_classes = _class_attrs_on(html, "div")
@@ -274,8 +254,6 @@ class TestStatGroupResponsive:
 
 
 class TestStatGroupPageContextDoesNotLeak:
-    """A page variable named ``class`` never fills an empty group's class list."""
-
     def test_page_context_class_does_not_leak_in(self, cotton_render_string):
         html = cotton_render_string(
             "<c-stat.group></c-stat.group>",

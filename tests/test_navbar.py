@@ -12,8 +12,6 @@ def parse(html):
 
 
 class TestNavbarRoot:
-    """The navbar is a named navigation landmark."""
-
     def test_root_is_a_nav_with_the_navbar_class(self, cotton_render_string):
         nav = parse(cotton_render_string("<c-navbar>x</c-navbar>")).find("nav")
         assert nav is not None
@@ -45,8 +43,6 @@ class TestNavbarRoot:
 
 
 class TestNavbarSections:
-    """Each named slot lands in its own section, emitted only when given."""
-
     def test_each_slot_lands_in_its_section(self, cotton_render_string):
         html = cotton_render_string(
             "<c-navbar>"

@@ -190,8 +190,6 @@ class TestMockupBrowser:
 
 
 class TestMockupAnnotations:
-    """Each mockup's gallery entry shows an example that exercises it."""
-
     @pytest.fixture
     def slot_examples(self):
         from django_cotton_gallery.core.annotations import AnnotationParser

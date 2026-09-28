@@ -55,10 +55,6 @@ ROWS = "<thead><tr><th scope='col'>Name</th></tr></thead><tbody><tr><td>Ada</td>
 
 
 class TestTableStructure:
-    """AS1: a wrapper carrying ``overflow-x-auto`` holds a ``<table>``
-    carrying ``table``, the caption renders as the table's ``<caption>``, and
-    the slot content follows it inside the table."""
-
     def test_wrapper_holds_a_table_with_caption_then_slot_content(
         self, cotton_render_string_soup
     ):
@@ -78,9 +74,6 @@ class TestTableStructure:
 
 
 class TestTableWrapperAccessibility:
-    """AS2: given a caption, the wrapper is focusable by keyboard, exposed as
-    a region, and named by the caption."""
-
     def test_wrapper_is_focusable_and_named_by_the_caption(self, cotton_render_string):
         html = cotton_render_string(f'<c-table caption="Invoices">{ROWS}</c-table>')
 
@@ -96,9 +89,6 @@ class TestTableWrapperAccessibility:
 
 
 class TestTableAriaLabel:
-    """AS3: given no caption and a caller ``aria-label``, the wrapper carries
-    that label, with no ``aria-labelledby``."""
-
     def test_caller_aria_label_reaches_the_wrapper(self, cotton_render_string):
         html = cotton_render_string(f'<c-table aria-label="Invoices">{ROWS}</c-table>')
 
@@ -108,8 +98,6 @@ class TestTableAriaLabel:
 
 
 class TestTableModifiers:
-    """AS4: ``zebra``, ``pin-rows`` and ``pin-cols`` map to their daisyUI classes."""
-
     def test_zebra_adds_table_zebra(self, cotton_render_string):
         html = cotton_render_string(f"<c-table zebra>{ROWS}</c-table>")
         assert "table-zebra" in _class_attrs_on(html, "table")[0]
@@ -124,8 +112,6 @@ class TestTableModifiers:
 
 
 class TestTableSize:
-    """AS5: ``size`` maps xs-xl to daisyUI's ``table-<size>`` class."""
-
     @pytest.mark.parametrize("size", ["xs", "sm", "md", "lg", "xl"])
     def test_each_size_maps_to_its_daisyui_class(self, cotton_render_string, size):
         html = cotton_render_string(f'<c-table size="{size}">{ROWS}</c-table>')
@@ -139,9 +125,6 @@ class TestTableSize:
 
 
 class TestTableClasses:
-    """AS6: ``class`` merges into the wrapper's class list, ``content_class``
-    into the table's."""
-
     def test_class_and_content_class_reach_their_own_elements(
         self, cotton_render_string
     ):
@@ -162,8 +145,6 @@ class TestTableClasses:
 
 
 class TestTableCaptionSlot:
-    """AS7: a ``caption`` slot fills the ``<caption>`` in place of the attribute."""
-
     def test_caption_slot_fills_the_caption(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             '<c-table><c-slot name="caption">Invoices <em>2026</em></c-slot>'
@@ -177,8 +158,6 @@ class TestTableCaptionSlot:
 
 
 class TestTableUniqueIds:
-    """Two tables on one page get different caption ids."""
-
     def test_two_tables_get_different_caption_ids(self, cotton_render_string):
         html = cotton_render_string(
             f'<c-table caption="One">{ROWS}</c-table>'
@@ -200,8 +179,6 @@ class TestTableUniqueIds:
 
 
 class TestTablePageContextDoesNotLeak:
-    """A page variable named ``caption`` never fills a table given no caption."""
-
     def test_page_context_caption_does_not_leak_in(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             f"<c-table>{ROWS}</c-table>",

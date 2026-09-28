@@ -35,11 +35,11 @@ Linking the messages to the control needs an id on each message. The fieldset ca
 
 ## `class` and the other attributes split on a wrapped input
 
-Article XIV sends `class` to the root element and everything else through `attrs`. When the text input or select is wrapped, the root is the `<label>` that carries daisyUI's `input` or `select` class, which is where layout classes such as `w-full` must go. Form attributes (`name`, `value`, `required`, `id`) do nothing on a label, so they go to the control. FS-005 made the same split for the swap's wrapper and checkbox.
+Article XIII sends `class` to the root element and everything else through `attrs`. When the text input or select is wrapped, the root is the `<label>` that carries daisyUI's `input` or `select` class, which is where layout classes such as `w-full` must go. Form attributes (`name`, `value`, `required`, `id`) do nothing on a label, so they go to the control. FS-005 made the same split for the swap's wrapper and checkbox.
 
 ## `start` and `end` for the slots
 
-daisyUI has no name for the content inside an input's box. Article XIV says to reuse an existing name for the same idea before coining one. The navbar already uses `start` and `end` for content at either side of it.
+daisyUI has no name for the content inside an input's box. Article XIII says to reuse an existing name for the same idea before coining one. The navbar already uses `start` and `end` for content at either side of it.
 
 ## The toggle is a switch
 

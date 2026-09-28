@@ -26,13 +26,6 @@ def _beautiful_soup():
 
 @pytest.fixture
 def cotton_render_string():
-    """Compile and render a Django template string containing Cotton markup.
-
-    Usage:
-        def test_something(cotton_render_string):
-            html = cotton_render_string("<c-badge text='Hi' />")
-            assert "Hi" in html
-    """
     factory = RequestFactory()
 
     def _render(template_string, context=None):
@@ -54,15 +47,6 @@ def cotton_render_string():
 
 @pytest.fixture
 def cotton_render_string_soup(cotton_render_string):
-    """Like ``cotton_render_string``, parsed with BeautifulSoup for DOM
-    traversal instead of substring assertions.
-
-    Usage:
-        def test_something(cotton_render_string_soup):
-            soup = cotton_render_string_soup("<c-badge text='Hi' />")
-            assert soup.find("div").get_text() == "Hi"
-    """
-
     def _render(template_string, context=None):
         html = cotton_render_string(template_string, context)
         return _beautiful_soup()(html, "html.parser")

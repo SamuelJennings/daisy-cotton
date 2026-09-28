@@ -24,10 +24,7 @@ def render(source, **context):
 
 
 class TestFormFieldControl:
-    """The bare control and its pass-through attributes."""
-
     def test_bare_field_renders_control_only(self):
-        """Without label/help/errors there is no fieldset wrapper — just the control."""
         html = render('<c-form.field name="q" placeholder="Search" />')
         assert 'class="input w-full' in html
         assert '<input type="text"' in html
@@ -49,7 +46,6 @@ class TestFormFieldControl:
         assert "disabled" in html
 
     def test_class_lands_on_the_control_wrapper(self):
-        """`class` styles the visible control box (e.g. join-item, widths)."""
         html = render('<c-form.field name="q" class="join-item" />')
         assert 'class="input w-full join-item"' in html
 
@@ -60,8 +56,6 @@ class TestFormFieldControl:
 
 
 class TestFormFieldLabel:
-    """Label rendering, association and the required indicator."""
-
     def test_label_renders_and_points_at_the_control(self):
         html = render(
             '<c-form.field label="Email" type="email" name="email" id="id_email" />'
@@ -100,8 +94,6 @@ class TestFormFieldLabel:
 
 
 class TestFormFieldHelpAndErrors:
-    """Help text and error rendering."""
-
     def test_help_text_attribute_and_slot(self):
         attr = render('<c-form.field label="U" name="u" help-text="Digits only." />')
         assert '<p class="label">Digits only.</p>' in attr
@@ -123,7 +115,6 @@ class TestFormFieldHelpAndErrors:
         assert "Invalid email." in html
 
     def test_errors_accepts_a_list(self):
-        """A BoundField's error list renders one line per error."""
         html = render(
             '<c-form.field label="Email" name="email" :errors="errs" />',
             errs=["Too short.", "Invalid domain."],
@@ -144,8 +135,6 @@ class TestFormFieldHelpAndErrors:
 
 
 class TestFormFieldWidgets:
-    """Per-widget markup: textarea, select, file, checkbox, radio, toggle."""
-
     def test_textarea_takes_value_from_slot_without_extra_whitespace(self):
         html = render(
             '<c-form.field type="textarea" label="Bio" name="bio" rows="3">Hello</c-form.field>'
@@ -223,8 +212,6 @@ class TestFormFieldWidgets:
 
 
 class TestFormFieldWrapper:
-    """Pre/post labels and the fieldset wrapper."""
-
     def test_prelabel_and_postlabel_attributes(self):
         html = render(
             '<c-form.field name="site" prelabel="https://" postlabel=".com" />'

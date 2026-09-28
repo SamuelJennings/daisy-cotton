@@ -50,8 +50,6 @@ def _class_attrs_on(html, tag):
 
 
 class TestStatusElement:
-    """FR-034: the status is a ``<span>`` carrying ``status``."""
-
     def test_renders_a_span_carrying_status(self, cotton_render_string_soup):
         soup = cotton_render_string_soup("<c-status />")
 
@@ -60,8 +58,6 @@ class TestStatusElement:
 
 
 class TestStatusVariant:
-    """FR-034: ``variant`` maps to daisyUI's eight colours."""
-
     @pytest.mark.parametrize(
         "variant",
         [
@@ -93,8 +89,6 @@ class TestStatusVariant:
 
 
 class TestStatusSize:
-    """FR-034: ``size`` maps xs-xl to daisyUI's ``status-<size>`` class."""
-
     @pytest.mark.parametrize("size", ["xs", "sm", "md", "lg", "xl"])
     def test_each_size_maps_to_its_daisyui_class(self, cotton_render_string, size):
         html = cotton_render_string(f'<c-status size="{size}" />')
@@ -122,10 +116,6 @@ class TestStatusSize:
 
 
 class TestStatusAccessibility:
-    """FR-035: given ``label``, the status is exposed as an image named by
-    it (US9-3); without one, it is hidden from assistive technology (US9-4).
-    """
-
     def test_label_gives_role_img_and_aria_label(self, cotton_render_string):
         html = cotton_render_string(
             '<c-status variant="success" size="lg" label="Online" />'
@@ -146,9 +136,6 @@ class TestStatusAccessibility:
 
 
 class TestStatusClassAndAttrs:
-    """``class`` merges into the status's single class list, and other
-    attributes reach the status (FR-002)."""
-
     def test_class_merges_and_extra_attributes_reach_the_status(
         self, cotton_render_string
     ):
@@ -166,8 +153,6 @@ class TestStatusClassAndAttrs:
 
 
 class TestStatusPageContextDoesNotLeak:
-    """A page variable sharing a declared name never fills an empty status."""
-
     def test_page_context_label_and_variant_do_not_leak_in(self, cotton_render_string):
         html = cotton_render_string(
             "<c-status />",

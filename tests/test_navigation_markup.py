@@ -60,8 +60,6 @@ class ScriptRules:
 
 
 class TestScriptRules:
-    """The rule catches what it is for, and nothing else."""
-
     def test_script_element_is_a_problem(self):
         assert ScriptRules.problems("<ul><script>go()</script></ul>")
 
@@ -81,8 +79,6 @@ class TestScriptRules:
 
 
 class TestNavigationTemplatesRunNoScript:
-    """No template in the navigation group ships a script (SC-005)."""
-
     def test_the_group_is_all_here(self):
         names = {
             path.relative_to(COTTON_DIR).as_posix() for path in NAVIGATION_TEMPLATES

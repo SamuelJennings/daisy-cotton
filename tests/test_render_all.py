@@ -27,8 +27,6 @@ TEMPLATES = sorted(
 
 
 class TestComponentRenderSmoke:
-    """Every packaged Cotton component template renders."""
-
     def test_inventory_is_nonempty(self):
         assert {"button.html", "card/index.html", "mockup/code/line.html"} <= set(
             TEMPLATES
@@ -45,8 +43,6 @@ class TestComponentRenderSmoke:
 
 
 class TestActionComponentsShipNoScript:
-    """SC-003: the action components render no script and no inline handler."""
-
     @pytest.mark.parametrize(
         "source",
         [

@@ -63,8 +63,6 @@ SIDEBAR_LINKS = collect_sidebar_links()
 
 
 class TestGallerySidebarLinks:
-    """Every sidebar link opens its component, or is skipped with a reason."""
-
     def test_sidebar_renders_at_least_one_component_link(self) -> None:
         # An empty collection would make every parametrized case below
         # vacuously "pass" by never running — that must fail loudly instead.

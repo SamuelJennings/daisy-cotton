@@ -48,9 +48,6 @@ def _class_attrs_on(html, tag):
 
 
 class TestTimelineRoot:
-    """US8-1: <c-timeline> renders a <ul> carrying timeline, holding the
-    default slot."""
-
     def test_root_is_ul_carrying_timeline_holding_slot(self, cotton_render_string_soup):
         soup = cotton_render_string_soup("<c-timeline><li>Item</li></c-timeline>")
 
@@ -60,9 +57,6 @@ class TestTimelineRoot:
 
 
 class TestTimelineModifiers:
-    """FR-029, US8-5: vertical/horizontal (each a boolean or a breakpoint),
-    compact and snap-icon map to their daisyUI classes."""
-
     def test_vertical_true_adds_the_bare_class(self, cotton_render_string):
         html = cotton_render_string("<c-timeline vertical></c-timeline>")
         root_classes = _class_attrs_on(html, "ul")
@@ -103,9 +97,6 @@ class TestTimelineModifiers:
 
 
 class TestTimelineClassAndAttrs:
-    """class merges into the timeline's single class list, and other
-    attributes reach the root."""
-
     def test_class_merges_and_extra_attributes_reach_the_root(
         self, cotton_render_string
     ):
@@ -125,9 +116,6 @@ class TestTimelineClassAndAttrs:
 
 
 class TestTimelinePageContextDoesNotLeak:
-    """A page variable named ``class`` never fills an empty timeline's class
-    list."""
-
     def test_page_context_class_does_not_leak_in(self, cotton_render_string):
         html = cotton_render_string(
             "<c-timeline></c-timeline>", context={"class": "leaked-class"}
@@ -139,8 +127,6 @@ class TestTimelinePageContextDoesNotLeak:
 
 
 class TestTimelineItemRoot:
-    """US8-2: <c-timeline.item> renders an <li> carrying group/item."""
-
     def test_root_is_li_carrying_group_item(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             '<c-timeline.item start="1984" end="First Macintosh" />'
@@ -151,10 +137,6 @@ class TestTimelineItemRoot:
 
 
 class TestTimelineItemParts:
-    """FR-030, US8-2: start and end (attribute or slot) sit in
-    timeline-start/timeline-end, and a middle slot sits in
-    timeline-middle."""
-
     def test_start_and_end_attributes_render_in_their_parts(
         self, cotton_render_string_soup
     ):
@@ -195,8 +177,6 @@ class TestTimelineItemParts:
 
 
 class TestTimelineItemEmptyParts:
-    """US8-3: start, end or middle left out is not emitted."""
-
     def test_no_start_emits_no_timeline_start(self, cotton_render_string_soup):
         soup = cotton_render_string_soup('<c-timeline.item end="First Macintosh" />')
         assert soup.find("div", class_="timeline-start") is None
@@ -211,9 +191,6 @@ class TestTimelineItemEmptyParts:
 
 
 class TestTimelineItemBox:
-    """FR-031, US8-4: box puts timeline-box on the end part, and
-    box="start" on the start part instead."""
-
     def test_box_adds_timeline_box_to_the_end_part(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             '<c-timeline.item start="1984" end="First Macintosh" box />'
@@ -248,10 +225,6 @@ class TestTimelineItemBox:
 
 
 class TestTimelineItemConnectors:
-    """FR-032, US8-6: a leading and a trailing hr, both hidden from
-    assistive technology, bracket every item so consecutive events join
-    and the line does not extend past the first or last item."""
-
     def test_item_has_a_leading_and_a_trailing_hr_both_aria_hidden(
         self, cotton_render_string_soup
     ):
@@ -285,9 +258,6 @@ class TestTimelineItemConnectors:
 
 
 class TestTimelineItemClassAndAttrs:
-    """class merges into the item's single class list, and other
-    attributes reach the root."""
-
     def test_class_merges_and_extra_attributes_reach_the_root(
         self, cotton_render_string
     ):
@@ -305,9 +275,6 @@ class TestTimelineItemClassAndAttrs:
 
 
 class TestTimelineItemPageContextDoesNotLeak:
-    """A page variable sharing a declared name never fills an empty item's
-    parts."""
-
     def test_page_context_start_and_end_do_not_leak_in(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             "<c-timeline.item />",

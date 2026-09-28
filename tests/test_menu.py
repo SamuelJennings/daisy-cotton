@@ -12,8 +12,6 @@ def parse(html):
 
 
 class TestMenuRoot:
-    """The menu is a bare list carrying daisyUI's menu classes only."""
-
     def test_bare_menu_is_a_ul_with_only_the_menu_class(self, cotton_render_string):
         ul = parse(cotton_render_string("<c-menu>x</c-menu>")).find("ul")
         assert ul is not None
@@ -62,8 +60,6 @@ class TestMenuRoot:
 
 
 class TestMenuItem:
-    """An item is a list item holding a link or a button."""
-
     def test_link_item_with_active_marks_the_link_as_current(
         self, cotton_render_string
     ):
@@ -190,8 +186,6 @@ class TestMenuItem:
 
 
 class TestMenuTitle:
-    """A title is a non-interactive list item."""
-
     def test_title_is_a_list_item_with_the_menu_title_class(self, cotton_render_string):
         li = parse(cotton_render_string('<c-menu.title text="Docs" />')).li
         assert li["class"] == ["menu-title"]
@@ -216,8 +210,6 @@ class TestMenuTitle:
 
 
 class TestMenuSubmenu:
-    """A submenu is a details element holding a nested list."""
-
     def test_renders_details_summary_and_a_list(self, cotton_render_string):
         li = parse(
             cotton_render_string(
@@ -270,8 +262,6 @@ class TestMenuSubmenu:
 
 
 class TestMenuPageContext:
-    """Page variables named like props never reach a plain item or submenu."""
-
     def test_page_active_does_not_mark_an_item_current(self, cotton_render_string):
         html = cotton_render_string('<c-menu.item text="A" />', {"active": "x"})
         assert "menu-active" not in html
@@ -299,8 +289,6 @@ class TestMenuPageContext:
 
 
 class TestMenuSubmenuIconIsolation:
-    """The caller's class belongs to the list item, not to the icon."""
-
     def test_the_callers_class_does_not_reach_the_icon(self, cotton_render_string):
         html = cotton_render_string(
             '<c-menu.submenu text="M" icon="x" class="mine">x</c-menu.submenu>'
