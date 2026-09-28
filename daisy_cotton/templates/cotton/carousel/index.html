@@ -1,0 +1,22 @@
+{# @description daisyUI's carousel: a scrollable, snapping row or column of slides. With no controls of its own it is a focusable, named region, so keyboard users can tab to it and scroll it with the arrow keys, and screen readers announce it as a carousel of slides. Fill the default slot with carousel.item components. See the mockup.browser entry for a named carousel with previous/next and indicator controls. #}
+{# @prop snap:select['start','center','end'] | description:"Where the slides snap to." #}
+{# @prop horizontal:select['sm','md','lg','xl','2xl'] | description:"Scroll horizontally. The bare attribute applies it at every width, which this select cannot set." #}
+{# @prop vertical:select['sm','md','lg','xl','2xl'] | description:"Scroll vertically. The bare attribute applies it at every width, which this select cannot set." #}
+{# @prop aria-label:text | description:"Accessible name of the carousel. No default: the component cannot invent one, so give it one or the region is unnamed." #}
+{# @prop class:text | description:"Extra classes added to the carousel." #}
+{# @slot <c-carousel.item id="gallery-slide-1" class="relative w-full"><img class="w-full" src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp" alt="A city skyline at dusk"><div class="absolute flex -translate-y-1/2 transform justify-between left-5 right-5 top-1/2"><c-button href="#gallery-slide-4" circle aria-label="Previous slide" text="❮" /><c-button href="#gallery-slide-2" circle aria-label="Next slide" text="❯" /></div></c-carousel.item><c-carousel.item id="gallery-slide-2" class="relative w-full"><img class="w-full" src="https://img.daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.webp" alt="A mountain trail in autumn"><div class="absolute flex -translate-y-1/2 transform justify-between left-5 right-5 top-1/2"><c-button href="#gallery-slide-1" circle aria-label="Previous slide" text="❮" /><c-button href="#gallery-slide-3" circle aria-label="Next slide" text="❯" /></div></c-carousel.item><c-carousel.item id="gallery-slide-3" class="relative w-full"><img class="w-full" src="https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp" alt="A row of colourful houses"><div class="absolute flex -translate-y-1/2 transform justify-between left-5 right-5 top-1/2"><c-button href="#gallery-slide-2" circle aria-label="Previous slide" text="❮" /><c-button href="#gallery-slide-4" circle aria-label="Next slide" text="❯" /></div></c-carousel.item><c-carousel.item id="gallery-slide-4" class="relative w-full"><img class="w-full" src="https://img.daisyui.com/images/stock/photo-1665553365602-b2fb8e5d1707.webp" alt="Ocean waves at sunset"><div class="absolute flex -translate-y-1/2 transform justify-between left-5 right-5 top-1/2"><c-button href="#gallery-slide-3" circle aria-label="Previous slide" text="❮" /><c-button href="#gallery-slide-1" circle aria-label="Next slide" text="❯" /></div></c-carousel.item> — Four full-width slides with daisyUI's previous/next pattern: each slide's controls are c-button href links to a neighbouring slide's id, drawn over the image. #}
+{% comment %}
+  Give an aria-label, or the region has no name. daisyUI builds previous/next
+  and indicator controls as plain links to a slide's id, written beside the
+  carousel rather than inside it (this component emits none); following one
+  also scrolls the page to the carousel. The gallery's inline preview cannot
+  follow those links, so try them in this entry's raw view.
+{% endcomment %}
+{% load i18n daisy_cotton %}
+<c-vars snap="" horizontal="" vertical="" aria-label="" class="" />
+<div class="carousel {% variation snap "carousel" "start,center,end" %} {% responsive horizontal "carousel-horizontal" %} {% responsive vertical "carousel-vertical" %} {{ class }}"
+     role="region"
+     tabindex="0"
+     aria-roledescription="{% trans "carousel" %}"
+     {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+     {{ attrs }}>{{ slot }}</div>

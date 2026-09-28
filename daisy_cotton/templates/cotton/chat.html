@@ -1,0 +1,20 @@
+{# @description daisyUI's chat: a placement side, an optional avatar, header and footer, and a coloured bubble holding the message. The side is visual only, so name the speaker in the header slot. See the mockup.window entry for a two-sided conversation. #}
+{# @prop placement:select['start','end'] | default:"start" | description:"Which side of the chat the bubble sits on." #}
+{# @prop variant:select['neutral','primary','secondary','accent','info','success','warning','error'] | description:"Bubble colour." #}
+{# @prop image:text | description:"Content shown in chat-image beside the bubble, usually a <c-avatar>. Fill the image slot for markup." #}
+{# @prop header:text | description:"Content shown in chat-header above the bubble, such as the speaker's name. Fill the header slot for markup." #}
+{# @prop footer:text | description:"Content shown in chat-footer below the bubble, such as a delivery status. Fill the footer slot for markup." #}
+{# @prop class:text | description:"Extra classes added to the chat root." #}
+{# @slot Hello! — The message, shown in the chat-bubble. #}
+{# @slot:image <c-avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="Portrait of the sender" /> — An avatar, shown in chat-image. #}
+{# @slot:header Anonymous <time>12:45</time> — The speaker's name and a time, shown in chat-header. #}
+{# @slot:footer Delivered — A delivery status, shown in chat-footer. #}
+{% load daisy_cotton %}
+<c-vars placement="start" variant="" image="" header="" footer="" class="" />
+<div class="chat {% variation placement "chat" "start,end" %} {{ class }}"
+     {{ attrs }}>
+  {% if image %}<div class="chat-image">{{ image }}</div>{% endif %}
+  {% if header %}<div class="chat-header">{{ header }}</div>{% endif %}
+  <div class="chat-bubble {% variation variant "chat-bubble" "neutral,primary,secondary,accent,info,success,warning,error" %}">{{ slot }}</div>
+  {% if footer %}<div class="chat-footer">{{ footer }}</div>{% endif %}
+</div>

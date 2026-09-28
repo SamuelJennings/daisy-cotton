@@ -111,6 +111,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `<c-status>`: daisyUI's status, a `<span>` carrying `status`, with `variant` (the eight daisyUI
   colours) and `size` (`xs`–`xl`). Given `label`, it is exposed to assistive technology as an image
   named by it; without one, it is hidden from assistive technology.
+- `<c-carousel>` and `<c-carousel.item>`: daisyUI's carousel, a scrollable, snapping row or column of
+  `<c-carousel.item>` slides. With no controls of its own it is a focusable, named `role="region"`
+  carrying the translatable roledescription "carousel", scrolled by keyboard with the arrow keys once
+  focused; each slide carries `role="group"` and the roledescription "slide". `snap` maps to
+  `carousel-start`/`carousel-center`/`carousel-end`, and `horizontal`/`vertical` (each a boolean or a
+  breakpoint) to `carousel-horizontal`/`carousel-vertical`. `aria-label` has no default: the component
+  cannot invent a name. A slide accepts `id`, `class` and other attributes, so a project builds its own
+  previous/next or indicator links to it with `<c-button href="#…">`.
+- `<c-chat>`: daisyUI's chat, a `<div>` carrying `chat` and a `placement` class (`start`/`end`, default
+  `start`), holding the default slot in a `chat-bubble` coloured by `variant` (the eight daisyUI
+  colours), plus optional `image`, `header` and `footer` named slots rendered in `chat-image`,
+  `chat-header` and `chat-footer`, each emitted only when given. An avatar goes in the `image` slot as
+  `<c-avatar>`; the chat's side is visual only, so name the speaker in `header`.
+- `<c-diff>`: daisyUI's diff, a `<figure>` carrying `diff` and `tabindex="0"`, holding `diff-item-1`
+  (also focusable) and `diff-item-2` in the `item_1` and `item_2` named slots, and an empty
+  `diff-resizer`, in that order. Both items stay available to assistive technology whatever the
+  resizer's position; dragging it needs a pointer. `aria-label` has no default: the component cannot
+  invent a name.
+- `<c-hover-gallery>`: daisyUI's hover gallery, a `<figure>` carrying `hover-gallery` holding the
+  default slot of images, with no width class of its own. Every image stays available to assistive
+  technology; only the hover effect needs a pointer.
+- `<c-hover-3d>`: daisyUI's hover 3D card, an `<a>` with `href` or a `<div>` without one, carrying
+  `hover-3d`, holding the default slot followed by eight empty `<div aria-hidden="true">` zones that
+  track the pointer. The content must be one element with no buttons, links or inputs of its own; a
+  linked card takes its accessible name from the content's text or image alt, or from `aria-label`.
+- `<c-text-rotate>`: daisyUI's text rotate, a `<span>` carrying `text-rotate` wrapping one inner
+  `<span>` that holds up to six slotted lines shown one at a time in a ten-second loop, `content_class`
+  reaching that inner span. A `duration-*` class on the root changes the loop's length; the loop pauses
+  only while the pointer is over it, and every line stays readable to a screen reader.
+- `<c-countdown>`: daisyUI's countdown, a `<span>` carrying `countdown` wrapping one inner `<span>` that
+  sets `--value` and shows the number, hidden from assistive technology, followed by a visually hidden
+  copy of the number so a screen reader reads it as rendered. `value` defaults to `0`; daisyUI animates
+  0 through 999 and any other value is rendered as given, so it must be a number, never unvalidated user
+  input. A script that animates it updates `--value`, the visible text and the hidden copy together.
+  `hero`'s example shows a days, hours, minutes and seconds clock of four labelled countdowns.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is

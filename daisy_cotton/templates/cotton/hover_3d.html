@@ -1,0 +1,11 @@
+{# @description daisyUI's hover 3D card: content that tilts toward the pointer, drawn from the default slot, with eight hidden zones behind it that track the pointer. Renders as an <a> when href is given, a <div> otherwise. The content must be one element and hold no buttons, links or inputs of its own. A linked card takes its accessible name from the content's text or image alt, or from an aria-label you give it. The tilt needs a pointer to move; whether it respects a reduced-motion setting is up to daisyUI's CSS. See the mockup.browser entry for a linked card wrapping a <c-card>. #}
+{# @prop href:text | description:"When given, the card renders as an <a> with this href instead of a <div>." #}
+{# @prop class:text | description:"Extra classes added to the card." #}
+{# @slot <figure><img src="https://img.daisyui.com/images/stock/creditcard.webp" alt="A blue credit card"></figure> — An image that tilts toward the pointer as it moves across the card. #}
+<c-vars href="" class="" />
+{# djlint:off #}
+{% with element=href|yesno:"a,div" %}
+  {# djlint:off #}
+  <{{ element }}{% if href %} href="{{ href }}"{% endif %} class="hover-3d {{ class }}" {{ attrs }}>{{ slot }}<div aria-hidden="true"></div><div aria-hidden="true"></div><div aria-hidden="true"></div><div aria-hidden="true"></div><div aria-hidden="true"></div><div aria-hidden="true"></div><div aria-hidden="true"></div><div aria-hidden="true"></div></{{ element }}>
+  {# djlint:on #}
+{% endwith %}
