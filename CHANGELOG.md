@@ -176,6 +176,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   given. Size it with `h-*`/`w-*` utility classes in `class`. `text` given as a bare attribute adds
   `skeleton-text` and leaves the default slot as the content; given a string it adds `skeleton-text`
   and renders that string as the content instead.
+- `<c-input>`: daisyUI's text input, an `<input>` carrying `input`, `variant` (the eight daisyUI
+  colours), `size` (`xs`–`xl`) and `ghost`, with `type` defaulting to `text` and accepting every
+  text-like native type; checkbox, radio, range and file have their own components, and `input`
+  does not refuse those types. With `start` or `end` filled it renders daisyUI's wrapped form
+  instead: a `<label>` carrying `input` and the modifiers, holding the start content, the `<input>`
+  and the end content, in that order; `class` lands on whichever element carries `input`, and every
+  other attribute lands on the `<input>` itself. Neither slot has a default sample, so the bare
+  gallery preview stays one plain `<input>`. Needs a `<c-label>`, an `aria-label` or an
+  `aria-labelledby` for a name; `input` cannot invent one.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
