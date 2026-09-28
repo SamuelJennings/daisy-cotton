@@ -5,7 +5,7 @@ Ambiguities in issue #13 resolved while writing the specification, with the reas
 ## `placement` for placement
 
 daisyUI groups `divider-start`, `drawer-end`, `footer-center`, `indicator-*` and `stack-*` as
-placement modifiers, and Article XIV takes attribute names from daisyUI's own vocabulary, so the
+placement modifiers, and Article XIII takes attribute names from daisyUI's own vocabulary, so the
 attribute is `placement`. The same name is used by every component that has placement modifiers,
 including `modal` and `dropdown` in the action components, which replaces the `position` attribute
 `divider` and `modal` carry today. Values are daisyUI's own suffixes, so `placement="end"` gives
@@ -72,7 +72,7 @@ or `>` is as common as `$`. No default follows daisyUI and removes the per-line 
 
 ## Mockups lose their imposed layout and literal colours
 
-`mockup.phone` hard-codes `text-white` and `bg-neutral-900`, which breaks Article XIII and ignores
+`mockup.phone` hard-codes `text-white` and `bg-neutral-900`, which breaks Article XII and ignores
 the active theme. `mockup.window` forces a 20rem centred grid on whatever it frames. Both come out.
 The frames keep the semantic-palette border and background daisyUI's own examples use.
 
@@ -102,7 +102,7 @@ not deleted: no prefix gives no `data-prefix`, and an empty prefix gives none ei
 Dropping `text-white bg-neutral-900` leaves the display transparent over daisyUI's black phone
 body, where the theme's default text colour is unreadable on light themes. The display carries
 `bg-base-100 text-base-content`, the pair `mockup.browser` and `mockup.window` already use, so
-content on the screen follows the active theme (scenario 2, Article XIII).
+content on the screen follows the active theme (scenario 2, Article XII).
 
 **ADR:** none — a styling choice inside one template.
 
@@ -140,7 +140,7 @@ names the landmark with the same text the title shows (scenario 3).
 
 ## D7 — The indicator's `placement` is a select of the nine corners
 
-`placement` takes up to two words, one per axis. Article XVI types a fixed-value prop as
+`placement` takes up to two words, one per axis. Article XV types a fixed-value prop as
 `select[…]`, and the variants matrix then shows every option. The list is the nine combinations of
 `top`/`middle`/`bottom` with `start`/`center`/`end`, which is every position daisyUI can place an
 item. Single words still work when written by hand, since each word is validated on its own.
@@ -208,7 +208,7 @@ Three changes, each small enough that a dispatch would have cost more than the e
   list view's `items` rendered inside every indicator on the page. The slot still wins when given,
   the pattern FS-003 uses for the navbar's sections. Tests for both directions.
 - `tests/test_semantic_palette.py` reads every component template for a literal Tailwind shade,
-  `white`/`black` or a hex value (SC-005, Article XIII). It fails on the phone mockup as it stood on
+  `white`/`black` or a hex value (SC-005, Article XII). It fails on the phone mockup as it stood on
   main.
 - `mask.html` computes its shape and half classes once, through `{% variation … as … %}`, instead of
   repeating both calls in each branch.

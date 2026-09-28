@@ -12,7 +12,7 @@
 
 ## Overview
 
-Constitution Article XVI says every component documents itself for the component gallery, and that `cotton_lint --warnings-as-errors` passes. Today neither is true. On main the linter reports 1 error and 88 warnings across the 21 component templates, and only 3 of them are clean. The one error is prose, not markup: a comment in `form/field.html` mentions `<c-form.render>`, which the linter reads as a call to a component that does not exist. Nothing runs the linter automatically, so the gap has grown without anyone noticing.
+Constitution Article XV says every component documents itself for the component gallery, and that `cotton_lint --warnings-as-errors` passes. Today neither is true. On main the linter reports 1 error and 88 warnings across the 21 component templates, and only 3 of them are clean. The one error is prose, not markup: a comment in `form/field.html` mentions `<c-form.render>`, which the linter reads as a call to a component that does not exist. Nothing runs the linter automatically, so the gap has grown without anyone noticing.
 
 This feature closes the gap and keeps it closed. Every existing component gets its annotations, the linter runs inside the test suite so CI fails on any error or warning, and the contributor docs explain how to run the gallery and the linter.
 
@@ -22,10 +22,10 @@ It also fixes what "passes the gallery lint" means for every later component gro
 
 ### Session 2026-09-26
 
-- Q: Which linter findings fail the build? → A: Errors and warnings fail. Hints do not. That is the constitution's rule (Article XVI), and it matches the linter's own `--warnings-as-errors` switch. Hints are heuristics by the tool's own description, and some are unavoidable. For example, `form.field` reads `{{ help_text }}`, which Cotton derives from its declared `help-text` attribute, and the linter flags that as undeclared.
-- Q: The linter checks `@prop` annotations against `<c-vars>`. It does not check that a component has a `@description`, that a rendered default slot has a `@slot`, or that each annotation stays on one line. How are those enforced? → A: The test suite gets a second, small check for exactly those three things: one `@description` per component, a `@slot` annotation wherever the template renders the default slot, and no `{#` comment that runs past the end of its line. Without it, a component could pass the linter and still miss half of what Article XVI asks for, which is the drift the issue wants CI to catch. Named slots and `@trigger` are left to review. Detecting a named slot from the template reliably is guesswork, and today `modal` is the only component another element opens.
+- Q: Which linter findings fail the build? → A: Errors and warnings fail. Hints do not. That is the constitution's rule (Article XV), and it matches the linter's own `--warnings-as-errors` switch. Hints are heuristics by the tool's own description, and some are unavoidable. For example, `form.field` reads `{{ help_text }}`, which Cotton derives from its declared `help-text` attribute, and the linter flags that as undeclared.
+- Q: The linter checks `@prop` annotations against `<c-vars>`. It does not check that a component has a `@description`, that a rendered default slot has a `@slot`, or that each annotation stays on one line. How are those enforced? → A: The test suite gets a second, small check for exactly those three things: one `@description` per component, a `@slot` annotation wherever the template renders the default slot, and no `{#` comment that runs past the end of its line. Without it, a component could pass the linter and still miss half of what Article XV asks for, which is the drift the issue wants CI to catch. Named slots and `@trigger` are left to review. Detecting a named slot from the template reliably is guesswork, and today `modal` is the only component another element opens.
 - Q: Does annotating a component change its attributes? → A: No. Annotations describe what each component declares on main today, including names that look internal, such as `avatar`'s `size_options` and `avatar.group`'s `space_options`. Renaming, removing or re-typing an attribute belongs to the feature for that component's group, and that feature updates the annotations as part of its own change.
-- Q: How is the `form.field` error fixed? → A: The comment is reworded so it no longer names a component this package does not ship. The sentence pointed readers at a form-rendering component from another package, which Article XII also rules out. No lint rule is suppressed and no configuration is added to hide the finding.
+- Q: How is the `form.field` error fixed? → A: The comment is reworded so it no longer names a component this package does not ship. The sentence pointed readers at a form-rendering component from another package, which Article XI also rules out. No lint rule is suppressed and no configuration is added to hide the finding.
 - Q: Where do the contributor docs live? → A: In a `CONTRIBUTING.md` at the repository root, linked from the README. It covers installing the development environment, running the gallery, running the linter directly, and how the same check runs in the test suite.
 
 ## User Scenarios & Testing *(mandatory)*
@@ -136,7 +136,7 @@ A host project developer opens the gallery pages for `mockup.browser`, `mockup.w
 
 A contributor adds a component with every `@prop` in place but forgets its `@description`, or writes an annotation that wraps onto a second line. The linter accepts both. The test suite does not.
 
-**Why this priority**: Article XVI asks for more than the linter checks. Without this, the "documentation contract" in the issue would be only partly enforced. It is P2 because the linter gate in User Story 1 already catches the most common drift, an undocumented attribute.
+**Why this priority**: Article XV asks for more than the linter checks. Without this, the "documentation contract" in the issue would be only partly enforced. It is P2 because the linter gate in User Story 1 already catches the most common drift, an undocumented attribute.
 
 **Independent Test**: In a scratch template, remove the `@description`, then separately wrap a `{# … #}` annotation onto two lines, then separately render the default slot with no `@slot`. Each time the suite fails and names the template. Restore the template and it passes.
 
@@ -220,7 +220,7 @@ A new contributor reads the repository's contributing guide and, from it alone, 
 
 - The component set is the 21 templates on main at the time of writing. Components added by later group features are covered by the checks automatically, and those features annotate them.
 - Making the demo the gallery alone, and fixing gallery links that return 404 for folder components, belongs to issue #10. This feature adds nothing to the demo. It depends only on the linter being able to read the package's templates.
-- The gallery stays a development dependency. Running the linter in the suite does not make it a runtime dependency of the package (Article VII, Article XII).
+- The gallery stays a development dependency. Running the linter in the suite does not make it a runtime dependency of the package (Article VII, Article XI).
 - Annotation types and defaults follow the gallery's annotation reference. Where a `<c-vars>` value is an expression or a translated string, the annotation's default is written the way the reference says to write such a value.
 - The linter's rule set and severities are the ones in the pinned major version of the gallery (`>=1.0.0,<2`). A future gallery release that changes them is handled when the dependency is bumped.
-- Attribute changes to bring existing components in line with Article XIV (the shared `variant`/`size` vocabulary) are out of scope. Each group's feature makes those changes and updates the annotations with them.
+- Attribute changes to bring existing components in line with Article XIII (the shared `variant`/`size` vocabulary) are out of scope. Each group's feature makes those changes and updates the annotations with them.

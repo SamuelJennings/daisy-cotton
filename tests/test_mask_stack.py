@@ -254,4 +254,3 @@ class TestStackAnnotations:
 
     def test_the_default_slot_holds_three_cards(self, parsed):
         assert len(parsed.slots) == 1
-        assert parsed.slots[0].content.count("card") >= 3

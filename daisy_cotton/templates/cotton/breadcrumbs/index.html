@@ -5,12 +5,7 @@
 {# @slot — The trail's steps, as breadcrumbs.item components. Shown when no items are passed. #}
 {% load i18n %}
 <c-vars items class aria-label />
-{% comment %}
-  `only` on the item is load-bearing. This component and the item declare a
-  prop of the same name — `class` — and a Cotton child with no isolated context
-  reads any prop it was not given out of the surrounding scope. Without it, a
-  class meant for the trail is written onto every <li> in it as well.
-{% endcomment %}
+{# `only` is load-bearing: a Cotton child reads a prop it wasn't given (here `class`) from the parent, so every <li> would get the trail's class (#3). #}
 <nav class="breadcrumbs {{ class }}"
      aria-label="{% if aria_label %}{{ aria_label }}{% else %}{% trans "Breadcrumbs" %}{% endif %}"
      {{ attrs }}>

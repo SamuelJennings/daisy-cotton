@@ -26,7 +26,7 @@ Issue #11 owns the gallery annotations on each component, the linter in the test
 - Q: Which themes does the switcher offer? → A: The ten the demo offers today: light, dark, cupcake, emerald, corporate, synthwave, dracula, business, night and winter. Between them they cover light, dark and heavily tinted palettes.
 - Q: Does "name no other project as its host or consumer" cover the shared CI and toolchain repository, `django-mvp/shared`? → A: No. It supplies the CI workflows, the pre-commit configuration and the development toolchain. It neither hosts nor consumes this package, so references to it stay.
 - Q: Does the CHANGELOG keep "migrated from django-mvp" as provenance for the first components? → A: No. Nothing has been released, so the Unreleased section describes what the package ships. Where a component came from tells a reader of this package nothing. Comparisons with another package's version of a component are restated as plain facts about this one.
-- Q: The issue lists six documents. Do the demo and the tests also stop naming django-mvp? → A: Yes. Constitution Article XII covers the demo, the tests and the dependency list, and the test settings can't import django-mvp's configuration once it isn't installed. Sample text in a test (a `pip install django-mvp` code line) becomes a neutral command.
+- Q: The issue lists six documents. Do the demo and the tests also stop naming django-mvp? → A: Yes. Constitution Article XI covers the demo, the tests and the dependency list, and the test settings can't import django-mvp's configuration once it isn't installed. Sample text in a test (a `pip install django-mvp` code line) becomes a neutral command.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -34,7 +34,7 @@ Issue #11 owns the gallery annotations on each component, the linter in the test
 
 A contributor starts the demo and lands in the component gallery. There is no home page and no application shell. Components render with daisyUI styling, and a theme switcher changes the theme of every component preview. The demo installs Django, Cotton, the gallery and the development toolchain and nothing more, so what's on the page is this package's components alone.
 
-**Why this priority**: Every later roadmap item adds components and has to look at them. Today the demo leans on another package's shell to supply daisyUI, which Article XII rules out. The other stories assume this one.
+**Why this priority**: Every later roadmap item adds components and has to look at them. Today the demo leans on another package's shell to supply daisyUI, which Article XI rules out. The other stories assume this one.
 
 **Independent Test**: Install the dev dependencies, start the demo, open its root URL, browse to a component and switch the theme. Confirm django-mvp isn't in the installed dependency tree and the test suite passes.
 
@@ -70,7 +70,7 @@ Every link in the gallery sidebar opens its component's page, including componen
 
 Someone reading the README, CONTEXT.md, AGENTS.md, `docs/brainstorm.md`, ADR 0001 or the CHANGELOG learns what daisy-cotton is and does without being told another project hosts it or depends on it. The demo, the tests and the dependency list don't name one either.
 
-**Why this priority**: Article XII requires it, and the README, the first thing an adopter reads, currently presents the package as a piece moving out of another project.
+**Why this priority**: Article XI requires it, and the README, the first thing an adopter reads, currently presents the package as a piece moving out of another project.
 
 **Independent Test**: Search the six documents, `demo/`, `tests/` and `pyproject.toml` for `django-mvp`, `mvp` and `daisy-cotton-blocks`. The only matches left point at the shared CI and toolchain repository and its `mvp-shared` bundle.
 

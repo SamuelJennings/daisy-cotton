@@ -39,8 +39,6 @@ def _class_attrs_on(html, tag):
 
 
 class TestCardTitle:
-    """``title``, as an attribute or a named slot, is a ``card-title`` heading."""
-
     def test_title_attribute_renders_a_card_title_heading(
         self, cotton_render_string_soup
     ):
@@ -64,8 +62,6 @@ class TestCardTitle:
 
 
 class TestCardFigure:
-    """A ``figure`` slot renders in a ``<figure>`` before the body."""
-
     def test_figure_slot_renders_in_a_figure_before_the_body(
         self, cotton_render_string_soup
     ):
@@ -83,8 +79,6 @@ class TestCardFigure:
 
 
 class TestCardActions:
-    """An ``actions`` slot renders in ``card-actions`` at the foot of the body."""
-
     def test_actions_slot_renders_in_card_actions_at_the_foot(
         self, cotton_render_string_soup
     ):
@@ -102,8 +96,6 @@ class TestCardActions:
 
 
 class TestCardEmptyParts:
-    """A card given no title, figure or actions emits only the root and the body."""
-
     def test_no_empty_heading_figure_or_actions_row(self, cotton_render_string_soup):
         soup = cotton_render_string_soup("<c-card>Body</c-card>")
 
@@ -118,8 +110,6 @@ class TestCardEmptyParts:
 
 
 class TestCardClasses:
-    """``class`` and ``content_class`` each merge into a single class list."""
-
     def test_class_and_content_class_merge_into_one_class_list_each(
         self, cotton_render_string, cotton_render_string_soup
     ):
@@ -145,8 +135,6 @@ class TestCardClasses:
 
 
 class TestCardPageContextDoesNotLeak:
-    """A page variable sharing a declared name never fills an empty card part."""
-
     def test_page_context_title_figure_and_actions_do_not_leak_in(
         self, cotton_render_string_soup
     ):
@@ -165,8 +153,6 @@ class TestCardPageContextDoesNotLeak:
 
 
 class TestCardSize:
-    """``size`` maps xs-xl to daisyUI's ``card-<size>`` class."""
-
     @pytest.mark.parametrize("size", ["xs", "sm", "md", "lg", "xl"])
     def test_each_size_maps_to_its_daisyui_class(self, cotton_render_string, size):
         html = cotton_render_string(f'<c-card size="{size}">Body</c-card>')
@@ -182,8 +168,6 @@ class TestCardSize:
 
 
 class TestCardModifiers:
-    """``border``, ``dash``, ``side`` and ``image-full`` map to their daisyUI classes."""
-
     def test_border_adds_card_border(self, cotton_render_string):
         html = cotton_render_string("<c-card border>Body</c-card>")
         root_classes = _class_attrs_on(html, "div")

@@ -4,7 +4,7 @@ straight through.
 
 This package resolves no icon pack of its own — a project wanting name-based
 resolution provides its own ``cotton/icon.html`` override (CONSTITUTION.md
-Article XII). These tests hold the pass-through contract in place, since
+Article XI). These tests hold the pass-through contract in place, since
 nothing else in the package would notice if a future ``<c-vars>`` line
 started intercepting an attribute on its way to the ``<i>``.
 """

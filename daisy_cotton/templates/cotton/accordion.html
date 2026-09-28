@@ -3,11 +3,5 @@
 {# @prop title:text | description:"Heading text, re-passed as the collapse's title slot. A title is expected: leaving both this and the title slot empty renders an unnamed control, an empty summary. Fill the title slot instead for rich content." #}
 {# @slot A short answer. — The item's content, forwarded to the collapse. #}
 {# @slot:title — A heading in place of the title attribute, for rich content such as an icon or badge. #}
-{% comment %}
-  Items sharing a name form one group, in which opening one item closes the
-  others. In a browser that does not support grouped <details>, more than one
-  can stay open at a time. If two items in a group are both given open, the
-  browser decides which stays open — open at most one per group.
-{% endcomment %}
 <c-vars name="" title="" />
 <c-collapse name="{{ name }}" :attrs="attrs">{% if title %}<c-slot name="title">{{ title }}</c-slot>{% endif %}{{ slot }}</c-collapse>

@@ -4,23 +4,23 @@ Ambiguities in issue #11 resolved while writing the spec, with the reasoning beh
 
 ## What "passes the gallery lint" means
 
-**Ambiguous:** whether the rule is only the linter's exit status, or all of Article XVI.
+**Ambiguous:** whether the rule is only the linter's exit status, or all of Article XV.
 
-**Chosen:** two checks in the test suite. The first runs the gallery's linter and fails on errors and warnings, not hints. The second covers the parts of Article XVI the linter does not read: exactly one `@description`, a `@slot` wherever the default slot is rendered, and no `{#` comment that spans lines. Every later component group meets both.
+**Chosen:** two checks in the test suite. The first runs the gallery's linter and fails on errors and warnings, not hints. The second covers the parts of Article XV the linter does not read: exactly one `@description`, a `@slot` wherever the default slot is rendered, and no `{#` comment that spans lines. Every later component group meets both.
 
-**Why:** the linter only compares `@prop` annotations with `<c-vars>`. A template with every prop documented and no description passes it, and so does one whose annotation wraps onto a second line and renders as page text. The issue asks that a component breaking "the documentation contract" fails CI. That contract is Article XVI, so checking only what the linter checks would leave half of it unenforced. Named slots and `@trigger` are left to review: telling a named slot apart from any other undeclared variable is guesswork, and only `modal` needs a trigger today.
+**Why:** the linter only compares `@prop` annotations with `<c-vars>`. A template with every prop documented and no description passes it, and so does one whose annotation wraps onto a second line and renders as page text. The issue asks that a component breaking "the documentation contract" fails CI. That contract is Article XV, so checking only what the linter checks would leave half of it unenforced. Named slots and `@trigger` are left to review: telling a named slot apart from any other undeclared variable is guesswork, and only `modal` needs a trigger today.
 
 ## Hints never fail
 
 **Chosen:** hints pass, and no rule is silenced by configuration.
 
-**Why:** Article XVI says so directly. Some hints can't be avoided. `form.field` declares `help-text` and reads `help_text`, and the linter flags the underscore form as undeclared.
+**Why:** Article XV says so directly. Some hints can't be avoided. `form.field` declares `help-text` and reads `help_text`, and the linter flags the underscore form as undeclared.
 
 ## Annotate what exists, change nothing else
 
 **Chosen:** annotations describe each component's attributes as they are on main, internal-looking ones included (`avatar`'s `size_options`, `avatar.group`'s `space_options`). No attribute is renamed, removed or re-typed.
 
-**Why:** bringing each component in line with Article XIV is the job of its group's feature (FS-003 to FS-010). Changing attributes here would leave those features working against a moving target, and it would make this feature's diff a breaking change.
+**Why:** bringing each component in line with Article XIII is the job of its group's feature (FS-003 to FS-010). Changing attributes here would leave those features working against a moving target, and it would make this feature's diff a breaking change.
 
 ## `form.field`'s attribute-or-slot names
 
@@ -32,7 +32,7 @@ Ambiguities in issue #11 resolved while writing the spec, with the reasoning beh
 
 **Chosen:** reword the comment so it no longer mentions `<c-form.render>`.
 
-**Why:** the linter reads the mention as a call to a component that doesn't exist. The sentence also pointed readers at a form-rendering component in another package, which Article XII rules out. Suppressing the rule would hide the same error in real markup later.
+**Why:** the linter reads the mention as a call to a component that doesn't exist. The sentence also pointed readers at a form-rendering component in another package, which Article XI rules out. Suppressing the rule would hide the same error in real markup later.
 
 ## Where the contributor docs go
 

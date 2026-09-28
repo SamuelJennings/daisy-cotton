@@ -7,7 +7,7 @@ alerts and the rest of an application's furniture, one Cotton component per unit
 defines these terms. Use them.
 
 Presentation only. No models, no views, no forms, no URLs, no migrations, and no runtime
-dependency on any host project — see `CONSTITUTION.md` Article XII.
+dependency on any host project — see `CONSTITUTION.md` Article XI.
 
 ## Stack & commands
 
@@ -40,7 +40,7 @@ See `docs/agents/domain.md`.
 
 ### CI checks
 
-CI runs from the shared reusable workflows in `django-mvp/shared`, pinned at `v0.4.1`. Because
+CI runs from the shared reusable workflows in `django-mvp/shared`, pinned at `v0.6.0`. Because
 they are called rather than inlined, those status checks carry their caller job as a prefix.
 The required checks are:
 
@@ -51,6 +51,8 @@ The required checks are:
 - `call-tests / Test Python 3.12, Django 6.0`
 - `call-tests / Test Python 3.13, Django 5.2`
 - `call-tests / Test Python 3.13, Django 6.0`
+- `call-tests / Test Python 3.12, Django 6.1`
+- `call-tests / Test Python 3.13, Django 6.1`
 
 `tests.yml` and `build.yml` deliberately carry no `paths:` filter on `pull_request`. A required
 check that is filtered out never reports, and a check that never reports blocks the merge.

@@ -2,10 +2,6 @@
 {# @prop drawer:text | required | example:"nav" | description:"Id of the drawer this button opens, the same value as the drawer's id." #}
 {# @prop class:text | description:"Extra classes added to the button." #}
 {# @slot Open sidebar — The opener's text. The focus ring shows when the opener is inside the drawer's page content. #}
-{% comment %}
-  A label, not a button: daisyUI's focus ring targets `label.drawer-button`
-  inside `.drawer-content`. It has no role and no tabindex; the Tab stop is
-  the drawer's checkbox.
-{% endcomment %}
+{# A label, not a button: daisyUI's focus ring targets `label.drawer-button`, and the Tab stop is the drawer's checkbox. #}
 <c-vars drawer="" class />
 <label for="{{ drawer }}" class="btn drawer-button {{ class }}" {{ attrs }}>{{ slot }}</label>

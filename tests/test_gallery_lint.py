@@ -62,8 +62,6 @@ def write_catalog(tmp_path, sources):
 
 
 class TestGalleryLintRules:
-    """The check can fail: each blocking case is proven on a scratch catalog."""
-
     def test_undocumented_cvars_name_blocks_with_component_line_rule_and_message(
         self, tmp_path
     ):
@@ -149,15 +147,11 @@ PACKAGE_FINDINGS = GalleryLint.blocking_by_component(GalleryLint.report(COTTON_D
 
 @pytest.mark.parametrize("component", sorted(PACKAGE_FINDINGS))
 class TestPackageComponentsLintClean:
-    """Every component the package ships has no errors or warnings."""
-
     def test_has_no_blocking_findings(self, component):
         findings = [GalleryLint.describe(i) for i in PACKAGE_FINDINGS[component]]
         assert not findings, "\n".join(findings)
 
 
 class TestPackageCatalog:
-    """The catalog the lint runs over is not empty."""
-
     def test_components_were_discovered(self):
         assert PACKAGE_FINDINGS, f"no components found under {COTTON_DIR}"

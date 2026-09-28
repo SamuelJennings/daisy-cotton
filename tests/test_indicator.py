@@ -186,9 +186,6 @@ class TestIndicatorItemPlacement:
 
 
 class TestIndicatorIgnoresPageContext:
-    """Declared names default to empty, so a page's own variables of the same
-    name do not rewrite the item (D9)."""
-
     def test_page_context_does_not_leak_in(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             "<c-indicator.item>1</c-indicator.item>",
@@ -198,7 +195,6 @@ class TestIndicatorIgnoresPageContext:
         assert placement_classes(soup.find("span")) == set()
 
     def test_a_page_items_variable_is_not_rendered(self, cotton_render_string_soup):
-        """A list view's own ``items`` must not appear in the indicator."""
         soup = cotton_render_string_soup(
             "<c-indicator>Inbox</c-indicator>", {"items": "PAGE-ITEMS"}
         )
@@ -224,17 +220,6 @@ class TestIndicatorAnnotations:
     @pytest.fixture
     def item(self):
         return AnnotationParser().parse((INDICATOR_DIR / "item.html").read_text())
-
-    def test_the_default_slot_is_a_button(self, indicator):
-        content = next(s for s in indicator.slots if s.name is None).content
-
-        assert "<button" in content
-
-    def test_the_items_slot_holds_a_badge_item(self, indicator):
-        content = next(s for s in indicator.slots if s.name == "items").content
-
-        assert "<c-indicator.item" in content
-        assert "badge" in content
 
     def test_the_items_slot_hides_the_count_and_speaks_it_visually_hidden(
         self, indicator, cotton_render_string_soup

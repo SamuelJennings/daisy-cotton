@@ -16,7 +16,7 @@ daisyUI styles three calendar libraries:
 
 Cally is therefore the only library the component serves. A project using Vanilla Calendar Pro writes its div directly.
 
-The package ships no JavaScript, so the project loads Cally. The demo loads it so the gallery can show a working calendar. That is the demo showing the component in use, not the package depending on Cally, so Article XII's runtime rule still holds.
+The package ships no JavaScript, so the project loads Cally. The demo loads it so the gallery can show a working calendar. That is the demo showing the component in use, not the package depending on Cally, so Article XI's runtime rule still holds.
 
 ## The filter uses daisyUI's structure without a form
 
@@ -32,11 +32,11 @@ The README says components take plain values and leave wiring to Django to the p
 
 ## The filter passes only `variant` and `size` to its buttons
 
-The filter's options are radio inputs carrying daisyUI's `btn` class, not buttons, so `<c-button>` cannot draw them and Article XV does not apply. Colour and size are the two things most filters change, and they already have names under Article XIV. The other button styles would add five attributes for rare uses, and tie-break 3 sends those to a project override.
+The filter's options are radio inputs carrying daisyUI's `btn` class, not buttons, so `<c-button>` cannot draw them and Article XIV does not apply. Colour and size are the two things most filters change, and they already have names under Article XIII. The other button styles would add five attributes for rare uses, and tie-break 3 sends those to a project override.
 
 ## The rating takes colour through `variant`
 
-daisyUI has no rating colour modifier. Its examples colour each item with a background class, usually a literal Tailwind colour such as `bg-orange-400`, which Article XIII forbids. Article XIV says that where daisyUI has no name, the attribute reuses the name the package already gives the same idea. Colour is `variant` everywhere else, so `variant="warning"` gives each item `bg-warning`. That keeps the rating on the theme's palette.
+daisyUI has no rating colour modifier. Its examples colour each item with a background class, usually a literal Tailwind colour such as `bg-orange-400`, which Article XII forbids. Article XIII says that where daisyUI has no name, the attribute reuses the name the package already gives the same idea. Colour is `variant` everywhere else, so `variant="warning"` gives each item `bg-warning`. That keeps the rating on the theme's palette.
 
 ## The rating's shape is `shape`
 

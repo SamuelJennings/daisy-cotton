@@ -51,8 +51,6 @@ CALLER_STRINGS = {
 
 
 class TestAnimatedDisplayNoScript:
-    """The rendered output of every component carries no script."""
-
     @pytest.mark.parametrize(
         "source", CALLER_STRINGS.values(), ids=CALLER_STRINGS.keys()
     )

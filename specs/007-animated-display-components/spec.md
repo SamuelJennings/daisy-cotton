@@ -199,9 +199,9 @@ A developer writing a headline wants one word or phrase in it to cycle through u
 **Every component in the group**
 
 - **FR-001**: Carousel, chat bubble, countdown, diff, hover 3D card, hover gallery and text rotate MUST each exist as a Cotton component (`<c-carousel>` with `<c-carousel.item>`, `<c-chat>`, `<c-countdown>`, `<c-diff>`, `<c-hover-3d>`, `<c-hover-gallery>`, `<c-text-rotate>`) emitting the markup and classes daisyUI documents. *(US1–US7)*
-- **FR-002**: Each MUST follow Article XIV: `variant` for colour where daisyUI has colour modifiers, daisyUI's modifier names as attributes, `class` merged into the root element's class list, and every other attribute passed through to the root element unless this spec names another element for it. *(US1–US7)*
-- **FR-003**: Each MUST carry the gallery annotations Article XVI requires, and `cotton_lint --warnings-as-errors` MUST pass. *(US1–US7)*
-- **FR-004**: Each MUST have a gallery entry that renders its variants and states, so a developer can choose attributes without reading the template. Every image in a gallery entry MUST carry alt text, and every colour a gallery entry uses MUST come from the semantic palette (Article XIII). *(US1–US7)*
+- **FR-002**: Each MUST follow Article XIII: `variant` for colour where daisyUI has colour modifiers, daisyUI's modifier names as attributes, `class` merged into the root element's class list, and every other attribute passed through to the root element unless this spec names another element for it. *(US1–US7)*
+- **FR-003**: Each MUST carry the gallery annotations Article XV requires, and `cotton_lint --warnings-as-errors` MUST pass. *(US1–US7)*
+- **FR-004**: Each MUST have a gallery entry that renders its variants and states, so a developer can choose attributes without reading the template. Every image in a gallery entry MUST carry alt text, and every colour a gallery entry uses MUST come from the semantic palette (Article XII). *(US1–US7)*
 - **FR-005**: Each MUST emit accessible markup by default: correct roles and states, keyboard reach for anything focusable, and a visible focus indicator. Elements that exist only for a visual effect MUST be hidden from assistive technology, and no slot content MAY be hidden from it. *(US1–US7)*
 - **FR-006**: The README MUST list the new components and record that aura has no component, and why. The CHANGELOG MUST list the seven new components. *(US1–US7)*
 - **FR-007**: Where a component's visual effect needs a pointer, or depends on a script the project supplies, its documentation MUST say what a keyboard or screen-reader user gets instead. *(US1, US3, US4, US5, US6, US7)*
@@ -211,7 +211,7 @@ A developer writing a headline wants one word or phrase in it to cycle through u
 - **FR-008**: `<c-carousel>` MUST render a root with `carousel`, `role="region"`, `tabindex="0"` and the translatable roledescription "carousel", taking its accessible name from `aria-label`, with the default slot as its content. *(US1)*
 - **FR-009**: `snap` MUST map `start`, `center` and `end` to `carousel-start`, `carousel-center` and `carousel-end`. `horizontal` and `vertical` MUST map to `carousel-horizontal` and `carousel-vertical`. *(US1)*
 - **FR-010**: `<c-carousel.item>` MUST render an element with `carousel-item`, `role="group"` and the translatable roledescription "slide", holding the default slot. It MUST accept `class`, `id` and other attributes on that element. *(US1)*
-- **FR-011**: The carousel's gallery entry MUST show daisyUI's indicator and previous/next patterns as links to slide ids, drawn with `<c-button>` (Article XV). The components themselves MUST NOT emit controls. *(US1)*
+- **FR-011**: The carousel's gallery entry MUST show daisyUI's indicator and previous/next patterns as links to slide ids, drawn with `<c-button>` (Article XIV). The components themselves MUST NOT emit controls. *(US1)*
 
 **Chat bubble**
 

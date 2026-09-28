@@ -92,7 +92,7 @@ title, and a caller's `aria-label` reaches the dialog through `{{ attrs }}` for 
 no title (FR-013). `closable` adds `<form method="dialog">` holding a `<c-button size="sm"
 circle ghost>` whose `aria-label` is `{% trans "Close" %}` and whose glyph is `aria-hidden`
 (FR-015) — a button with no type inside a form submits it, which closes the dialog with no
-script (Article XV). Added `TestModalNaming`, `TestModalClosable` and
+script (Article XIV). Added `TestModalNaming`, `TestModalClosable` and
 `TestModalTranslatableStrings` to `tests/test_modal.py` for scenarios 1 (naming) and 4, that
 both "Close" strings sit inside `{% trans %}` in the template source, and that two modals with
 different ids get different heading ids.

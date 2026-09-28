@@ -73,10 +73,6 @@ def _iter_all_attrs(html, tag):
 
 
 class TestCollapseStructure:
-    """AS1: a root carrying ``collapse``, a ``<summary>`` carrying
-    ``collapse-title`` holding ``title``, and the default slot in
-    ``collapse-content``."""
-
     def test_title_and_content_render_in_their_parts(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             '<c-collapse title="Details">Content</c-collapse>'
@@ -95,8 +91,6 @@ class TestCollapseStructure:
 
 
 class TestCollapseTitleSlot:
-    """AS5: a ``title`` slot fills the summary."""
-
     def test_title_slot_fills_the_summary(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             '<c-collapse><c-slot name="title">'
@@ -111,10 +105,6 @@ class TestCollapseTitleSlot:
 
 
 class TestCollapseOpen:
-    """AS3: ``open`` renders the collapse initially expanded through the
-    browser's native ``open`` attribute, never daisyUI's state-locking
-    ``collapse-open``/``collapse-close`` classes (SC-001)."""
-
     def test_open_renders_the_native_open_attribute(self, cotton_render_string):
         html = cotton_render_string(
             '<c-collapse title="Details" open>Content</c-collapse>'
@@ -137,8 +127,6 @@ class TestCollapseOpen:
 
 
 class TestCollapseModifiers:
-    """AS4: ``arrow`` and ``plus`` map to ``collapse-arrow`` and ``collapse-plus``."""
-
     def test_arrow_adds_collapse_arrow(self, cotton_render_string):
         html = cotton_render_string(
             '<c-collapse title="Details" arrow>Content</c-collapse>'
@@ -155,9 +143,6 @@ class TestCollapseModifiers:
 
 
 class TestCollapseNamePassthrough:
-    """``name`` is not declared, so it passes through ``{{ attrs }}`` to
-    ``<details>`` — how an accordion's group is formed."""
-
     def test_name_reaches_the_details_element(self, cotton_render_string):
         html = cotton_render_string(
             '<c-collapse title="Details" name="faq">Content</c-collapse>'
@@ -167,8 +152,6 @@ class TestCollapseNamePassthrough:
 
 
 class TestCollapsePageContextDoesNotLeak:
-    """A page variable sharing a declared name never fills an empty collapse part."""
-
     def test_page_context_title_and_open_do_not_leak_in(
         self, cotton_render_string_soup
     ):
@@ -186,10 +169,6 @@ class TestCollapsePageContextDoesNotLeak:
 
 
 class TestCollapseFocusRing:
-    """FR-006, US4-2: the summary carries a focus-visible outline, since
-    daisyUI draws no focus ring of its own on collapse-title (research R5,
-    the accessibility run)."""
-
     def test_collapse_summary_carries_the_focus_visible_outline(
         self, cotton_render_string
     ):
@@ -210,10 +189,6 @@ class TestCollapseFocusRing:
 
 
 class TestAccordionDrawnByCollapse:
-    """AS8: <c-accordion> is drawn by <c-collapse> and accepts every collapse
-    attribute and slot — arrow, plus, open, class and the title slot all
-    reach the collapse's markup (FR-020)."""
-
     def test_arrow_plus_open_and_class_reach_the_collapse(self, cotton_render_string):
         html = cotton_render_string(
             '<c-accordion name="faq" arrow plus open class="border">Answer</c-accordion>'
@@ -246,12 +221,6 @@ class TestAccordionDrawnByCollapse:
 
 
 class TestAccordionGrouping:
-    """AS6/AS7 at the markup level: items sharing a name carry it on
-    <details>, and two groups carry their own, distinct names. Whether the
-    browser actually keeps only one item per group open is the native
-    <details name="..."> behaviour this markup relies on, not something a
-    template render can exercise."""
-
     def test_three_items_sharing_a_name_each_carry_it(self, cotton_render_string):
         html = cotton_render_string(
             '<c-accordion name="faq" title="Q1">A1</c-accordion>'
@@ -275,9 +244,6 @@ class TestAccordionGrouping:
 
 
 class TestAccordionPageContextDoesNotLeak:
-    """A page variable sharing a declared name never fills an empty
-    accordion part."""
-
     def test_page_context_name_and_title_do_not_leak_in(
         self, cotton_render_string_soup
     ):

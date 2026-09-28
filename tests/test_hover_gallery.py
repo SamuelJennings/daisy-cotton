@@ -12,8 +12,6 @@ def parse(html):
 
 
 class TestHoverGalleryRoot:
-    """The gallery is a figure holding the slotted images in order, with no width of its own."""
-
     def test_root_carries_hover_gallery_class_and_the_callers_class(
         self, cotton_render_string
     ):
@@ -56,8 +54,6 @@ class TestHoverGalleryRoot:
 
 
 class TestHoverGalleryNoAriaHidden:
-    """Every image stays in the accessibility tree; only the hover effect needs a pointer."""
-
     def test_figure_carries_no_aria_hidden(self, cotton_render_string):
         html = cotton_render_string(
             '<c-hover-gallery><img src="/a.jpg" alt="A"></c-hover-gallery>'
@@ -75,8 +71,6 @@ class TestHoverGalleryNoAriaHidden:
 
 
 class TestHoverGalleryPageContext:
-    """A page variable named class never leaks into the gallery."""
-
     def test_page_class_does_not_leak(self, cotton_render_string):
         html = cotton_render_string(
             '<c-hover-gallery><img src="/a.jpg" alt="A"></c-hover-gallery>',

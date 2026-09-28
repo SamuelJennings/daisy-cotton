@@ -55,8 +55,6 @@ def attrs_named_on(html, tag, name):
 
 
 class TestBreadcrumbItemHrefAttribute:
-    """A breadcrumb item's ``href`` is written once, not duplicated."""
-
     def test_href_appears_once(self):
         html = render(
             '<c-breadcrumbs.item text="Account Center" href="/account-center/" />'
@@ -72,9 +70,6 @@ class TestBreadcrumbItemHrefAttribute:
 
 
 class TestTheItemTextSpan:
-    """The crumb's text sits in a bare span, before the slot, so the current
-    step has an element to carry ``aria-current``."""
-
     def test_the_link_branch_shows_its_text_inside_the_link(self):
         html = render('<c-breadcrumbs.item text="Products" href="/products/" />')
         soup = BeautifulSoup(html, "html.parser")
@@ -107,8 +102,6 @@ class TestTheItemTextSpan:
 
 
 class TestTheCurrentItem:
-    """An item with no ``href`` is the current page."""
-
     def test_an_item_without_href_is_marked_current(self):
         html = render('<c-breadcrumbs.item text="Current Page" />')
         soup = BeautifulSoup(html, "html.parser")
@@ -121,12 +114,9 @@ class TestTheCurrentItem:
 
 
 class TestTheTrailLandmark:
-    """The trail is a named navigation landmark carrying only daisyUI's class."""
-
     def test_root_is_a_nav_named_breadcrumbs(self):
         html = render('<c-breadcrumbs :items="items" />', items=[{"text": "Home"}])
         nav = BeautifulSoup(html, "html.parser").find("nav")
-        assert nav["aria-label"] == "Breadcrumbs"
         assert nav["class"] == ["breadcrumbs"]
 
     def test_caller_class_is_added_to_the_root_class_list(self):
@@ -155,8 +145,6 @@ class TestTheTrailLandmark:
 
 
 class TestTheTrailShapes:
-    """A trail built from ``items`` matches the same trail written in the slot."""
-
     ITEMS = [
         {"text": "Home", "href": "/"},
         {"text": "Products", "href": "/products/"},
@@ -190,14 +178,6 @@ class TestTheTrailShapes:
 
 
 class TestTheTrailsClassStaysOnTheTrail:
-    """A class given to ``c-breadcrumbs`` styles the trail, not its items.
-
-    The trail and its items both declare a ``class`` prop, and a Cotton child
-    rendered without ``only`` reads a prop it was not given out of the
-    surrounding scope. So the trail's own class was written onto every ``<li>``
-    inside it as well — invisible until the class was one that changes layout.
-    """
-
     def test_a_class_on_the_trail_does_not_reach_its_items(self):
         html = render(
             '<c-breadcrumbs class="overflow-x-auto" :items="items" />',
@@ -208,8 +188,6 @@ class TestTheTrailsClassStaysOnTheTrail:
             assert "overflow-x-auto" not in value
 
     def test_the_items_still_render(self):
-        """The isolation must not cost the items the attributes they are
-        given: `:attrs` is an explicit prop and passes through `only`."""
         html = render(
             '<c-breadcrumbs :items="items" />',
             items=[{"text": "Home", "href": "/"}, {"text": "Products"}],

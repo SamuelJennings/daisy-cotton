@@ -106,8 +106,6 @@ class TestDeclaredAttributesAreRead:
 
 
 class TestTheGuardItselfReadsDeclarations:
-    """The parser has to survive the declaration shapes the package uses."""
-
     def test_a_translated_default_is_one_declaration(self):
         assert declared_names(' label="{% trans "Search" %}" ') == ["label"]
 

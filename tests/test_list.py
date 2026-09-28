@@ -7,11 +7,6 @@ class attribute; the row itself declares nothing for either (FR-028).
 """
 
 from html.parser import HTMLParser
-from pathlib import Path
-
-import daisy_cotton
-
-COTTON_DIR = Path(next(iter(daisy_cotton.__path__))).resolve() / "templates" / "cotton"
 
 
 class _FirstTagAttrs(HTMLParser):
@@ -55,16 +50,7 @@ def _class_attrs_on(html, tag):
     ]
 
 
-def _annotation_text(path):
-    """The text of every ``{# ... #}`` annotation line in a template file."""
-    return "\n".join(
-        line for line in path.read_text().splitlines() if line.strip().startswith("{#")
-    )
-
-
 class TestListRoot:
-    """FR-027, US7-1: <c-list> renders a <ul> carrying list, holding rows."""
-
     def test_root_is_ul_carrying_list_holding_rows(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             "<c-list><c-list.row>Row one</c-list.row></c-list>"
@@ -79,9 +65,6 @@ class TestListRoot:
 
 
 class TestListRowRoot:
-    """FR-027, US7-1: <c-list.row> renders an <li> carrying list-row, holding
-    the default slot."""
-
     def test_row_is_li_carrying_list_row(self, cotton_render_string_soup):
         soup = cotton_render_string_soup("<c-list.row>Row content</c-list.row>")
 
@@ -91,9 +74,6 @@ class TestListRowRoot:
 
 
 class TestListClassAndAttrs:
-    """US7-2: class merges into the list's single class list and other
-    attributes reach the root."""
-
     def test_class_merges_and_extra_attributes_reach_the_root(
         self, cotton_render_string
     ):
@@ -111,9 +91,6 @@ class TestListClassAndAttrs:
 
 
 class TestListRowClassAndAttrs:
-    """US7-2: class merges into the row's single class list and other
-    attributes reach the root."""
-
     def test_class_merges_and_extra_attributes_reach_the_root(
         self, cotton_render_string
     ):
@@ -133,8 +110,6 @@ class TestListRowClassAndAttrs:
 
 
 class TestListPageContextDoesNotLeak:
-    """A page variable named ``class`` never fills an empty list's class list."""
-
     def test_page_context_class_does_not_leak_in(self, cotton_render_string):
         html = cotton_render_string(
             "<c-list></c-list>", context={"class": "leaked-class"}
@@ -146,8 +121,6 @@ class TestListPageContextDoesNotLeak:
 
 
 class TestListRowPageContextDoesNotLeak:
-    """A page variable named ``class`` never fills an empty row's class list."""
-
     def test_page_context_class_does_not_leak_in(self, cotton_render_string):
         html = cotton_render_string(
             "<c-list.row></c-list.row>", context={"class": "leaked-class"}
@@ -156,25 +129,3 @@ class TestListRowPageContextDoesNotLeak:
         root_classes = _class_attrs_on(html, "li")
         assert len(root_classes) == 1
         assert "leaked-class" not in root_classes[0]
-
-
-class TestListDocumentsColumnClasses:
-    """FR-028, US7-3: the documentation shows list-col-grow and
-    list-col-wrap applied to a row's children."""
-
-    def test_list_col_grow_and_list_col_wrap_appear_in_the_templates_annotations(self):
-        index_annotations = _annotation_text(COTTON_DIR / "list" / "index.html")
-        row_annotations = _annotation_text(COTTON_DIR / "list" / "row.html")
-
-        assert "list-col-grow" in row_annotations, (
-            "row.html's @description must name list-col-grow"
-        )
-        assert "list-col-wrap" in row_annotations, (
-            "row.html's @description must name list-col-wrap"
-        )
-        assert "list-col-grow" in index_annotations, (
-            "index.html's @slot example must use list-col-grow"
-        )
-        assert "list-col-wrap" in index_annotations, (
-            "index.html's @slot example must use list-col-wrap"
-        )

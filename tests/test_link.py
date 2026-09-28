@@ -41,8 +41,6 @@ def first_tag_attrs(html, tag):
 
 
 class TestLinkDefaults:
-    """With no attributes, `<c-link>` renders a bare `.link` anchor."""
-
     def test_default_renders_anchor_with_link_class(self):
         html = render('<c-link text="Sign in" />')
         attrs = first_tag_attrs(html, "a")
@@ -61,8 +59,6 @@ class TestLinkDefaults:
 
 
 class TestLinkVariant:
-    """`variant` maps to a `link-{variant}` DaisyUI colour class."""
-
     def test_variant_adds_link_variant_class(self):
         html = render('<c-link text="Sign in" variant="primary" />')
         attrs = first_tag_attrs(html, "a")
@@ -101,8 +97,6 @@ class TestLinkVariant:
 
 
 class TestLinkHover:
-    """`hover` adds `link-hover` (underline only on hover)."""
-
     def test_hover_adds_link_hover_class(self):
         html = render('<c-link text="Sign in" hover />')
         attrs = first_tag_attrs(html, "a")
@@ -115,9 +109,6 @@ class TestLinkHover:
 
 
 class TestLinkClassMerge:
-    """A caller-supplied `class` merges into the built-in classes instead of
-    producing a second, browser-ignored `class` attribute (issue #121)."""
-
     def test_caller_class_merges_with_built_in_classes(self):
         html = render('<c-link text="Sign in" class="dac-prose" />')
         assert html.count('class="') == 1
@@ -127,8 +118,6 @@ class TestLinkClassMerge:
 
 
 class TestLinkContent:
-    """`text` and the default slot both populate the anchor's content."""
-
     def test_text_attribute_renders_as_content(self):
         html = render('<c-link href="/login/" text="Sign in" />')
         assert "Sign in" in html
@@ -139,8 +128,6 @@ class TestLinkContent:
 
 
 class TestLinkPassthroughAttrs:
-    """Undeclared attributes pass through to the anchor via `{{ attrs }}`."""
-
     def test_target_and_rel_pass_through(self):
         html = render(
             '<c-link href="https://example.com" text="Docs" target="_blank" rel="noopener" />'
@@ -151,8 +138,6 @@ class TestLinkPassthroughAttrs:
 
 
 class TestLinkPageContext:
-    """A page variable named like a prop never reaches a plain link."""
-
     def test_page_href_does_not_give_the_link_an_href(self):
         html = render('<c-link text="Sign in" />', href="/leak")
         assert "href" not in first_tag_attrs(html, "a")

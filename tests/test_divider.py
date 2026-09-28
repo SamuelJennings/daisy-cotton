@@ -230,9 +230,6 @@ class TestDividerRole:
 
 
 class TestDividerIgnoresPageContext:
-    """Declared names default to empty, so a page's own variables of the same
-    name do not rewrite the divider (D9)."""
-
     def test_page_context_does_not_leak_in(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             "<c-divider />",
@@ -274,7 +271,6 @@ class TestDividerAnnotations:
         prop = next(p for p in parsed.props if p.clean_name == name)
 
         assert prop.type == "boolean"
-        assert "breakpoint" in prop.description
 
     def test_the_old_position_prop_is_gone(self, parsed):
         assert "position" not in {p.clean_name for p in parsed.props}

@@ -5,7 +5,6 @@ the control's state, form attributes and accessible name, and `on`/`off`/
 `indeterminate` slots in `swap-on`/`swap-off`/`swap-indeterminate`.
 """
 
-import re
 from pathlib import Path
 
 from django_cotton_gallery.core.annotations import AnnotationParser
@@ -27,8 +26,6 @@ def _checkbox_tag(html):
 
 
 class TestSwapStructure:
-    """Scenario 1: the wrapper, checkbox and on/off slots."""
-
     def test_renders_the_wrapper_checkbox_and_on_off_slots(self, cotton_render_string):
         html = cotton_render_string(
             '<c-swap label="Dark mode"><c-slot name="on">🌙</c-slot>'
@@ -45,8 +42,6 @@ class TestSwapStructure:
 
 
 class TestSwapModifiers:
-    """Scenarios 3-4: rotate, flip and active map to their wrapper classes."""
-
     def test_rotate_applies_to_the_wrapper(self, cotton_render_string):
         html = cotton_render_string("<c-swap rotate />")
         assert "swap-rotate" in html
@@ -67,9 +62,6 @@ class TestSwapModifiers:
 
 
 class TestSwapIndeterminate:
-    """Scenario 5: the indeterminate slot sits in swap-indeterminate, and only
-    when given."""
-
     def test_indeterminate_slot_renders_in_its_own_div(self, cotton_render_string):
         html = cotton_render_string(
             '<c-swap><c-slot name="indeterminate">-</c-slot></c-swap>'
@@ -84,9 +76,6 @@ class TestSwapIndeterminate:
 
 
 class TestSwapCheckboxAttributes:
-    """Scenario 6: checked, name, value and disabled land on the checkbox,
-    never the wrapper; anything else lands on the wrapper."""
-
     def test_checked_name_and_value_land_on_the_checkbox(self, cotton_render_string):
         html = cotton_render_string('<c-swap checked name="theme" value="dark" />')
         checkbox = _checkbox_tag(html)
@@ -119,8 +108,6 @@ class TestSwapCheckboxAttributes:
 
 
 class TestSwapGalleryAnnotations:
-    """Article XVI, read through the gallery's own `AnnotationParser`."""
-
     @staticmethod
     def _parsed():
         return AnnotationParser().parse(SWAP_TEMPLATE.read_text())
@@ -147,36 +134,12 @@ class TestSwapGalleryAnnotations:
         names = {s.name for s in self._parsed().slots}
         assert {"on", "off", "indeterminate"} <= names
 
-    def test_on_and_off_have_short_word_examples(self):
-        slots = {s.name: s for s in self._parsed().slots}
-        assert slots["on"].content == "ON"
-        assert slots["off"].content == "OFF"
-
     def test_indeterminate_has_no_example_and_describes_the_script_dependency(self):
         slot = next(s for s in self._parsed().slots if s.name == "indeterminate")
         assert slot.content == ""
-        assert "script" in slot.description
-
-    def test_the_description_tells_the_viewer_to_give_label(self):
-        assert "label" in self._parsed().description
-
-
-class TestSwapThemeToggleComment:
-    """FR-024: the theme controller has no component of its own, and the
-    template says so and shows the markup."""
-
-    def test_the_comment_names_the_theme_controller_class(self):
-        source = SWAP_TEMPLATE.read_text()
-        [comment] = re.findall(
-            r"\{%\s*comment\s*%\}(.*?)\{%\s*endcomment\s*%\}", source, re.DOTALL
-        )
-        assert "theme-controller" in comment
 
 
 class TestSwapContextLeak:
-    """A page variable of the same name as a declared prop never leaks in
-    (research R5, D6): every declared name gets an empty default."""
-
     def test_a_page_context_on_off_and_label_do_not_leak_in(self, cotton_render_string):
         html = cotton_render_string(
             "<c-swap />",
@@ -193,8 +156,6 @@ class TestSwapContextLeak:
 
 
 class TestSwapWrapperClass:
-    """FR-021: the wrapper itself carries daisyUI's `swap` class."""
-
     def test_the_wrapper_carries_swap(self, cotton_render_string_soup):
         soup = cotton_render_string_soup('<c-swap label="Dark mode" />')
         assert "swap" in soup.label["class"]

@@ -91,7 +91,7 @@ Shared rules, applied everywhere below:
 ```
 
 - The heading names the dialog through `aria-labelledby`, built from the modal's own required `id`, so two modals on a page never share a heading id. A caller's `aria-label` reaches the dialog through `{{ attrs }}` for a modal with no title (Edge Cases).
-- The close button is a `<c-button>` inside `<form method="dialog">`, where a button with no type submits the form and closes the dialog without script (FR-015, Article XV). The backdrop is daisyUI's own `<form method="dialog" class="modal-backdrop">`, whose button covers the backdrop and is not a styled button, so it stays a plain `<button>` with translatable text.
+- The close button is a `<c-button>` inside `<form method="dialog">`, where a button with no type submits the form and closes the dialog without script (FR-015, Article XIV). The backdrop is daisyUI's own `<form method="dialog" class="modal-backdrop">`, whose button covers the backdrop and is not a styled button, so it stays a plain `<button>` with translatable text.
 - Escape, the focus trap and focus return are the browser's, for a dialog opened with `showModal()`. `open` renders `<dialog open>`, which daisyUI shows (`.modal[open]`, research R1). A dialog shown this way is not modal: Escape does not close it and focus is not trapped, though the backdrop and close button still close it. That is the only way to show a dialog without script, and the `open` description says so (D4).
 - `actions` is a named slot declared with an empty default, so a page variable called `actions` does not fill it (FS-004 D12).
 - The inner card, `size`, `position`, `icon`, `footer` and `footer_end` go (FR-016). Width goes through `content_class`.
@@ -111,7 +111,7 @@ Shared rules, applied everywhere below:
 </div>
 ```
 
-- The root is a wrapper `<div class="inline-block">`, the display `.dropdown` gave the old wrapper, so `class` has a root to land on (Article XIV). The `dropdown` class and its placement classes sit on the panel, which is where daisyUI's popover method puts them (research R2).
+- The root is a wrapper `<div class="inline-block">`, the display `.dropdown` gave the old wrapper, so `class` has a root to land on (Article XIII). The `dropdown` class and its placement classes sit on the panel, which is where daisyUI's popover method puts them (research R2).
 - The panel id is the caller's `id`, or `dropdown-` plus eight hex characters from the new `unique_id` tag (FR-019, research R6). The trigger's `popovertarget` and both anchor names are built from it. `popovertarget` and `style` are written after `:attrs`, so a caller's `style` cannot drop the anchor (Cotton applies a tag's attributes in source order, research R4). A caller's `style` therefore does not reach the default trigger, and the `{% comment %}` block says so.
 - Extra attributes configure the default trigger (`text`, `icon`, `variant`, `aria-label`…), and fall through to the wrapper when a `button` slot replaces it, as today. A custom trigger must carry `popovertarget` set to the dropdown's `id` and `type="button"`, plus `style="anchor-name: --<id>"` for placement, so a dropdown with a custom trigger needs an `id`. The `@slot:button` description and a `{% comment %}` block say so (scenario 6).
 - `button` is declared with an empty default, so a page variable called `button` does not replace the trigger (FS-004 D12).
@@ -134,7 +134,7 @@ Shared rules, applied everywhere below:
 ```
 
 - The control's state, form attributes and accessible name are declared so they reach the checkbox. Everything else reaches the `<label>` (FR-023, clarification).
-- `input_class` is the checkbox's extra classes, the name FS-010 gives the OTP's inner input for the same idea (Article XIV). The theme toggle is `input_class="theme-controller" value="dark"` (FR-024).
+- `input_class` is the checkbox's extra classes, the name FS-010 gives the OTP's inner input for the same idea (Article XIII). The theme toggle is `input_class="theme-controller" value="dark"` (FR-024).
 - The named slots `on`, `off` and `indeterminate` are declared with empty defaults so a page variable called `on` or `off` does not fill them (FS-004 D12). Only `indeterminate` is conditional: `swap-on` and `swap-off` are always emitted, because daisyUI's CSS keys on them.
 - The checkbox stays in the tab order with the browser's focus ring (research R8), so the swap needs no focus class.
 - A `{% comment %}` block says the theme controller has no component of its own and why, and shows the theme toggle.

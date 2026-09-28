@@ -1,16 +1,18 @@
 # daisy-cotton
 
-Base [daisyUI](https://daisyui.com/)-styled components for [django-cotton](https://django-cotton.com/) — buttons, inputs, cards, alerts, badges, modals and the rest of an application's furniture.
+[![Tests](https://github.com/SamuelJennings/daisy-cotton/actions/workflows/tests.yml/badge.svg)](https://github.com/SamuelJennings/daisy-cotton/actions/workflows/tests.yml) [![Coverage](https://codecov.io/gh/SamuelJennings/daisy-cotton/branch/main/graph/badge.svg)](https://codecov.io/gh/SamuelJennings/daisy-cotton) ![Python 3.12 | 3.13](https://img.shields.io/badge/python-3.12%20%7C%203.13-blue) ![Django 5.2 | 6.0 | 6.1](https://img.shields.io/badge/django-5.2%20%7C%206.0%20%7C%206.1-blue) [![License: MIT](https://img.shields.io/badge/license-MIT-green)](https://github.com/SamuelJennings/daisy-cotton/blob/main/LICENSE)
 
-A project that wants daisyUI-styled Cotton components depends on this package directly: install it, add it to `INSTALLED_APPS`, and each `<c-name>` tag is ready to use. It carries no settings, no menus, no icon registry and no views of its own — see [Scope & philosophy](#scope--philosophy).
+Base daisyUI-styled django-cotton components: buttons, inputs, cards, alerts and the rest of an application's furniture
+
+Built on [daisyUI](https://daisyui.com/) and [django-cotton](https://django-cotton.com/). A project that wants daisyUI-styled Cotton components depends on this package directly: install it, add it to `INSTALLED_APPS`, and each `<c-name>` tag is ready to use. It carries no settings, no menus, no icon registry and no views of its own — see [Scope & philosophy](https://github.com/SamuelJennings/daisy-cotton#scope--philosophy).
 
 ## Status
 
-Version 0.0.1, pre-1.0: names, attributes and the set of classes a component emits can change between minor versions. The [CHANGELOG](CHANGELOG.md) is how a project finds out what has landed.
+Version 0.0.1, pre-1.0: names, attributes and the set of classes a component emits can change between minor versions. The [CHANGELOG](https://github.com/SamuelJennings/daisy-cotton/blob/main/CHANGELOG.md) is how a project finds out what has landed.
 
-Sixty-three components are built so far: `accordion`, `alert`, `avatar`, `badge`, `breadcrumbs`, `button`, `card`, `carousel`, `chat`, `collapse`, `countdown`, `diff`, `divider`, `dock`, `drawer`, `dropdown`, `fab`, `footer`, `form.field`, `hero`, `hover-3d`, `hover-gallery`, `icon`, `indicator`, `join`, `kbd`, `link`, `list`, `mask`, `megamenu`, `menu`, `modal`, `navbar`, `stack`, `stat`, `status`, `steps`, `swap`, `table`, `tabs`, `text-rotate`, `timeline` and `mockup.*`. Pagination has no component: daisyUI builds it from `join` and `btn` and gives it no class of its own, so write it with those two. Aura has no component either: it only decorates another element, so wrap the component to highlight in a `<div class="aura">` with daisyUI's style and size classes. Each one is documented live in the component gallery (`python manage.py runserver` from a checkout). More land as the need arises. To set up a checkout, run the checks or add a component, see [CONTRIBUTING](https://github.com/SamuelJennings/daisy-cotton/blob/main/CONTRIBUTING.md).
+Sixty-three components are built so far: `accordion`, `alert`, `avatar`, `badge`, `breadcrumbs`, `button`, `card`, `carousel`, `chat`, `collapse`, `countdown`, `diff`, `divider`, `dock`, `drawer`, `dropdown`, `fab`, `footer`, `form.field`, `hero`, `hover-3d`, `hover-gallery`, `icon`, `indicator`, `join`, `kbd`, `link`, `list`, `mask`, `megamenu`, `menu`, `modal`, `navbar`, `stack`, `stat`, `status`, `steps`, `swap`, `table`, `tabs`, `text-rotate`, `timeline` and `mockup.*`. Pagination has no component: daisyUI builds it from `join` and `btn` and gives it no class of its own, so write it with those two. Aura has no component either: it only decorates another element, so wrap the component to highlight in a `<div class="aura">` with daisyUI's style and size classes. Each one is documented live in the component gallery (`python manage.py runserver` from a checkout). More land as the need arises.
 
-`<c-icon>` renders `name` as a literal CSS class string and resolves nothing itself — a project wanting name-based icon resolution provides its own override (see [docs/adr/0001](docs/adr/0001-icon-is-an-extension-point.md)).
+`<c-icon>` renders `name` as a literal CSS class string and resolves nothing itself — a project wanting name-based icon resolution provides its own override (see [docs/adr/0001](https://github.com/SamuelJennings/daisy-cotton/blob/main/docs/adr/0001-icon-is-an-extension-point.md)).
 
 `<c-alert>`'s `dismissible` and `delay` need [Alpine.js](https://alpinejs.dev/) on the page — this package doesn't ship or load it. Without Alpine, the alert still renders and reads fine, but the dismiss button does nothing and `delay` never fires.
 
@@ -39,6 +41,21 @@ INSTALLED_APPS = [
 ]
 ```
 
+## Usage
+
+Each component is a Cotton tag named after its daisyUI component, configured through attributes that use daisyUI's own modifier names:
+
+```html
+<c-card title="Storage" border>
+  Almost full.
+  <c-slot name="actions">
+    <c-button variant="primary" size="sm" text="Upgrade" />
+  </c-slot>
+</c-card>
+```
+
+Classes passed with `class` are added to the component's own, and any other attribute passes through to its root element.
+
 ## Scope & philosophy
 
 **What this is.** One Cotton component for each base daisyUI component, and nothing else. A component that daisyUI builds out of other components, or a class that only modifies another component, gets no Cotton component of its own. Everything here is presentation: templates configured through attributes and themed by whatever daisyUI theme the project runs.
@@ -60,8 +77,16 @@ INSTALLED_APPS = [
 
 ## Prior art
 
-[labbhq/labb](https://github.com/labbhq/labb) is an actively maintained django-cotton + daisyUI 5 component library covering similar ground. It is a batteries-included framework — its own CLI, reactivity layer, icon system and project scaffolder — rather than a thin base layer, and daisy-cotton's purpose here is narrower: a dependency-free set of base primitives a project drops in alongside its own choices. See [docs/brainstorm.md](docs/brainstorm.md) for the fuller reasoning.
+[labbhq/labb](https://github.com/labbhq/labb) is an actively maintained django-cotton + daisyUI 5 component library covering similar ground. It is a batteries-included framework — its own CLI, reactivity layer, icon system and project scaffolder — rather than a thin base layer, and daisy-cotton's purpose here is narrower: a dependency-free set of base primitives a project drops in alongside its own choices. See [docs/brainstorm.md](https://github.com/SamuelJennings/daisy-cotton/blob/main/docs/brainstorm.md) for the fuller reasoning.
+
+## Contributing
+
+To set up a checkout, open the component gallery, run the checks or add a component, see [CONTRIBUTING](https://github.com/SamuelJennings/daisy-cotton/blob/main/CONTRIBUTING.md).
+
+## Changelog
+
+See [CHANGELOG.md](https://github.com/SamuelJennings/daisy-cotton/blob/main/CHANGELOG.md).
 
 ## License
 
-MIT
+MIT. See [LICENSE](https://github.com/SamuelJennings/daisy-cotton/blob/main/LICENSE).

@@ -15,10 +15,6 @@ SLOT = '<figure><img src="/a.jpg" alt="A"></figure>'
 
 
 class TestHover3dStructure:
-    """Scenarios 1-2: the slot content first, then exactly eight empty
-    hidden zones, nine element children in all.
-    """
-
     def test_root_has_nine_element_children(self, cotton_render_string):
         html = cotton_render_string(f"<c-hover-3d>{SLOT}</c-hover-3d>")
         root = parse(html).find(class_="hover-3d")
@@ -54,8 +50,6 @@ class TestHover3dStructure:
 
 
 class TestHover3dElement:
-    """Scenario 3: href switches the root element and carries the href."""
-
     def test_href_renders_an_a_carrying_the_href_and_hover_3d_class(
         self, cotton_render_string
     ):
@@ -72,8 +66,6 @@ class TestHover3dElement:
 
 
 class TestHover3dClassAndAttrs:
-    """`class` merges into the root and further attributes spread onto it."""
-
     def test_root_carries_hover_3d_class_and_the_callers_class(
         self, cotton_render_string
     ):
@@ -88,8 +80,6 @@ class TestHover3dClassAndAttrs:
 
 
 class TestHover3dPageContext:
-    """A page variable named href never leaks into the component (research R5)."""
-
     def test_page_href_does_not_leak(self, cotton_render_string):
         html = cotton_render_string(
             f"<c-hover-3d>{SLOT}</c-hover-3d>", {"href": "/leaked"}

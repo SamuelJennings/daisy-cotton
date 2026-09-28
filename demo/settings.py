@@ -23,11 +23,8 @@ ALLOWED_HOSTS = ["*"]
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 
-# "daisy_cotton" sits above "demo" for the gallery's benefit, not for template
-# resolution. The gallery scans exactly one cotton/ directory: the first
-# template root that has one, in this order. Below "demo" it would index the
-# demo's own scaffolding components (there are none) and never see the
-# package's own.
+# "daisy_cotton" sits above "demo": the gallery indexes only the first app
+# with a cotton/ dir, in INSTALLED_APPS order.
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -38,12 +35,8 @@ INSTALLED_APPS = [
     "daisy_cotton",
     "demo",
     "django_cotton",
-    # Development only, and a dev dependency for that reason: the gallery
-    # serves component source code, so urls.py mounts it under DEBUG alone.
     "django_cotton_gallery",
-    # Reloads the browser on a change to a template, a stylesheet or Python.
-    # It arrives with the shared development bundle rather than a pin of its
-    # own, and its middleware removes itself from the chain unless DEBUG is on.
+    # Its middleware removes itself from the chain unless DEBUG is on.
     "django_browser_reload",
 ]
 

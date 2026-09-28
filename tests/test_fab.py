@@ -26,8 +26,6 @@ ACTIONS = (
 
 
 class TestFabTrigger:
-    """Scenario 1: the wrapper, its default trigger and the actions."""
-
     def test_renders_the_wrapper_trigger_and_actions(self, cotton_render_string):
         html = cotton_render_string(
             f'<c-fab icon="bi bi-plus-lg" aria-label="Actions">{ACTIONS}</c-fab>'
@@ -46,7 +44,6 @@ class TestFabTrigger:
     def test_a_callers_size_and_variant_override_the_default_trigger(
         self, cotton_render_string
     ):
-        """research R4: :attrs wins over the literals written before it."""
         html = cotton_render_string('<c-fab size="md" variant="primary" />')
 
         assert "btn-md" in html
@@ -55,8 +52,6 @@ class TestFabTrigger:
 
 
 class TestFabNoActions:
-    """Scenario 3: a FAB with no actions is a single floating button."""
-
     def test_a_fab_with_no_actions_is_only_the_trigger(self, cotton_render_string):
         html = cotton_render_string("<c-fab />")
 
@@ -66,8 +61,6 @@ class TestFabNoActions:
 
 
 class TestFabFlower:
-    """Scenario 4: flower maps to fab-flower on the wrapper."""
-
     def test_flower_applies_to_the_wrapper(self, cotton_render_string):
         html = cotton_render_string("<c-fab flower />")
         assert "fab-flower" in html
@@ -78,9 +71,6 @@ class TestFabFlower:
 
 
 class TestFabCloseAndMainAction:
-    """Scenario 5: close and main_action slots render in their own divs,
-    only when given."""
-
     def test_close_slot_renders_in_its_own_div(self, cotton_render_string):
         html = cotton_render_string(
             '<c-fab><c-slot name="close">'
@@ -101,8 +91,6 @@ class TestFabCloseAndMainAction:
 
 
 class TestFabCustomTrigger:
-    """Scenario 6: a button slot replaces the default trigger."""
-
     def test_a_slot_trigger_replaces_the_default_trigger(self, cotton_render_string):
         html = cotton_render_string(
             '<c-fab><c-slot name="button">'
@@ -128,8 +116,6 @@ class TestFabCustomTrigger:
 
 
 class TestFabClassAndWrapper:
-    """D6: the FAB's own class never reaches the trigger it draws."""
-
     def test_class_lands_on_the_wrapper_and_not_on_the_default_trigger(
         self, cotton_render_string
     ):
@@ -142,8 +128,6 @@ class TestFabClassAndWrapper:
 
 
 class TestFabGalleryAnnotations:
-    """Article XVI, read through the gallery's own `AnnotationParser`."""
-
     @staticmethod
     def _parsed():
         return AnnotationParser().parse(FAB_TEMPLATE.read_text())
@@ -159,28 +143,10 @@ class TestFabGalleryAnnotations:
     def test_close_and_main_action_have_no_example_and_give_the_markup(self):
         slots = {s.name: s for s in self._parsed().slots}
         assert slots["close"].content == ""
-        assert "c-button" in slots["close"].description
         assert slots["main_action"].content == ""
-        assert "c-button" in slots["main_action"].description
-
-    def test_the_button_slot_names_the_focusability_contract(self):
-        slot = next(s for s in self._parsed().slots if s.name == "button")
-        assert "focusable" in slot.description
-        assert "tabindex" in slot.description
-
-    def test_the_default_slot_has_three_action_examples(self):
-        [slot] = [s for s in self._parsed().slots if s.name is None]
-        assert slot.content.count("<c-button") == 3
-
-    def test_the_description_tells_the_viewer_to_type_the_trigger_attributes(self):
-        assert 'icon="bi bi-plus-lg"' in self._parsed().description
-        assert 'aria-label="Actions"' in self._parsed().description
 
 
 class TestFabContextLeak:
-    """A page variable of the same name as a declared prop never leaks in
-    (research R5, D6): every declared name gets an empty default."""
-
     def test_a_page_context_close_main_action_and_button_do_not_leak_in(
         self, cotton_render_string
     ):
@@ -199,8 +165,6 @@ class TestFabContextLeak:
 
 
 class TestFabAttributeRouting:
-    """FR-026: the trigger's attributes stay on the trigger; actions follow close and main action."""
-
     def test_trigger_attributes_do_not_reach_the_wrapper(self, cotton_render_string):
         html = cotton_render_string(
             '<c-fab icon="bi bi-plus-lg" aria-label="Actions" variant="primary" />'

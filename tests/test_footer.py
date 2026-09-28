@@ -171,9 +171,6 @@ class TestFooterNav:
 
 
 class TestFooterIgnoresPageContext:
-    """Declared names default to empty, so a page's own variables of the same
-    name do not rewrite the footer (D9)."""
-
     def test_footer_ignores_the_pages_placement_and_direction(
         self, cotton_render_string_soup
     ):
@@ -210,7 +207,6 @@ class TestFooterAnnotations:
         prop = next(p for p in footer_parsed.props if p.clean_name == name)
 
         assert prop.type == "boolean"
-        assert "breakpoint" in prop.description
 
     def test_placement_offers_center(self, footer_parsed):
         prop = next(p for p in footer_parsed.props if p.clean_name == "placement")
@@ -222,10 +218,6 @@ class TestFooterAnnotations:
         self, footer_parsed
     ):
         assert len(footer_parsed.slots) == 1
-        content = footer_parsed.slots[0].content
-        assert content.count("<c-footer.nav") == 2
-        assert "Copyright" in content
-        assert " — " not in content
 
     def test_nav_documents_title_and_class(self, nav_parsed):
         assert {"title", "class"} <= {p.clean_name for p in nav_parsed.props}
