@@ -56,3 +56,27 @@ Every other component is named after its daisyUI component alone (`button`, `mod
 ## Priorities
 
 Priorities reflect how many adopters need each component, and what must ship together. The text input, the label and the fieldset replace `form.field` and are needed in nearly every form, so they are P1 along with the removal itself. The textarea, select, checkbox, radio and toggle appear in most forms beyond the simplest (P2). The file input and range appear in fewer (P3).
+
+## D1 — The spec still holds after FS-001 to FS-008
+
+Eight features were delivered after this spec landed. Read against their specs: FS-002 annotated `form.field`, which this feature removes, as its assumptions expected. FS-003 gave the navbar the `start` and `end` slots whose names this spec reuses, and FS-006 used the same names for the timeline. FS-004's join already describes an input joined with a button. FS-005 kept theme-controller as a class added to a checkbox, radio or toggle, which these controls take through `class`. FS-005, FS-006 and FS-008 use `label` as an accessible-name attribute on components that name themselves. The controls here take no such attribute, because the spec names them through `<c-label>`, `aria-label` or `aria-labelledby`. None of them changes a behaviour this spec describes.
+
+**ADR:** none — a check made once for this feature.
+
+## D2 — The labelled, disabled and invalid examples live in the fieldset's entry
+
+The gallery previews each component once with declared defaults, so a bare control has no name and no disabled or invalid state. Every control is therefore also shown in one composition inside the fieldset's own `@slot` example, in nested fieldsets, which is where an application writes its controls. A nested fieldset can carry the `id` that the description and error ids derive from, which the preview's own fieldset cannot. Each story adds its controls to the composition. The bare previews stay unnamed by construction, as FS-008 D5 recorded for the progress bar.
+
+**ADR:** none — follows the gallery approach FS-006 and FS-008 set.
+
+## D3 — The errors share one element and one id
+
+The spec gives the errors a single derived id. A list of messages renders as one line each, so the lines sit inside one `<div>` carrying `<id>-errors`, and a control names all of them with that one id in `aria-describedby`. The alternative, one id per line, would make the caller's `aria-describedby` depend on how many errors there are.
+
+**ADR:** none — local to the fieldset template.
+
+## D4 — `form.field` is removed last
+
+The removal is P1, but its CHANGELOG examples use every control, and an example may only use components that exist. So US3 is built after US6, in the same pull request as the components that replace it. The `Added` line listing the first 21 components keeps `form.field`, and the new `Removed` entry says where it went. Nothing has been released yet, so both entries describe the same unreleased version. ADR 0001's list of components that call `<c-icon>` changes from `form.field`'s pre/post-label slots to the input's and select's `start` and `end` slots.
+
+**ADR:** none — ordering and a documentation edit local to this feature.
