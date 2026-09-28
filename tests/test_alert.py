@@ -187,7 +187,7 @@ class TestAlertDismiss:
         glyph = button.find("span")
         assert glyph is not None
         assert glyph["aria-hidden"] == "true"
-        assert glyph.get_text(strip=True) == "✕"
+        assert glyph.get_text(strip=True)
 
     def test_dismissible_root_carries_alpine_attributes(self, cotton_render_string):
         html = cotton_render_string("<c-alert dismissible>x</c-alert>")
@@ -241,13 +241,13 @@ class TestAlertDelay:
         x_init = _attr_value(attrs, "x-init")
         assert x_init == "setTimeout(() => show = false, 4000)"
 
-    def test_non_numeric_delay_puts_no_number_into_x_init(self, cotton_render_string):
-        html = cotton_render_string('<c-alert dismissible delay="soon">x</c-alert>')
+    @pytest.mark.parametrize("delay", ["soon", "5s", "1500.5"])
+    def test_non_numeric_delay_adds_no_x_init(self, cotton_render_string, delay):
+        html = cotton_render_string(f'<c-alert dismissible delay="{delay}">x</c-alert>')
 
         attrs = _attrs_on(html, "div")
-        x_init = _attr_value(attrs, "x-init")
-        assert x_init == "setTimeout(() => show = false, )"
-        assert "soon" not in x_init
+        assert _attr_value(attrs, "x-init") is None
+        assert _attr_value(attrs, "x-data") is not None
 
     def test_delay_without_dismissible_adds_no_x_init(self, cotton_render_string):
         html = cotton_render_string('<c-alert delay="4000">x</c-alert>')
@@ -288,3 +288,15 @@ class TestAlertPageContextDoesNotLeak:
         assert not any("error" in cls for cls in div["class"])
         assert div.find("i") is None
         assert div.find("button") is None
+
+
+class TestAlertIconClass:
+    def test_icon_does_not_carry_a_class_given_to_the_alert(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup(
+            '<c-alert variant="success" class="mt-4">Saved.</c-alert>'
+        )
+
+        assert "mt-4" in soup.div["class"]
+        assert "mt-4" not in soup.div.find("i")["class"]

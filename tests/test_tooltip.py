@@ -211,3 +211,16 @@ class TestTooltipPageContextDoesNotLeak:
         content = div.find("div", class_="tooltip-content")
         assert content.get_text(strip=True) == ""
         assert content.get("id") is None
+
+
+class TestTooltipBlankContentSlot:
+    def test_whitespace_only_content_slot_falls_back_to_tip(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup(
+            '<c-tooltip tip="Copy link"><c-slot name="content">  </c-slot>'
+            "<button>Copy</button></c-tooltip>"
+        )
+
+        content = soup.div.find("div", class_="tooltip-content")
+        assert content.get_text(strip=True) == "Copy link"

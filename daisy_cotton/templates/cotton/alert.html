@@ -15,8 +15,8 @@
 <c-vars variant="" icon="" soft="" outline="" dash="" horizontal="" vertical="" dismissible="" delay="" role="alert" class="" />
 {% trans "Dismiss" as dismiss_label %}
 {# djlint:off #}
-<div role="{{ role }}" class="alert {% variation variant "alert" "info,success,warning,error" %}{% if soft %} alert-soft{% endif %}{% if outline %} alert-outline{% endif %}{% if dash %} alert-dash{% endif %} {% responsive horizontal "alert-horizontal" %} {% responsive vertical "alert-vertical" %} {{ class }}"{% if dismissible %} x-data="{ show: true }" x-show="show" x-transition{% if delay %} x-init="setTimeout(() => show = false, {{ delay|add:0 }})"{% endif %}{% endif %} {{ attrs }}>
-  {% if icon %}<c-icon name="{{ icon }}" aria-hidden="true" />{% elif variant %}<c-icon name="{{ variant }}" aria-hidden="true" />{% endif %}
+<div role="{{ role }}" class="alert {% variation variant "alert" "info,success,warning,error" %}{% if soft %} alert-soft{% endif %}{% if outline %} alert-outline{% endif %}{% if dash %} alert-dash{% endif %} {% responsive horizontal "alert-horizontal" %} {% responsive vertical "alert-vertical" %} {{ class }}"{% if dismissible %} x-data="{ show: true }" x-show="show" x-transition{% with ms=delay|add:0 %}{% if ms != "" %} x-init="setTimeout(() => show = false, {{ ms }})"{% endif %}{% endwith %}{% endif %} {{ attrs }}>
+  {% if icon %}<c-icon name="{{ icon }}" class="" aria-hidden="true" />{% elif variant %}<c-icon name="{{ variant }}" class="" aria-hidden="true" />{% endif %}
   {{ slot }}
   {% if dismissible %}<c-button type="button" ghost size="xs" circle x-on:click="show = false" aria-label="{{ dismiss_label }}"><span aria-hidden="true">✕</span></c-button>{% endif %}
 </div>

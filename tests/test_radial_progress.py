@@ -88,6 +88,16 @@ class TestRadialProgressVisibleText:
 
         assert soup.div.find("i") is not None
         assert "70%" not in soup.div.get_text()
+        assert soup.div["aria-valuenow"] == "70"
+        assert "--value:70;" in soup.div["style"]
+
+    def test_value_bound_to_zero_is_written_and_shown(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup(
+            '<c-radial-progress :value="done" />', {"done": 0}
+        )
+
+        assert soup.div["aria-valuenow"] == "0"
+        assert soup.div.get_text(strip=True) == "0%"
 
 
 class TestRadialProgressLabel:

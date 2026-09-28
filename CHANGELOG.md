@@ -258,8 +258,8 @@ decision.
   `role="status"` gives a polite announcement. The dismiss button is now drawn by `<c-button>`,
   with the translatable accessible name "Dismiss" and its `✕` glyph hidden from assistive
   technology; it was a plain `<button>` named only by that glyph. The icon is now hidden from
-  assistive technology. `delay` now accepts only a number: a non-numeric value no longer reaches
-  the page. A page variable named after one of the alert's attributes no longer leaks into it.
+  assistive technology. `delay` now accepts only a whole number of milliseconds: any other value is
+  ignored and the alert stays until dismissed. A page variable named after one of the alert's attributes no longer leaks into it.
 - `dock` renders as a `<nav>` named `Dock` by default (translated; an `aria-label` passed by the caller replaces
   it) instead of a `<div>`, and no longer adds `bg-transparent backdrop-blur`; pass them through `class` to keep them.
   A `dock.item` with no `href` and no `toggle` is now a `<button type="button">`, its icon is hidden from

@@ -95,3 +95,9 @@ The gallery's catalog registers a component under its file stem — `radial_prog
 The browser check found that no dismiss button worked in the gallery. The demo loaded `https://cdn.jsdelivr.net/npm/alpinejs@3`, which jsDelivr resolves to Alpine's CommonJS build (`dist/module.cjs.js`), and in a browser that throws "module is not defined", so Alpine never started. The spec assumes the demo runs Alpine so the dismissible alert works in the gallery, and FS-001 required it. The URL now names Alpine's browser build, `alpinejs@3/dist/cdn.min.js`, with a test in `tests/test_demo.py` that failed first. It was made directly rather than dispatched: one URL and one test, found during the browser check.
 
 **ADR:** none — a fix to the demo's asset URL.
+
+## D8 — Code review applied
+
+The review approved with two medium and two low findings, all verified and all fixed with a test written first: a non-numeric `delay` now adds no timer at all (it used to render an empty argument, which a browser runs as an immediate dismissal); the alert's icon no longer picks up the alert's `class`; the radial progress has tests for a value bound to 0 and for the value attributes surviving custom centre content; and the loading and alert tests no longer pin the English name or the glyph. The tooltip's `content` slot is now tested after stripping whitespace, as the radial progress's slot is. Made directly rather than dispatched: each fix is one line of template and one test.
+
+**ADR:** none — fixes local to this feature's templates.

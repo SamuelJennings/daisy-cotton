@@ -108,7 +108,7 @@ class TestLoadingLabel:
     ):
         soup = cotton_render_string_soup("<c-loading />")
 
-        assert soup.span["aria-label"] == "Loading"
+        assert soup.span["aria-label"].strip()
 
 
 class TestLoadingTranslation:
@@ -174,6 +174,6 @@ class TestLoadingPageContextDoesNotLeak:
         )
 
         span = soup.span
-        assert span["aria-label"] == "Loading"
+        assert span["aria-label"] != "Leaked"
         assert not any("xs" in cls for cls in span["class"])
         assert "loading-dots" not in span["class"]

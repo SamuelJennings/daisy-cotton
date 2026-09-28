@@ -49,7 +49,6 @@ class TestPreviewAssetsScopedToRawPage:
         # without a flash of the default theme.
         assert "data-theme" in html
 
-
     def test_raw_page_loads_alpines_browser_build(self, client: Client) -> None:
         response = client.get(
             reverse("django_cotton_gallery:component_raw", args=["button"])
@@ -58,6 +57,7 @@ class TestPreviewAssetsScopedToRawPage:
         # The bare package URL resolves to Alpine's CommonJS build, which throws
         # "module is not defined" in a browser, so no Alpine attribute works.
         assert "cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js" in html
+
 
 class TestGalleryHasNoExtraCssOrJs:
     def test_no_extra_css_configured(self) -> None:
