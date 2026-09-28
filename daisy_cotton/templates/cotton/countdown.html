@@ -1,0 +1,10 @@
+{# @description daisyUI's countdown: a number that animates when it changes. #}
+{# @prop value:text | default:"0" | description:"The number to show." #}
+{# @prop class:text | description:"Extra classes added to the countdown, such as font-mono or text-4xl." #}
+{% comment %}
+  The screen reader copy sits after the countdown span, not inside it:
+  daisyUI hides every direct child of .countdown and visibility is
+  inherited, so anything inside would be hidden too.
+{% endcomment %}
+<c-vars value="0" class="" />
+<span class="countdown {{ class }}" {{ attrs }}><span style="--value:{{ value }};" aria-hidden="true">{{ value }}</span></span><span class="sr-only">{{ value }}</span>

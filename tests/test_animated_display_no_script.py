@@ -26,6 +26,7 @@ CALLER_STRINGS = {
         "Hello"
         "</c-chat>"
     ),
+    "countdown": '<c-countdown value="42" class="font-mono" />',
     "diff": (
         '<c-diff aria-label="Before and after">'
         '<c-slot name="item_1"><img src="/a.jpg" alt="Before"></c-slot>'
