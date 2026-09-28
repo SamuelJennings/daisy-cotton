@@ -6,20 +6,7 @@
 {# @prop class:text | description:"Extra classes added to the dropdown wrapper." #}
 {# @slot <ul class="menu"><li><a href="#">Profile</a></li><li><a href="#">Settings</a></li></ul> — The panel content. #}
 {# @slot:button — A custom trigger. Must carry popovertarget set to the dropdown's id and type="button", plus style="anchor-name: --<id>" for placement, so a dropdown with a custom trigger needs an id. #}
-{% comment %}
-  Trigger: by default, any extra attributes on the dropdown (text, icon,
-  variant, size) are forwarded to an inner button that becomes the trigger.
-
-  Positioning uses the popover method: the trigger's `popovertarget` opens
-  the panel, and CSS anchor positioning (`anchor-name` on the trigger,
-  `position-anchor` on the panel) places it. A browser without anchor
-  positioning support still opens and closes the panel, but it may not sit
-  beside its trigger — that is a limit of the method, not a bug here.
-
-  A custom trigger (the `button` slot) must carry `popovertarget` set to the
-  dropdown's `id` and `type="button"`, plus `style="anchor-name: --<id>"` for
-  placement, so a dropdown with a custom trigger needs an `id`.
-{% endcomment %}
+{# Without CSS anchor positioning the panel still opens but may not sit beside its trigger: a limit of the popover method. #}
 {% load daisy_cotton %}
 <c-vars id=""
         placement=""

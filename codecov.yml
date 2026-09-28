@@ -1,8 +1,4 @@
-# Family coverage gating — materialized into each repo at onboarding.
-# 100% is brittle (it fails a PR over a single defensive branch or unreachable
-# guard). These are floors with headroom, not a ratchet.
-#   project — overall coverage floor for the package.
-#   patch   — coverage required of the lines changed in a PR (new code).
+# Floors with headroom, not 100%: one defensive branch must not fail a PR.
 # The 1% threshold absorbs rounding and small, justified dips.
 coverage:
   status:

@@ -1,13 +1,7 @@
 {% comment %}
-  Loaded into every gallery document (see `_extra_head.html`). Carries no
-  markup of its own — only a script — because the gallery copies this
-  partial into every preview frame and the raw page, not only the
-  interface page (D3). The theme `<select>` is built only when this script
-  is running in the interface page itself: the top-level window, on a path
-  that is neither the raw page nor a preview/thumb endpoint. Everywhere
-  else it does nothing except apply the saved theme, mirroring the bootstrap
-  in `_extra_head.html` for a document that loaded before a theme choice
-  existed yet.
+  The gallery loads this partial into every document, so the theme switcher
+  it builds must check it is the interface page and not a preview frame or
+  the raw page — everywhere else it does nothing (#95).
 {% endcomment %}
 <script>
   (() => {
@@ -35,9 +29,6 @@
       } catch (_) { /* storage disabled */ }
     };
 
-    // Every preview frame currently on the page — the live preview stage,
-    // the compare panels, thumbnails — mirrors this document's own iframes,
-    // reachable through the same window.
     const applyToFrames = (theme) => {
       document.querySelectorAll('iframe').forEach((frame) => {
         try {

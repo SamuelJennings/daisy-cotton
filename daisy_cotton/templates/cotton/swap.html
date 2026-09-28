@@ -15,17 +15,7 @@
 {# @slot:on ON — Content shown when the checkbox is checked. #}
 {# @slot:off OFF — Content shown when the checkbox is unchecked. #}
 {# @slot:indeterminate — Only a project's own script sets the checkbox's indeterminate state; give label so the control still has a name. #}
-{% comment %}
-  daisyUI's theme-controller class turns a checkbox into a full page theme
-  switch. It has no component of its own here: it is exactly a swap whose
-  checkbox carries an extra class and a value, so <c-swap> already covers
-  it:
-
-    <c-swap input_class="theme-controller" value="dark">
-      <c-slot name="on">🌙</c-slot>
-      <c-slot name="off">☀️</c-slot>
-    </c-swap>
-{% endcomment %}
+{# No theme-controller component: it is exactly a swap with input_class="theme-controller" and a value. #}
 <c-vars label=""
         rotate=""
         flip=""

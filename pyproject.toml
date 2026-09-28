@@ -38,10 +38,7 @@ Issues = "https://github.com/SamuelJennings/daisy-cotton/issues"
 # ruff, mypy, deptry, pre-commit, pytest, pytest-django, coverage, django-stubs.
 dev = [
     "mvp-shared[dev,test]",
-    # The component gallery, which reads a component's annotations and gives
-    # back a live playground and a linter. A development dependency, and its
-    # URLs are mounted under DEBUG only: it serves component source and
-    # evaluates URL parameters through the template engine.
+    # Dev-only: serves component source, and its URLs mount under DEBUG only.
     "django-cotton-gallery>=1.0.0,<2",
 ]
 
@@ -70,10 +67,8 @@ addopts = [
     "-ra",
 ]
 filterwarnings = [
-    # The gallery mounts in every test run now that tests/settings.py
-    # installs it directly (T003) rather than borrowing the demo's DEBUG
-    # guard, so its own "mounted and serving" notice would otherwise print
-    # on every collection. The suite deliberately runs it mounted.
+    # tests/settings.py installs the gallery directly, so silence its
+    # "mounted and serving" notice.
     "ignore:(?s).*django-cotton-gallery is MOUNTED AND SERVING.*:RuntimeWarning",
 ]
 
@@ -99,10 +94,7 @@ include = "H006,H013,H020,H021,H023,H025,H030,H031"
 ignore = "H017"
 extension = "html"
 
-# Lint and format are both ruff's: it replaces black (formatting), isort (the I
-# rules) and pyupgrade (the UP rules), so those three no longer appear here.
-# The family rule set lives in ruff-base.toml, which is copied in rather than
-# referenced remotely — `extend` only accepts a local path.
+# ruff-base.toml is copied in, not referenced remotely: `extend` only accepts a local path.
 [tool.ruff]
 extend = "ruff-base.toml"
 
@@ -131,10 +123,7 @@ django_settings_module = "tests.settings"
 ignore_missing_model_attributes = "True"
 
 [tool.forge.conformance]
-# None of these test modules has a source module to mirror, and none should:
-# every one exercises a Cotton component template (markup, not Python) or the
-# package/app registry as a whole. Inventing a Python module purely to give a
-# test something to point at would defeat the mirror rule rather than satisfy it.
+# These tests exercise Cotton templates or the app registry, so there is no Python module to mirror.
 non-mirror-paths = [
     "tests/test_app.py",
     "tests/test_render_all.py",
@@ -185,11 +174,11 @@ non-mirror-paths = [
     "tests/test_form_field.py",
     "tests/test_gallery_annotations.py",
     "tests/test_gallery_lint.py",
-    # Exercises the demo project own URLs and settings, not a component
+    # Exercises the demo project's own URLs and settings, not a component
     # template or a Python module in the package.
     "tests/test_demo.py",
     # Walks the rendered gallery sidebar; there is no source module for a
-    # test parametrised from another package runtime output to mirror.
+    # test parametrised from another package's runtime output to mirror.
     "tests/test_gallery_links.py",
     # Reads every component template for literal colours (Article XII).
     "tests/test_semantic_palette.py",
@@ -202,8 +191,5 @@ non-mirror-paths = [
 extend_exclude = ["tests/", "demo/", "docs/"]
 
 [tool.deptry.per_rule_ignores]
-# django-cotton is a real runtime dependency that no Python module here imports.
-# Every component is a Cotton component, so the dependence is at the template
-# layer: without Cotton installed and in INSTALLED_APPS, a `<c-...>` tag renders
-# as literal text while every Python import still resolves.
+# Cotton is a runtime dependency that no module imports: without it, <c-…> tags render as literal text.
 DEP002 = ["django-cotton"]
