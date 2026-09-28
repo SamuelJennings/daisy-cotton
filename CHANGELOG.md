@@ -185,6 +185,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   other attribute lands on the `<input>` itself. Neither slot has a default sample, so the bare
   gallery preview stays one plain `<input>`. Needs a `<c-label>`, an `aria-label` or an
   `aria-labelledby` for a name; `input` cannot invent one.
+- `<c-label>`: daisyUI's label in its three forms. Above a control, `<c-label for="id_email"
+  text="Email" />` renders `<label class="label" for="id_email">Email</label>`. Wrapping a
+  checkbox, radio or toggle, the default slot holds the control and `text` follows it inside the
+  same `<label>`. With `floating`, it renders daisyUI's floating label instead: a
+  `<label class="floating-label">` holding the slot's control, then a `<span>` with `text`, and no
+  `label` class. `class` merges into the `<label>` and every other attribute, including `for`,
+  passes through.
+- `<c-fieldset>`: daisyUI's fieldset. `legend` (attribute or named slot) renders a
+  `<legend class="fieldset-legend">` as the first child, then the default slot, then `description`
+  as a `<p class="label">` and `errors` as one `<div class="grid">` holding a
+  `<p class="label text-error">` per message — `errors` takes a string for one line or a list (a
+  Django `ErrorList` works) for one line per item. With `id`, the fieldset carries it once and the
+  description and errors carry `<id>-description` and `<id>-errors`, so a control can name both in
+  `aria-describedby`; without `id`, neither derived id is emitted. An empty `description` or
+  `errors` renders nothing.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
