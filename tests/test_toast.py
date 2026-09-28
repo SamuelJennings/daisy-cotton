@@ -68,18 +68,14 @@ class TestToastPlacement:
     def test_unknown_placement_word_emits_no_class_and_does_not_raise(
         self, cotton_render_string_soup
     ):
-        soup = cotton_render_string_soup(
-            '<c-toast placement="diagonal"></c-toast>'
-        )
+        soup = cotton_render_string_soup('<c-toast placement="diagonal"></c-toast>')
 
         assert not any("diagonal" in cls for cls in soup.div["class"])
 
 
 class TestToastNoRoleOrLiveRegion:
     def test_root_carries_no_role_or_aria_live(self, cotton_render_string_soup):
-        soup = cotton_render_string_soup(
-            '<c-toast><c-alert>Saved.</c-alert></c-toast>'
-        )
+        soup = cotton_render_string_soup("<c-toast><c-alert>Saved.</c-alert></c-toast>")
 
         div = soup.find("div", class_="toast")
         assert div.get("role") is None
@@ -101,9 +97,7 @@ class TestToastClassAndAttrs:
 
 
 class TestToastPageContextDoesNotLeak:
-    def test_page_context_does_not_leak_into_the_toast(
-        self, cotton_render_string_soup
-    ):
+    def test_page_context_does_not_leak_into_the_toast(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             "<c-toast></c-toast>",
             context={"placement": "top center"},
