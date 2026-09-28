@@ -147,8 +147,7 @@ class TestFormFieldWidgets:
         html = render(
             '<c-form.field type="select" label="Plan" name="plan"><option>Free</option></c-form.field>'
         )
-        wrapper = BeautifulSoup(html, "html.parser").find("select").find_parent("label")
-        assert "select" in wrapper["class"]
+        assert "select" in control_wrapper_classes(html, "select")
         assert "<select" in html
         assert "<option>Free</option>" in html
 
