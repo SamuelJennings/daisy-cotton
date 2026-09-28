@@ -14,7 +14,7 @@ Sixty-three components are built so far: `accordion`, `alert`, `avatar`, `badge`
 
 `<c-icon>` renders `name` as a literal CSS class string and resolves nothing itself — a project wanting name-based icon resolution provides its own override (see [docs/adr/0001](https://github.com/SamuelJennings/daisy-cotton/blob/main/docs/adr/0001-icon-is-an-extension-point.md)).
 
-`<c-alert>`'s `dismissible` and `delay` need [Alpine.js](https://alpinejs.dev/) on the page — this package doesn't ship or load it. Without Alpine, the alert still renders and reads fine, but the dismiss button does nothing and `delay` never fires.
+`<c-alert>` takes `variant` (info, success, warning, error), `soft`/`outline`/`dash` for style, and `horizontal`/`vertical` for direction, each accepting a breakpoint such as `sm`; a caller-given `role` replaces the default `role="alert"`, so `role="status"` gives a polite announcement instead of an interruption. Its icon and dismiss button are drawn by `<c-icon>` and `<c-button>`; the dismiss button's accessible name is the translatable "Dismiss" with its glyph hidden from assistive technology. `dismissible` and `delay` need [Alpine.js](https://alpinejs.dev/) on the page — this package doesn't ship or load it. Without Alpine, the alert still renders and reads fine, but the dismiss button does nothing and `delay` never fires.
 
 ## Requirements
 

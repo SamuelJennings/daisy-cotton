@@ -87,8 +87,17 @@
         },
         {
           "id": "T002",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run python manage.py cotton_lint --warnings-as-errors: 55/63 clean, 0 errors, 0 warnings",
+              "uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py -q: 350 passed"
+            ],
+            "tests": [
+              "tests/test_gallery_annotations.py::TestPackageTemplateAnnotations"
+            ]
+          }
         }
       ]
     },

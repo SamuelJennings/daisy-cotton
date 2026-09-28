@@ -18,3 +18,10 @@ Did: rewrote `alert.html` on the attribute vocabulary — `variant` validated th
 Verified: `uv run pytest tests/test_alert.py tests/test_feedback_no_script.py tests/test_declared_attributes.py tests/test_render_all.py tests/test_gallery_annotations.py tests/test_class_attribute_merge.py tests/test_gallery_lint.py -q` — 526 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — 0 errors, 0 warnings. `uv run ruff check`/`ruff format` clean on the new test files.
 Next: T002 (gallery annotations already written in this task; README/CHANGELOG remain).
 Watch: none.
+
+## 2026-09-28T20:27:31Z · Implementer US1 · T002
+
+Did: gallery annotations for the alert (written together with the T001 rewrite: `horizontal`/`vertical` as breakpoint selects, `role` typed text with default `alert`, the description naming the Alpine.js requirement, the warning against `delay` on errors and anything the reader must act on, and the toast entry). Rewrote the README's Alpine paragraph to describe the alert's full current attribute set. Added a CHANGELOG `### Changed` bullet for the alert listing each change from plan "Alert".
+Verified: `uv run python manage.py cotton_lint --warnings-as-errors` — 55/63 clean, 0 errors, 0 warnings. `uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py -q` — 350 passed.
+Next: US1 complete; US2 loading follows.
+Watch: none.
