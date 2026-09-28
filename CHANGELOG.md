@@ -151,6 +151,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `infinity` adds its own class; with none given daisyUI draws the spinner, and giving more than one
   emits every class named. `size` takes the five daisyUI sizes; colour it with a text utility such as
   `text-primary` in `class`.
+- `<c-tooltip>`: a wrapper carrying `tooltip` around the default slot (the trigger), followed by a
+  `tooltip-content` element with `role="tooltip"` holding `tip` or, when given, the `content` slot —
+  never `data-tip`, which CSS-generated text does not reliably expose to assistive technology.
+  `placement` takes one side (`top`, `bottom`, `left`, `right`) and one alignment (`start`, `center`,
+  `end`), `variant` takes daisyUI's seven tooltip colours, and `open` forces the hint to show. `id`
+  lands on the `tooltip-content` element rather than the wrapper, so a trigger can reference it with
+  `aria-describedby`.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is

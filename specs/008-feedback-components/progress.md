@@ -46,3 +46,10 @@ Did: wrote `tooltip.html` — a wrapper carrying `tooltip` around the trigger sl
 Verified: `uv run pytest tests/test_tooltip.py tests/test_feedback_no_script.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q` — 575 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — 57/65 clean, 0 errors, 0 warnings.
 Next: T006 (gallery annotations already written in this task; `mockup.browser` composition, README, CHANGELOG remain).
 Watch: none.
+
+## 2026-09-28T20:43:44Z · Implementer US3 · T006
+
+Did: refined the tooltip's `@description` to also carry the "wrap a focusable trigger" edge case (a plain-text trigger shows the hint on hover only), alongside the annotations already written in T005 — the `placement` select lists every single word and two-word combination as the dropdown's does, `@slot` shows an icon-only `<c-button circle icon aria-label>`, and `@slot:content` shows a `<kbd>` shortcut. Added a toolbar to `mockup.browser`'s default `@slot` example: an icon-only share `<c-button circle icon="bi bi-share" aria-label="Share" aria-describedby="product-share-hint">` inside `<c-tooltip id="product-share-hint" tip="Share this product">`, placed before the existing carousel; sanity-rendered the added fragment through the Cotton compiler to confirm valid output. README component count Sixty-four → Sixty-five with `tooltip` listed alphabetically after `timeline`. CHANGELOG `### Added` bullet for `tooltip`.
+Verified: `uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_mockup.py tests/test_render_all.py tests/test_tooltip.py tests/test_feedback_no_script.py -q` — 486 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — 57/65 clean, 0 errors, 0 warnings.
+Next: US3 complete; US4 progress and radial progress follows.
+Watch: none.
