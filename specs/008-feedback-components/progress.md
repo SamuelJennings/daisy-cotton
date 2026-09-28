@@ -32,3 +32,10 @@ Did: wrote `loading.html` — a `<span>` carrying `loading`, `role="status"`, th
 Verified: `uv run pytest tests/test_loading.py tests/test_feedback_no_script.py tests/test_declared_attributes.py tests/test_render_all.py tests/test_gallery_annotations.py tests/test_class_attribute_merge.py tests/test_gallery_lint.py -q` — 527 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — 56/64 clean, 0 errors, 0 warnings.
 Next: T004 (mockup.browser composition, README, CHANGELOG).
 Watch: none.
+
+## 2026-09-28T20:36:46Z · Implementer US2 · T004
+
+Did: gallery annotations for `loading` were already complete in T003 (description naming the colour-via-class convention, the always-given name defaulting to "Loading", and the `mockup.browser` entry). Added an "Add to cart" `<c-button text="Add to cart">` holding `<c-loading size="sm" />` to the `mockup.browser` default `@slot` example, after the existing hover 3D card, without removing anything; sanity-rendered the slot's example markup through the Cotton compiler to confirm it produces valid output. README component count Sixty-three → Sixty-four with `loading` listed alphabetically between `list` and `mask`. CHANGELOG `### Added` bullet for `loading`.
+Verified: `uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_loading.py tests/test_feedback_no_script.py -q` — 451 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — 56/64 clean, 0 errors, 0 warnings.
+Next: US2 complete; US3 tooltip follows.
+Watch: none.

@@ -146,6 +146,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   0 through 999 and any other value is rendered as given, so it must be a number, never unvalidated user
   input. A script that animates it updates `--value`, the visible text and the hidden copy together.
   `hero`'s example shows a days, hours, minutes and seconds clock of four labelled countdowns.
+- `<c-loading>`: daisyUI's loading indicator, a `<span>` carrying `loading` and `role="status"`, named
+  by `label` or the translatable "Loading". Each of `spinner`, `dots`, `ring`, `ball`, `bars` and
+  `infinity` adds its own class; with none given daisyUI draws the spinner, and giving more than one
+  emits every class named. `size` takes the five daisyUI sizes; colour it with a text utility such as
+  `text-primary` in `class`.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
