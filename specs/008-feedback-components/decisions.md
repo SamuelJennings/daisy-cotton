@@ -89,3 +89,9 @@ The review approved the plan with two medium and four low findings, all applied 
 The gallery's catalog registers a component under its file stem — `radial_progress`, not `radial-progress` — and its unknown-component lint check compares a source tag against that literal set with no hyphen/underscore normalization, so `<c-radial-progress>` inside `mockup.phone`'s `@slot` example reads as a reference to a component that does not exist, even though Cotton itself resolves the hyphen form to `radial_progress.html` at render time and the component's own tests use it freely. `card/index.html`'s existing `<c-hover_gallery>` is the same rule already applied. `mockup.phone`'s composition is written `<c-radial_progress>` for this reason; the README and CHANGELOG still name it `radial-progress`, the display form the gallery and daisyUI's own naming use.
 
 **ADR:** none — a lint tool's known-tags limitation, not a design choice; recorded so the next template that composes with `radial-progress` in scanned markup does not rediscover it.
+
+## D7 — The demo loads Alpine's browser build
+
+The browser check found that no dismiss button worked in the gallery. The demo loaded `https://cdn.jsdelivr.net/npm/alpinejs@3`, which jsDelivr resolves to Alpine's CommonJS build (`dist/module.cjs.js`), and in a browser that throws "module is not defined", so Alpine never started. The spec assumes the demo runs Alpine so the dismissible alert works in the gallery, and FS-001 required it. The URL now names Alpine's browser build, `alpinejs@3/dist/cdn.min.js`, with a test in `tests/test_demo.py` that failed first. It was made directly rather than dispatched: one URL and one test, found during the browser check.
+
+**ADR:** none — a fix to the demo's asset URL.

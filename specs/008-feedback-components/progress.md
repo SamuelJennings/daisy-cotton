@@ -101,3 +101,9 @@ Watch: none.
 Did: all six stories accepted. Reworded the toast's description and README line: daisyUI already fixes the toast to the viewport, so placing it is not left to the project. No migrations. Simplify pass over the feature diff found nothing to remove: each template is one element with its modifiers, and no helper was added. No decision meets the ADR bar; every entry records its verdict.
 Next: code review.
 Watch: nothing new.
+
+## 2026-09-28T21:25Z · Browser check
+
+Did: axe-core and scripted checks against every new and changed gallery entry (research R9). Found the demo's Alpine URL loading a CommonJS build that never starts in a browser, which left every dismiss button inert; fixed the URL with a failing test first (D7). After the fix: dismiss works by click and by Enter, the tooltip shows on hover and on keyboard focus, and names and values reach the accessibility tree. axe reports daisyUI's soft alert colours below 4.5:1 in the light theme (1.69 to 2.65), which is daisyUI's CSS and is reported in the pull request.
+Next: code review outcome.
+Watch: nothing new.
