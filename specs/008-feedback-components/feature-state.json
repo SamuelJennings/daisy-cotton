@@ -205,8 +205,31 @@
       "tasks": [
         {
           "id": "T007",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_progress.py tests/test_radial_progress.py tests/test_feedback_no_script.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q: 626 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 59/67 clean, 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_progress.py::TestProgressRoot",
+              "tests/test_progress.py::TestProgressValue",
+              "tests/test_progress.py::TestProgressMax",
+              "tests/test_progress.py::TestProgressVariant",
+              "tests/test_progress.py::TestProgressLabel",
+              "tests/test_progress.py::TestProgressClassAndAttrs",
+              "tests/test_progress.py::TestProgressPageContextDoesNotLeak",
+              "tests/test_radial_progress.py::TestRadialProgressRoot",
+              "tests/test_radial_progress.py::TestRadialProgressStyle",
+              "tests/test_radial_progress.py::TestRadialProgressValue",
+              "tests/test_radial_progress.py::TestRadialProgressVisibleText",
+              "tests/test_radial_progress.py::TestRadialProgressLabel",
+              "tests/test_radial_progress.py::TestRadialProgressClassAndAttrs",
+              "tests/test_radial_progress.py::TestRadialProgressPageContextDoesNotLeak",
+              "tests/test_feedback_no_script.py::TestFeedbackNoScript"
+            ]
+          }
         },
         {
           "id": "T008",

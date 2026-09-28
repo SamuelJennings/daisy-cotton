@@ -22,6 +22,15 @@ CALLER_STRINGS = {
         'id="copy-hint" class="mt-4"><c-button circle icon="bi bi-share" '
         'aria-label="Share" /></c-tooltip>'
     ),
+    "progress": (
+        '<c-progress value="40" max="100" variant="primary" label="Upload progress" '
+        'class="mt-4" />'
+    ),
+    "radial-progress": (
+        '<c-radial-progress value="70" label="Upload progress" style="color:red;" '
+        'class="mt-4"><i class="bi bi-cloud-upload" aria-hidden="true"></i>'
+        "</c-radial-progress>"
+    ),
 }
 
 
