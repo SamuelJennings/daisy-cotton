@@ -154,6 +154,16 @@ The maintainer's ruling on D6's SPEC-001: no script of any kind, and a screen re
 
 ## D13 — Convergence
 
-Every FR and SC has a task with a test or a browser check behind it (T015's check ran on all seven components and the four host entries, progress.md). No migrations. The cleanup pass found nothing to simplify: every template is the markup the plan names. One template comment that cited a planning document was reworded. The gallery linter's handling of hyphenated tags (D11) is filed as #107, alongside #96.
+Every FR and SC has a task with a test or a browser check behind it. The browser check ran on the six components before the countdown, then on the countdown and the hero clock after it (progress.md). No migrations. The cleanup pass found nothing to simplify: every template is the markup the plan names. One template comment that cited a planning document was reworded. The gallery linter's handling of hyphenated tags (D11) is filed as #107, alongside #96.
+
+**ADR:** none — local to this feature.
+
+## D14 — Code review applied
+
+One reviewer, correctness and spec. Verdict: approve.
+
+- **REV-001 (medium), declined.** It asked for tests asserting the wording of each component's description and the README's aura sentence. The maintainer's standing rule is that copy is never pinned by a test (it is his to change at the walkthrough). The countdown story's tests that asserted description wording and the example clock's numbers and labels are removed or reduced to behaviour: four countdowns, each with a visible label and a hidden copy equal to its number.
+- **REV-002 (low), fixed.** The browser check now covers the countdown and the hero clock, and waits out daisyUI's transition before reading the diff's resizer. D13 says what ran.
+- Notes applied: research R3 points at D12, the plan's hero composition uses the underscored spelling the annotation needs, and the task boxes are ticked. The doubled `djlint:off` in `hover_3d.html` matches `button.html`, which it copies, and stays.
 
 **ADR:** none — local to this feature.

@@ -163,3 +163,9 @@ Did: `countdown.html`'s `@description` now carries the whole gallery entry: dais
 Verified: 7 of the 10 new tests observed failing before the annotation and hero edits (the description points and the two clock tests; the no-slot, default-of-zero and kept-heading tests pass from the start as guards). `uv run pytest tests/test_countdown.py tests/test_animated_display_no_script.py tests/test_gallery_lint.py tests/test_gallery_annotations.py tests/test_hero.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py tests/test_text_rotate.py -q` — 616 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — exit 0, 55/63 clean, 0 errors, 0 warnings.
 Next: US3 done.
 Watch: nothing new.
+
+## 2026-09-28T10:28Z · Review and browser check, all seven
+
+Did: applied the code review (decisions D14). Reduced the countdown tests that pinned description wording and example copy to behaviour. Re-ran the browser check on all seven components and the four host entries, waiting out daisyUI's transitions.
+Verified: no component-level axe violation on 15 pages. The countdown's accessibility tree holds only its number ("42"), and the hero clock reads "15 days 10 hours 24 min 59 sec". The diff's resizer goes 640px → 1216px on the figure → 64px on the first item. The carousel scrolls 0 → 1280 with ArrowRight, and an indicator link scrolls it in the raw view.
+Next: the pull request's review outcome, then the walkthrough.

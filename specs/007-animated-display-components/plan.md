@@ -163,7 +163,7 @@ Each component's own entry:
 |---|---|---|
 | `mockup.browser` default slot | A product page: a carousel named by `aria-label`, three full-width slides with ids, and daisyUI's indicator row of `<c-button href="#…" size="xs">` links below it (US1). A text comparison `<c-diff aria-label>` with text in both items (US4). A linked `<c-hover-3d href>` wrapping a `<c-card>` (US6). | US1-6, US4-5, US6-6 |
 | `mockup.window` default slot | A two-sided conversation: four `<c-chat>`s, both placements, `<c-avatar>`s in `image`, names and times in `header`, "Delivered"/"Seen" in `footer`. | US2-7 |
-| `hero` default slot | A launch banner: a large centred `<c-text-rotate class="text-5xl" content_class="justify-items-center">` heading, a sentence with an inline rotating word (US7), and a days, hours, minutes and seconds clock of four labelled `<c-countdown>`s (US3), plus the existing call to action. | US3-6, US7-6 |
+| `hero` default slot | A launch banner: a large centred `<c-text_rotate class="text-5xl" content_class="justify-items-center">` heading (underscored inside an annotation, decisions D11), a sentence with an inline rotating word (US7), and a days, hours, minutes and seconds clock of four labelled `<c-countdown>`s (US3), plus the existing call to action. | US3-6, US7-6 |
 | `card` `figure` slot | A `<c-hover-gallery>` of four same-size images, a gallery inside a card. | US5-5 |
 
 Every image has `alt`, every icon-only control an `aria-label`, every named region and linked card a name (SC-004).
