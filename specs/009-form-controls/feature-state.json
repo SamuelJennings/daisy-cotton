@@ -103,8 +103,24 @@
       "tasks": [
         {
           "id": "T003",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_label.py -q: 7 passed",
+              "uv run pytest tests/test_form_controls.py -q -k label: 3 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings",
+              "uv run djlint daisy_cotton/templates/cotton/label.html --check: 0 files would be updated",
+              "uv run ruff check tests/test_label.py tests/test_form_controls.py: clean"
+            ],
+            "tests": [
+              "tests/test_label.py::TestLabelAboveControl",
+              "tests/test_label.py::TestLabelWrappingControl",
+              "tests/test_label.py::TestLabelFloating",
+              "tests/test_form_controls.py::TestFormControlsNoScript",
+              "tests/test_form_controls.py::TestFormControlsPageContextDoesNotLeak"
+            ]
+          }
         },
         {
           "id": "T004",

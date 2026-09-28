@@ -25,6 +25,11 @@ CALLER_STRINGS = {
         '<c-slot name="end"><kbd>Enter</kbd></c-slot>'
         "</c-input>"
     ),
+    "label": (
+        '<c-label text="Email" floating class="my-label" for="id_email">'
+        '<c-input placeholder="Email" />'
+        "</c-label>"
+    ),
 }
 
 # A bare control: no variant and no aria-invalid given, so neither may appear.
@@ -44,6 +49,14 @@ PAGE_CONTEXT_LEAK = {
             "ghost": "leaked-ghost",
             "start": "leaked-start",
             "end": "leaked-end",
+            "class": "leaked-class",
+        },
+    ),
+    "label": (
+        "<c-label />",
+        {
+            "text": "leaked-text",
+            "floating": "leaked-floating",
             "class": "leaked-class",
         },
     ),
