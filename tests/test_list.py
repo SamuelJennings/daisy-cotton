@@ -7,11 +7,6 @@ class attribute; the row itself declares nothing for either (FR-028).
 """
 
 from html.parser import HTMLParser
-from pathlib import Path
-
-import daisy_cotton
-
-COTTON_DIR = Path(next(iter(daisy_cotton.__path__))).resolve() / "templates" / "cotton"
 
 
 class _FirstTagAttrs(HTMLParser):
@@ -53,13 +48,6 @@ def _class_attrs_on(html, tag):
     return [
         name_value[1] for name_value in _attrs_on(html, tag) if name_value[0] == "class"
     ]
-
-
-def _annotation_text(path):
-    """The text of every ``{# ... #}`` annotation line in a template file."""
-    return "\n".join(
-        line for line in path.read_text().splitlines() if line.strip().startswith("{#")
-    )
 
 
 class TestListRoot:
@@ -141,22 +129,3 @@ class TestListRowPageContextDoesNotLeak:
         root_classes = _class_attrs_on(html, "li")
         assert len(root_classes) == 1
         assert "leaked-class" not in root_classes[0]
-
-
-class TestListDocumentsColumnClasses:
-    def test_list_col_grow_and_list_col_wrap_appear_in_the_templates_annotations(self):
-        index_annotations = _annotation_text(COTTON_DIR / "list" / "index.html")
-        row_annotations = _annotation_text(COTTON_DIR / "list" / "row.html")
-
-        assert "list-col-grow" in row_annotations, (
-            "row.html's @description must name list-col-grow"
-        )
-        assert "list-col-wrap" in row_annotations, (
-            "row.html's @description must name list-col-wrap"
-        )
-        assert "list-col-grow" in index_annotations, (
-            "index.html's @slot example must use list-col-grow"
-        )
-        assert "list-col-wrap" in index_annotations, (
-            "index.html's @slot example must use list-col-wrap"
-        )

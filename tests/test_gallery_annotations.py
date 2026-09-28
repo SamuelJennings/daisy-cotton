@@ -34,7 +34,6 @@ DESCRIPTION = re.compile(r"\{#\s*@description\b")
 DEFAULT_SLOT_ANNOTATION = re.compile(r"\{#\s*@slot(?!:)")
 DEFAULT_SLOT_EXPRESSION = re.compile(r"\{\{\s*slot\s*(?:\|[^}]*)?\}\}")
 
-# Props whose value is always one of a fixed set of daisyUI modifier names.
 FIXED_CHOICE_PROPS = frozenset({"variant", "align", "position", "placement"})
 
 

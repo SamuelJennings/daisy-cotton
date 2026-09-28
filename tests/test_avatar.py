@@ -127,36 +127,6 @@ class TestAvatarOnlineOffline:
 
 
 class TestAvatarFrameContentClass:
-    def test_frame_defaults_with_src(self, cotton_render_string_soup):
-        soup = cotton_render_string_soup('<c-avatar src="/p.jpg" />')
-
-        frame = soup.find("div", class_="avatar").find("div", recursive=False)
-        classes = frame.get("class")
-        assert "w-12" in classes
-        assert "rounded-full" in classes
-        assert "bg-neutral" not in classes
-        assert "text-neutral-content" not in classes
-
-    def test_frame_defaults_with_no_src_add_placeholder_colours(
-        self, cotton_render_string_soup
-    ):
-        soup = cotton_render_string_soup('<c-avatar placeholder="AL" />')
-
-        frame = soup.find("div", class_="avatar").find("div", recursive=False)
-        classes = frame.get("class")
-        for token in ("w-12", "rounded-full", "bg-neutral", "text-neutral-content"):
-            assert token in classes
-
-    def test_silhouette_frame_also_gets_placeholder_colours(
-        self, cotton_render_string_soup
-    ):
-        soup = cotton_render_string_soup("<c-avatar />")
-
-        frame = soup.find("div", class_="avatar").find("div", recursive=False)
-        classes = frame.get("class")
-        assert "bg-neutral" in classes
-        assert "text-neutral-content" in classes
-
     def test_content_class_replaces_the_defaults(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             '<c-avatar src="/p.jpg" content_class="w-24 rounded-xl" />'

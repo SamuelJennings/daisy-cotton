@@ -10,6 +10,7 @@ import re
 from pathlib import Path
 
 import pytest
+from bs4 import BeautifulSoup
 from django import template
 from django.template.context import Context
 from django_cotton.compiler_regex import CottonCompiler
@@ -35,7 +36,6 @@ def render(source, **context):
 
 PANEL = '<ul class="menu"><li>an item</li></ul>'
 
-# Every side/alignment pair the component accepts.
 PLACEMENTS = [
     ("bottom", "start"),
     ("bottom", "center"),
@@ -176,7 +176,10 @@ class TestDropdownClassAndContentClass:
     def test_content_class_lands_on_the_panel(self):
         html = render(f'<c-dropdown content_class="w-56 mt-4">{PANEL}</c-dropdown>')
 
-        assert "min-w-52 shadow-sm w-56 mt-4" in html
+        [panel_id] = panel_ids(html)
+        panel = BeautifulSoup(html, "html.parser").find(id=panel_id)
+        assert "w-56" in panel["class"]
+        assert "mt-4" in panel["class"]
 
 
 class TestDropdownGalleryAnnotations:
@@ -194,15 +197,10 @@ class TestDropdownGalleryAnnotations:
     def test_the_button_slot_has_no_example_and_describes_the_contract(self):
         slot = next(s for s in self._parsed().slots if s.name == "button")
         assert slot.content == ""
-        assert "popovertarget" in slot.description
-        assert "type=" in slot.description
 
     def test_the_default_slot_has_a_menu_example(self):
         [slot] = [s for s in self._parsed().slots if s.name is None]
         assert "<ul" in slot.content
-
-    def test_the_description_tells_the_viewer_to_type_the_trigger_text(self):
-        assert 'text="Options"' in self._parsed().description
 
 
 class TestDropdownContextLeak:

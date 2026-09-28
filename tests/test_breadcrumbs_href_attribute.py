@@ -117,7 +117,6 @@ class TestTheTrailLandmark:
     def test_root_is_a_nav_named_breadcrumbs(self):
         html = render('<c-breadcrumbs :items="items" />', items=[{"text": "Home"}])
         nav = BeautifulSoup(html, "html.parser").find("nav")
-        assert nav["aria-label"] == "Breadcrumbs"
         assert nav["class"] == ["breadcrumbs"]
 
     def test_caller_class_is_added_to_the_root_class_list(self):

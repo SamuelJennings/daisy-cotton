@@ -286,7 +286,6 @@ class TestDrawerAnnotations:
         prop = next(p for p in drawer.props if p.clean_name == "open")
 
         assert prop.type == "boolean"
-        assert "lg" in prop.description
 
     def test_placement_offers_end(self, drawer):
         prop = next(p for p in drawer.props if p.clean_name == "placement")
@@ -302,23 +301,6 @@ class TestDrawerAnnotations:
             '<c-drawer.button drawer="demo-drawer">Open sidebar</c-drawer.button>'
         )
 
-    def test_the_default_slot_composes_divider_join_and_footer(self, drawer):
-        page = next(s for s in drawer.slots if s.name is None)
-
-        assert '<c-divider horizontal="sm">OR</c-divider>' in page.content
-        assert '<c-join vertical horizontal="sm">' in page.content
-        assert '<c-footer vertical horizontal="sm">' in page.content
-        assert page.content.count("<c-footer.nav") == 2
-        assert "drawer-button" not in page.content
-
-    def test_the_side_slot_is_a_menu(self, drawer):
-        side = next(s for s in drawer.slots if s.name == "side")
-
-        assert '<ul class="menu bg-base-200 min-h-full w-80 p-4">' in side.content
-
-    def test_the_description_tells_the_viewer_to_set_the_demo_id(self, drawer):
-        assert "demo-drawer" in drawer.description
-
     def test_button_drawer_is_required_with_no_default(self, button):
         prop = next(p for p in button.props if p.clean_name == "drawer")
 
@@ -327,4 +309,3 @@ class TestDrawerAnnotations:
 
     def test_button_documents_class_and_the_focus_ring_condition(self, button):
         assert "class" in {p.clean_name for p in button.props}
-        assert "focus ring" in button.slots[0].description

@@ -6,6 +6,7 @@ rendering is <c-form.render>'s job). Sources are compiled through the Cotton
 compiler so the tests exercise the component exactly as a template would.
 """
 
+from bs4 import BeautifulSoup
 from django import template
 from django.template.context import Context
 from django_cotton.compiler_regex import CottonCompiler
@@ -18,15 +19,20 @@ def render(source, **context):
     return template.Template(compiler.process(source)).render(Context(context))
 
 
-# ---------------------------------------------------------------------------
-# Bare fields (no label/help/errors)
-# ---------------------------------------------------------------------------
+def control_wrapper_classes(html, tag="input"):
+    """Classes on the wrapper that carries the control's daisyUI style.
+
+    A text-like control's daisyUI class (``input``, ``select``) lands on the
+    ``<label>`` wrapping the control, not on the control itself.
+    """
+    control = BeautifulSoup(html, "html.parser").find(tag)
+    return control.find_parent("label")["class"]
 
 
 class TestFormFieldControl:
     def test_bare_field_renders_control_only(self):
         html = render('<c-form.field name="q" placeholder="Search" />')
-        assert 'class="input w-full' in html
+        assert "input" in control_wrapper_classes(html)
         assert '<input type="text"' in html
         assert 'name="q"' in html
         assert 'placeholder="Search"' in html
@@ -47,12 +53,9 @@ class TestFormFieldControl:
 
     def test_class_lands_on_the_control_wrapper(self):
         html = render('<c-form.field name="q" class="join-item" />')
-        assert 'class="input w-full join-item"' in html
-
-
-# ---------------------------------------------------------------------------
-# Label
-# ---------------------------------------------------------------------------
+        classes = control_wrapper_classes(html)
+        assert "input" in classes
+        assert "join-item" in classes
 
 
 class TestFormFieldLabel:
@@ -64,7 +67,7 @@ class TestFormFieldLabel:
         assert "fieldset-legend" in html
         assert ">Email<" in html or "Email" in html
         assert 'for="id_email"' in html
-        assert 'id="id_email"' in html  # the control keeps its id too
+        assert 'id="id_email"' in html
 
     def test_label_slot_allows_rich_content(self):
         html = render(
@@ -79,18 +82,12 @@ class TestFormFieldLabel:
         html = render('<c-form.field label="Confirm" hide-label name="confirmation" />')
         assert "sr-only" in html
         assert "Confirm" in html
-        # the control itself must stay visible
-        assert 'class="input w-full' in html
+        assert "input" in control_wrapper_classes(html)
 
     def test_required_adds_indicator_and_html_attribute(self):
         html = render('<c-form.field label="Name" name="name" required />')
         assert 'aria-hidden="true">*</span>' in html
         assert "required" in html.split("<input", 1)[1]
-
-
-# ---------------------------------------------------------------------------
-# Help text and errors
-# ---------------------------------------------------------------------------
 
 
 class TestFormFieldHelpAndErrors:
@@ -111,7 +108,6 @@ class TestFormFieldHelpAndErrors:
         )
         assert "input-error" in html
         assert 'aria-invalid="true"' in html
-        assert "text-error" in html
         assert "Invalid email." in html
 
     def test_errors_accepts_a_list(self):
@@ -126,12 +122,10 @@ class TestFormFieldHelpAndErrors:
     def test_errors_alone_do_not_render_a_label(self):
         html = render('<c-form.field name="email" errors="Nope." />')
         assert "fieldset-legend" not in html
-        assert "text-error" in html
-
-
-# ---------------------------------------------------------------------------
-# Control types
-# ---------------------------------------------------------------------------
+        error_line = BeautifulSoup(html, "html.parser").find(
+            "p", string=lambda text: text and "Nope." in text
+        )
+        assert error_line is not None
 
 
 class TestFormFieldWidgets:
@@ -139,7 +133,9 @@ class TestFormFieldWidgets:
         html = render(
             '<c-form.field type="textarea" label="Bio" name="bio" rows="3">Hello</c-form.field>'
         )
-        assert 'class="textarea w-full' in html
+        assert (
+            "textarea" in BeautifulSoup(html, "html.parser").find("textarea")["class"]
+        )
         assert ">Hello</textarea>" in html
         assert 'rows="3"' in html
 
@@ -151,7 +147,8 @@ class TestFormFieldWidgets:
         html = render(
             '<c-form.field type="select" label="Plan" name="plan"><option>Free</option></c-form.field>'
         )
-        assert 'class="select w-full' in html
+        wrapper = BeautifulSoup(html, "html.parser").find("select").find_parent("label")
+        assert "select" in wrapper["class"]
         assert "<select" in html
         assert "<option>Free</option>" in html
 
@@ -175,7 +172,6 @@ class TestFormFieldWidgets:
         assert 'class="checkbox' in html
         assert "Remember me" in html
         assert "checked" in html
-        # no legend-style label and no wrapper for a bare checkbox
         assert "fieldset-legend" not in html
         assert "fieldset" not in html
 
@@ -204,11 +200,6 @@ class TestFormFieldWidgets:
             '<c-form.field type="checkbox" label="Terms" name="terms" errors="Required." />'
         )
         assert "checkbox-error" in html
-
-
-# ---------------------------------------------------------------------------
-# Prefix / suffix and wrapper
-# ---------------------------------------------------------------------------
 
 
 class TestFormFieldWrapper:

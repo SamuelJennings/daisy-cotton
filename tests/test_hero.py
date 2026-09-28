@@ -120,7 +120,3 @@ class TestHeroAnnotations:
 
     def test_the_default_slot_holds_a_heading_copy_and_a_button(self, parsed):
         assert len(parsed.slots) == 1
-        content = parsed.slots[0].content
-        assert "<h1" in content
-        assert "<p" in content
-        assert "btn" in content

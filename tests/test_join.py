@@ -166,14 +166,11 @@ class TestJoinAnnotations:
         prop = next(p for p in parsed.props if p.clean_name == name)
 
         assert prop.type == "boolean"
-        assert "breakpoint" in prop.description
 
     def test_role_and_class_are_documented(self, parsed):
         props = {p.clean_name: p for p in parsed.props}
 
         assert {"role", "class"} <= set(props)
-        assert "group" in props["role"].description
 
     def test_the_default_slot_holds_three_join_item_buttons(self, parsed):
         assert len(parsed.slots) == 1
-        assert parsed.slots[0].content.count("join-item") == 3

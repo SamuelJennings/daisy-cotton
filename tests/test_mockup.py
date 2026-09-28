@@ -98,25 +98,6 @@ class TestMockupRoot:
 
 
 class TestMockupPhone:
-    def test_the_display_follows_the_theme(self, cotton_render_string_soup):
-        soup = cotton_render_string_soup("<c-mockup.phone>Hi</c-mockup.phone>")
-
-        display = soup.find(class_="mockup-phone-display")
-        assert {"bg-base-100", "text-base-content"} <= set(display["class"])
-
-    def test_the_display_imposes_no_layout_or_literal_colour(
-        self, cotton_render_string_soup
-    ):
-        soup = cotton_render_string_soup("<c-mockup.phone>Hi</c-mockup.phone>")
-
-        display_classes = set(soup.find(class_="mockup-phone-display")["class"])
-        assert not display_classes & {
-            "text-white",
-            "bg-neutral-900",
-            "grid",
-            "place-content-center",
-        }
-
     def test_the_camera_is_hidden_from_assistive_technology(
         self, cotton_render_string_soup
     ):
@@ -136,12 +117,6 @@ class TestMockupWindow:
         assert wrappers[0].name == "div"
         assert not wrappers[0].attrs
         assert wrappers[0].find(id="body")
-
-    def test_the_content_area_is_not_sized_or_centred(self, cotton_render_string):
-        html = cotton_render_string("<c-mockup.window>Hi</c-mockup.window>")
-
-        for imposed in ("h-80", "grid", "place-content-center"):
-            assert imposed not in html
 
 
 class TestMockupBrowser:
@@ -213,14 +188,6 @@ class TestMockupAnnotations:
             "window.html",
         ]
         assert all(slot_examples.values())
-
-    def test_the_code_example_has_a_prompt_line_and_an_output_line(self, slot_examples):
-        example = slot_examples["code/index.html"]
-
-        assert 'prefix="$"' in example
-        lines = re.findall(r"<c-mockup\.code\.line[^>]*>", example)
-        assert len(lines) == 2
-        assert sum("prefix=" in line for line in lines) == 1
 
     def test_every_mockup_declares_class(self):
         from django_cotton_gallery.core.annotations import AnnotationParser

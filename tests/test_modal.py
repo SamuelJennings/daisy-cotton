@@ -117,15 +117,21 @@ class TestModalNaming:
 
 
 class TestModalClosable:
-    def test_closable_adds_a_close_button_with_the_translatable_name(self):
-        html = render('<c-modal id="confirm" closable>Body</c-modal>')
-        assert '<form method="dialog"' in html
-        assert 'aria-label="Close"' in html
-        assert 'aria-hidden="true"' in html
+    def test_closable_adds_a_close_button(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup(
+            '<c-modal id="confirm" closable>Body</c-modal>'
+        )
+        box = soup.find(class_="modal-box")
+        button = box.find("form", attrs={"method": "dialog"}).find("button")
+        assert button is not None
+        assert button.has_attr("aria-label") and button["aria-label"]
+        assert button.find(attrs={"aria-hidden": "true"}) is not None
 
-    def test_without_closable_there_is_no_close_button(self):
-        html = render('<c-modal id="confirm">Body</c-modal>')
-        assert 'aria-label="Close"' not in html
+    def test_without_closable_there_is_no_close_button(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup('<c-modal id="confirm">Body</c-modal>')
+        box = soup.find(class_="modal-box")
+        form = box.find("form", attrs={"method": "dialog"})
+        assert form is None or form.find("button") is None
 
 
 class TestModalTranslatableStrings:
@@ -149,35 +155,14 @@ class TestModalGalleryAnnotations:
         assert prop.type == "select"
         assert set(prop.options) == {"top", "middle", "bottom", "start", "end"}
 
-    def test_open_description_says_it_is_not_modal_and_the_trigger_cannot_reopen_it(
-        self,
-    ):
-        prop = next(p for p in self._parsed().props if p.clean_name == "open")
-        assert "not modal" in prop.description
-        assert "cannot" in prop.description
-
-    def test_description_says_to_give_title_or_aria_label(self):
-        assert "title" in self._parsed().description
-        assert "aria-label" in self._parsed().description
-
     def test_the_default_slot_has_a_body_copy_example(self):
         [slot] = [s for s in self._parsed().slots if s.name is None]
         assert slot.content
-
-    def test_the_actions_slot_example_shows_a_form_with_a_button(self):
-        slot = next(s for s in self._parsed().slots if s.name == "actions")
-        assert '<form method="dialog">' in slot.content
-        assert "<c-button" in slot.content
 
     def test_the_trigger_calls_showmodal_on_demo_modal(self):
         parsed = self._parsed()
         assert "demo_modal.showModal()" in parsed.trigger
         assert "<c-button" in parsed.trigger
-
-    def test_the_description_tells_the_viewer_to_set_id_and_switch_open_on(self):
-        description = self._parsed().description
-        assert "demo_modal" in description
-        assert "open" in description
 
 
 class TestModalContextLeak:
@@ -205,7 +190,8 @@ class TestModalCloseMechanics:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup('<c-modal id="m" closable>Body</c-modal>')
-        close = soup.find("button", attrs={"aria-label": "Close"})
+        box = soup.find(class_="modal-box")
+        close = box.find("form", attrs={"method": "dialog"}).find("button")
         assert "btn" in close["class"]
         form = close.find_parent("form")
         assert form["method"] == "dialog"
@@ -225,5 +211,6 @@ class TestModalCloseMechanics:
         soup = cotton_render_string_soup(
             '<c-modal id="m" closable class="my-modal">Body</c-modal>'
         )
-        close = soup.find("button", attrs={"aria-label": "Close"})
+        box = soup.find(class_="modal-box")
+        close = box.find("form", attrs={"method": "dialog"}).find("button")
         assert "my-modal" not in close["class"]

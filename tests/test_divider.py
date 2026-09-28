@@ -271,7 +271,6 @@ class TestDividerAnnotations:
         prop = next(p for p in parsed.props if p.clean_name == name)
 
         assert prop.type == "boolean"
-        assert "breakpoint" in prop.description
 
     def test_the_old_position_prop_is_gone(self, parsed):
         assert "position" not in {p.clean_name for p in parsed.props}

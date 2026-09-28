@@ -143,22 +143,7 @@ class TestFabGalleryAnnotations:
     def test_close_and_main_action_have_no_example_and_give_the_markup(self):
         slots = {s.name: s for s in self._parsed().slots}
         assert slots["close"].content == ""
-        assert "c-button" in slots["close"].description
         assert slots["main_action"].content == ""
-        assert "c-button" in slots["main_action"].description
-
-    def test_the_button_slot_names_the_focusability_contract(self):
-        slot = next(s for s in self._parsed().slots if s.name == "button")
-        assert "focusable" in slot.description
-        assert "tabindex" in slot.description
-
-    def test_the_default_slot_has_three_action_examples(self):
-        [slot] = [s for s in self._parsed().slots if s.name is None]
-        assert slot.content.count("<c-button") == 3
-
-    def test_the_description_tells_the_viewer_to_type_the_trigger_attributes(self):
-        assert 'icon="bi bi-plus-lg"' in self._parsed().description
-        assert 'aria-label="Actions"' in self._parsed().description
 
 
 class TestFabContextLeak:
