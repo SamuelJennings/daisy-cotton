@@ -16,7 +16,7 @@ Sixty-nine components are built so far: `accordion`, `alert`, `avatar`, `badge`,
 
 `<c-alert>` takes `variant` (info, success, warning, error), `soft`/`outline`/`dash` for style, and `horizontal`/`vertical` for direction, each accepting a breakpoint such as `sm`; a caller-given `role` replaces the default `role="alert"`, so `role="status"` gives a polite announcement instead of an interruption. Its icon and dismiss button are drawn by `<c-icon>` and `<c-button>`; the dismiss button's accessible name is the translatable "Dismiss" with its glyph hidden from assistive technology. `dismissible` and `delay` need [Alpine.js](https://alpinejs.dev/) on the page — this package doesn't ship or load it. Without Alpine, the alert still renders and reads fine, but the dismiss button does nothing and `delay` never fires.
 
-`<c-toast>` is a positioning wrapper with no role or live region of its own; place it on the page yourself and put alerts inside it. A project rendering Django's messages framework writes:
+`<c-toast>` pins its content to a corner or edge of the screen and has no role or live region of its own, so put alerts inside it and each keeps its own. A project rendering Django's messages framework writes:
 
 ```django
 <c-toast placement="top end">

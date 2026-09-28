@@ -1,12 +1,12 @@
 # Progress: Feedback components
 
-## 2026-09-28T20:40Z · Plan
+## 2026-09-28T20:12Z · Plan
 
 Did: branch cut from origin/main fe694a4; verify green on that commit. Re-read the spec against FS-001 to FS-007, which landed after it: no contradiction (D1). Read daisyUI 5.7.46's CSS and class reference for the seven components, and checked that Alpine attributes and a translated name reach `<c-button>` through django-cotton 2.7.2. Wrote plan.md, research.md, tasks.md, decisions D1–D4 and the ledger.
 Next: design review, then batch 1 (US1 alert, US2 loading, US3 tooltip).
 Watch: a progress bound to `0` must not turn indeterminate (research R5).
 
-## 2026-09-28T21:10Z · Design review
+## 2026-09-28T20:16Z · Design review
 
 Did: one reviewer, three lenses: approve, 0 critical, 0 high, 2 medium, 4 low. All six applied to plan.md and tasks.md (D5).
 Next: US1 alert, US2 loading, US3 tooltip.
@@ -95,3 +95,9 @@ Did: gallery annotations for `skeleton` were already complete in T011 (`@descrip
 Verified: `uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_skeleton.py tests/test_feedback_no_script.py tests/test_mockup.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q` — 648 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — 61/69 clean, 0 errors, 0 warnings.
 Next: US6 complete; this was the last story.
 Watch: none.
+
+## 2026-09-28T21:19Z · Converge
+
+Did: all six stories accepted. Reworded the toast's description and README line: daisyUI already fixes the toast to the viewport, so placing it is not left to the project. No migrations. Simplify pass over the feature diff found nothing to remove: each template is one element with its modifiers, and no helper was added. No decision meets the ADR bar; every entry records its verdict.
+Next: code review.
+Watch: nothing new.

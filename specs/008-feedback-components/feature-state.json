@@ -2,7 +2,7 @@
   "feature": "008-feedback-components",
   "branch": "008-feedback-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "IMPLEMENT",
+  "state": "CONVERGE",
   "state_history": [
     {
       "state": "QUEUED",
@@ -23,6 +23,11 @@
       "state": "IMPLEMENT",
       "at": "2026-09-28T20:16:16Z",
       "note": "design review applied (D5); plan notification sent"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-28T21:19:00Z",
+      "note": "all six stories accepted"
     }
   ],
   "gates": {
@@ -341,7 +346,7 @@
   ],
   "budgets": {
     "converge_cycles": {
-      "used": 0,
+      "used": 1,
       "max": 2
     },
     "review_cycles": {
