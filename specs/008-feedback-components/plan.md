@@ -60,7 +60,7 @@ Shared rules, applied everywhere below (FS-006's and FS-007's, unchanged):
 `alert.html` — `{% load i18n daisy_cotton %}`, `<c-vars variant="" icon="" soft="" outline="" dash="" horizontal="" vertical="" dismissible="" delay="" role="alert" class="" />`.
 
 ```
-<div role="{{ role }}" class="alert {% variation variant "alert" "info,success,warning,error" %}{% if soft %} alert-soft{% endif %}{% if outline %} alert-outline{% endif %}{% if dash %} alert-dash{% endif %} {% responsive horizontal "alert-horizontal" %} {% responsive vertical "alert-vertical" %} {{ class }}"{% if dismissible %} x-data="{ show: true }" x-show="show" x-transition{% if delay %} x-init="setTimeout(() => show = false, {{ delay }})"{% endif %}{% endif %} {{ attrs }}>
+<div role="{{ role }}" class="alert {% variation variant "alert" "info,success,warning,error" %}{% if soft %} alert-soft{% endif %}{% if outline %} alert-outline{% endif %}{% if dash %} alert-dash{% endif %} {% responsive horizontal "alert-horizontal" %} {% responsive vertical "alert-vertical" %} {{ class }}"{% if dismissible %} x-data="{ show: true }" x-show="show" x-transition{% if delay %} x-init="setTimeout(() => show = false, {{ delay|add:0 }})"{% endif %}{% endif %} {{ attrs }}>
   {% if icon %}<c-icon name="{{ icon }}" aria-hidden="true" />{% elif variant %}<c-icon name="{{ variant }}" aria-hidden="true" />{% endif %}
   {{ slot }}
   {% if dismissible %}<c-button type="button" ghost size="xs" circle x-on:click="show = false" aria-label="{{ dismiss_label }}"><span aria-hidden="true">✕</span></c-button>{% endif %}
@@ -69,10 +69,11 @@ Shared rules, applied everywhere below (FS-006's and FS-007's, unchanged):
 
 - `role` is declared with the default `alert`, so a caller's `role` replaces it and is never spread a second time through `{{ attrs }}` (FR-010, US1-4).
 - `{% trans "Dismiss" as dismiss_label %}` precedes the markup (research R4). The ✕ sits in an `aria-hidden` span inside the button, so the name is the label alone (FR-013).
+- `delay|add:0` gives the number for a numeric `delay` and an empty string for anything else, so no caller text reaches the script in `x-init`.
 - `x-on:click` rather than `@click`: both reach the button (research R4), and the long form reads unambiguously as an attribute to anyone reading the template.
 - The old template gave `variant` no validation; it now goes through `variation`, so an unknown value emits nothing. The icon fallback still uses `variant` as given, which is the icon extension point working as ADR 0001 describes (Edge Cases).
 - The old `class` annotation said the icon gets the classes too. It never did; the new annotation says `class` goes on the alert.
-- CHANGELOG `Changed`: `horizontal` and `vertical` added; `role` can be replaced; the dismiss button is now `<c-button>` with a translatable name and a hidden glyph; the icon is hidden from assistive technology; an unknown `variant` emits no class.
+- CHANGELOG `Changed`: `horizontal` and `vertical` added; `role` can be replaced; the dismiss button is now `<c-button>` with a translatable name and a hidden glyph; the icon is hidden from assistive technology; an unknown `variant` emits no class; `delay` must be a number; a page variable named like one of the alert's attributes no longer leaks into it.
 - The description warns against `delay` on errors or anything the reader must act on (FR-013, Edge Cases), says `dismissible` and `delay` need Alpine.js, and names the `toast` entry as where an alert with an icon and a dismissible alert are shown.
 
 ### Loading (US2)
@@ -101,22 +102,22 @@ Shared rules, applied everywhere below (FS-006's and FS-007's, unchanged):
 - The trigger comes first and the hint after it, so reading order is the control, then its description. daisyUI's CSS needs `tooltip-content` only as a direct child, in any position (research R3).
 - No `data-tip` anywhere (FR-016).
 - `id` is declared so it never reaches the wrapper through `{{ attrs }}` (FR-018).
-- The description and a `{% comment %}` block carry: wrap a focusable trigger or the hint shows on hover only; the tooltip is a description, not a name, so an icon-only trigger still needs `aria-label`; give `id` and put `aria-describedby` with that id on the trigger; Escape does not dismiss it without a project script. It names the `mockup.browser` entry for the linked example.
+- The description carries: wrap a focusable trigger or the hint shows on hover only; the tooltip is a description, not a name, so an icon-only trigger still needs `aria-label`; give `id` and put `aria-describedby` with that id on the trigger; Escape does not dismiss it without a project script. It names the `mockup.browser` entry for the linked example.
 
 ### Progress and radial progress (US4)
 
 `progress.html` — `{% load daisy_cotton %}`, `<c-vars value="" max="100" variant="" label="" class="" />`.
 
 ```
-<progress class="progress {% variation variant "progress" "neutral,primary,secondary,accent,info,success,warning,error" %} {{ class }}"{% if value != "" %} value="{{ value }}"{% endif %} max="{{ max }}"{% if label %} aria-label="{{ label }}"{% endif %} {{ attrs }}></progress>
+<progress class="progress {% variation variant "progress" "neutral,primary,secondary,accent,info,success,warning,error" %} {{ class }}"{% if value is not None and value != "" %} value="{{ value }}"{% endif %} max="{{ max }}"{% if label %} aria-label="{{ label }}"{% endif %} {{ attrs }}></progress>
 ```
 
-- The value test is for emptiness, not truthiness, so `:value="0"` renders `value="0"` rather than an indeterminate bar (research R5). The implementer confirms the comparison against a `None` value too.
+- The value test is for emptiness, not truthiness, so `:value="0"` renders `value="0"` rather than an indeterminate bar, and `:value` bound to `None` renders no value (research R5).
 
 `radial_progress.html` — `{% load daisy_cotton %}`, `<c-vars value="" label="" style="" class="" />`.
 
 ```
-<div class="radial-progress {{ class }}" role="progressbar" style="--value:{{ value }};{% if style %} {{ style }}{% endif %}" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100"{% if label %} aria-label="{{ label }}"{% endif %} {{ attrs }}>{% if slot %}{{ slot }}{% elif value != "" %}{{ value }}%{% endif %}</div>
+<div class="radial-progress {{ class }}" role="progressbar" style="--value:{{ value }};{% if style %} {{ style }}{% endif %}" {% if value != "" %}aria-valuenow="{{ value }}" {% endif %}aria-valuemin="0" aria-valuemax="100"{% if label %} aria-label="{{ label }}"{% endif %} {{ attrs }}>{% if slot.strip %}{{ slot }}{% elif value != "" %}{{ value }}%{% endif %}</div>
 ```
 
 - `value` is annotated `required` with `=""` in `<c-vars>`, as the modal's `id` is. The gallery preview therefore shows an empty ring, and the values live in the `mockup.phone` composition (research R7).
@@ -133,7 +134,7 @@ Shared rules, applied everywhere below (FS-006's and FS-007's, unchanged):
 
 - No `role` and no `aria-live` (FR-022). With no placement, daisyUI's default is bottom end.
 - `@slot` holds three `<c-alert>`s: an info alert with an icon, a success alert with `role="status"`, and a dismissible warning.
-- The `{% comment %}` block and the README show a project rendering its messages: `{% for message in messages %}<c-alert variant="{{ message.level_tag }}" dismissible>{{ message }}</c-alert>{% endfor %}` inside `<c-toast>`, noting that Django's `debug` level tag has no alert colour and falls back to the plain alert.
+- The README shows a project rendering its messages: `{% for message in messages %}<c-alert variant="{{ message.level_tag }}" dismissible>{{ message }}</c-alert>{% endfor %}` inside `<c-toast>`, noting that Django's `debug` level tag has no alert colour and falls back to the plain alert. The toast's description points to it.
 
 ### Skeleton (US6)
 
@@ -158,7 +159,7 @@ Every template carries `@description`, a `@prop` per `<c-vars>` name and `@slot`
 | progress | No slot. |
 | radial-progress | `@slot` custom centre content, such as an icon or a short word (US4-6). |
 | toast | Three alerts (see Toast above). |
-| skeleton | `@slot` a line of text, shown when `text` is set. |
+| skeleton | `@slot` with no sample (a sample would render as hidden text inside a shape); the description says to toggle `text` and type the content. |
 
 **Compositions (research R7).** Each goes where an application would write it, and the component's `@description` names the entry that shows it:
 
@@ -209,8 +210,8 @@ README.md, CHANGELOG.md
 
 One worktree, stories one after another: they share `README.md`, `CHANGELOG.md`, `pyproject.toml`, the no-script module and the host entries' annotations.
 
-1. Batch 1: US1 alert, US2 loading, US3 tooltip.
-2. Batch 2: US4 progress and radial progress, US5 toast (after US1, whose alert it holds), US6 skeleton.
+1. US1 alert, US2 loading, US3 tooltip, then a checkpoint.
+2. US4 progress and radial progress, US5 toast (after US1, whose alert it holds), US6 skeleton, then a checkpoint.
 
 ## Complexity Tracking
 

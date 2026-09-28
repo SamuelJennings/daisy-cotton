@@ -77,3 +77,9 @@ FR-020 makes `value` required. It is declared `value=""` and annotated `required
 As FS-007 D3: the loading indicator inside a button and the tooltip linked to its trigger go into the `mockup.browser` product page, and progress bars, radial progress rings and the skeleton card placeholder into a mobile upload screen in `mockup.phone`, whose slot example held only placeholder text. An alert with an icon and a dismissible alert are shown in the toast's own slot example, which is where an application would put them.
 
 **ADR:** none — follows the approach FS-006 set for the gallery.
+
+## D5 — Design review applied
+
+The review approved the plan with two medium and four low findings, all applied as plan and task edits: a progress bound to `None` emits no value; the radial progress tests its slot after stripping whitespace and writes `aria-valuenow` only with a value; the alert's `delay` goes through `add:0` so only a number reaches `x-init`; the tooltip and toast carry their notes in the description and README rather than template comments. SC-004's "every gallery example" is read as the composed examples: the bare progress and radial progress previews carry only declared defaults, and `label` has none, so they are unnamed by construction and their descriptions tell the developer to type `label`, as the FAB's does for its trigger.
+
+**ADR:** none — local to this feature's templates and gallery entries.
