@@ -61,8 +61,24 @@
       "tasks": [
         {
           "id": "T001",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_input.py -q: 13 passed",
+              "uv run pytest tests/test_form_controls.py -q: 4 passed",
+              "uv run pytest tests/test_declared_attributes.py tests/test_gallery_annotations.py tests/test_semantic_palette.py tests/test_render_all.py -q: 535 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings",
+              "uv run djlint daisy_cotton/templates/cotton/input.html --check: 0 files would be updated"
+            ],
+            "tests": [
+              "tests/test_input.py::TestInputUnwrapped",
+              "tests/test_input.py::TestInputWrapped",
+              "tests/test_form_controls.py::TestFormControlsNoScript",
+              "tests/test_form_controls.py::TestFormControlsNoOwnInvalidState",
+              "tests/test_form_controls.py::TestFormControlsPageContextDoesNotLeak"
+            ]
+          }
         },
         {
           "id": "T002",
