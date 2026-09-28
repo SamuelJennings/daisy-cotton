@@ -200,6 +200,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   description and errors carry `<id>-description` and `<id>-errors`, so a control can name both in
   `aria-describedby`; without `id`, neither derived id is emitted. An empty `description` or
   `errors` renders nothing.
+- `<c-textarea>`: daisyUI's multi-line text box, a `<textarea>` carrying `textarea`, `variant`
+  (the eight daisyUI colours), `size` (`xs`–`xl`) and `ghost`. The default slot becomes its value,
+  exactly as written, with nothing added around it. Needs a `<c-label>`, an `aria-label` or an
+  `aria-labelledby` for a name; `textarea` cannot invent one.
+- `<c-select>`: daisyUI's select, following the text input's own split. Unwrapped, it is one
+  `<select>` carrying `select`, `variant`, `size` and `ghost`, with the default slot as its
+  `<option>` elements. With `start` or `end` filled it renders the wrapped form instead: a
+  `<label>` carrying `select` and the modifiers, holding the start content, the `<select>` and the
+  end content, in that order; `class` lands on whichever element carries `select`, and every other
+  attribute lands on the `<select>` itself.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
