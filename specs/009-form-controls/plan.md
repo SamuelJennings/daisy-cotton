@@ -22,9 +22,9 @@ Ten new Cotton templates for daisyUI's data input group: `input`, `textarea`, `s
 
 **Project Type**: Django package (templates) with a demo project
 
-**Constraints**: no JavaScript shipped, no stylesheet, no literal colours, no class daisyUI does not define for the component
+**Constraints**: no JavaScript shipped, no stylesheet, no colour outside the semantic palette, and every daisyUI class a component emits exists in daisyUI 5 for that component
 
-**Scale/Scope**: 10 new templates, 1 removed; 10 new test modules plus one no-script module and one removal module, 1 test module removed
+**Scale/Scope**: 10 new templates, 1 removed; 10 new test modules plus one shared module and one removal module, 1 test module removed
 
 ## Constitution Check
 
@@ -39,7 +39,7 @@ Ten new Cotton templates for daisyUI's data input group: `input`, `textarea`, `s
 | VIII i18n | No component writes a string of its own. | Pass |
 | X Test structure | One test module per component, `Test<Subject>` classes, new modules in `non-mirror-paths` like the existing component tests. | Pass |
 | XI Agnostic | Gallery examples use neutral copy. | Pass |
-| XII Semantic palette | Colour only through validated `variant`, and `text-error` on the fieldset's error lines. | Pass |
+| XII Semantic palette | Colour only through validated `variant`, and `text-error` on the fieldset's error lines. The errors' wrapper carries the layout utility `grid`, as other packaged templates carry `flex` and `w-full`. | Pass |
 | XIII Attribute vocabulary | `variant`, `size`, `ghost` and `vertical` as daisyUI names them, merged `class`, the rest through `{{ attrs }}`. The wrapped input and select send `class` to the wrapper and every other attribute to the control (FR-009, spec Clarifications). `start` and `end` reuse the navbar's names. | Pass |
 | XIV Composition | Gallery examples compose `<c-label>`, `<c-fieldset>`, the controls, `<c-icon>` and `<c-kbd>`. The components themselves call no other component. | Pass |
 | XV Gallery annotations | Every template annotated, fixed-value props typed `select[…]`, `cotton_lint --warnings-as-errors` clean. | Pass |
@@ -53,7 +53,7 @@ Shared rules, applied everywhere below:
 - **Native states pass through.** `name`, `value`, `id`, `checked`, `disabled`, `required`, `placeholder`, `aria-invalid`, `aria-describedby` and the rest are not declared: they reach the element through `{{ attrs }}` (research R4, FR-005, FR-009). The error colour and `aria-invalid` are never set by a component (FR-006).
 - **Defaults.** Every declared name gets a default, so a page variable of the same name never leaks in (research R4). `=""` everywhere except the input's `type="text"` and the range's `min="0"` and `max="100"`. Annotations give no `default:` for empty defaults, and a `select` must not get `default:""`.
 - **Named slots.** Declared once in `<c-vars>` with an empty default and rendered only when non-empty. Each gets a `@prop` and a `@slot:name`, as the navbar's `start` and `end` do.
-- **No script.** No `<script>` and no `on*=` attribute in any component's rendered output (FR-005, SC-003), asserted on the component rendered from a caller string, in one module, `tests/test_form_controls_no_script.py`, that each story extends (FS-008's `tests/test_feedback_no_script.py` is the model).
+- **Shared rules, tested once.** Three rules hold for every component and are each one parametrised test in one module, `tests/test_form_controls.py`, that each story extends by adding its components' rows: no `<script>` and no `on*=` attribute in the rendered output (FR-005, SC-003; FS-008's `tests/test_feedback_no_script.py` is the model); no `aria-invalid` and no `*-error` class when the caller gives neither (FR-006, controls only); and a page context carrying the component's declared names leaves its own defaults in place (research R4). The testing standard asks for one parametrised test over a rule, not one copy per subject (`docs/contributing/standards/testing.md` §5).
 - **One line of markup.** The controls are single elements, so each template is its annotations, `<c-vars>` and one line of markup inside `{# djlint:off #}`, as `progress.html` is.
 
 ### Text input (US1)
@@ -87,14 +87,14 @@ Shared rules, applied everywhere below:
 `fieldset.html` — `<c-vars legend="" description="" errors="" id="" class="" />`.
 
 ```
-<fieldset class="fieldset {{ class }}"{% if id %} id="{{ id }}"{% endif %} {{ attrs }}>{% if legend %}<legend class="fieldset-legend">{{ legend }}</legend>{% endif %}{{ slot }}{% if description %}<p class="label"{% if id %} id="{{ id }}-description"{% endif %}>{{ description }}</p>{% endif %}{% if errors %}<div{% if id %} id="{{ id }}-errors"{% endif %}>{% if errors == errors|stringformat:"s" %}<p class="label text-error">{{ errors }}</p>{% else %}{% for error in errors %}<p class="label text-error">{{ error }}</p>{% endfor %}{% endif %}</div>{% endif %}</fieldset>
+<fieldset class="fieldset {{ class }}"{% if id %} id="{{ id }}"{% endif %} {{ attrs }}>{% if legend %}<legend class="fieldset-legend">{{ legend }}</legend>{% endif %}{{ slot }}{% if description %}<p class="label"{% if id %} id="{{ id }}-description"{% endif %}>{{ description }}</p>{% endif %}{% if errors %}<div class="grid"{% if id %} id="{{ id }}-errors"{% endif %}>{% if errors == errors|stringformat:"s" %}<p class="label text-error">{{ errors }}</p>{% else %}{% for error in errors %}<p class="label text-error">{{ error }}</p>{% endfor %}{% endif %}</div>{% endif %}</fieldset>
 ```
 
 - `legend`, `description` and `errors` are attributes and named slots under the same names (FR-019, FR-020). A slot's content is a string and renders as one line.
 - `id` is declared so the template can derive from it. It is emitted on the fieldset only when given, and never twice.
-- The derived ids are `<id>-description` and `<id>-errors`. The errors sit in one `<div>` carrying `<id>-errors`, so a control names every message with one id however many there are (FR-021). The div renders only when there are errors.
+- The derived ids are `<id>-description` and `<id>-errors`. The errors sit in one `<div class="grid">` carrying `<id>-errors`, so a control names every message with one id however many there are (FR-021). `grid` stacks the lines: daisyUI's `.label` is `inline-flex`, and only the fieldset's direct children are grid items, so without it the messages run together on one line. The div renders only when there are errors.
 - An empty string, an empty list and an absent value all render nothing (US2-7, Edge Cases).
-- The description states both derived ids, shows `aria-describedby="<id>-description <id>-errors"` on a control, says the legend names the group and not a control inside it (a fieldset holding one control still gives it a `<c-label>`), says a description or message containing HTML is escaped and the named slot takes markup, notes that daisyUI's description line does not wrap (research R3), and names its own composition for every control.
+- The description states both derived ids, shows `aria-describedby="<id>-description <id>-errors"` on a control, says the legend names the group and not a control inside it (a fieldset holding one control still gives it a `<c-label>`), says a description or message containing HTML is escaped and the named slot takes markup, notes that daisyUI's description line does not wrap (research R3), says a named slot filled with whitespace only still renders its element, and names its own composition for every control.
 
 ### Textarea and select (US4)
 
@@ -119,8 +119,7 @@ Shared rules, applied everywhere below:
 <input type="checkbox" role="switch" class="toggle …modifiers… {{ class }}" {{ attrs }}>
 ```
 
-- `type` is not declared on any of the three. The template writes it, so the component is always what its name says.
-- The toggle's `role="switch"` is written by the template (FR-014, research R7).
+- `type`, and the toggle's `role="switch"`, are written by the template (FR-014, research R7). A caller passes neither: a second `type` or `role` would reach the element as a duplicate attribute, which the browser resolves to the first. Each description says so. Neither is declared, because a declared name the template does not read fails `tests/test_declared_attributes.py`.
 - The checkbox's description says its indeterminate state can only be set from the project's own script. The radio's says to give every radio in a group the same `name`, and to group them in a `<c-fieldset>` whose legend names the group. Each names the fieldset entry.
 
 ### File input and range (US6)
@@ -143,9 +142,9 @@ Shared rules, applied everywhere below:
 ### Removing `form.field` (US3)
 
 - `daisy_cotton/templates/cotton/form/field.html` and `tests/test_form_field.py` are deleted, and the empty `form/` directory with them. No alias, no stub (FR-022).
-- A new `tests/test_form_field_removed.py` asserts that rendering `<c-form.field />` raises the error Cotton raises for a missing component (US3-1).
-- `docs/adr/0001-icon-is-an-extension-point.md` lists `form.field`'s pre/post-label slots among the components that call `<c-icon>`. That sentence changes to the input's and select's `start` and `end` slots, which is where an icon now goes, so the record keeps describing the package as it is.
-- `CHANGELOG.md` gains `### Removed` under `[Unreleased]` (see Documentation). The existing `Added` line listing the first 21 components stays as it is.
+- A new `tests/test_form_field_removed.py` asserts that rendering `<c-form.field />` raises `TemplateDoesNotExist` with `form/field` in its message (US3-1), under pytest-django's default `DEBUG=False`: with `DEBUG=True`, Django's debug-info step fails first on the compiled node and hides the real error.
+- `docs/adr/0001-icon-is-an-extension-point.md` lists `form.field`'s pre/post-label slots among the components that call `<c-icon>`. `form.field` never called `<c-icon>` itself, so that entry is deleted from the parenthesised list and nothing is added, and the record keeps describing the package as it is.
+- `CHANGELOG.md` gains `### Removed` under `[Unreleased]` (see Documentation). The existing `Added` line listing the first 21 components stays as it is. The sentence at the end of `Added` that excludes form rendering "beyond the single presentational `form.field`" is reworded to describe the package without it, and `docs/ROADMAP.md`'s "`form.field` covers part of fieldset today" is brought up to date the same way.
 
 ### Gallery entries (FR-003, FR-004)
 
@@ -174,7 +173,7 @@ Each control's `@description` names the fieldset entry as where its labelled, di
 ### Documentation
 
 - `README.md`: the component count goes from Sixty-nine to Seventy-eight in words, one step per story, and the alphabetical list gains each new component in its story (`checkbox`, `fieldset`, `file-input`, `input`, `label`, `radio`, `range`, `select`, `textarea`, `toggle`). US3 removes `form.field` from the list (FR-024).
-- `CHANGELOG.md` `[Unreleased]`: `Added` per new component in its story, each naming its attributes and slots. US3 adds `### Removed` for `form.field`: before-and-after examples for a labelled text input, a textarea, a select, a file input, a checkbox, a radio button, a toggle, a field with help text, a field with errors, and an input with `prelabel` and `postlabel`, then `hide-label`, `wrapper-class`, `prelabel`, `postlabel` and the required asterisk each with its replacement or the reason it was dropped (FR-023, spec Clarifications).
+- `CHANGELOG.md` `[Unreleased]`: `Added` per new component in its story, each naming its attributes and slots. US3 adds `### Removed` for `form.field`: before-and-after examples for a labelled text input, a textarea, a select, a file input, a checkbox, a radio button, a toggle, a field with help text, a field with errors, and an input with `prelabel` and `postlabel`, then `hide-label`, `wrapper-class`, `prelabel`, `postlabel` and the required asterisk each with its replacement or the reason it was dropped (FR-023, spec Clarifications). Before `tests/test_form_field.py` is deleted, each of its tests is mapped to the example or table row that rebuilds it, and any case left unmapped gets one more before-and-after line (SC-004).
 
 ## Project Structure
 
@@ -199,7 +198,7 @@ daisy_cotton/templates/cotton/
 tests/
 ├── test_input.py, test_label.py, test_fieldset.py, test_textarea.py, test_select.py,
 │   test_checkbox.py, test_radio.py, test_toggle.py, test_file_input.py, test_range.py   # new
-├── test_form_controls_no_script.py             # new, extended per story
+├── test_form_controls.py                        # new, extended per story
 ├── test_form_field_removed.py                  # new (US3)
 └── test_form_field.py                          # removed (US3)
 docs/adr/0001-icon-is-an-extension-point.md     # one sentence (US3)
@@ -211,7 +210,7 @@ README.md, CHANGELOG.md
 
 ## Story order
 
-One worktree, stories one after another: they share `README.md`, `CHANGELOG.md`, `pyproject.toml`, the no-script module and the fieldset's composition.
+One worktree, stories one after another: they share `README.md`, `CHANGELOG.md`, `pyproject.toml`, the shared module and the fieldset's composition.
 
 1. US1 text input, US2 label and fieldset (the composition starts here, with the input), then a checkpoint.
 2. US4 textarea and select, US5 checkbox, radio and toggle, US6 file input and range, each adding to the composition, then a checkpoint.

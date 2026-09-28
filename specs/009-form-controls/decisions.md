@@ -77,6 +77,12 @@ The spec gives the errors a single derived id. A list of messages renders as one
 
 ## D4 — `form.field` is removed last
 
-The removal is P1, but its CHANGELOG examples use every control, and an example may only use components that exist. So US3 is built after US6, in the same pull request as the components that replace it. The `Added` line listing the first 21 components keeps `form.field`, and the new `Removed` entry says where it went. Nothing has been released yet, so both entries describe the same unreleased version. ADR 0001's list of components that call `<c-icon>` changes from `form.field`'s pre/post-label slots to the input's and select's `start` and `end` slots.
+The removal is P1, but its CHANGELOG examples use every control, and an example may only use components that exist. So US3 is built after US6, in the same pull request as the components that replace it. The `Added` line listing the first 21 components keeps `form.field`, and the new `Removed` entry says where it went. Nothing has been released yet, so both entries describe the same unreleased version. ADR 0001's list of components that call `<c-icon>` drops `form.field`, which never called it.
 
 **ADR:** none — ordering and a documentation edit local to this feature.
+
+## D5 — Design review applied
+
+The review approved the plan with three medium and three low findings, all applied as plan and task edits. The errors' wrapper carries `grid`, because daisyUI's description line is `inline-flex` and only the fieldset's direct children stack. `type` and the toggle's `role` are written by the template and documented as not for the caller, since a second one would be a duplicate attribute. SC-004 is shown by mapping each removed `form.field` test to the CHANGELOG example that rebuilds it. The ADR edit only removes `form.field` from the list. The removal test asserts `TemplateDoesNotExist` naming `form/field`. The no-script, no-invalid-state-of-its-own and page-context rules are each one parametrised test in `tests/test_form_controls.py` rather than a copy per component. The review's notes also brought in the CHANGELOG's form-rendering sentence, the roadmap's fieldset line and a sentence on whitespace-only slots.
+
+**ADR:** none — local to this feature's templates, tests and documentation.

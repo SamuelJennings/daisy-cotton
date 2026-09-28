@@ -2,7 +2,7 @@
   "feature": "009-form-controls",
   "branch": "009-form-controls",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "PLAN",
+  "state": "DESIGN_REVIEW",
   "state_history": [
     {
       "state": "QUEUED",
@@ -13,6 +13,11 @@
       "state": "PLAN",
       "at": "2026-09-28T23:13:59Z",
       "note": "picked up from the queue; branch cut from origin/main 6c8464a; verify green on base"
+    },
+    {
+      "state": "DESIGN_REVIEW",
+      "at": "2026-09-28T23:15:48Z",
+      "note": "plan, research, tasks committed; draft PR #112 opened"
     }
   ],
   "gates": {
@@ -24,12 +29,20 @@
       ]
     },
     "plan": {
-      "approved_by": null,
-      "at": null
+      "approved_by": "notified",
+      "at": "2026-09-28T23:22:04Z"
     },
     "merge": {
       "approved_by": null,
       "at": null
+    },
+    "design_review": {
+      "approved_by": "design-panel",
+      "at": "2026-09-28T23:22:04Z",
+      "self_resolved": [
+        "DR-001..DR-003 medium: applied as plan/tasks edits (D5)",
+        "DR-004..DR-006 low: applied as plan/tasks edits (D5)"
+      ]
     }
   },
   "stories": [
@@ -164,12 +177,16 @@
       "max": 1
     },
     "design_review_cycles": {
-      "used": 0,
+      "used": 1,
       "max": 1
     },
     "tokens": {
       "used": 0,
       "max": 120
     }
+  },
+  "pr": {
+    "number": 112,
+    "draft": true
   }
 }
