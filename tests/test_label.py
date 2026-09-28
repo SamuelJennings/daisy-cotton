@@ -17,9 +17,7 @@ class TestLabelAboveControl:
         assert label["for"] == "id_email"
         assert label.get_text() == "Email"
 
-    def test_no_floating_label_class_when_not_floating(
-        self, cotton_render_string_soup
-    ):
+    def test_no_floating_label_class_when_not_floating(self, cotton_render_string_soup):
         soup = cotton_render_string_soup('<c-label for="id_email" text="Email" />')
 
         label = soup.find("label")
