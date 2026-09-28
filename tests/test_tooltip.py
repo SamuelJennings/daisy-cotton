@@ -100,7 +100,9 @@ class TestTooltipPlacement:
     def test_each_placement_word_maps_to_its_daisyui_class(
         self, cotton_render_string_soup, placement, classes
     ):
-        soup = cotton_render_string_soup(f'<c-tooltip placement="{placement}">x</c-tooltip>')
+        soup = cotton_render_string_soup(
+            f'<c-tooltip placement="{placement}">x</c-tooltip>'
+        )
 
         for css_class in classes:
             assert css_class in soup.div["class"]
@@ -108,7 +110,9 @@ class TestTooltipPlacement:
     def test_unknown_placement_word_emits_no_class_and_does_not_raise(
         self, cotton_render_string_soup
     ):
-        soup = cotton_render_string_soup('<c-tooltip placement="diagonal">x</c-tooltip>')
+        soup = cotton_render_string_soup(
+            '<c-tooltip placement="diagonal">x</c-tooltip>'
+        )
 
         assert not any("diagonal" in cls for cls in soup.div["class"])
 
@@ -121,7 +125,9 @@ class TestTooltipVariant:
     def test_each_variant_maps_to_its_daisyui_class(
         self, cotton_render_string_soup, variant
     ):
-        soup = cotton_render_string_soup(f'<c-tooltip variant="{variant}">x</c-tooltip>')
+        soup = cotton_render_string_soup(
+            f'<c-tooltip variant="{variant}">x</c-tooltip>'
+        )
 
         assert f"tooltip-{variant}" in soup.div["class"]
 
