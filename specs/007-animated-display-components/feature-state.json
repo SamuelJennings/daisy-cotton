@@ -58,6 +58,14 @@
         "SPEC-001 high: spec fault, put to the maintainer; US3 built last (D6)",
         "SPEC-002..SPEC-004 medium, SEC-001, SPEC-005, ARCH-001 low: applied as plan/tasks edits (D6, D7)"
       ]
+    },
+    "review": {
+      "approved_by": "review-panel",
+      "at": "2026-09-28T10:29:33Z",
+      "self_resolved": [
+        "medium: declined, wording is not pinned by tests (D14)",
+        "low: browser check extended to the countdown and hero (D14)"
+      ]
     }
   },
   "stories": [
