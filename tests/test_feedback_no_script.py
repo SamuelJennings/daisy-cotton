@@ -37,6 +37,7 @@ CALLER_STRINGS = {
         '<c-alert variant="warning" dismissible delay="4000">Expiring soon.</c-alert>'
         "</c-toast>"
     ),
+    "skeleton": '<c-skeleton text="Loading data…" class="h-4 w-32" />',
 }
 
 

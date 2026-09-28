@@ -81,3 +81,10 @@ Did: gallery annotations for `toast` were already complete in T009 (`@descriptio
 Verified: `uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_toast.py tests/test_feedback_no_script.py tests/test_render_all.py -q` — 476 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — 60/68 clean, 0 errors, 0 warnings.
 Next: US5 complete; US6 skeleton follows.
 Watch: none.
+
+## 2026-09-28T21:15:39Z · Implementer US6 · T011
+
+Did: wrote `skeleton.html` — a `<div>` carrying `skeleton`, `skeleton-text` and `aria-hidden="true"` unless `text` is given, `text` rendered as content when it carries a string (a bare `text` attribute arrives as `True` and leaves the slot as content instead), `class` merged, attributes spread; full gallery annotations (`@description`, `@prop` for `text` and `class`, `@slot` with no sample since a sample would render as hidden text inside a shape). Wrote `tests/test_skeleton.py` (scenarios from tasks.md T011: a shape hidden from assistive technology with its classes; `text` as a string giving `skeleton-text` with the string as content and not hidden; bare `text` with slot content rendering the same as the string case; no `text` rendering the default slot as content while still hidden; `class`/attrs merge; a page context carrying `text` that does not leak in). Extended `tests/test_feedback_no_script.py` with a skeleton caller string. Added `tests/test_skeleton.py` to `[tool.forge.conformance] non-mirror-paths` in `pyproject.toml`.
+Verified: `uv run pytest tests/test_skeleton.py tests/test_feedback_no_script.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_class_attribute_merge.py tests/test_semantic_palette.py -q` — 627 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — 61/69 clean, 0 errors, 0 warnings.
+Next: T012 (`mockup.phone` card placeholder composition, README, CHANGELOG remain).
+Watch: none.
