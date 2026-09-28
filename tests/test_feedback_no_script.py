@@ -17,6 +17,11 @@ CALLER_STRINGS = {
         'class="mt-4">Saved.</c-alert>'
     ),
     "loading": '<c-loading spinner size="sm" label="Saving" class="text-primary" />',
+    "tooltip": (
+        '<c-tooltip tip="Copy link" placement="bottom end" variant="primary" open '
+        'id="copy-hint" class="mt-4"><c-button circle icon="bi bi-share" '
+        'aria-label="Share" /></c-tooltip>'
+    ),
 }
 
 
