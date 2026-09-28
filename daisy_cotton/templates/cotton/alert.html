@@ -1,24 +1,23 @@
-{# @description A message banner, optionally dismissible and auto-hiding. Shows an icon, then the default slot, then a dismiss button. #}
+{# @description A message banner for the result of an action, with an optional icon and an optional dismiss button. dismissible and delay both need Alpine.js on the page. Avoid delay on errors or on anything the reader must act on — the message can disappear before they've read it. See the toast entry for an alert shown with an icon and a dismissible alert. #}
 {# @prop variant:select['info','success','warning','error'] | description:"Colour variant. Also picks the icon when none is given." #}
-{# @prop icon:text | description:"Icon shown before the message, passed as the name of the icon component. Defaults to an icon named after the variant." #}
+{# @prop icon:text | description:"Icon shown before the message, passed as the name of the icon component. Defaults to an icon named after variant." #}
 {# @prop soft:boolean | description:"Use the soft style." #}
 {# @prop outline:boolean | description:"Draw the alert as an outline." #}
 {# @prop dash:boolean | description:"Use a dashed border." #}
-{# @prop dismissible:boolean | description:"Add a dismiss button that hides the alert (needs Alpine.js)." #}
+{# @prop horizontal:select['sm','md','lg','xl','2xl'] | description:"Lay the alert out horizontally. The bare attribute applies it at every width, which this select cannot set." #}
+{# @prop vertical:select['sm','md','lg','xl','2xl'] | description:"Stack the alert vertically. The bare attribute applies it at every width, which this select cannot set." #}
+{# @prop dismissible:boolean | description:"Add a dismiss button that hides the alert." #}
 {# @prop delay:number | description:"Milliseconds before a dismissible alert hides itself." #}
-{# @prop class:text | description:"Extra classes added to the alert. The icon gets them too." #}
-{# @slot Your changes were saved. — The alert message. #}
-<c-vars variant icon soft outline dash dismissible delay class />
-<div role="alert"
-     class="alert{% if variant %} alert-{{ variant }}{% endif %}{% if soft %} alert-soft{% endif %}{% if outline %} alert-outline{% endif %}{% if dash %} alert-dash{% endif %} {{ class }}"
-     {% if dismissible %}x-data="{ show: true }" x-show="show" x-transition{% if delay %} x-init="setTimeout(() => show = false, {{ delay }})"{% endif %}{% endif %}
-     {{ attrs }}>
-  {% if icon %}<c-icon name="{{ icon }}" />{% elif variant %}<c-icon name="{{ variant }}" />{% endif %}
+{# @prop role:text | default:"alert" | description:"Interrupts a screen reader by default. Pass role=\"status\" for a message that should be announced politely." #}
+{# @prop class:text | description:"Extra classes added to the alert." #}
+{# @slot Saved. — The alert message. #}
+{% load i18n daisy_cotton %}
+<c-vars variant="" icon="" soft="" outline="" dash="" horizontal="" vertical="" dismissible="" delay="" role="alert" class="" />
+{% trans "Dismiss" as dismiss_label %}
+{# djlint:off #}
+<div role="{{ role }}" class="alert {% variation variant "alert" "info,success,warning,error" %}{% if soft %} alert-soft{% endif %}{% if outline %} alert-outline{% endif %}{% if dash %} alert-dash{% endif %} {% responsive horizontal "alert-horizontal" %} {% responsive vertical "alert-vertical" %} {{ class }}"{% if dismissible %} x-data="{ show: true }" x-show="show" x-transition{% if delay %} x-init="setTimeout(() => show = false, {{ delay|add:0 }})"{% endif %}{% endif %} {{ attrs }}>
+  {% if icon %}<c-icon name="{{ icon }}" aria-hidden="true" />{% elif variant %}<c-icon name="{{ variant }}" aria-hidden="true" />{% endif %}
   {{ slot }}
-  {% if dismissible %}
-    <button type="button"
-            class="btn btn-ghost btn-xs btn-circle"
-            @click="show = false"
-            aria-label="Dismiss">✕</button>
-  {% endif %}
+  {% if dismissible %}<c-button type="button" ghost size="xs" circle x-on:click="show = false" aria-label="{{ dismiss_label }}"><span aria-hidden="true">✕</span></c-button>{% endif %}
 </div>
+{# djlint:on #}
