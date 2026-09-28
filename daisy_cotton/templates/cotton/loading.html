@@ -1,0 +1,15 @@
+{# @description A loading indicator. With no animation given daisyUI draws the spinner; giving more than one emits every class named. A name is always given, defaulting to "Loading" — pass label for one that says what is loading. Colour it with a text utility such as text-primary in class. See the mockup.browser entry for a loading indicator inside a button. #}
+{# @prop spinner:boolean | description:"Spinner animation." #}
+{# @prop dots:boolean | description:"Dots animation." #}
+{# @prop ring:boolean | description:"Ring animation." #}
+{# @prop ball:boolean | description:"Ball animation." #}
+{# @prop bars:boolean | description:"Bars animation." #}
+{# @prop infinity:boolean | description:"Infinity animation." #}
+{# @prop size:select['xs','sm','md','lg','xl'] | description:"Loading indicator size." #}
+{# @prop label:text | description:"Accessible name. Defaults to the translatable \"Loading\"." #}
+{# @prop class:text | description:"Extra classes added to the loading indicator, such as a text colour utility." #}
+{% load i18n daisy_cotton %}
+<c-vars spinner="" dots="" ring="" ball="" bars="" infinity="" size="" label="" class="" />
+{# djlint:off #}
+<span class="loading{% if spinner %} loading-spinner{% endif %}{% if dots %} loading-dots{% endif %}{% if ring %} loading-ring{% endif %}{% if ball %} loading-ball{% endif %}{% if bars %} loading-bars{% endif %}{% if infinity %} loading-infinity{% endif %} {% variation size "loading" "xs,sm,md,lg,xl" %} {{ class }}" role="status" aria-label="{% if label %}{{ label }}{% else %}{% trans "Loading" %}{% endif %}" {{ attrs }}></span>
+{# djlint:on #}

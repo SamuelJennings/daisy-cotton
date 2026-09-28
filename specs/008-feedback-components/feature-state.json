@@ -111,8 +111,25 @@
       "tasks": [
         {
           "id": "T003",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_loading.py tests/test_feedback_no_script.py tests/test_declared_attributes.py tests/test_render_all.py tests/test_gallery_annotations.py tests/test_class_attribute_merge.py tests/test_gallery_lint.py -q: 527 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 56/64 clean, 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_loading.py::TestLoadingRoot",
+              "tests/test_loading.py::TestLoadingAnimation",
+              "tests/test_loading.py::TestLoadingSize",
+              "tests/test_loading.py::TestLoadingLabel",
+              "tests/test_loading.py::TestLoadingTranslation",
+              "tests/test_loading.py::TestLoadingClassAndAttrs",
+              "tests/test_loading.py::TestLoadingInsideAButton",
+              "tests/test_loading.py::TestLoadingPageContextDoesNotLeak",
+              "tests/test_feedback_no_script.py::TestFeedbackNoScript"
+            ]
+          }
         },
         {
           "id": "T004",

@@ -25,3 +25,10 @@ Did: gallery annotations for the alert (written together with the T001 rewrite: 
 Verified: `uv run python manage.py cotton_lint --warnings-as-errors` — 55/63 clean, 0 errors, 0 warnings. `uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py -q` — 350 passed.
 Next: US1 complete; US2 loading follows.
 Watch: none.
+
+## 2026-09-28T20:34:10Z · Implementer US2 · T003
+
+Did: wrote `loading.html` — a `<span>` carrying `loading`, `role="status"`, the six animation booleans each mapped to their `loading-*` class with none emitted when none given, `size` validated through `variation`, `class` merged, `aria-label` from `label` or the translatable "Loading". Wrote `tests/test_loading.py` (scenarios 1–5, each animation's class, two animations together, an unknown `size`, the translation test, a loading indicator inside a `<c-button>` slot, and a page context carrying `label`, `size` and `dots` that does not leak in). Extended `tests/test_feedback_no_script.py` with a loading caller string. Added `tests/test_loading.py` to `[tool.forge.conformance] non-mirror-paths`.
+Verified: `uv run pytest tests/test_loading.py tests/test_feedback_no_script.py tests/test_declared_attributes.py tests/test_render_all.py tests/test_gallery_annotations.py tests/test_class_attribute_merge.py tests/test_gallery_lint.py -q` — 527 passed. `uv run python manage.py cotton_lint --warnings-as-errors` — 56/64 clean, 0 errors, 0 warnings.
+Next: T004 (mockup.browser composition, README, CHANGELOG).
+Watch: none.

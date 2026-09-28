@@ -16,6 +16,7 @@ CALLER_STRINGS = {
         '<c-alert variant="success" icon="bi bi-check" dismissible delay="4000" '
         'class="mt-4">Saved.</c-alert>'
     ),
+    "loading": '<c-loading spinner size="sm" label="Saving" class="text-primary" />',
 }
 
 
