@@ -242,6 +242,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   slots holding a `<c-icon>` and a visually hidden "Previous" or "Next", so each button is named; `previous_icon`
   and `next_icon` set the icons. The package ships no script: the project loads Cally, and the README shows
   how and how to copy a chosen date into a form input. Adds the `count_range` template tag.
+- `<c-form.otp>`: daisyUI's one-time code field, a `<label class="otp">` holding `length` empty `<span>` boxes
+  (six by default), then one text input with `maxlength`, a digits-only `pattern`, `inputmode="numeric"` and
+  `autocomplete="one-time-code"`, then a visually hidden `<small>` naming it "Verification code", or `label`.
+  `variant`, `size` and `joined` become `otp-{variant}`, `otp-{size}` and `otp-joined` on the label, and `class`
+  is added to it. `pattern` and `inputmode` replace the defaults, `input_class` adds classes to the input (such as
+  `validator`), and `id`, `name`, `value`, `required`, `disabled`, `autofocus`, `form` and every other attribute
+  land on the input.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is

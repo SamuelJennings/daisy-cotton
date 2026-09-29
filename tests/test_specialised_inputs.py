@@ -254,6 +254,58 @@ class TestFieldsetCompositionCalendars:
                 assert name.get_text(strip=True)
 
 
+class TestFieldsetCompositionOtps:
+    @pytest.fixture
+    def composition(self, cotton_render_string_soup):
+        return cotton_render_string_soup(_fieldset_composition())
+
+    @pytest.fixture
+    def otp_fieldset(self, composition):
+        fieldsets = [
+            fieldset
+            for fieldset in composition.find_all("fieldset")
+            if fieldset.find("label", class_="otp")
+        ]
+        assert fieldsets, "the composition holds no OTP"
+        return fieldsets[0]
+
+    def test_the_composition_holds_an_otp_row_in_its_own_fieldset(self, otp_fieldset):
+        assert otp_fieldset.find("legend") is not None
+        assert len(otp_fieldset.find_all("label", class_="otp")) >= 3
+
+    def test_every_otp_has_an_accessible_name(self, otp_fieldset):
+        for label in otp_fieldset.find_all("label", class_="otp"):
+            name = label.find("small", class_="sr-only")
+            assert name.get_text(strip=True)
+            assert name.find_previous_sibling("input") is not None
+
+    def test_the_row_shows_a_labelled_a_joined_four_digit_and_a_disabled_otp(
+        self, otp_fieldset
+    ):
+        labels = otp_fieldset.find_all("label", class_="otp")
+        inputs = [label.find("input") for label in labels]
+
+        assert any("otp-joined" in label["class"] for label in labels)
+        assert any(field["maxlength"] == "4" for field in inputs)
+        assert any(field.has_attr("disabled") for field in inputs)
+        assert len({label.find("small").get_text(strip=True) for label in labels}) >= 2
+
+    def test_each_otp_has_its_own_name(self, otp_fieldset):
+        names = [
+            field["name"]
+            for field in otp_fieldset.find_all("input")
+            if field.find_parent("label", class_="otp")
+        ]
+
+        assert all(names)
+        assert len(names) == len(set(names))
+
+    def test_ids_are_unique_within_the_composition(self, composition):
+        ids = [element["id"] for element in composition.find_all(id=True)]
+
+        assert [id_ for id_, count in Counter(ids).items() if count > 1] == []
+
+
 class TestDemoHeadLoadsCally:
     @pytest.fixture
     def head(self):

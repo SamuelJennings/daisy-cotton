@@ -54,3 +54,10 @@ Did: `form/otp.html` and `tests/test_otp.py` (29 tests, tests first: red on the 
 Verified: `uv run pytest tests/test_otp.py tests/test_specialised_inputs.py -q` 52 passed; fourteen mutations of the template each failed a new test; `cotton_lint --warnings-as-errors` 0 errors 0 warnings; the gallery, render-all, declared-attribute, palette, link, demo and class-merge tests 777 passed, 17 skipped (pre-existing skips).
 Next: T008, the fieldset composition row, README and CHANGELOG.
 Watch: the hidden name is a `<small>`, never a `<span>`, since daisyUI counts span children as boxes.
+
+## 2026-09-29T10:48Z · Implementer US3 · T008
+
+Did: the fieldset composition gains a nested "Two-step verification" fieldset holding a labelled six-digit OTP, a joined four-digit OTP and a disabled OTP, each with its own `name` and hidden name, and its `@slot` description names it. README count is Eighty-one with `form.otp` in the list. CHANGELOG `Added` bullet. The OTP's annotations were written in T007. Tests first in `tests/test_specialised_inputs.py::TestFieldsetCompositionOtps`: red on the composition holding no OTP. No page under `docs/` describes the OTP or the fieldset composition, so none changed.
+Verified: the composition, OTP, fieldset, gallery annotation, lint and render-all tests 605 passed; five mutations of the row each failed a new test; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: full verify, then the completion report.
+Watch: the OTP's focus indicator, digit display and submission are browser behaviour (US3-6) and covered by the walkthrough's browser check, not by these tests.
