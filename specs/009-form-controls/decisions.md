@@ -92,3 +92,9 @@ The review approved the plan with three medium and three low findings, all appli
 As built, the composition's `account-email` fieldset held every control, so the email's description and error rendered below all of them. That fieldset now holds only the email field it describes, and the other examples follow it inside the outer fieldset. The outer preview's description sample changed so it no longer repeats the inner one. It was an annotation-only edit, made directly at the story's acceptance rather than dispatched again.
 
 **ADR:** none — a gallery example.
+
+## D7 — `<c-file_input>` inside gallery-scanned markup
+
+The gallery's catalog registers a component under its file stem — `file_input`, not `file-input` — and its unknown-component lint check compares a source tag against that literal set with no hyphen/underscore normalization, so `<c-file-input>` inside the fieldset's `@slot` composition read as a reference to a component that does not exist (3 errors, `cotton_lint --warnings-as-errors`), even though Cotton itself resolves the hyphen form to `file_input.html` at render time and `tests/test_file_input.py`/`tests/test_form_controls.py` use `<c-file-input>` freely. This is the same rule spec 008-feedback-components D6 recorded for `<c-radial_progress>` and spec 007-animated-display-components D10/D11 recorded for `<c-hover_gallery>`/`<c-hover_3d>`/`<c-text_rotate>`. The fieldset's composition is written `<c-file_input>` for this reason; the README and CHANGELOG still name it `file-input`, the display form the gallery and daisyUI's own naming use. `<c-range>` has no hyphen in its tag, so it needed no such rewrite.
+
+**ADR:** none — a lint tool's known-tags limitation, not a design choice; recorded so a future template composing with `file-input` in scanned markup does not rediscover it.

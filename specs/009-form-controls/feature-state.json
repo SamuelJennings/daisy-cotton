@@ -300,8 +300,24 @@
         },
         {
           "id": "T011",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run python manage.py cotton_lint --warnings-as-errors: 3 errors first (unknown-component `file-input` in fieldset's composition), exit 0, 0 errors, 0 warnings (71/79 clean) after rewriting the composition's tag to `<c-file_input>` (D7)",
+              "uv run djlint daisy_cotton/templates/cotton/fieldset.html --check: exit 0, 0 files would be updated",
+              "django_cotton_gallery:component_raw for fieldset via Django test client: 200, 3 <input type=file>, 4 <input type=range>, range-vertical present once, 13 unique ids (unchanged, no duplicates), every new control inside a <label>, one file input/range each disabled/invalid",
+              "uv run pytest tests/test_file_input.py tests/test_range.py tests/test_fieldset.py tests/test_form_controls.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py -q: 584 passed",
+              "uv run pytest tests/test_gallery_links.py tests/test_semantic_palette.py tests/test_declared_attributes.py -q: 231 passed, 17 skipped (pre-existing, issue #96)",
+              "uv run ruff check tests/test_file_input.py tests/test_range.py tests/test_form_controls.py: all checks passed",
+              "uv run ruff format --check on the same three files: clean"
+            ],
+            "tests": [
+              "tests/test_gallery_annotations.py",
+              "tests/test_gallery_lint.py",
+              "tests/test_render_all.py"
+            ]
+          }
         }
       ]
     },

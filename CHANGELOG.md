@@ -221,6 +221,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `<c-toggle>`: daisyUI's switch, a native `<input type="checkbox" role="switch">` carrying
   `toggle`, `variant` and `size` the same way `checkbox` does. Both `type` and `role` are written
   by the template and not accepted as attributes.
+- `<c-file-input>`: daisyUI's file input, a native `<input type="file">` carrying `file-input`,
+  `variant`, `size` and, when `ghost` is given, `file-input-ghost`.
+- `<c-range>`: daisyUI's range, a native `<input type="range">` carrying `range`, `variant`,
+  `size` and, when `vertical` is given, `range-vertical`. `min` and `max` are always emitted,
+  defaulting to the browser's own `0` and `100`.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
