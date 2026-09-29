@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.1.1] - 2026-09-29
+
 ### Fixed
 
 - `button`: a class passed to the button no longer also lands on its icon. `<c-button icon="bi bi-plus"
