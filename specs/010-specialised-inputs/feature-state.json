@@ -227,8 +227,19 @@
       "tasks": [
         {
           "id": "T009",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_templatetags/test_daisy_cotton.py -q before rating_items existed: collection error, cannot import rating_items",
+              "uv run pytest tests/test_templatetags/test_daisy_cotton.py -q: 82 passed",
+              "5 mutations of rating_items (int values, half alternation, checked comparison, max fallback, whole flag): every one failed a new test",
+              "uv run ruff check daisy_cotton tests/test_templatetags: all checks passed"
+            ],
+            "tests": [
+              "tests/test_templatetags/test_daisy_cotton.py::TestRatingItems"
+            ]
+          }
         },
         {
           "id": "T010",

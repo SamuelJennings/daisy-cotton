@@ -148,3 +148,55 @@ def filter_options(options: object, value: object) -> list[dict[str, object]]:
         )
 
     return result
+
+
+@register.simple_tag
+def rating_items(max: object, half: object, value: object) -> list[dict[str, object]]:  # noqa: A002
+    """Return the items of a rating, one dict per radio or read-only shape.
+
+    Args:
+        max: The highest rating, as an integer or a numeric string. Anything
+            that is not a positive whole number gives five.
+        half: Truthy to give two items per whole value, one for each half
+            step, from 0.5 up to ``max``.
+        value: The rating to check, compared as a number, so ``7``, ``"7"``
+            and ``"7.0"`` all match. Empty, not a number, out of range or off
+            the step checks nothing.
+
+    Returns:
+        A list of ``{"value", "half", "whole", "checked"}`` dicts in order.
+        Whole values are ints, because ``{% blocktrans count %}`` needs a
+        number; half values are strings such as ``"1.5"``. ``half`` is ``1``
+        or ``2`` alternating on a half rating and ``0`` otherwise, and
+        ``whole`` is true on whole values.
+
+    Example:
+        ``rating_items(2, True, "1.5")`` ->
+        ``[{"value": "0.5", "half": 1, "whole": False, "checked": False},
+        {"value": 1, "half": 2, "whole": True, "checked": False},
+        {"value": "1.5", "half": 1, "whole": False, "checked": True},
+        {"value": 2, "half": 2, "whole": True, "checked": False}]``
+    """
+    top = len(count_range(max, 5))
+    try:
+        chosen = float(str(value).strip())
+    except ValueError:
+        chosen = None
+
+    if half:
+        steps = [
+            (step / 2, step % 2 == 0, 2 if step % 2 == 0 else 1)
+            for step in range(1, top * 2 + 1)
+        ]
+    else:
+        steps = [(number, True, 0) for number in range(1, top + 1)]
+
+    return [
+        {
+            "value": int(number) if whole else str(number),
+            "half": half_class,
+            "whole": whole,
+            "checked": chosen == number,
+        }
+        for number, whole, half_class in steps
+    ]

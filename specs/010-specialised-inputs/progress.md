@@ -61,3 +61,10 @@ Did: the fieldset composition gains a nested "Two-step verification" fieldset ho
 Verified: the composition, OTP, fieldset, gallery annotation, lint and render-all tests 605 passed; five mutations of the row each failed a new test; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: full verify, then the completion report.
 Watch: the OTP's focus indicator, digit display and submission are browser behaviour (US3-6) and covered by the walkthrough's browser check, not by these tests.
+
+## 2026-09-29T10:52Z · Implementer US4 · T009
+
+Did: `rating_items(max, half, value)` in `daisy_cotton/templatetags/daisy_cotton.py` and `TestRatingItems` (35 cases) in `tests/test_templatetags/test_daisy_cotton.py`, tests first: red on the missing import. Whole values are ints, half values strings, `half` is 1 or 2 on a half rating and 0 otherwise, `max` reuses `count_range` with a default of five, and `value` is compared as a number so `7`, `"7"` and `"7.0"` match while empty, non-numeric, out-of-range and off-step values check nothing.
+Verified: `uv run pytest tests/test_templatetags/test_daisy_cotton.py -q` 82 passed; five mutations of the tag each failed a new test; `ruff check` clean.
+Next: T010, `form/rating.html` and `tests/test_rating.py`.
+Watch: the tag's first parameter is named `max` to match the plan's signature, with a `noqa: A002` for the builtin shadow.
