@@ -56,6 +56,23 @@ class TestLabelWrappingControl:
 
         assert html.index('type="checkbox"') < html.index("Remember me")
 
+    def test_c_checkbox_is_inside_the_label(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup(
+            '<c-label text="Remember me"><c-checkbox name="remember" /></c-label>'
+        )
+
+        label = soup.find("label")
+        checkbox = label.find("input", type="checkbox")
+        assert checkbox is not None
+        assert checkbox["name"] == "remember"
+
+    def test_c_checkbox_comes_before_the_text(self, cotton_render_string):
+        html = cotton_render_string(
+            '<c-label text="Remember me"><c-checkbox name="remember" /></c-label>'
+        )
+
+        assert html.index('name="remember"') < html.index("Remember me")
+
 
 class TestLabelFloating:
     def test_floating_wraps_the_input_then_a_span_with_the_text(

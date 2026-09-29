@@ -229,3 +229,46 @@ class TestFieldsetNamedSlots:
             < html.index("We never share it.")
             < html.index("Pick a shipping option.")
         )
+
+
+class TestFieldsetRadioGroup:
+    def test_labelled_radios_share_a_name_under_the_legend(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup(
+            '<c-fieldset legend="Shipping method">'
+            '<c-label text="Standard">'
+            '<c-radio name="shipping" value="standard" /></c-label>'
+            '<c-label text="Express">'
+            '<c-radio name="shipping" value="express" /></c-label>'
+            '<c-label text="Overnight">'
+            '<c-radio name="shipping" value="overnight" /></c-label>'
+            "</c-fieldset>"
+        )
+
+        fieldset = soup.find("fieldset")
+        first_child = next(c for c in fieldset.children if getattr(c, "name", None))
+        assert first_child.name == "legend"
+        labels = fieldset.find_all("label")
+        assert len(labels) == 3
+        radios = [label.find("input", type="radio") for label in labels]
+        assert all(radio is not None for radio in radios)
+        assert {radio["name"] for radio in radios} == {"shipping"}
+        assert [radio["value"] for radio in radios] == [
+            "standard",
+            "express",
+            "overnight",
+        ]
+
+    def test_each_radio_is_inside_its_own_label(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup(
+            '<c-fieldset legend="Shipping method">'
+            '<c-label text="Standard">'
+            '<c-radio name="shipping" value="standard" /></c-label>'
+            '<c-label text="Express">'
+            '<c-radio name="shipping" value="express" /></c-label>'
+            "</c-fieldset>"
+        )
+
+        for label in soup.find_all("label"):
+            assert label.find("input", type="radio") is not None

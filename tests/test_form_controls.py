@@ -48,6 +48,9 @@ CALLER_STRINGS = {
         '<option value="a">A</option>'
         "</c-select>"
     ),
+    "checkbox": '<c-checkbox name="terms" variant="primary" size="sm" checked />',
+    "radio": '<c-radio name="shipping" value="standard" variant="accent" />',
+    "toggle": '<c-toggle name="dark_mode" variant="primary" size="lg" checked />',
 }
 
 # A bare control: no variant and no aria-invalid given, so neither may appear.
@@ -55,6 +58,9 @@ NO_OWN_INVALID_STATE = {
     "input": '<c-input name="q" />',
     "textarea": '<c-textarea name="bio" />',
     "select": '<c-select name="plan" />',
+    "checkbox": '<c-checkbox name="terms" />',
+    "radio": '<c-radio name="shipping" />',
+    "toggle": '<c-toggle name="dark_mode" />',
 }
 
 # The bare component, and a page context naming every declared attribute with
@@ -107,6 +113,30 @@ PAGE_CONTEXT_LEAK = {
             "ghost": "leaked-ghost",
             "start": "leaked-start",
             "end": "leaked-end",
+            "class": "leaked-class",
+        },
+    ),
+    "checkbox": (
+        "<c-checkbox />",
+        {
+            "variant": "leaked-variant",
+            "size": "leaked-size",
+            "class": "leaked-class",
+        },
+    ),
+    "radio": (
+        "<c-radio />",
+        {
+            "variant": "leaked-variant",
+            "size": "leaked-size",
+            "class": "leaked-class",
+        },
+    ),
+    "toggle": (
+        "<c-toggle />",
+        {
+            "variant": "leaked-variant",
+            "size": "leaked-size",
             "class": "leaked-class",
         },
     ),
