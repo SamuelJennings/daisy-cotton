@@ -176,23 +176,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   given. Size it with `h-*`/`w-*` utility classes in `class`. `text` given as a bare attribute adds
   `skeleton-text` and leaves the default slot as the content; given a string it adds `skeleton-text`
   and renders that string as the content instead.
-- `<c-input>`: daisyUI's text input, an `<input>` carrying `input`, `variant` (the eight daisyUI
+- `<c-form.input>`: daisyUI's text input, an `<input>` carrying `input`, `variant` (the eight daisyUI
   colours), `size` (`xs`–`xl`) and `ghost`, with `type` defaulting to `text` and accepting every
   text-like native type; checkbox, radio, range and file have their own components, and `input`
   does not refuse those types. With `start` or `end` filled it renders daisyUI's wrapped form
   instead: a `<label>` carrying `input` and the modifiers, holding the start content, the `<input>`
   and the end content, in that order; `class` lands on whichever element carries `input`, and every
   other attribute lands on the `<input>` itself. Neither slot has a default sample, so the bare
-  gallery preview stays one plain `<input>`. Needs a `<c-label>`, an `aria-label` or an
+  gallery preview stays one plain `<input>`. Needs a `<c-form.label>`, an `aria-label` or an
   `aria-labelledby` for a name; `input` cannot invent one.
-- `<c-label>`: daisyUI's label in its three forms. Above a control, `<c-label for="id_email"
+- `<c-form.label>`: daisyUI's label in its three forms. Above a control, `<c-form.label for="id_email"
   text="Email" />` renders `<label class="label" for="id_email">Email</label>`. Wrapping a
   checkbox, radio or toggle, the default slot holds the control and `text` follows it inside the
   same `<label>`. With `floating`, it renders daisyUI's floating label instead: a
   `<label class="floating-label">` holding the slot's control, then a `<span>` with `text`, and no
   `label` class. `class` merges into the `<label>` and every other attribute, including `for`,
   passes through.
-- `<c-fieldset>`: daisyUI's fieldset. `legend` (attribute or named slot) renders a
+- `<c-form.fieldset>`: daisyUI's fieldset. `legend` (attribute or named slot) renders a
   `<legend class="fieldset-legend">` as the first child, then the default slot, then `description`
   as a `<p class="label">` and `errors` as one `<div class="grid">` holding a
   `<p class="label text-error">` per message — `errors` takes a string for one line or a list (a
@@ -201,30 +201,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `aria-describedby`; without `id`, neither derived id is emitted. An empty `description` or
   `errors` renders nothing. Given as a named slot, either one is placed inside a single line, so it
   takes inline markup only.
-- `<c-textarea>`: daisyUI's multi-line text box, a `<textarea>` carrying `textarea`, `variant`
+- `<c-form.textarea>`: daisyUI's multi-line text box, a `<textarea>` carrying `textarea`, `variant`
   (the eight daisyUI colours), `size` (`xs`–`xl`) and `ghost`. The default slot becomes its value,
-  exactly as written, with nothing added around it. Needs a `<c-label>`, an `aria-label` or an
+  exactly as written, with nothing added around it. Needs a `<c-form.label>`, an `aria-label` or an
   `aria-labelledby` for a name; `textarea` cannot invent one.
-- `<c-select>`: daisyUI's select, following the text input's own split. Unwrapped, it is one
+- `<c-form.select>`: daisyUI's select, following the text input's own split. Unwrapped, it is one
   `<select>` carrying `select`, `variant`, `size` and `ghost`, with the default slot as its
   `<option>` elements. With `start` or `end` filled it renders the wrapped form instead: a
   `<label>` carrying `select` and the modifiers, holding the start content, the `<select>` and the
   end content, in that order; `class` lands on whichever element carries `select`, and every other
   attribute lands on the `<select>` itself.
-- `<c-checkbox>`: daisyUI's checkbox, a native `<input type="checkbox">` carrying `checkbox`,
+- `<c-form.checkbox>`: daisyUI's checkbox, a native `<input type="checkbox">` carrying `checkbox`,
   `variant` (the eight daisyUI colours) and `size` (`xs`–`xl`). `type` is written by the template
-  and not accepted as an attribute. Needs a `<c-label>`, an `aria-label` or an `aria-labelledby`
+  and not accepted as an attribute. Needs a `<c-form.label>`, an `aria-label` or an `aria-labelledby`
   for a name; `checkbox` cannot invent one. Its indeterminate state can only be set from your own
   script.
-- `<c-radio>`: daisyUI's radio, a native `<input type="radio">` carrying `radio`, `variant` and
+- `<c-form.radio>`: daisyUI's radio, a native `<input type="radio">` carrying `radio`, `variant` and
   `size` the same way `checkbox` does. Give every radio in a group the same `name` and group them
-  in a `<c-fieldset>` whose `legend` names the group.
-- `<c-toggle>`: daisyUI's switch, a native `<input type="checkbox" role="switch">` carrying
+  in a `<c-form.fieldset>` whose `legend` names the group.
+- `<c-form.toggle>`: daisyUI's switch, a native `<input type="checkbox" role="switch">` carrying
   `toggle`, `variant` and `size` the same way `checkbox` does. Both `type` and `role` are written
   by the template and not accepted as attributes.
-- `<c-file-input>`: daisyUI's file input, a native `<input type="file">` carrying `file-input`,
+- `<c-form.file-input>`: daisyUI's file input, a native `<input type="file">` carrying `file-input`,
   `variant`, `size` and, when `ghost` is given, `file-input-ghost`.
-- `<c-range>`: daisyUI's range, a native `<input type="range">` carrying `range`, `variant`,
+- `<c-form.range>`: daisyUI's range, a native `<input type="range">` carrying `range`, `variant`,
   `size` and, when `vertical` is given, `range-vertical`. `min` and `max` are always emitted,
   defaulting to the browser's own `0` and `100`.
 
@@ -241,8 +241,8 @@ bound field into those values is the project's job. See
 ### Removed
 
 - `form.field` is removed, with no alias or stub: rendering `<c-form.field>` now raises
-  `TemplateDoesNotExist` naming `form/field`. Everything it did is built from `<c-fieldset>`,
-  `<c-label>` and a control, shown below for every case its tests covered. `form.field` also
+  `TemplateDoesNotExist` naming `form/field`. Everything it did is built from `<c-form.fieldset>`,
+  `<c-form.label>` and a control, shown below for every case its tests covered. `form.field` also
   made every control full width; the new components keep daisyUI's default width, so add
   `class="w-full"` where a field should fill its container.
 
@@ -252,16 +252,16 @@ bound field into those values is the project's job. See
   <!-- before -->
   <c-form.field label="Email" type="email" name="email" id="id_email" />
   <!-- after -->
-  <c-label for="id_email" text="Email" />
-  <c-input id="id_email" type="email" name="email" />
+  <c-form.label for="id_email" text="Email" />
+  <c-form.input id="id_email" type="email" name="email" />
   ```
 
   Every other attribute (`id`, `value`, `disabled`, `required`, a bare `class`) reaches
-  `<c-input>` exactly as it reached `form.field`'s control. Rich label content — a badge, a link —
-  goes in `<c-label>`'s default slot, which comes before `text`, since `text` is a plain attribute:
+  `<c-form.input>` exactly as it reached `form.field`'s control. Rich label content — a badge, a link —
+  goes in `<c-form.label>`'s default slot, which comes before `text`, since `text` is a plain attribute:
 
   ```html
-  <c-label for="id_email">Email <c-badge variant="success">Verified</c-badge></c-label>
+  <c-form.label for="id_email">Email <c-badge variant="success">Verified</c-badge></c-form.label>
   ```
 
   A textarea:
@@ -270,8 +270,8 @@ bound field into those values is the project's job. See
   <!-- before -->
   <c-form.field type="textarea" label="Bio" name="bio" rows="3">Hello</c-form.field>
   <!-- after -->
-  <c-label for="id_bio" text="Bio" />
-  <c-textarea id="id_bio" name="bio" rows="3">Hello</c-textarea>
+  <c-form.label for="id_bio" text="Bio" />
+  <c-form.textarea id="id_bio" name="bio" rows="3">Hello</c-form.textarea>
   ```
 
   An invalid textarea takes `variant="error" aria-invalid="true"` directly, the same way every
@@ -283,8 +283,8 @@ bound field into those values is the project's job. See
   <!-- before -->
   <c-form.field type="select" label="Plan" name="plan"><option>Free</option></c-form.field>
   <!-- after -->
-  <c-label for="id_plan" text="Plan" />
-  <c-select id="id_plan" name="plan"><option>Free</option></c-select>
+  <c-form.label for="id_plan" text="Plan" />
+  <c-form.select id="id_plan" name="plan"><option>Free</option></c-form.select>
   ```
 
   A file input:
@@ -293,8 +293,8 @@ bound field into those values is the project's job. See
   <!-- before -->
   <c-form.field type="file" label="Avatar" name="avatar" accept="image/*" />
   <!-- after -->
-  <c-label for="id_avatar" text="Avatar" />
-  <c-file-input id="id_avatar" name="avatar" accept="image/*" />
+  <c-form.label for="id_avatar" text="Avatar" />
+  <c-form.file-input id="id_avatar" name="avatar" accept="image/*" />
   ```
 
   A checkbox:
@@ -303,7 +303,7 @@ bound field into those values is the project's job. See
   <!-- before -->
   <c-form.field type="checkbox" label="Remember me" name="remember" checked />
   <!-- after -->
-  <c-label text="Remember me"><c-checkbox name="remember" checked /></c-label>
+  <c-form.label text="Remember me"><c-form.checkbox name="remember" checked /></c-form.label>
   ```
 
   A radio button:
@@ -312,7 +312,7 @@ bound field into those values is the project's job. See
   <!-- before -->
   <c-form.field type="radio" label="Standard" name="ship" value="std" />
   <!-- after -->
-  <c-label text="Standard"><c-radio name="ship" value="std" /></c-label>
+  <c-form.label text="Standard"><c-form.radio name="ship" value="std" /></c-form.label>
   ```
 
   A toggle:
@@ -321,17 +321,17 @@ bound field into those values is the project's job. See
   <!-- before -->
   <c-form.field type="toggle" label="Notify" name="notify" />
   <!-- after -->
-  <c-label text="Notify"><c-toggle name="notify" /></c-label>
+  <c-form.label text="Notify"><c-form.toggle name="notify" /></c-form.label>
   ```
 
-  A checkbox, radio or toggle that also needs help text or errors wraps in a `<c-fieldset
+  A checkbox, radio or toggle that also needs help text or errors wraps in a `<c-form.fieldset
   description="…">` around the labelled control, with no `legend`: the legend names a group, not a
   single control.
 
   ```html
-  <c-fieldset description="Applies from your next bill.">
-    <c-label text="Notify"><c-toggle name="notify" /></c-label>
-  </c-fieldset>
+  <c-form.fieldset description="Applies from your next bill.">
+    <c-form.label text="Notify"><c-form.toggle name="notify" /></c-form.label>
+  </c-form.fieldset>
   ```
 
   A field with help text:
@@ -340,13 +340,13 @@ bound field into those values is the project's job. See
   <!-- before -->
   <c-form.field label="U" name="u" help-text="Digits only." />
   <!-- after -->
-  <c-fieldset id="id_u" description="Digits only.">
-    <c-label for="id_u-input" text="U" />
-    <c-input id="id_u-input" name="u" aria-describedby="id_u-description" />
-  </c-fieldset>
+  <c-form.fieldset id="id_u" description="Digits only.">
+    <c-form.label for="id_u-input" text="U" />
+    <c-form.input id="id_u-input" name="u" aria-describedby="id_u-description" />
+  </c-form.fieldset>
   ```
 
-  The named-slot form (`<c-slot name="help_text">`) becomes `<c-fieldset>`'s own `description`
+  The named-slot form (`<c-slot name="help_text">`) becomes `<c-form.fieldset>`'s own `description`
   slot.
 
   A field with errors:
@@ -355,11 +355,11 @@ bound field into those values is the project's job. See
   <!-- before -->
   <c-form.field label="Email" name="email" errors="Invalid email." />
   <!-- after -->
-  <c-fieldset id="id_email" errors="Invalid email.">
-    <c-label for="id_email-input" text="Email" />
-    <c-input id="id_email-input" name="email" type="email" variant="error"
+  <c-form.fieldset id="id_email" errors="Invalid email.">
+    <c-form.label for="id_email-input" text="Email" />
+    <c-form.input id="id_email-input" name="email" type="email" variant="error"
              aria-invalid="true" aria-describedby="id_email-errors" />
-  </c-fieldset>
+  </c-form.fieldset>
   ```
 
   `errors` still takes a string or a list of strings (a Django `ErrorList` works) either way.
@@ -370,16 +370,16 @@ bound field into those values is the project's job. See
   <!-- before -->
   <c-form.field name="site" prelabel="https://" postlabel=".com" />
   <!-- after -->
-  <c-input name="site">
+  <c-form.input name="site">
     <c-slot name="start"><span class="label">https://</span></c-slot>
     <c-slot name="end"><span class="label">.com</span></c-slot>
-  </c-input>
+  </c-form.input>
   ```
 
   What has no direct replacement in an attribute:
 
-  - `hide-label` → `class="sr-only"` on the `<c-label>`.
-  - `wrapper-class` → `class` on the `<c-fieldset>`.
+  - `hide-label` → `class="sr-only"` on the `<c-form.label>`.
+  - `wrapper-class` → `class` on the `<c-form.fieldset>`.
   - `prelabel` → the control's `start` slot.
   - `postlabel` → the control's `end` slot.
   - The required asterisk `form.field` added after a label is dropped: the control's own

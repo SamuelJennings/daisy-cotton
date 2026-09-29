@@ -1,4 +1,4 @@
-"""Tests for <c-input>: daisyUI's text input, wrapped when start or end is filled.
+"""Tests for <c-form.input>: daisyUI's text input, wrapped when start or end is filled.
 
 Sources render through the Cotton compiler as a caller's template would, so
 attributes and named slots reach the component the way they do in a real page.
@@ -17,7 +17,9 @@ class TestInputUnwrapped:
     def test_bare_input_renders_one_text_input_with_its_attributes(
         self, cotton_render_string_soup
     ):
-        soup = cotton_render_string_soup('<c-input name="q" placeholder="Search" />')
+        soup = cotton_render_string_soup(
+            '<c-form.input name="q" placeholder="Search" />'
+        )
 
         inputs = soup.find_all("input")
         assert len(inputs) == 1
@@ -32,7 +34,7 @@ class TestInputUnwrapped:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            '<c-input type="email" variant="primary" size="lg" ghost />'
+            '<c-form.input type="email" variant="primary" size="lg" ghost />'
         )
 
         input_ = soup.find("input")
@@ -41,7 +43,7 @@ class TestInputUnwrapped:
             assert token in input_["class"]
 
     def test_class_join_item_renders_one_element(self, cotton_render_string_soup):
-        soup = cotton_render_string_soup('<c-input class="join-item" />')
+        soup = cotton_render_string_soup('<c-form.input class="join-item" />')
 
         inputs = soup.find_all("input")
         assert len(inputs) == 1
@@ -52,7 +54,7 @@ class TestInputUnwrapped:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            '<c-input variant="error" aria-invalid="true" />'
+            '<c-form.input variant="error" aria-invalid="true" />'
         )
 
         input_ = soup.find("input")
@@ -62,21 +64,21 @@ class TestInputUnwrapped:
     def test_an_unknown_variant_emits_no_class_and_does_not_raise(
         self, cotton_render_string_soup
     ):
-        soup = cotton_render_string_soup('<c-input variant="rainbow" />')
+        soup = cotton_render_string_soup('<c-form.input variant="rainbow" />')
 
         assert "input-rainbow" not in soup.find("input")["class"]
 
     def test_an_unknown_size_emits_no_class_and_does_not_raise(
         self, cotton_render_string_soup
     ):
-        soup = cotton_render_string_soup('<c-input size="xxl" />')
+        soup = cotton_render_string_soup('<c-form.input size="xxl" />')
 
         assert "input-xxl" not in soup.find("input")["class"]
 
     def test_bare_required_and_disabled_reach_the_input_as_bare_attributes(
         self, cotton_render_string
     ):
-        html = cotton_render_string("<c-input required disabled />")
+        html = cotton_render_string("<c-form.input required disabled />")
         tag = _first_input_tag(html)
 
         assert re.search(r"\srequired[\s>]", tag)
@@ -88,9 +90,9 @@ class TestInputWrapped:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            '<c-input variant="primary" size="lg" ghost>'
+            '<c-form.input variant="primary" size="lg" ghost>'
             '<c-slot name="start"><span class="label">https://</span></c-slot>'
-            "</c-input>"
+            "</c-form.input>"
         )
 
         label = soup.find("label")
@@ -101,10 +103,10 @@ class TestInputWrapped:
 
     def test_start_and_end_wrap_the_input_in_order(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
-            "<c-input>"
+            "<c-form.input>"
             '<c-slot name="start"><span class="label">$</span></c-slot>'
             '<c-slot name="end"><kbd>Enter</kbd></c-slot>'
-            "</c-input>"
+            "</c-form.input>"
         )
 
         label = soup.find("label")
@@ -117,13 +119,13 @@ class TestInputWrapped:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            '<c-input><c-slot name="start">$</c-slot></c-input>'
+            '<c-form.input><c-slot name="start">$</c-slot></c-form.input>'
         )
         assert soup.find("label") is not None
 
     def test_only_end_filled_chooses_the_wrapped_form(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
-            '<c-input><c-slot name="end">.00</c-slot></c-input>'
+            '<c-form.input><c-slot name="end">.00</c-slot></c-form.input>'
         )
         assert soup.find("label") is not None
 
@@ -131,9 +133,9 @@ class TestInputWrapped:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            '<c-input class="w-full" name="site" required>'
+            '<c-form.input class="w-full" name="site" required>'
             '<c-slot name="start">$</c-slot>'
-            "</c-input>"
+            "</c-form.input>"
         )
 
         label = soup.find("label")
@@ -144,7 +146,7 @@ class TestInputWrapped:
 
     def test_inner_input_carries_no_class(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
-            '<c-input class="w-full"><c-slot name="start">$</c-slot></c-input>'
+            '<c-form.input class="w-full"><c-slot name="start">$</c-slot></c-form.input>'
         )
 
         assert soup.find("input").get("class") is None
@@ -153,9 +155,9 @@ class TestInputWrapped:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            '<c-input id="site" aria-describedby="site-errors">'
+            '<c-form.input id="site" aria-describedby="site-errors">'
             '<c-slot name="start">$</c-slot>'
-            "</c-input>"
+            "</c-form.input>"
         )
 
         label = soup.find("label")

@@ -1,4 +1,4 @@
-"""Tests for <c-fieldset>: daisyUI's fieldset, with a legend, a description and errors.
+"""Tests for <c-form.fieldset>: daisyUI's fieldset, with a legend, a description and errors.
 
 Sources render through the Cotton compiler as a caller's template would, so
 attributes and named slots reach the component the way they do in a real page.
@@ -38,7 +38,7 @@ def _id_attrs_on(html, tag):
 
 class TestFieldsetStructure:
     def test_bare_fieldset_carries_the_fieldset_class(self, cotton_render_string_soup):
-        soup = cotton_render_string_soup("<c-fieldset>Body</c-fieldset>")
+        soup = cotton_render_string_soup("<c-form.fieldset>Body</c-form.fieldset>")
 
         fieldset = soup.find("fieldset")
         assert fieldset is not None
@@ -48,7 +48,7 @@ class TestFieldsetStructure:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            '<c-fieldset legend="Shipping">Body</c-fieldset>'
+            '<c-form.fieldset legend="Shipping">Body</c-form.fieldset>'
         )
 
         fieldset = soup.find("fieldset")
@@ -60,7 +60,7 @@ class TestFieldsetStructure:
     def test_no_legend_element_when_legend_is_not_given(
         self, cotton_render_string_soup
     ):
-        soup = cotton_render_string_soup("<c-fieldset>Body</c-fieldset>")
+        soup = cotton_render_string_soup("<c-form.fieldset>Body</c-form.fieldset>")
 
         assert soup.find("legend") is None
 
@@ -68,14 +68,14 @@ class TestFieldsetStructure:
 class TestFieldsetDescription:
     def test_description_renders_after_the_slot(self, cotton_render_string):
         html = cotton_render_string(
-            '<c-fieldset description="We never share it.">Body</c-fieldset>'
+            '<c-form.fieldset description="We never share it.">Body</c-form.fieldset>'
         )
 
         assert html.index("Body") < html.index("We never share it.")
 
     def test_description_carries_the_label_class(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
-            '<c-fieldset description="We never share it.">Body</c-fieldset>'
+            '<c-form.fieldset description="We never share it.">Body</c-form.fieldset>'
         )
 
         description_p = next(
@@ -86,7 +86,7 @@ class TestFieldsetDescription:
     def test_no_description_element_when_description_is_empty(
         self, cotton_render_string_soup
     ):
-        soup = cotton_render_string_soup("<c-fieldset>Body</c-fieldset>")
+        soup = cotton_render_string_soup("<c-form.fieldset>Body</c-form.fieldset>")
 
         assert soup.find("p") is None
 
@@ -96,7 +96,7 @@ class TestFieldsetErrors:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            '<c-fieldset errors="Pick a shipping option.">Body</c-fieldset>'
+            '<c-form.fieldset errors="Pick a shipping option.">Body</c-form.fieldset>'
         )
 
         wrapper = soup.find("div", class_="grid")
@@ -111,7 +111,7 @@ class TestFieldsetErrors:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            '<c-fieldset :errors="messages">Body</c-fieldset>',
+            '<c-form.fieldset :errors="messages">Body</c-form.fieldset>',
             {"messages": ["Pick a shipping option.", "Address is required."]},
         )
 
@@ -128,7 +128,7 @@ class TestFieldsetErrors:
         from django.forms.utils import ErrorList
 
         soup = cotton_render_string_soup(
-            '<c-fieldset :errors="messages">Body</c-fieldset>',
+            '<c-form.fieldset :errors="messages">Body</c-form.fieldset>',
             {"messages": ErrorList(["Required."])},
         )
 
@@ -139,13 +139,16 @@ class TestFieldsetErrors:
     @pytest.mark.parametrize(
         ("source", "context"),
         [
-            ('<c-fieldset errors="Enter a <b>valid</b> value.">Body</c-fieldset>', {}),
             (
-                '<c-fieldset :errors="errs">Body</c-fieldset>',
+                '<c-form.fieldset errors="Enter a <b>valid</b> value.">Body</c-form.fieldset>',
+                {},
+            ),
+            (
+                '<c-form.fieldset :errors="errs">Body</c-form.fieldset>',
                 {"errs": ErrorList(["Enter a <b>valid</b> value."])},
             ),
             (
-                '<c-fieldset description="Enter a <b>valid</b> value.">Body</c-fieldset>',
+                '<c-form.fieldset description="Enter a <b>valid</b> value.">Body</c-form.fieldset>',
                 {},
             ),
         ],
@@ -162,7 +165,9 @@ class TestFieldsetErrors:
     def test_empty_string_errors_renders_no_errors_element(
         self, cotton_render_string_soup
     ):
-        soup = cotton_render_string_soup('<c-fieldset errors="">Body</c-fieldset>')
+        soup = cotton_render_string_soup(
+            '<c-form.fieldset errors="">Body</c-form.fieldset>'
+        )
 
         assert soup.find("div", class_="grid") is None
 
@@ -170,7 +175,8 @@ class TestFieldsetErrors:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            '<c-fieldset :errors="messages">Body</c-fieldset>', {"messages": []}
+            '<c-form.fieldset :errors="messages">Body</c-form.fieldset>',
+            {"messages": []},
         )
 
         assert soup.find("div", class_="grid") is None
@@ -178,7 +184,9 @@ class TestFieldsetErrors:
 
 class TestFieldsetIds:
     def test_fieldset_carries_the_given_id_exactly_once(self, cotton_render_string):
-        html = cotton_render_string('<c-fieldset id="shipping">Body</c-fieldset>')
+        html = cotton_render_string(
+            '<c-form.fieldset id="shipping">Body</c-form.fieldset>'
+        )
 
         assert _id_attrs_on(html, "fieldset") == ["shipping"]
 
@@ -186,8 +194,8 @@ class TestFieldsetIds:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            '<c-fieldset id="shipping" description="We never share it." '
-            'errors="Pick a shipping option.">Body</c-fieldset>'
+            '<c-form.fieldset id="shipping" description="We never share it." '
+            'errors="Pick a shipping option.">Body</c-form.fieldset>'
         )
 
         description_p = next(
@@ -199,8 +207,8 @@ class TestFieldsetIds:
 
     def test_no_derived_ids_without_a_fieldset_id(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
-            '<c-fieldset description="We never share it." '
-            'errors="Pick a shipping option.">Body</c-fieldset>'
+            '<c-form.fieldset description="We never share it." '
+            'errors="Pick a shipping option.">Body</c-form.fieldset>'
         )
 
         assert soup.find("fieldset").get("id") is None
@@ -217,12 +225,12 @@ class TestFieldsetNamedSlots:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            "<c-fieldset>"
+            "<c-form.fieldset>"
             '<c-slot name="legend">Shipping</c-slot>'
             "Body"
             '<c-slot name="description">We never share it.</c-slot>'
             '<c-slot name="errors">Pick a shipping option.</c-slot>'
-            "</c-fieldset>"
+            "</c-form.fieldset>"
         )
 
         assert soup.find("legend").get_text() == "Shipping"
@@ -237,8 +245,8 @@ class TestFieldsetNamedSlots:
         self, cotton_render_string
     ):
         html = cotton_render_string(
-            '<c-fieldset legend="Shipping" description="We never share it." '
-            'errors="Pick a shipping option.">Slot content</c-fieldset>'
+            '<c-form.fieldset legend="Shipping" description="We never share it." '
+            'errors="Pick a shipping option.">Slot content</c-form.fieldset>'
         )
 
         assert (
@@ -254,14 +262,14 @@ class TestFieldsetRadioGroup:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            '<c-fieldset legend="Shipping method">'
-            '<c-label text="Standard">'
-            '<c-radio name="shipping" value="standard" /></c-label>'
-            '<c-label text="Express">'
-            '<c-radio name="shipping" value="express" /></c-label>'
-            '<c-label text="Overnight">'
-            '<c-radio name="shipping" value="overnight" /></c-label>'
-            "</c-fieldset>"
+            '<c-form.fieldset legend="Shipping method">'
+            '<c-form.label text="Standard">'
+            '<c-form.radio name="shipping" value="standard" /></c-form.label>'
+            '<c-form.label text="Express">'
+            '<c-form.radio name="shipping" value="express" /></c-form.label>'
+            '<c-form.label text="Overnight">'
+            '<c-form.radio name="shipping" value="overnight" /></c-form.label>'
+            "</c-form.fieldset>"
         )
 
         fieldset = soup.find("fieldset")
@@ -280,12 +288,12 @@ class TestFieldsetRadioGroup:
 
     def test_each_radio_is_inside_its_own_label(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
-            '<c-fieldset legend="Shipping method">'
-            '<c-label text="Standard">'
-            '<c-radio name="shipping" value="standard" /></c-label>'
-            '<c-label text="Express">'
-            '<c-radio name="shipping" value="express" /></c-label>'
-            "</c-fieldset>"
+            '<c-form.fieldset legend="Shipping method">'
+            '<c-form.label text="Standard">'
+            '<c-form.radio name="shipping" value="standard" /></c-form.label>'
+            '<c-form.label text="Express">'
+            '<c-form.radio name="shipping" value="express" /></c-form.label>'
+            "</c-form.fieldset>"
         )
 
         for label in soup.find_all("label"):

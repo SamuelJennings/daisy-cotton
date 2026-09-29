@@ -1,4 +1,4 @@
-"""Tests for <c-textarea>: daisyUI's multi-line text box.
+"""Tests for <c-form.textarea>: daisyUI's multi-line text box.
 
 Sources render through the Cotton compiler as a caller's template would, so
 attributes and the default slot reach the component the way they do in a real
@@ -11,9 +11,9 @@ class TestTextarea:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            '<c-textarea name="bio" rows="3" variant="secondary" size="sm">'
+            '<c-form.textarea name="bio" rows="3" variant="secondary" size="sm">'
             "Hello"
-            "</c-textarea>"
+            "</c-form.textarea>"
         )
 
         textareas = soup.find_all("textarea")
@@ -27,7 +27,7 @@ class TestTextarea:
         assert soup.find("label") is None
 
     def test_ghost_adds_the_ghost_class(self, cotton_render_string_soup):
-        soup = cotton_render_string_soup("<c-textarea ghost>Hi</c-textarea>")
+        soup = cotton_render_string_soup("<c-form.textarea ghost>Hi</c-form.textarea>")
 
         assert "textarea-ghost" in soup.find("textarea")["class"]
 
@@ -35,7 +35,7 @@ class TestTextarea:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            '<c-textarea variant="error" aria-invalid="true" />'
+            '<c-form.textarea variant="error" aria-invalid="true" />'
         )
 
         textarea = soup.find("textarea")
@@ -45,18 +45,18 @@ class TestTextarea:
     def test_an_unknown_variant_emits_no_class_and_does_not_raise(
         self, cotton_render_string_soup
     ):
-        soup = cotton_render_string_soup('<c-textarea variant="rainbow" />')
+        soup = cotton_render_string_soup('<c-form.textarea variant="rainbow" />')
 
         assert "textarea-rainbow" not in soup.find("textarea")["class"]
 
     def test_an_unknown_size_emits_no_class_and_does_not_raise(
         self, cotton_render_string_soup
     ):
-        soup = cotton_render_string_soup('<c-textarea size="xxl" />')
+        soup = cotton_render_string_soup('<c-form.textarea size="xxl" />')
 
         assert "textarea-xxl" not in soup.find("textarea")["class"]
 
     def test_class_merges_with_the_modifier_classes(self, cotton_render_string_soup):
-        soup = cotton_render_string_soup('<c-textarea class="join-item" />')
+        soup = cotton_render_string_soup('<c-form.textarea class="join-item" />')
 
         assert "join-item" in soup.find("textarea")["class"]

@@ -19,61 +19,61 @@ ERROR_CLASS = re.compile(r"-error\b")
 # Every slot and modifier the component offers, filled in.
 CALLER_STRINGS = {
     "input": (
-        '<c-input type="email" variant="primary" size="lg" ghost name="q" '
+        '<c-form.input type="email" variant="primary" size="lg" ghost name="q" '
         'placeholder="Search">'
         '<c-slot name="start"><span class="label">$</span></c-slot>'
         '<c-slot name="end"><kbd>Enter</kbd></c-slot>'
-        "</c-input>"
+        "</c-form.input>"
     ),
     "label": (
-        '<c-label text="Email" floating class="my-label" for="id_email">'
-        '<c-input placeholder="Email" />'
-        "</c-label>"
+        '<c-form.label text="Email" floating class="my-label" for="id_email">'
+        '<c-form.input placeholder="Email" />'
+        "</c-form.label>"
     ),
     "fieldset": (
-        '<c-fieldset legend="Shipping" description="We never share it." '
+        '<c-form.fieldset legend="Shipping" description="We never share it." '
         'errors="Pick a shipping option." id="shipping" class="my-fieldset">'
         "<p>Fields</p>"
-        "</c-fieldset>"
+        "</c-form.fieldset>"
     ),
     "textarea": (
-        '<c-textarea variant="primary" size="lg" ghost name="bio" rows="3">'
+        '<c-form.textarea variant="primary" size="lg" ghost name="bio" rows="3">'
         "Hello"
-        "</c-textarea>"
+        "</c-form.textarea>"
     ),
     "select": (
-        '<c-select variant="primary" size="lg" ghost name="plan">'
+        '<c-form.select variant="primary" size="lg" ghost name="plan">'
         '<c-slot name="start"><span class="label">Plan</span></c-slot>'
         '<c-slot name="end"><kbd>Enter</kbd></c-slot>'
         '<option value="a">A</option>'
-        "</c-select>"
+        "</c-form.select>"
     ),
-    "checkbox": '<c-checkbox name="terms" variant="primary" size="sm" checked />',
-    "radio": '<c-radio name="shipping" value="standard" variant="accent" />',
-    "toggle": '<c-toggle name="dark_mode" variant="primary" size="lg" checked />',
+    "checkbox": '<c-form.checkbox name="terms" variant="primary" size="sm" checked />',
+    "radio": '<c-form.radio name="shipping" value="standard" variant="accent" />',
+    "toggle": '<c-form.toggle name="dark_mode" variant="primary" size="lg" checked />',
     "file_input": (
-        '<c-file-input name="resume" accept=".pdf" variant="primary" size="sm" ghost />'
+        '<c-form.file-input name="resume" accept=".pdf" variant="primary" size="sm" ghost />'
     ),
-    "range": '<c-range name="volume" value="40" variant="primary" size="sm" />',
+    "range": '<c-form.range name="volume" value="40" variant="primary" size="sm" />',
 }
 
 # A bare control: no variant and no aria-invalid given, so neither may appear.
 NO_OWN_INVALID_STATE = {
-    "input": '<c-input name="q" />',
-    "textarea": '<c-textarea name="bio" />',
-    "select": '<c-select name="plan" />',
-    "checkbox": '<c-checkbox name="terms" />',
-    "radio": '<c-radio name="shipping" />',
-    "toggle": '<c-toggle name="dark_mode" />',
-    "file_input": '<c-file-input name="resume" />',
-    "range": '<c-range name="volume" />',
+    "input": '<c-form.input name="q" />',
+    "textarea": '<c-form.textarea name="bio" />',
+    "select": '<c-form.select name="plan" />',
+    "checkbox": '<c-form.checkbox name="terms" />',
+    "radio": '<c-form.radio name="shipping" />',
+    "toggle": '<c-form.toggle name="dark_mode" />',
+    "file_input": '<c-form.file-input name="resume" />',
+    "range": '<c-form.range name="volume" />',
 }
 
 # The bare component, and a page context naming every declared attribute with
 # a value that must not leak into the rendered output.
 PAGE_CONTEXT_LEAK = {
     "input": (
-        "<c-input />",
+        "<c-form.input />",
         {
             "type": "leaked-type",
             "variant": "leaked-variant",
@@ -85,7 +85,7 @@ PAGE_CONTEXT_LEAK = {
         },
     ),
     "label": (
-        "<c-label />",
+        "<c-form.label />",
         {
             "text": "leaked-text",
             "floating": "leaked-floating",
@@ -93,7 +93,7 @@ PAGE_CONTEXT_LEAK = {
         },
     ),
     "fieldset": (
-        "<c-fieldset />",
+        "<c-form.fieldset />",
         {
             "legend": "leaked-legend",
             "description": "leaked-description",
@@ -103,7 +103,7 @@ PAGE_CONTEXT_LEAK = {
         },
     ),
     "textarea": (
-        "<c-textarea />",
+        "<c-form.textarea />",
         {
             "variant": "leaked-variant",
             "size": "leaked-size",
@@ -112,7 +112,7 @@ PAGE_CONTEXT_LEAK = {
         },
     ),
     "select": (
-        "<c-select />",
+        "<c-form.select />",
         {
             "variant": "leaked-variant",
             "size": "leaked-size",
@@ -123,7 +123,7 @@ PAGE_CONTEXT_LEAK = {
         },
     ),
     "checkbox": (
-        "<c-checkbox />",
+        "<c-form.checkbox />",
         {
             "variant": "leaked-variant",
             "size": "leaked-size",
@@ -131,7 +131,7 @@ PAGE_CONTEXT_LEAK = {
         },
     ),
     "radio": (
-        "<c-radio />",
+        "<c-form.radio />",
         {
             "variant": "leaked-variant",
             "size": "leaked-size",
@@ -139,7 +139,7 @@ PAGE_CONTEXT_LEAK = {
         },
     ),
     "toggle": (
-        "<c-toggle />",
+        "<c-form.toggle />",
         {
             "variant": "leaked-variant",
             "size": "leaked-size",
@@ -147,7 +147,7 @@ PAGE_CONTEXT_LEAK = {
         },
     ),
     "file_input": (
-        "<c-file-input />",
+        "<c-form.file-input />",
         {
             "variant": "leaked-variant",
             "size": "leaked-size",
@@ -156,7 +156,7 @@ PAGE_CONTEXT_LEAK = {
         },
     ),
     "range": (
-        "<c-range />",
+        "<c-form.range />",
         {
             "variant": "leaked-variant",
             "size": "leaked-size",

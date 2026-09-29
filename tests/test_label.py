@@ -1,4 +1,4 @@
-"""Tests for <c-label>: daisyUI's label, above a control, wrapping one, or floating.
+"""Tests for <c-form.label>: daisyUI's label, above a control, wrapping one, or floating.
 
 Sources render through the Cotton compiler as a caller's template would, so
 attributes and named slots reach the component the way they do in a real page.
@@ -9,7 +9,7 @@ class TestLabelAboveControl:
     def test_for_and_text_render_a_label_naming_the_control(
         self, cotton_render_string_soup
     ):
-        soup = cotton_render_string_soup('<c-label for="id_email" text="Email" />')
+        soup = cotton_render_string_soup('<c-form.label for="id_email" text="Email" />')
 
         label = soup.find("label")
         assert label is not None
@@ -18,7 +18,7 @@ class TestLabelAboveControl:
         assert label.get_text() == "Email"
 
     def test_no_floating_label_class_when_not_floating(self, cotton_render_string_soup):
-        soup = cotton_render_string_soup('<c-label for="id_email" text="Email" />')
+        soup = cotton_render_string_soup('<c-form.label for="id_email" text="Email" />')
 
         label = soup.find("label")
         assert "floating-label" not in label["class"]
@@ -27,7 +27,7 @@ class TestLabelAboveControl:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            '<c-label text="Email" class="my-label" data-testid="email-label" />'
+            '<c-form.label text="Email" class="my-label" data-testid="email-label" />'
         )
 
         label = soup.find("label")
@@ -39,9 +39,9 @@ class TestLabelAboveControl:
 class TestLabelWrappingControl:
     def test_checkbox_is_inside_the_label(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
-            '<c-label text="Remember me">'
+            '<c-form.label text="Remember me">'
             '<input type="checkbox" class="checkbox" />'
-            "</c-label>"
+            "</c-form.label>"
         )
 
         label = soup.find("label")
@@ -49,16 +49,16 @@ class TestLabelWrappingControl:
 
     def test_wrapped_control_comes_before_the_text(self, cotton_render_string):
         html = cotton_render_string(
-            '<c-label text="Remember me">'
+            '<c-form.label text="Remember me">'
             '<input type="checkbox" class="checkbox" />'
-            "</c-label>"
+            "</c-form.label>"
         )
 
         assert html.index('type="checkbox"') < html.index("Remember me")
 
     def test_c_checkbox_is_inside_the_label(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
-            '<c-label text="Remember me"><c-checkbox name="remember" /></c-label>'
+            '<c-form.label text="Remember me"><c-form.checkbox name="remember" /></c-form.label>'
         )
 
         label = soup.find("label")
@@ -68,7 +68,7 @@ class TestLabelWrappingControl:
 
     def test_c_checkbox_comes_before_the_text(self, cotton_render_string):
         html = cotton_render_string(
-            '<c-label text="Remember me"><c-checkbox name="remember" /></c-label>'
+            '<c-form.label text="Remember me"><c-form.checkbox name="remember" /></c-form.label>'
         )
 
         assert html.index('name="remember"') < html.index("Remember me")
@@ -79,7 +79,7 @@ class TestLabelFloating:
         self, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            '<c-label text="Email" floating><c-input placeholder="Email" /></c-label>'
+            '<c-form.label text="Email" floating><c-form.input placeholder="Email" /></c-form.label>'
         )
 
         label = soup.find("label")
@@ -90,7 +90,7 @@ class TestLabelFloating:
 
     def test_no_label_class_when_floating(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
-            '<c-label text="Email" floating><c-input placeholder="Email" /></c-label>'
+            '<c-form.label text="Email" floating><c-form.input placeholder="Email" /></c-form.label>'
         )
 
         label = soup.find("label")

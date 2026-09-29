@@ -1,4 +1,4 @@
-"""Tests for <c-range>: daisyUI's native slider, whose min and max are
+"""Tests for <c-form.range>: daisyUI's native slider, whose min and max are
 always emitted (the browser's own defaults, 0 and 100) so the element is
 never left without bounds.
 """
@@ -47,7 +47,7 @@ class TestRange:
         self, cotton_render_string, cotton_render_string_soup
     ):
         soup = cotton_render_string_soup(
-            '<c-range name="volume" value="40" variant="success" size="xs" />'
+            '<c-form.range name="volume" value="40" variant="success" size="xs" />'
         )
 
         ranges = soup.find_all("input", type="range")
@@ -61,14 +61,14 @@ class TestRange:
         assert range_input["max"] == "100"
 
         attrs = _attrs_on(
-            cotton_render_string('<c-range name="volume" value="40" />'), "input"
+            cotton_render_string('<c-form.range name="volume" value="40" />'), "input"
         )
         assert _attr_count(attrs, "min") == 1
         assert _attr_count(attrs, "max") == 1
 
     def test_min_and_max_replace_the_defaults(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
-            '<c-range name="volume" min="10" max="20" step="2" />'
+            '<c-form.range name="volume" min="10" max="20" step="2" />'
         )
 
         range_input = soup.find("input", type="range")
@@ -77,30 +77,30 @@ class TestRange:
         assert range_input["step"] == "2"
 
     def test_min_bound_to_integer_zero_still_renders(self, cotton_render_string):
-        attrs = _attrs_on(cotton_render_string('<c-range :min="0" />'), "input")
+        attrs = _attrs_on(cotton_render_string('<c-form.range :min="0" />'), "input")
 
         assert _attr_value(attrs, "min") == "0"
 
     def test_vertical_renders_range_vertical(self, cotton_render_string_soup):
-        soup = cotton_render_string_soup("<c-range vertical />")
+        soup = cotton_render_string_soup("<c-form.range vertical />")
 
         assert "range-vertical" in soup.find("input", type="range")["class"]
 
     def test_an_unknown_variant_emits_no_class_and_does_not_raise(
         self, cotton_render_string_soup
     ):
-        soup = cotton_render_string_soup('<c-range variant="rainbow" />')
+        soup = cotton_render_string_soup('<c-form.range variant="rainbow" />')
 
         assert "range-rainbow" not in soup.find("input", type="range")["class"]
 
     def test_an_unknown_size_emits_no_class_and_does_not_raise(
         self, cotton_render_string_soup
     ):
-        soup = cotton_render_string_soup('<c-range size="xxl" />')
+        soup = cotton_render_string_soup('<c-form.range size="xxl" />')
 
         assert "range-xxl" not in soup.find("input", type="range")["class"]
 
     def test_class_merges_with_the_modifier_classes(self, cotton_render_string_soup):
-        soup = cotton_render_string_soup('<c-range class="join-item" />')
+        soup = cotton_render_string_soup('<c-form.range class="join-item" />')
 
         assert "join-item" in soup.find("input", type="range")["class"]

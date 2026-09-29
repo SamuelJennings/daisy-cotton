@@ -378,8 +378,21 @@
         },
         {
           "id": "T014",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_form_field_removed.py -q: failed red (DID NOT RAISE TemplateDoesNotExist) before git mv, 2 passed after",
+              "uv run pytest tests/test_input.py tests/test_textarea.py tests/test_select.py tests/test_checkbox.py tests/test_radio.py tests/test_toggle.py tests/test_range.py tests/test_file_input.py tests/test_label.py tests/test_fieldset.py tests/test_form_controls.py tests/test_form_field_removed.py -q: 128 passed",
+              "git grep -nE '\\bc-(input|label|fieldset|textarea|select|checkbox|radio|toggle|file-input|file_input|range)\\b' -- daisy_cotton/ tests/ README.md CHANGELOG.md: only c-form.* hits and the deliberate <c-input /> in the new removal test",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings, 71/78 clean",
+              "uv run pytest -q: 1932 passed, 17 skipped",
+              "uv run pre-commit run --all-files: ruff-format reformatted 3 files on first run (line-wrapping only), clean on second run"
+            ],
+            "tests": [
+              "tests/test_form_field_removed.py::TestOldFlatInputNameRemoved::test_rendering_raises_template_does_not_exist"
+            ]
+          }
         }
       ]
     }

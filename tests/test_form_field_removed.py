@@ -19,3 +19,10 @@ class TestFormFieldRemoved:
     def test_rendering_raises_template_does_not_exist(self):
         with pytest.raises(template.TemplateDoesNotExist, match="form/field"):
             render("<c-form.field />")
+
+
+class TestOldFlatInputNameRemoved:
+    @override_settings(DEBUG=False)
+    def test_rendering_raises_template_does_not_exist(self):
+        with pytest.raises(template.TemplateDoesNotExist, match="input"):
+            render("<c-input />")
