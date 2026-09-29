@@ -50,6 +50,17 @@ CALLER_STRINGS = {
         'form="verify" value="1234" pattern="[0-9]{4}" inputmode="numeric" '
         'input_class="validator" class="mb-4" data-testid="o" />'
     ),
+    "rating": (
+        '<c-form.rating name="score" value="3" label="Your rating" max="10" '
+        'shape="heart" variant="warning" size="lg" half clearable required '
+        'disabled form="review" id="score-rating" class="mb-4" '
+        'data-testid="r" />'
+    ),
+    "rating-readonly": (
+        '<c-form.rating readonly value="3" label="Your rating" max="10" '
+        'shape="heart" variant="warning" size="lg" half clearable '
+        'id="score-rating" class="mb-4" data-testid="r" />'
+    ),
 }
 
 # The bare component, and a page context naming every declared attribute with
@@ -92,6 +103,25 @@ PAGE_CONTEXT_LEAK = {
             "pattern": "leaked-pattern",
             "inputmode": "leaked-inputmode",
             "input_class": "leaked-input-class",
+            "class": "leaked-class",
+        },
+    ),
+    "rating": (
+        "<c-form.rating />",
+        {
+            "max": "leaked-max",
+            "value": "leaked-value",
+            "name": "leaked-name",
+            "label": "leaked-label",
+            "shape": "leaked-shape",
+            "variant": "leaked-variant",
+            "size": "leaked-size",
+            "half": "leaked-half",
+            "clearable": "leaked-clearable",
+            "readonly": "leaked-readonly",
+            "required": "leaked-required",
+            "disabled": "leaked-disabled",
+            "form": "leaked-form",
             "class": "leaked-class",
         },
     ),

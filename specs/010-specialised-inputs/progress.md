@@ -68,3 +68,10 @@ Did: `rating_items(max, half, value)` in `daisy_cotton/templatetags/daisy_cotton
 Verified: `uv run pytest tests/test_templatetags/test_daisy_cotton.py -q` 82 passed; five mutations of the tag each failed a new test; `ruff check` clean.
 Next: T010, `form/rating.html` and `tests/test_rating.py`.
 Watch: the tag's first parameter is named `max` to match the plan's signature, with a `noqa: A002` for the builtin shadow.
+
+## 2026-09-29T10:54Z · Implementer US4 · T010
+
+Did: `form/rating.html` and `tests/test_rating.py` (73 tests, tests first: red on the missing template), plus the rating's two rows (interactive and read-only caller strings, page-context leak) in `tests/test_specialised_inputs.py`; `tests/test_rating.py` added to `[tool.forge.conformance] non-mirror-paths`. Wrote the template's annotations here rather than in T011, because the gallery annotation and lint tests fail on an unannotated template, as in US1 to US3. The wrapper carries `rating`, `rating-{size}`, `rating-half`, `class` and `attrs`; interactive it is a `radiogroup` named by `label`, read-only it is `role="img"` named "value out of max". Items are radios (or `<div>`s) carrying `mask`, `mask-{shape}`, `mask-half-{1,2}` and `bg-{variant}`. Radio names bind the item (`count counter=item.value`, `with step=item.value`). The read-only total is the last item's value so a `max` that is not a number reads as five.
+Verified: `uv run pytest tests/test_rating.py tests/test_specialised_inputs.py -q` 106 passed; fifteen mutations of the template each failed a new test; gallery, lint, render-all, declared-attribute and fieldset tests 749 passed; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: T011, the fieldset composition row, README and CHANGELOG.
+Watch: nothing but items sits inside `.rating`, so the group name is `aria-label` on the wrapper. Focus indicator and keyboard use (US4-8) are browser behaviour, covered by the walkthrough's browser check, not by these tests.
