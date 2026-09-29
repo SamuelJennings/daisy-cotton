@@ -1,0 +1,437 @@
+{
+  "feature": "009-form-controls",
+  "branch": "009-form-controls",
+  "repo": "SamuelJennings/daisy-cotton",
+  "state": "PR_READY",
+  "state_history": [
+    {
+      "state": "QUEUED",
+      "at": "2026-09-26T14:48:47Z",
+      "note": "specification merged in #28; issue graph built"
+    },
+    {
+      "state": "PLAN",
+      "at": "2026-09-28T23:13:59Z",
+      "note": "picked up from the queue; branch cut from origin/main 6c8464a; verify green on base"
+    },
+    {
+      "state": "DESIGN_REVIEW",
+      "at": "2026-09-28T23:15:48Z",
+      "note": "plan, research, tasks committed; draft PR #112 opened"
+    },
+    {
+      "state": "IMPLEMENT",
+      "at": "2026-09-28T23:22:16Z",
+      "note": "design review applied (D5); plan notification sent"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-29T00:36:36Z",
+      "note": "all six stories accepted"
+    },
+    {
+      "state": "REVIEW",
+      "at": "2026-09-29T00:37:24Z",
+      "note": "converge green; no ADR graduated"
+    },
+    {
+      "state": "PR_READY",
+      "at": "2026-09-29T00:48:35Z",
+      "note": "review applied (D10); browser check clean apart from the theme's error-colour contrast; pull request ready; walkthrough sent to the maintainer"
+    },
+    {
+      "state": "IMPLEMENT",
+      "at": "2026-09-29T07:06:31Z",
+      "note": "walkthrough: maintainer asked for the form components under a form. namespace (c-form.input, c-form.textarea, ...)"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-29T08:44:53Z",
+      "note": "walkthrough change T014 (form. namespace) verified: 1932 passed, lint 0/0, browser check unchanged"
+    },
+    {
+      "state": "REVIEW",
+      "at": "2026-09-29T08:44:53Z",
+      "note": "walkthrough change T014 (form. namespace) verified: 1932 passed, lint 0/0, browser check unchanged"
+    },
+    {
+      "state": "PR_READY",
+      "at": "2026-09-29T08:44:54Z",
+      "note": "walkthrough change T014 (form. namespace) verified: 1932 passed, lint 0/0, browser check unchanged"
+    }
+  ],
+  "gates": {
+    "spec": {
+      "approved_by": "SamuelJennings",
+      "at": "2026-09-26T14:48:47Z",
+      "self_resolved": [
+        "merge commit 6264208, pull request #28"
+      ]
+    },
+    "plan": {
+      "approved_by": "notified",
+      "at": "2026-09-28T23:22:04Z"
+    },
+    "merge": {
+      "approved_by": null,
+      "at": null
+    },
+    "design_review": {
+      "approved_by": "design-panel",
+      "at": "2026-09-28T23:22:04Z",
+      "self_resolved": [
+        "DR-001..DR-003 medium: applied as plan/tasks edits (D5)",
+        "DR-004..DR-006 low: applied as plan/tasks edits (D5)"
+      ]
+    },
+    "review": {
+      "approved_by": "review-panel",
+      "at": "2026-09-29T00:47:06Z",
+      "self_resolved": [
+        "REV-001..REV-004 medium: fixed with tests and documentation (D10)",
+        "REV-005, REV-006 low: fixed (D10)",
+        "REV-007 low: declined, squash merge (D10)"
+      ]
+    }
+  },
+  "stories": [
+    {
+      "id": "US1",
+      "priority": "P1",
+      "issue": 85,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/009-form-controls",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T001",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_input.py -q: 13 passed",
+              "uv run pytest tests/test_form_controls.py -q: 4 passed",
+              "uv run pytest tests/test_declared_attributes.py tests/test_gallery_annotations.py tests/test_semantic_palette.py tests/test_render_all.py -q: 535 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings",
+              "uv run djlint daisy_cotton/templates/cotton/input.html --check: 0 files would be updated"
+            ],
+            "tests": [
+              "tests/test_input.py::TestInputUnwrapped",
+              "tests/test_input.py::TestInputWrapped",
+              "tests/test_form_controls.py::TestFormControlsNoScript",
+              "tests/test_form_controls.py::TestFormControlsNoOwnInvalidState",
+              "tests/test_form_controls.py::TestFormControlsPageContextDoesNotLeak"
+            ]
+          }
+        },
+        {
+          "id": "T002",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings"
+            ],
+            "tests": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "US2",
+      "priority": "P1",
+      "issue": 86,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/009-form-controls",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T003",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_label.py -q: 7 passed",
+              "uv run pytest tests/test_form_controls.py -q -k label: 3 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings",
+              "uv run djlint daisy_cotton/templates/cotton/label.html --check: 0 files would be updated",
+              "uv run ruff check tests/test_label.py tests/test_form_controls.py: clean"
+            ],
+            "tests": [
+              "tests/test_label.py::TestLabelAboveControl",
+              "tests/test_label.py::TestLabelWrappingControl",
+              "tests/test_label.py::TestLabelFloating",
+              "tests/test_form_controls.py::TestFormControlsNoScript",
+              "tests/test_form_controls.py::TestFormControlsPageContextDoesNotLeak"
+            ]
+          }
+        },
+        {
+          "id": "T004",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_fieldset.py tests/test_form_controls.py -q: 27 passed",
+              "uv run pytest tests/test_declared_attributes.py -q: 80 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings",
+              "uv run djlint daisy_cotton/templates/cotton/fieldset.html --check: 0 files would be updated",
+              "uv run ruff check tests/test_fieldset.py tests/test_form_controls.py: clean"
+            ],
+            "tests": [
+              "tests/test_fieldset.py::TestFieldsetStructure",
+              "tests/test_fieldset.py::TestFieldsetDescription",
+              "tests/test_fieldset.py::TestFieldsetErrors",
+              "tests/test_fieldset.py::TestFieldsetIds",
+              "tests/test_fieldset.py::TestFieldsetNamedSlots",
+              "tests/test_form_controls.py::TestFormControlsNoScript",
+              "tests/test_form_controls.py::TestFormControlsPageContextDoesNotLeak"
+            ]
+          }
+        },
+        {
+          "id": "T005",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings",
+              "uv run djlint daisy_cotton/templates/cotton/label.html daisy_cotton/templates/cotton/fieldset.html --check: 0 files would be updated",
+              "uv run pytest tests/test_label.py tests/test_fieldset.py tests/test_form_controls.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py -q: 507 passed",
+              "uv run pytest tests/test_gallery_links.py tests/test_semantic_palette.py tests/test_declared_attributes.py -q: 210 passed, 17 skipped (pre-existing, issue #96)",
+              "django_cotton_gallery:component_raw for label and fieldset via Django test client: both 200"
+            ],
+            "tests": [
+              "tests/test_gallery_annotations.py",
+              "tests/test_gallery_lint.py",
+              "tests/test_render_all.py"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US4",
+      "priority": "P2",
+      "issue": 88,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/009-form-controls",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T006",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_textarea.py tests/test_select.py tests/test_form_controls.py -q: 33 passed",
+              "uv run pytest tests/test_declared_attributes.py tests/test_gallery_annotations.py tests/test_semantic_palette.py tests/test_render_all.py -q: 563 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings",
+              "uv run djlint daisy_cotton/templates/cotton/textarea.html daisy_cotton/templates/cotton/select.html --check: 0 files would be updated",
+              "uv run ruff check tests/test_textarea.py tests/test_select.py tests/test_form_controls.py: clean"
+            ],
+            "tests": [
+              "tests/test_textarea.py::TestTextarea",
+              "tests/test_select.py::TestSelectUnwrapped",
+              "tests/test_select.py::TestSelectWrapped",
+              "tests/test_form_controls.py::TestFormControlsNoScript",
+              "tests/test_form_controls.py::TestFormControlsNoOwnInvalidState",
+              "tests/test_form_controls.py::TestFormControlsPageContextDoesNotLeak"
+            ]
+          }
+        },
+        {
+          "id": "T007",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings",
+              "uv run djlint daisy_cotton/templates/cotton/fieldset.html --check: 0 files would be updated",
+              "uv run pytest tests/test_textarea.py tests/test_select.py tests/test_fieldset.py tests/test_form_controls.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py -q: 535 passed",
+              "uv run pytest tests/test_gallery_links.py tests/test_semantic_palette.py tests/test_declared_attributes.py -q: 216 passed, 17 skipped (pre-existing, issue #96)",
+              "django_cotton_gallery:component_raw for fieldset via Django test client: 200, 3 <textarea>, 5 <select>, 7 new ids present, 13 unique ids total, every new control named by label[for], aria-labelledby or a wrapping label"
+            ],
+            "tests": [
+              "tests/test_gallery_annotations.py",
+              "tests/test_gallery_lint.py",
+              "tests/test_render_all.py"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US5",
+      "priority": "P2",
+      "issue": 89,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/009-form-controls",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T008",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_checkbox.py tests/test_radio.py tests/test_toggle.py -q: 10 failed (TemplateDoesNotExist: cotton/checkbox/index.html, cotton/toggle/index.html) before templates existed, 15 passed once they did",
+              "uv run pytest tests/test_checkbox.py tests/test_radio.py tests/test_toggle.py tests/test_label.py tests/test_fieldset.py tests/test_form_controls.py tests/test_declared_attributes.py -q: 158 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings (69/77 clean)",
+              "uv run djlint daisy_cotton/templates/cotton/checkbox.html daisy_cotton/templates/cotton/radio.html daisy_cotton/templates/cotton/toggle.html --check: exit 0, 0 files would be updated",
+              "uv run ruff check tests/ daisy_cotton/: all checks passed",
+              "uv run ruff format --check on the six touched test files: clean"
+            ],
+            "tests": [
+              "tests/test_checkbox.py::TestCheckbox",
+              "tests/test_radio.py::TestRadio",
+              "tests/test_toggle.py::TestToggle",
+              "tests/test_label.py::TestLabelWrappingControl",
+              "tests/test_fieldset.py::TestFieldsetRadioGroup",
+              "tests/test_form_controls.py"
+            ]
+          }
+        },
+        {
+          "id": "T009",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings (69/77 clean)",
+              "uv run djlint daisy_cotton/templates/cotton/fieldset.html --check: exit 0, 0 files would be updated",
+              "django_cotton_gallery:component_raw for fieldset via Django test client: 200, 3 <fieldset>, 3 radio, 3 checkbox, 3 toggle, 13 unique ids (unchanged), every new control inside a <label>, one checked/disabled/invalid each",
+              "uv run pytest tests/test_checkbox.py tests/test_radio.py tests/test_toggle.py tests/test_fieldset.py tests/test_form_controls.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py -q: 567 passed",
+              "uv run pytest tests/test_gallery_links.py tests/test_semantic_palette.py tests/test_declared_attributes.py -q: 225 passed, 17 skipped (pre-existing, issue #96)"
+            ],
+            "tests": [
+              "tests/test_gallery_annotations.py",
+              "tests/test_gallery_lint.py",
+              "tests/test_render_all.py"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US6",
+      "priority": "P3",
+      "issue": 90,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/009-form-controls",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T010",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_file_input.py tests/test_range.py -q: 12 failed (TemplateDoesNotExist: cotton/file_input/index.html, cotton/range/index.html) before templates existed",
+              "uv run pytest tests/test_file_input.py tests/test_range.py tests/test_form_controls.py -q: 50 passed once they did",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings (71/79 clean)",
+              "uv run djlint daisy_cotton/templates/cotton/file_input.html daisy_cotton/templates/cotton/range.html --check: exit 0, 0 files would be updated",
+              "uv run pytest tests/test_file_input.py tests/test_range.py tests/test_form_controls.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py -q: 565 passed",
+              "uv run ruff check tests/test_file_input.py tests/test_range.py tests/test_form_controls.py: all checks passed",
+              "uv run ruff format --check on the same three files: clean"
+            ],
+            "tests": [
+              "tests/test_file_input.py::TestFileInput",
+              "tests/test_range.py::TestRange",
+              "tests/test_form_controls.py"
+            ]
+          }
+        },
+        {
+          "id": "T011",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run python manage.py cotton_lint --warnings-as-errors: 3 errors first (unknown-component `file-input` in fieldset's composition), exit 0, 0 errors, 0 warnings (71/79 clean) after rewriting the composition's tag to `<c-file_input>` (D7)",
+              "uv run djlint daisy_cotton/templates/cotton/fieldset.html --check: exit 0, 0 files would be updated",
+              "django_cotton_gallery:component_raw for fieldset via Django test client: 200, 3 <input type=file>, 4 <input type=range>, range-vertical present once, 13 unique ids (unchanged, no duplicates), every new control inside a <label>, one file input/range each disabled/invalid",
+              "uv run pytest tests/test_file_input.py tests/test_range.py tests/test_fieldset.py tests/test_form_controls.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py -q: 584 passed",
+              "uv run pytest tests/test_gallery_links.py tests/test_semantic_palette.py tests/test_declared_attributes.py -q: 231 passed, 17 skipped (pre-existing, issue #96)",
+              "uv run ruff check tests/test_file_input.py tests/test_range.py tests/test_form_controls.py: all checks passed",
+              "uv run ruff format --check on the same three files: clean"
+            ],
+            "tests": [
+              "tests/test_gallery_annotations.py",
+              "tests/test_gallery_lint.py",
+              "tests/test_render_all.py"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US3",
+      "priority": "P1",
+      "issue": 87,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/009-form-controls",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T012",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_form_field_removed.py -q: failed red (DID NOT RAISE TemplateDoesNotExist) before deletion, 1 passed after",
+              "uv run pytest tests/test_form_field_removed.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py -q: 510 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings, 71/78 clean",
+              "uv run ruff check tests/test_form_field_removed.py: all checks passed",
+              "uv run ruff format --check tests/test_form_field_removed.py: 1 file already formatted",
+              "git grep -n --untracked 'form\\.field|form/field' -- daisy_cotton/ demo/ tests/: only tests/test_form_field_removed.py"
+            ],
+            "tests": [
+              "tests/test_form_field_removed.py::TestFormFieldRemoved::test_rendering_raises_template_does_not_exist"
+            ]
+          }
+        },
+        {
+          "id": "T014",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_form_field_removed.py -q: failed red (DID NOT RAISE TemplateDoesNotExist) before git mv, 2 passed after",
+              "uv run pytest tests/test_input.py tests/test_textarea.py tests/test_select.py tests/test_checkbox.py tests/test_radio.py tests/test_toggle.py tests/test_range.py tests/test_file_input.py tests/test_label.py tests/test_fieldset.py tests/test_form_controls.py tests/test_form_field_removed.py -q: 128 passed",
+              "git grep -nE '\\bc-(input|label|fieldset|textarea|select|checkbox|radio|toggle|file-input|file_input|range)\\b' -- daisy_cotton/ tests/ README.md CHANGELOG.md: only c-form.* hits and the deliberate <c-input /> in the new removal test",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings, 71/78 clean",
+              "uv run pytest -q: 1932 passed, 17 skipped",
+              "uv run pre-commit run --all-files: ruff-format reformatted 3 files on first run (line-wrapping only), clean on second run"
+            ],
+            "tests": [
+              "tests/test_form_field_removed.py::TestOldFlatInputNameRemoved::test_rendering_raises_template_does_not_exist"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "budgets": {
+    "converge_cycles": {
+      "used": 2,
+      "max": 2
+    },
+    "review_cycles": {
+      "used": 2,
+      "max": 1
+    },
+    "design_review_cycles": {
+      "used": 1,
+      "max": 1
+    },
+    "tokens": {
+      "used": 0,
+      "max": 120
+    }
+  },
+  "pr": {
+    "number": 112,
+    "draft": false
+  }
+}

@@ -16,18 +16,18 @@ daisyUI's data input group has ten base components that nearly every form uses. 
 
 | Component | Tag | State today | This feature |
 |---|---|---|---|
-| Text input | `<c-input>` | missing | new |
-| Textarea | `<c-textarea>` | missing | new |
-| Select | `<c-select>` | missing | new |
-| Checkbox | `<c-checkbox>` | missing | new |
-| Radio | `<c-radio>` | missing | new |
-| Toggle | `<c-toggle>` | missing | new |
-| Range | `<c-range>` | missing | new |
-| File input | `<c-file-input>` | missing | new |
-| Label | `<c-label>` | missing | new, covering daisyUI's `label` and `floating-label` |
-| Fieldset | `<c-fieldset>` | missing | new |
+| Text input | `<c-form.input>` | missing | new |
+| Textarea | `<c-form.textarea>` | missing | new |
+| Select | `<c-form.select>` | missing | new |
+| Checkbox | `<c-form.checkbox>` | missing | new |
+| Radio | `<c-form.radio>` | missing | new |
+| Toggle | `<c-form.toggle>` | missing | new |
+| Range | `<c-form.range>` | missing | new |
+| File input | `<c-form.file-input>` | missing | new |
+| Label | `<c-form.label>` | missing | new, covering daisyUI's `label` and `floating-label` |
+| Fieldset | `<c-form.fieldset>` | missing | new |
 
-**`form.field` is removed.** It draws a fieldset, a label and a control under one tag, three daisyUI components in one, which the README's *Scope & philosophy* rules out. Everything it does today can be written with `<c-fieldset>`, `<c-label>` and a control used together, and the CHANGELOG shows how (User Story 3).
+**`form.field` is removed.** It draws a fieldset, a label and a control under one tag, three daisyUI components in one, which the README's *Scope & philosophy* rules out. Everything it does today can be written with `<c-form.fieldset>`, `<c-form.label>` and a control used together, and the CHANGELOG shows how (User Story 3).
 
 Out of scope:
 
@@ -39,8 +39,8 @@ Out of scope:
 
 ### Session 2026-09-26
 
-- Q: How is a control's visible label tied to it, now that no single component draws both? → A: By `<c-label>`, in one of daisyUI's documented forms. Above a control it is a `<label class="label">` pointing at the control's `id` with `for`, the pattern daisyUI's fieldset examples use. Around a checkbox, radio or toggle it wraps the control and its text. With `floating` it becomes daisyUI's floating label, wrapping a text input, select or textarea. A wrapping label needs no `id`.
-- Q: What is a fieldset's legend for, and does it name a single control? → A: The legend names a group of controls, such as a set of radio buttons or an address block. It does not name a control inside it for assistive technology, so a fieldset holding one control still gives that control a `<c-label>`. The documentation and the gallery show both shapes.
+- Q: How is a control's visible label tied to it, now that no single component draws both? → A: By `<c-form.label>`, in one of daisyUI's documented forms. Above a control it is a `<label class="label">` pointing at the control's `id` with `for`, the pattern daisyUI's fieldset examples use. Around a checkbox, radio or toggle it wraps the control and its text. With `floating` it becomes daisyUI's floating label, wrapping a text input, select or textarea. A wrapping label needs no `id`.
+- Q: What is a fieldset's legend for, and does it name a single control? → A: The legend names a group of controls, such as a set of radio buttons or an address block. It does not name a control inside it for assistive technology, so a fieldset holding one control still gives that control a `<c-form.label>`. The documentation and the gallery show both shapes.
 - Q: Where do `form.field`'s help text and errors go? → A: To the fieldset. `description` renders daisyUI's description line, and `errors` takes a string or a list of strings and renders them as error-coloured description lines. When the fieldset has an `id`, the description and the errors get ids derived from it, so a control can point at them with `aria-describedby`. The documentation shows that link in every example with help text or errors.
 - Q: How does a control show that it is invalid? → A: The caller sets `variant="error"` for daisyUI's error colour and passes `aria-invalid="true"`, which reaches the control like any other attribute. The control does not infer either from the fieldset, so each attribute keeps one predictable meaning. The gallery shows the invalid state for every control.
 - Q: Which `form.field` attributes have no direct replacement? → A: `hide-label` becomes `class="sr-only"` on the label. `wrapper-class` becomes `class` on the fieldset. `prelabel` and `postlabel` become the `start` and `end` slots of the input or select. The asterisk `form.field` added after a required control's label is dropped: the control's own `required` attribute tells assistive technology, and a project that wants a visible marker writes it in the label text. The CHANGELOG lists each one.
@@ -48,7 +48,7 @@ Out of scope:
 - Q: Which element receives `class` and which receives the other attributes when an input or select is wrapped? → A: `class` goes to the element that carries daisyUI's `input` or `select` class, which is the wrapper when there is one. Every other attribute (`name`, `value`, `id`, `required`, `aria-*` and the rest) goes to the `<input>` or `<select>`, where it has an effect.
 - Q: Is the toggle announced as a checkbox or a switch? → A: As a switch. It renders a checkbox with `role="switch"`, so assistive technology reports "on" and "off", which is what a toggle looks like it does.
 - Q: daisyUI says a range must have `min` and `max`. What if the caller gives neither? → A: The range defaults them to 0 and 100, the browser's own defaults, so the rendered markup always meets daisyUI's rule.
-- Q: Are the new components grouped under a `form.` prefix, as `form.field` was? → A: No. Every other component is named after its daisyUI component with no group prefix, and these follow that: `<c-input>`, `<c-select>` and so on.
+- Q: Are the new components grouped under a `form.` prefix, as `form.field` was? → A: Yes. Every form component sits under `form.`, named after its daisyUI component: `<c-form.input>`, `<c-form.textarea>`, `<c-form.select>` and so on. A project's form markup then reads as one family, and the names cannot collide with a project's own `input` or `label` components.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -58,23 +58,23 @@ A developer building a form needs a text field in every colour, size and style d
 
 **Why this priority**: Almost every form has a text input. It is also what most `form.field` uses turn into, so adopters need it first.
 
-**Independent Test**: Render `<c-input>` with each attribute and check the classes and attributes on the element it emits. Render it with `start` and `end` content and check the wrapped form. Open its gallery entry and see every variant, size and state.
+**Independent Test**: Render `<c-form.input>` with each attribute and check the classes and attributes on the element it emits. Render it with `start` and `end` content and check the wrapped form. Open its gallery entry and see every variant, size and state.
 
 **Acceptance Scenarios**:
 
-1. **Given** `<c-input name="q" placeholder="Search">`, **When** it renders, **Then** it is a single `<input type="text">` with the `input` class and those attributes.
-2. **Given** `<c-input type="email" variant="primary" size="lg" ghost>`, **When** it renders, **Then** it is an `<input type="email">` carrying `input`, `input-primary`, `input-lg` and `input-ghost`.
+1. **Given** `<c-form.input name="q" placeholder="Search">`, **When** it renders, **Then** it is a single `<input type="text">` with the `input` class and those attributes.
+2. **Given** `<c-form.input type="email" variant="primary" size="lg" ghost>`, **When** it renders, **Then** it is an `<input type="email">` carrying `input`, `input-primary`, `input-lg` and `input-ghost`.
 3. **Given** a `start` slot holding `<span class="label">https://</span>` and an `end` slot holding a `<kbd>`, **When** it renders, **Then** a `<label>` carries `input` and the modifier classes, and holds the start content, the `<input>` and the end content in that order.
 4. **Given** a wrapped input with `class="w-full" name="site" required`, **When** it renders, **Then** `w-full` is on the wrapper, and `name` and `required` are on the `<input>`.
-5. **Given** `<c-input class="join-item">` with no slots, **When** it renders, **Then** it is a single element that composes inside a join.
-6. **Given** `<c-input variant="error" aria-invalid="true">`, **When** it renders, **Then** it carries `input-error` and `aria-invalid="true"`.
+5. **Given** `<c-form.input class="join-item">` with no slots, **When** it renders, **Then** it is a single element that composes inside a join.
+6. **Given** `<c-form.input variant="error" aria-invalid="true">`, **When** it renders, **Then** it carries `input-error` and `aria-invalid="true"`.
 7. **Given** the text input's gallery entry, **When** a developer opens it, **Then** every colour, size, the ghost style, the disabled, required and invalid states, several input types, and start and end content are shown, each with an accessible name.
 
 ---
 
 ### User Story 2 - Label and fieldset (Priority: P1)
 
-A developer needs to name every control, group related controls under a heading, and show help text and error messages under a field. They put a `<c-label>` beside or around a control, and wrap related controls in a `<c-fieldset>` with a legend, a description and errors.
+A developer needs to name every control, group related controls under a heading, and show help text and error messages under a field. They put a `<c-form.label>` beside or around a control, and wrap related controls in a `<c-form.fieldset>` with a legend, a description and errors.
 
 **Why this priority**: Without a label no control is accessible, and without the fieldset there is nowhere for help text and errors to go. Together they replace `form.field`, so they land with the text input.
 
@@ -82,11 +82,11 @@ A developer needs to name every control, group related controls under a heading,
 
 **Acceptance Scenarios**:
 
-1. **Given** `<c-label for="id_email" text="Email">`, **When** it renders, **Then** it is a `<label class="label" for="id_email">` reading "Email", and the control with that id takes "Email" as its accessible name.
-2. **Given** `<c-label text="Remember me">` wrapping a `<c-checkbox>`, **When** it renders, **Then** the `<label>` holds the checkbox and the text, and the checkbox's accessible name is "Remember me".
-3. **Given** `<c-label text="Email" floating>` wrapping a `<c-input placeholder="Email">`, **When** it renders, **Then** it is daisyUI's floating label: a `floating-label` wrapper holding the input and a `<span>` with the text, and the input's accessible name is "Email".
-4. **Given** `<c-fieldset legend="Shipping">`, **When** it renders, **Then** it is a `<fieldset class="fieldset">` whose first child is a `<legend class="fieldset-legend">` reading "Shipping", followed by the default slot.
-5. **Given** `<c-fieldset id="f-email" description="We never share it.">`, **When** it renders, **Then** the description is a daisyUI description line after the slot content, with an id derived from `f-email` that a control can name in `aria-describedby`.
+1. **Given** `<c-form.label for="id_email" text="Email">`, **When** it renders, **Then** it is a `<label class="label" for="id_email">` reading "Email", and the control with that id takes "Email" as its accessible name.
+2. **Given** `<c-form.label text="Remember me">` wrapping a `<c-form.checkbox>`, **When** it renders, **Then** the `<label>` holds the checkbox and the text, and the checkbox's accessible name is "Remember me".
+3. **Given** `<c-form.label text="Email" floating>` wrapping a `<c-form.input placeholder="Email">`, **When** it renders, **Then** it is daisyUI's floating label: a `floating-label` wrapper holding the input and a `<span>` with the text, and the input's accessible name is "Email".
+4. **Given** `<c-form.fieldset legend="Shipping">`, **When** it renders, **Then** it is a `<fieldset class="fieldset">` whose first child is a `<legend class="fieldset-legend">` reading "Shipping", followed by the default slot.
+5. **Given** `<c-form.fieldset id="f-email" description="We never share it.">`, **When** it renders, **Then** the description is a daisyUI description line after the slot content, with an id derived from `f-email` that a control can name in `aria-describedby`.
 6. **Given** `errors` as a string or as a list of strings, **When** the fieldset renders, **Then** each message appears as an error-coloured description line, and with an `id` the errors carry their own derived id.
 7. **Given** a fieldset with no `legend`, `description` or `errors`, **When** it renders, **Then** it emits no empty legend or description element.
 8. **Given** the label's and fieldset's gallery entries, **When** a developer opens them, **Then** each label form (above a control, around a checkbox, floating) and a fieldset with a legend, a description, errors and a radio group are shown, with the `aria-describedby` link in the example markup.
@@ -116,12 +116,12 @@ A developer needs a multi-line text box and a drop-down list of options, styled 
 
 **Why this priority**: Most forms beyond a login have one or the other, but they are less universal than the text input.
 
-**Independent Test**: Render `<c-textarea>` and `<c-select>` with each attribute and check the emitted classes and attributes. Open their gallery entries.
+**Independent Test**: Render `<c-form.textarea>` and `<c-form.select>` with each attribute and check the emitted classes and attributes. Open their gallery entries.
 
 **Acceptance Scenarios**:
 
-1. **Given** `<c-textarea name="bio" rows="3" variant="secondary" size="sm">Hello</c-textarea>`, **When** it renders, **Then** it is a `<textarea>` carrying `textarea`, `textarea-secondary` and `textarea-sm`, with `name` and `rows`, and "Hello" as its value.
-2. **Given** `<c-select name="plan" ghost>` with `<option>` elements in the default slot, **When** it renders, **Then** it is a `<select>` carrying `select` and `select-ghost` and holding the options.
+1. **Given** `<c-form.textarea name="bio" rows="3" variant="secondary" size="sm">Hello</c-form.textarea>`, **When** it renders, **Then** it is a `<textarea>` carrying `textarea`, `textarea-secondary` and `textarea-sm`, with `name` and `rows`, and "Hello" as its value.
+2. **Given** `<c-form.select name="plan" ghost>` with `<option>` elements in the default slot, **When** it renders, **Then** it is a `<select>` carrying `select` and `select-ghost` and holding the options.
 3. **Given** a select with a `start` slot, **When** it renders, **Then** a `<label>` carries `select` and the modifier classes and holds the start content and the `<select>`, with `name` and the other attributes on the `<select>`.
 4. **Given** either control with `variant="error" aria-invalid="true"`, **When** it renders, **Then** it carries its error class and `aria-invalid="true"`.
 5. **Given** the textarea's and select's gallery entries, **When** a developer opens them, **Then** every colour, size, the ghost style, and the disabled and invalid states are shown, and the select also shows start content and a floating label.
@@ -134,14 +134,14 @@ A developer needs on-off and one-of-many choices: a checkbox for "remember me", 
 
 **Why this priority**: Common in settings pages and sign-up forms, but fewer forms need them than need a text field.
 
-**Independent Test**: Render each control with each attribute inside a `<c-label>` and check the emitted markup. In a browser, tab to each, change it with Space or the arrow keys, and check what assistive technology reports.
+**Independent Test**: Render each control with each attribute inside a `<c-form.label>` and check the emitted markup. In a browser, tab to each, change it with Space or the arrow keys, and check what assistive technology reports.
 
 **Acceptance Scenarios**:
 
-1. **Given** `<c-checkbox name="remember" variant="primary" size="sm" checked>`, **When** it renders, **Then** it is a checked `<input type="checkbox">` carrying `checkbox`, `checkbox-primary` and `checkbox-sm`.
-2. **Given** `<c-radio name="ship" value="std" variant="accent">`, **When** it renders, **Then** it is an `<input type="radio">` carrying `radio` and `radio-accent`, with that name and value.
-3. **Given** `<c-toggle name="notify" size="lg">`, **When** it renders, **Then** it is an `<input type="checkbox" role="switch">` carrying `toggle` and `toggle-lg`, and is announced as a switch with its on or off state.
-4. **Given** three radio buttons sharing a name inside a `<c-fieldset legend="Shipping">`, each in a `<c-label>`, **When** a keyboard user tabs into the group, **Then** the group is announced as "Shipping", the arrow keys move between options, and each option is announced by its label.
+1. **Given** `<c-form.checkbox name="remember" variant="primary" size="sm" checked>`, **When** it renders, **Then** it is a checked `<input type="checkbox">` carrying `checkbox`, `checkbox-primary` and `checkbox-sm`.
+2. **Given** `<c-form.radio name="ship" value="std" variant="accent">`, **When** it renders, **Then** it is an `<input type="radio">` carrying `radio` and `radio-accent`, with that name and value.
+3. **Given** `<c-form.toggle name="notify" size="lg">`, **When** it renders, **Then** it is an `<input type="checkbox" role="switch">` carrying `toggle` and `toggle-lg`, and is announced as a switch with its on or off state.
+4. **Given** three radio buttons sharing a name inside a `<c-form.fieldset legend="Shipping">`, each in a `<c-form.label>`, **When** a keyboard user tabs into the group, **Then** the group is announced as "Shipping", the arrow keys move between options, and each option is announced by its label.
 5. **Given** any of the three with `disabled`, **When** it renders, **Then** the input carries the native `disabled` attribute.
 6. **Given** the three gallery entries, **When** a developer opens them, **Then** every colour, size, the checked, unchecked, disabled and invalid states, a labelled radio group and a labelled toggle are shown.
 
@@ -153,14 +153,14 @@ A developer needs a file picker for uploads and a slider for picking a number in
 
 **Why this priority**: Uploads and sliders appear in fewer forms than any other control here.
 
-**Independent Test**: Render `<c-file-input>` and `<c-range>` with each attribute and check the emitted markup. Open their gallery entries.
+**Independent Test**: Render `<c-form.file-input>` and `<c-form.range>` with each attribute and check the emitted markup. Open their gallery entries.
 
 **Acceptance Scenarios**:
 
-1. **Given** `<c-file-input name="avatar" accept="image/*" variant="info" ghost>`, **When** it renders, **Then** it is an `<input type="file">` carrying `file-input`, `file-input-info` and `file-input-ghost`, with `name` and `accept`.
-2. **Given** `<c-range name="volume" value="40" variant="success" size="xs">`, **When** it renders, **Then** it is an `<input type="range">` carrying `range`, `range-success` and `range-xs`, with `min="0"` and `max="100"`.
-3. **Given** `<c-range min="10" max="20" step="2">`, **When** it renders, **Then** those values replace the defaults.
-4. **Given** `<c-range vertical>`, **When** it renders, **Then** it carries `range-vertical`.
+1. **Given** `<c-form.file-input name="avatar" accept="image/*" variant="info" ghost>`, **When** it renders, **Then** it is an `<input type="file">` carrying `file-input`, `file-input-info` and `file-input-ghost`, with `name` and `accept`.
+2. **Given** `<c-form.range name="volume" value="40" variant="success" size="xs">`, **When** it renders, **Then** it is an `<input type="range">` carrying `range`, `range-success` and `range-xs`, with `min="0"` and `max="100"`.
+3. **Given** `<c-form.range min="10" max="20" step="2">`, **When** it renders, **Then** those values replace the defaults.
+4. **Given** `<c-form.range vertical>`, **When** it renders, **Then** it carries `range-vertical`.
 5. **Given** the file input's and range's gallery entries, **When** a developer opens them, **Then** every colour, size, the file input's ghost style, the vertical range and the disabled state are shown, each control labelled.
 
 ---
@@ -168,10 +168,10 @@ A developer needs a file picker for uploads and a slider for picking a number in
 ### Edge Cases
 
 - A `variant` or `size` value daisyUI does not define emits no class for that attribute and raises no error.
-- A control with no `<c-label>`, no `aria-label` and no `aria-labelledby` has no accessible name, and the component cannot invent one. The documentation says so, and every gallery example names its control.
-- A `<c-label for="...">` whose id matches no control names nothing, and the browser does not report it. The documentation says the id must match.
+- A control with no `<c-form.label>`, no `aria-label` and no `aria-labelledby` has no accessible name, and the component cannot invent one. The documentation says so, and every gallery example names its control.
+- A `<c-form.label for="...">` whose id matches no control names nothing, and the browser does not report it. The documentation says the id must match.
 - A fieldset holding one control, with the legend as its only text, leaves that control unnamed. The documentation shows the label-per-control shape instead.
-- `<c-input type="checkbox">`, `type="radio"`, `type="range"` or `type="file"` renders an input with the `input` class, which daisyUI does not style for those types. The documentation points to the matching component. The input does not refuse the type.
+- `<c-form.input type="checkbox">`, `type="radio"`, `type="range"` or `type="file"` renders an input with the `input` class, which daisyUI does not style for those types. The documentation points to the matching component. The input does not refuse the type.
 - An empty `errors` list renders no error lines.
 - A description or error message containing HTML is escaped like any other template value. A caller who wants markup uses the named slot of the same name.
 - A checkbox's indeterminate state can only be set from script. The project supplies it.
@@ -184,7 +184,7 @@ A developer needs a file picker for uploads and a slider for picking a number in
 
 **Every component in the group**
 
-- **FR-001**: Checkbox, fieldset, file input, label, radio, range, select, text input, textarea and toggle MUST each exist as a Cotton component (`<c-checkbox>`, `<c-fieldset>`, `<c-file-input>`, `<c-label>`, `<c-radio>`, `<c-range>`, `<c-select>`, `<c-input>`, `<c-textarea>`, `<c-toggle>`) emitting the markup and classes daisyUI documents. *(US1, US2, US4–US6)*
+- **FR-001**: Checkbox, fieldset, file input, label, radio, range, select, text input, textarea and toggle MUST each exist as a Cotton component (`<c-form.checkbox>`, `<c-form.fieldset>`, `<c-form.file-input>`, `<c-form.label>`, `<c-form.radio>`, `<c-form.range>`, `<c-form.select>`, `<c-form.input>`, `<c-form.textarea>`, `<c-form.toggle>`) emitting the markup and classes daisyUI documents. *(US1, US2, US4–US6)*
 - **FR-002**: Each MUST follow Article XIII: `variant` for colour (neutral, primary, secondary, accent, info, success, warning, error), `size` on daisyUI's `xs`–`xl` scale, daisyUI's modifier names as boolean attributes, `class` merged into the root element's class list, and every other attribute passed through to the element this spec names. The fieldset and label have no colour or size modifier in daisyUI and take neither attribute. *(US1, US2, US4–US6)*
 - **FR-003**: Each MUST carry the gallery annotations Article XV requires, and `cotton_lint --warnings-as-errors` MUST pass. *(US1, US2, US4–US6)*
 - **FR-004**: Each MUST have a gallery entry that renders its variants and states, including the disabled and invalid states for every control, so a developer can choose attributes without reading the template. Every control in every gallery example MUST have an accessible name. *(US1, US2, US4–US6)*
@@ -193,34 +193,34 @@ A developer needs a file picker for uploads and a slider for picking a number in
 
 **Text input**
 
-- **FR-007**: `<c-input>` MUST render an `<input>` with the `input` class and `type="text"` unless `type` is given. It MUST accept `variant`, `size` and `ghost`. *(US1)*
-- **FR-008**: `<c-input>` MUST accept `start` and `end` slots. When either is filled, it MUST render daisyUI's wrapped form: a `<label>` carrying `input`, the modifier classes and `class`, holding the start content, the `<input>` and the end content, in that order. When neither is filled, it MUST render the `<input>` alone. *(US1)*
+- **FR-007**: `<c-form.input>` MUST render an `<input>` with the `input` class and `type="text"` unless `type` is given. It MUST accept `variant`, `size` and `ghost`. *(US1)*
+- **FR-008**: `<c-form.input>` MUST accept `start` and `end` slots. When either is filled, it MUST render daisyUI's wrapped form: a `<label>` carrying `input`, the modifier classes and `class`, holding the start content, the `<input>` and the end content, in that order. When neither is filled, it MUST render the `<input>` alone. *(US1)*
 - **FR-009**: Every attribute other than `class`, `variant`, `size` and `ghost` MUST reach the `<input>`, wrapped or not. *(US1)*
 
 **Textarea and select**
 
-- **FR-010**: `<c-textarea>` MUST render a `<textarea>` with the `textarea` class and its default slot as the value, and accept `variant`, `size` and `ghost`. *(US4)*
-- **FR-011**: `<c-select>` MUST render a `<select>` with the `select` class and its default slot as the options, and accept `variant`, `size` and `ghost`. It MUST accept `start` and `end` slots with the same wrapped form and attribute split as the text input (FR-008, FR-009). *(US4)*
+- **FR-010**: `<c-form.textarea>` MUST render a `<textarea>` with the `textarea` class and its default slot as the value, and accept `variant`, `size` and `ghost`. *(US4)*
+- **FR-011**: `<c-form.select>` MUST render a `<select>` with the `select` class and its default slot as the options, and accept `variant`, `size` and `ghost`. It MUST accept `start` and `end` slots with the same wrapped form and attribute split as the text input (FR-008, FR-009). *(US4)*
 
 **Checkbox, radio and toggle**
 
-- **FR-012**: `<c-checkbox>` MUST render an `<input type="checkbox">` with the `checkbox` class, and accept `variant` and `size`. *(US5)*
-- **FR-013**: `<c-radio>` MUST render an `<input type="radio">` with the `radio` class, and accept `variant` and `size`. *(US5)*
-- **FR-014**: `<c-toggle>` MUST render an `<input type="checkbox">` with the `toggle` class and `role="switch"`, and accept `variant` and `size`. *(US5)*
+- **FR-012**: `<c-form.checkbox>` MUST render an `<input type="checkbox">` with the `checkbox` class, and accept `variant` and `size`. *(US5)*
+- **FR-013**: `<c-form.radio>` MUST render an `<input type="radio">` with the `radio` class, and accept `variant` and `size`. *(US5)*
+- **FR-014**: `<c-form.toggle>` MUST render an `<input type="checkbox">` with the `toggle` class and `role="switch"`, and accept `variant` and `size`. *(US5)*
 
 **File input and range**
 
-- **FR-015**: `<c-file-input>` MUST render an `<input type="file">` with the `file-input` class, and accept `variant`, `size` and `ghost`. *(US6)*
-- **FR-016**: `<c-range>` MUST render an `<input type="range">` with the `range` class, accept `variant`, `size` and `vertical` (mapping to `range-vertical`), and emit `min` and `max`, defaulting to 0 and 100 when not given. *(US6)*
+- **FR-015**: `<c-form.file-input>` MUST render an `<input type="file">` with the `file-input` class, and accept `variant`, `size` and `ghost`. *(US6)*
+- **FR-016**: `<c-form.range>` MUST render an `<input type="range">` with the `range` class, accept `variant`, `size` and `vertical` (mapping to `range-vertical`), and emit `min` and `max`, defaulting to 0 and 100 when not given. *(US6)*
 
 **Label**
 
-- **FR-017**: `<c-label>` MUST render a `<label>` with the `label` class, its `text` attribute and its default slot. `for` and every other attribute MUST pass through to the `<label>`. A control in the default slot MUST be named by the text. *(US2)*
-- **FR-018**: `<c-label floating>` MUST render daisyUI's floating label: a `<label>` with the `floating-label` class holding the control from its default slot and a `<span>` with the text. *(US2)*
+- **FR-017**: `<c-form.label>` MUST render a `<label>` with the `label` class, its `text` attribute and its default slot. `for` and every other attribute MUST pass through to the `<label>`. A control in the default slot MUST be named by the text. *(US2)*
+- **FR-018**: `<c-form.label floating>` MUST render daisyUI's floating label: a `<label>` with the `floating-label` class holding the control from its default slot and a `<span>` with the text. *(US2)*
 
 **Fieldset**
 
-- **FR-019**: `<c-fieldset>` MUST render a `<fieldset>` with the `fieldset` class, then a `<legend class="fieldset-legend">` when `legend` is given, then its default slot. `legend` MUST also be fillable as a named slot. *(US2)*
+- **FR-019**: `<c-form.fieldset>` MUST render a `<fieldset>` with the `fieldset` class, then a `<legend class="fieldset-legend">` when `legend` is given, then its default slot. `legend` MUST also be fillable as a named slot. *(US2)*
 - **FR-020**: `description` MUST render daisyUI's description line (`label` class) after the default slot. `errors` MUST accept a string or a list of strings and render each as an error-coloured description line after the description. Both MUST also be fillable as named slots. An empty value MUST render nothing. *(US2)*
 - **FR-021**: When the fieldset has an `id`, its description and its errors MUST each carry an id derived from it, and the documentation MUST state both derived ids and show a control naming them in `aria-describedby`. *(US2)*
 

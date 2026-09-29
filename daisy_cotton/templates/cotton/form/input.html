@@ -1,0 +1,15 @@
+{# @description A native text input. size is daisyUI's scale, not the native size attribute, and a control still needs a c-form.label, an aria-label or an aria-labelledby for its accessible name. With start or end filled, the content sits inside the box before or after the field: daisyUI's inline label written as a span with class label, an icon or a keyboard hint. type also accepts checkbox, radio, range and file's native values; each of those has its own styled component instead. See the fieldset gallery entry for labelled, wrapped, disabled and invalid examples. #}
+{# @prop type:select['text','email','password','number','tel','url','search','date','time','datetime-local','month','week','color'] | default:"text" | description:"Native input type. Checkbox, radio, range and file have their own components; this does not refuse those types." #}
+{# @prop variant:select['neutral','primary','secondary','accent','info','success','warning','error'] | description:"Colour variant." #}
+{# @prop size:select['xs','sm','md','lg','xl'] | description:"Input size. daisyUI's scale, not the native size attribute." #}
+{# @prop ghost:boolean | description:"Draw the input with no background until focused." #}
+{# @prop start:text | description:"Content inside the box before the field. Give it as the start slot; this declaration keeps a page variable of the same name out of the box." #}
+{# @prop end:text | description:"Content inside the box after the field. Give it as the end slot; this declaration keeps a page variable of the same name out of the box." #}
+{# @prop class:text | description:"Extra classes added to the input, or to the wrapper when start or end is filled." #}
+{# @slot:start — Content inside the box before the field: daisyUI's inline label written as a span with class label, an icon or a keyboard hint. #}
+{# @slot:end — Content inside the box after the field. #}
+{% load daisy_cotton %}
+<c-vars type="text" variant="" size="" ghost="" start="" end="" class="" />
+{# djlint:off #}
+{% if start or end %}<label class="input {% variation variant "input" "neutral,primary,secondary,accent,info,success,warning,error" %} {% variation size "input" "xs,sm,md,lg,xl" %}{% if ghost %} input-ghost{% endif %} {{ class }}">{{ start }}<input type="{{ type }}" {{ attrs }}>{{ end }}</label>{% else %}<input type="{{ type }}" class="input {% variation variant "input" "neutral,primary,secondary,accent,info,success,warning,error" %} {% variation size "input" "xs,sm,md,lg,xl" %}{% if ghost %} input-ghost{% endif %} {{ class }}" {{ attrs }}>{% endif %}
+{# djlint:on #}

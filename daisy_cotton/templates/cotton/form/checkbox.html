@@ -1,0 +1,9 @@
+{# @description daisyUI's checkbox: a native on-off control. type is written by the template — checkbox does not accept it, and a caller passing type would produce a duplicate attribute the browser resolves to the first. Its indeterminate state can only be set from the project's own script. A control still needs a c-form.label, an aria-label or an aria-labelledby for its accessible name. See the fieldset gallery entry for labelled, disabled and invalid examples. #}
+{# @prop variant:select['neutral','primary','secondary','accent','info','success','warning','error'] | description:"Colour variant." #}
+{# @prop size:select['xs','sm','md','lg','xl'] | description:"Checkbox size." #}
+{# @prop class:text | description:"Extra classes added to the checkbox." #}
+{% load daisy_cotton %}
+<c-vars variant="" size="" class="" />
+{# djlint:off #}
+<input type="checkbox" class="checkbox {% variation variant "checkbox" "neutral,primary,secondary,accent,info,success,warning,error" %} {% variation size "checkbox" "xs,sm,md,lg,xl" %} {{ class }}" {{ attrs }}>
+{# djlint:on #}
