@@ -38,7 +38,7 @@
 {# djlint:off #}
 {% with element=href|yesno:"a,button" %}
   <{{ element }}{% if href %} href="{{ href }}"{% endif %} class="btn {% variation variant "btn" "neutral,primary,secondary,accent,info,success,warning,error" %} {% variation size "btn" "xs,sm,md,lg,xl" %}{% if outline %} btn-outline{% endif %}{% if dash %} btn-dash{% endif %}{% if soft %} btn-soft{% endif %}{% if ghost %} btn-ghost{% endif %}{% if link %} btn-link{% endif %}{% if active %} btn-active{% endif %}{% if wide %} btn-wide{% endif %}{% if block %} btn-block{% endif %}{% if square %} btn-square{% endif %}{% if circle %} btn-circle{% endif %}{% if disabled and href %} btn-disabled{% endif %} {{ class }}"{% if disabled %}{% if href %} aria-disabled="true" role="button" tabindex="-1"{% else %} disabled{% endif %}{% endif %} {{ attrs }}>
-    {% if icon %}<c-icon name="{{ icon }}" aria-hidden="true" />{% endif %}
+    {% if icon %}<c-icon name="{{ icon }}" aria-hidden="true" only />{% endif %}
     {% if text %}<span>{{ text }}</span>{% endif %}
     {{ slot }}
   </{{ element }}>

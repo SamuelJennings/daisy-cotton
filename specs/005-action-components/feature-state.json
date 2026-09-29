@@ -2,7 +2,7 @@
   "feature": "005-action-components",
   "branch": "005-action-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "PR_READY",
+  "state": "MERGED",
   "state_history": [
     {
       "state": "QUEUED",
@@ -38,6 +38,11 @@
       "state": "PR_READY",
       "at": "2026-09-27T09:46:58Z",
       "note": "review applied (D9); accessibility run clean; pull request ready; walkthrough sent to the maintainer"
+    },
+    {
+      "state": "MERGED",
+      "at": "2026-09-27T16:25:59Z",
+      "note": "PR #103 merged; no approving review found"
     }
   ],
   "gates": {
@@ -54,7 +59,7 @@
     },
     "merge": {
       "approved_by": null,
-      "at": null
+      "at": "2026-09-27T16:25:59Z"
     },
     "design_review": {
       "approved_by": "design-panel",
@@ -340,7 +345,7 @@
       "max": 1
     },
     "tokens": {
-      "used": 0,
+      "used": 55.55,
       "max": 120
     }
   },
