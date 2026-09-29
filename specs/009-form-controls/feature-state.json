@@ -2,7 +2,7 @@
   "feature": "009-form-controls",
   "branch": "009-form-controls",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "REVIEW",
+  "state": "PR_READY",
   "state_history": [
     {
       "state": "QUEUED",
@@ -33,6 +33,11 @@
       "state": "REVIEW",
       "at": "2026-09-29T00:37:24Z",
       "note": "converge green; no ADR graduated"
+    },
+    {
+      "state": "PR_READY",
+      "at": "2026-09-29T00:48:35Z",
+      "note": "review applied (D10); browser check clean apart from the theme's error-colour contrast; pull request ready; walkthrough sent to the maintainer"
     }
   ],
   "gates": {
@@ -389,6 +394,6 @@
   },
   "pr": {
     "number": 112,
-    "draft": true
+    "draft": false
   }
 }
