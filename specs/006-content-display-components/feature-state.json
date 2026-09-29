@@ -2,7 +2,7 @@
   "feature": "006-content-display-components",
   "branch": "006-content-display-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "PR_READY",
+  "state": "MERGED",
   "state_history": [
     {
       "state": "QUEUED",
@@ -38,6 +38,11 @@
       "state": "PR_READY",
       "at": "2026-09-27T14:53:37Z",
       "note": "review applied (D7); accessibility run clean; pull request ready; walkthrough sent to the maintainer"
+    },
+    {
+      "state": "MERGED",
+      "at": "2026-09-27T16:33:22Z",
+      "note": "PR #104 merged; no approving review found"
     }
   ],
   "gates": {
@@ -54,7 +59,7 @@
     },
     "merge": {
       "approved_by": null,
-      "at": null
+      "at": "2026-09-27T16:33:22Z"
     },
     "design_review": {
       "approved_by": "design-panel",
@@ -639,7 +644,7 @@
       "max": 1
     },
     "tokens": {
-      "used": 0,
+      "used": 118.71,
       "max": 120
     }
   },

@@ -2,7 +2,7 @@
   "feature": "007-animated-display-components",
   "branch": "007-animated-display-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "PR_READY",
+  "state": "MERGED",
   "state_history": [
     {
       "state": "QUEUED",
@@ -38,6 +38,11 @@
       "state": "PR_READY",
       "at": "2026-09-28T10:30:30Z",
       "note": "review applied (D14); browser check clean; pull request ready; walkthrough sent to the maintainer"
+    },
+    {
+      "state": "MERGED",
+      "at": "2026-09-28T14:03:07Z",
+      "note": "PR #105 merged; approved by SamuelJennings"
     }
   ],
   "gates": {
@@ -53,8 +58,8 @@
       "at": "2026-09-27T20:34:33Z"
     },
     "merge": {
-      "approved_by": null,
-      "at": null
+      "approved_by": "SamuelJennings",
+      "at": "2026-09-28T14:02:45Z"
     },
     "design_review": {
       "approved_by": "design-panel",
@@ -409,7 +414,7 @@
       "max": 1
     },
     "tokens": {
-      "used": 0,
+      "used": 77.77,
       "max": 120
     }
   },

@@ -2,7 +2,7 @@
   "feature": "008-feedback-components",
   "branch": "008-feedback-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "PR_READY",
+  "state": "MERGED",
   "state_history": [
     {
       "state": "QUEUED",
@@ -38,6 +38,11 @@
       "state": "PR_READY",
       "at": "2026-09-28T21:28:32Z",
       "note": "review applied (D8); browser check clean after the Alpine fix (D7); pull request ready; walkthrough sent to the maintainer"
+    },
+    {
+      "state": "MERGED",
+      "at": "2026-09-28T23:01:10Z",
+      "note": "PR #110 merged; no approving review found"
     }
   ],
   "gates": {
@@ -54,7 +59,7 @@
     },
     "merge": {
       "approved_by": null,
-      "at": null
+      "at": "2026-09-28T23:01:10Z"
     },
     "design_review": {
       "approved_by": "design-panel",
@@ -377,7 +382,7 @@
       "max": 1
     },
     "tokens": {
-      "used": 0,
+      "used": 63.04,
       "max": 120
     }
   },
