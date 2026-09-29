@@ -29,9 +29,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/SamuelJennings/daisy-cotton"
-Repository = "https://github.com/SamuelJennings/daisy-cotton"
-Issues = "https://github.com/SamuelJennings/daisy-cotton/issues"
+Homepage = "https://github.com/django-mvp/daisy-cotton"
+Repository = "https://github.com/django-mvp/daisy-cotton"
+Issues = "https://github.com/django-mvp/daisy-cotton/issues"
 
 [dependency-groups]
 # Toolchain bundle; the tag in [tool.uv.sources] is the shared version. Ships
