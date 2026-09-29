@@ -31,6 +31,12 @@ CALLER_STRINGS = {
         'form="search" id="status-filter" class="mb-4" data-testid="f" '
         ":options=\"['Open', 'Closed']\" />"
     ),
+    "calendar": (
+        '<c-form.calendar range months="2" previous_icon="bi bi-arrow-left" '
+        'next_icon="bi bi-arrow-right" class="mb-4" id="delivery" '
+        'value="2026-09-01/2026-09-07" min="2026-09-01" max="2026-09-30" '
+        'locale="en-GB" first-day-of-week="1" data-testid="c" />'
+    ),
 }
 
 # The bare component, and a page context naming every declared attribute with
@@ -49,6 +55,16 @@ PAGE_CONTEXT_LEAK = {
             "required": "leaked-required",
             "disabled": "leaked-disabled",
             "form": "leaked-form",
+            "class": "leaked-class",
+        },
+    ),
+    "calendar": (
+        "<c-form.calendar />",
+        {
+            "range": "leaked-range",
+            "months": "leaked-months",
+            "previous_icon": "leaked-previous-icon",
+            "next_icon": "leaked-next-icon",
             "class": "leaked-class",
         },
     ),

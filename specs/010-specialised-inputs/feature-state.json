@@ -135,8 +135,23 @@
         },
         {
           "id": "T005",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_calendar.py -q before the template existed: 30 failed, TemplateDoesNotExist cotton/form/calendar/index.html",
+              "uv run pytest tests/test_calendar.py tests/test_specialised_inputs.py -q: 40 passed",
+              "14 template mutations (root element, cally class, class merge, months attribute, offset, sr-only name, aria-hidden on both icons, icon routing, slot names, count_range input, attrs, months default, icon default): every one failed a new test",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors, 0 warnings",
+              "uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_semantic_palette.py tests/test_gallery_links.py tests/test_demo.py tests/test_class_attribute_merge.py -q: 768 passed, 17 skipped (skips pre-existing)",
+              "uv run pre-commit run --files <changed files>: passed"
+            ],
+            "tests": [
+              "tests/test_calendar.py",
+              "tests/test_specialised_inputs.py::TestSpecialisedInputsNoScript",
+              "tests/test_specialised_inputs.py::TestSpecialisedInputsPageContextDoesNotLeak"
+            ]
+          }
         },
         {
           "id": "T006",

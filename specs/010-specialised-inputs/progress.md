@@ -33,3 +33,10 @@ Did: `count_range(value, default)` in `daisy_cotton/templatetags/daisy_cotton.py
 Verified: `uv run pytest tests/test_templatetags/test_daisy_cotton.py -q` 47 passed; changing `> 0` to `>= 0` failed nine of the new tests; pre-commit on the two files passed.
 Next: T005, `form/calendar.html` and its tests.
 Watch: the tag is shared with the OTP (US3), which passes `length` and 6.
+
+## 2026-09-29T10:42Z · Implementer US2 · T005
+
+Did: `form/calendar.html` and `tests/test_calendar.py` (28 tests, tests first: red on the missing component), plus the calendar's rows in `tests/test_specialised_inputs.py` (no script or handler, page context); `tests/test_calendar.py` added to `[tool.forge.conformance] non-mirror-paths`. Wrote the template's annotations here rather than in T006, because the existing gallery annotation and lint tests fail on an unannotated template, as in US1. The root is `<calendar-date>` or `<calendar-range>` with `cally`, `months` written on it above one, one `<calendar-month>` per month with `offset` from the second, and `previous` and `next` span slots each holding an `aria-hidden` icon and a `sr-only` name.
+Verified: `uv run pytest tests/test_calendar.py tests/test_specialised_inputs.py -q` 40 passed; fourteen mutations of the template each failed a new test; `cotton_lint --warnings-as-errors` 0 errors 0 warnings; the gallery, render-all, declared-attribute, palette, link, demo and class-merge tests 768 passed, 17 skipped (pre-existing skips).
+Next: T006, the demo loads Cally, the fieldset composition row, README and CHANGELOG.
+Watch: the page-context rule cannot catch a leak into `range` or `months`, since neither value is ever written into the output as text; the icon and class names are covered.
