@@ -22,6 +22,13 @@ FIELDSET_TEMPLATE = (
     / "form"
     / "fieldset.html"
 )
+DEMO_HEAD = (
+    Path(__file__).parent.parent
+    / "demo"
+    / "templates"
+    / "django_cotton_gallery"
+    / "_extra_head.html"
+)
 
 # Every attribute the component offers, filled in.
 CALLER_STRINGS = {
@@ -172,3 +179,79 @@ class TestFieldsetCompositionFilters:
         }
 
         assert {"btn-primary", "btn-sm", "btn-accent", "btn-lg"} <= classes
+
+
+class TestFieldsetCompositionCalendars:
+    @pytest.fixture
+    def composition(self, cotton_render_string_soup):
+        return cotton_render_string_soup(_fieldset_composition())
+
+    @pytest.fixture
+    def calendar_fieldset(self, composition):
+        fieldsets = [
+            fieldset
+            for fieldset in composition.find_all("fieldset")
+            if fieldset.find(["calendar-date", "calendar-range"])
+        ]
+        assert fieldsets, "the composition holds no calendar"
+        return fieldsets[0]
+
+    def test_the_composition_holds_a_calendar_row_in_its_own_fieldset(
+        self, calendar_fieldset
+    ):
+        assert calendar_fieldset.find("legend") is not None
+        assert calendar_fieldset.find("calendar-date") is not None
+        assert calendar_fieldset.find("calendar-range") is not None
+
+    def test_the_single_date_calendar_has_a_minimum_and_a_maximum(
+        self, calendar_fieldset
+    ):
+        calendar = calendar_fieldset.find("calendar-date")
+
+        assert calendar.get("min")
+        assert calendar.get("max")
+
+    def test_the_range_calendar_shows_two_months(self, calendar_fieldset):
+        calendar = calendar_fieldset.find("calendar-range")
+
+        assert len(calendar.find_all("calendar-month")) == 2
+
+    def test_every_calendar_draws_its_paging_icons_from_an_icon_font(
+        self, calendar_fieldset
+    ):
+        calendars = calendar_fieldset.find_all(["calendar-date", "calendar-range"])
+        assert len(calendars) >= 2
+        for calendar in calendars:
+            previous = calendar.find(attrs={"slot": "previous"}).find("i")
+            following = calendar.find(attrs={"slot": "next"}).find("i")
+            assert {"bi", "bi-chevron-left"} <= set(previous["class"])
+            assert {"bi", "bi-chevron-right"} <= set(following["class"])
+
+    def test_every_calendar_paging_button_has_a_name(self, calendar_fieldset):
+        for calendar in calendar_fieldset.find_all(["calendar-date", "calendar-range"]):
+            for slot in ("previous", "next"):
+                name = calendar.find(attrs={"slot": slot}).find(class_="sr-only")
+                assert name.get_text(strip=True)
+
+
+class TestDemoHeadLoadsCally:
+    @pytest.fixture
+    def head(self):
+        return DEMO_HEAD.read_text(encoding="utf-8")
+
+    def test_cally_loads_as_a_module_from_unpkg_at_a_pinned_version(self, head):
+        assert re.search(
+            r"<script\s+type=\"module\"\s+src=\"https://unpkg\.com/cally@\d+\.\d+\.\d+\"",
+            head,
+        )
+
+    def test_cally_loads_only_after_the_preview_document_check(self, head):
+        guard = head.index("if (!isPreviewDocument) return;")
+
+        assert head.index("cally@") > guard
+
+    def test_the_closing_script_tag_is_split_inside_the_inline_script(self, head):
+        line = next(line for line in head.splitlines() if "cally@" in line)
+
+        assert "</script>" not in line
+        assert "</' + 'script>" in line

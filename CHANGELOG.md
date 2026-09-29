@@ -235,6 +235,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   and `size` become `btn-{variant}` and `btn-{size}` on every radio, and `label` names the group. `name`
   (generated when empty), `required`, `disabled` and `form` land on every radio; `id`, `class` and every
   other attribute land on the wrapper. Adds the `filter_options` template tag.
+- `<c-form.calendar>`: daisyUI's calendar, Cally's `<calendar-date>` element, or `<calendar-range>` with `range`,
+  carrying `cally`. `months` above one writes the count on the root and adds one `<calendar-month>` for each,
+  the second onward with `offset`. `value`, `min`, `max`, `locale`, `first-day-of-week`, `id` and every other
+  attribute land on the root, and `class` is added to its own. The previous and next buttons are `<span>`
+  slots holding a `<c-icon>` and a visually hidden "Previous" or "Next", so each button is named; `previous_icon`
+  and `next_icon` set the icons. The package ships no script: the project loads Cally, and the README shows
+  how and how to copy a chosen date into a form input. Adds the `count_range` template tag.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is

@@ -155,8 +155,20 @@
         },
         {
           "id": "T006",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_specialised_inputs.py -q before the row and the head line: 3 failed, 5 errors (the composition holds no calendar; no Cally script in the demo head)",
+              "uv run pytest tests/test_specialised_inputs.py tests/test_calendar.py tests/test_fieldset.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_demo.py tests/test_gallery_links.py tests/test_semantic_palette.py -q: 745 passed, 17 skipped (skips pre-existing)",
+              "5 mutations (drop months=2, drop min and max, drop type=module, unsplit closing script tag, Cally before the preview-document check): each failed a new test",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_specialised_inputs.py::TestFieldsetCompositionCalendars",
+              "tests/test_specialised_inputs.py::TestDemoHeadLoadsCally"
+            ]
+          }
         }
       ]
     },
