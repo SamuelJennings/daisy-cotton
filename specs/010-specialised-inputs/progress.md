@@ -47,3 +47,10 @@ Did: the demo's preview-document head loads `cally@0.9.2` as a module from unpkg
 Verified: the composition, calendar, fieldset, gallery annotation, lint, render-all, demo, link and palette tests 745 passed, 17 skipped (pre-existing skips); five mutations of the row and head each failed a new test; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: full verify, then the completion report.
 Watch: the README's range example (`start/end` joined by a slash) and the `change` event target are from Cally's documented behaviour, unchecked in a browser; the walkthrough's browser check covers them (research R8).
+
+## 2026-09-29T10:47Z · Implementer US3 · T007
+
+Did: `form/otp.html` and `tests/test_otp.py` (29 tests, tests first: red on the missing component), plus the OTP's rows in `tests/test_specialised_inputs.py` (no script or handler, page context); `tests/test_otp.py` added to `[tool.forge.conformance] non-mirror-paths`. Wrote the template's annotations here rather than in T008, because the existing gallery annotation and lint tests fail on an unannotated template, as in US1 and US2. The label carries `otp`, `otp-{variant}`, `otp-{size}`, `otp-joined` and `class`; the boxes come first, then the input (`maxlength`, `pattern`, `inputmode`, `autocomplete`, `input_class`, everything else through `attrs`), then a `<small class="sr-only">` name. Boxes come from `count_range`.
+Verified: `uv run pytest tests/test_otp.py tests/test_specialised_inputs.py -q` 52 passed; fourteen mutations of the template each failed a new test; `cotton_lint --warnings-as-errors` 0 errors 0 warnings; the gallery, render-all, declared-attribute, palette, link, demo and class-merge tests 777 passed, 17 skipped (pre-existing skips).
+Next: T008, the fieldset composition row, README and CHANGELOG.
+Watch: the hidden name is a `<small>`, never a `<span>`, since daisyUI counts span children as boxes.

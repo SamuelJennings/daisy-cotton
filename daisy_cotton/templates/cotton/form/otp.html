@@ -1,0 +1,16 @@
+{# @description daisyUI's OTP: a one-time code field drawn as separate boxes over one text input, so typing, pasting and phone autofill all work. length sets the boxes and the digits allowed; daisyUI styles four to six. The input asks for the number keypad and one-time-code autofill, and accepts exactly length digits unless pattern and inputmode replace those defaults for letter codes. label is the input's visually hidden name and defaults to Verification code. id, name, value, required, disabled, autofocus, form and every other attribute land on the input; class lands on the label. Validation styling comes from adding validator through input_class. See the fieldset gallery entry for a labelled, a joined four-digit and a disabled example. #}
+{# @prop length:select['4','5','6'] | default:"6" | description:"How many boxes show, and how many digits the input accepts. Anything that is not a positive whole number gives six." #}
+{# @prop label:text | description:"Accessible name of the input, visually hidden. Empty uses the translated Verification code." #}
+{# @prop variant:select['neutral','primary','secondary','accent','info','success','warning','error'] | description:"Colour variant of the boxes." #}
+{# @prop size:select['xs','sm','md','lg','xl'] | description:"Size of the boxes." #}
+{# @prop joined:boolean | description:"Draw the boxes joined into one strip instead of separate." #}
+{# @prop pattern:text | description:"Regular expression the input must match. Empty allows exactly length digits." #}
+{# @prop inputmode:text | default:"numeric" | description:"The keyboard the input asks for; use text for letter codes." #}
+{# @prop input_class:text | description:"Extra classes added to the input, such as validator for validation styling." #}
+{# @prop class:text | description:"Extra classes added to the label that carries the boxes." #}
+{% load i18n daisy_cotton %}
+<c-vars length="6" label="" variant="" size="" joined="" pattern="" inputmode="numeric" input_class="" class="" />
+{% count_range length 6 as boxes %}{% variation variant "otp" "neutral,primary,secondary,accent,info,success,warning,error" as variant_class %}{% variation size "otp" "xs,sm,md,lg,xl" as size_class %}
+{# djlint:off #}
+<label class="otp {{ variant_class }} {{ size_class }}{% if joined %} otp-joined{% endif %} {{ class }}">{% for box in boxes %}<span></span>{% endfor %}<input type="text" maxlength="{{ boxes|length }}" pattern="{% if pattern %}{{ pattern }}{% else %}[0-9]{% templatetag openbrace %}{{ boxes|length }}{% templatetag closebrace %}{% endif %}" inputmode="{{ inputmode }}" autocomplete="one-time-code"{% if input_class %} class="{{ input_class }}"{% endif %} {{ attrs }}><small class="sr-only">{% if label %}{{ label }}{% else %}{% trans "Verification code" %}{% endif %}</small></label>
+{# djlint:on #}

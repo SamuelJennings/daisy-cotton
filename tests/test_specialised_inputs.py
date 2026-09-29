@@ -44,6 +44,12 @@ CALLER_STRINGS = {
         'value="2026-09-01/2026-09-07" min="2026-09-01" max="2026-09-30" '
         'locale="en-GB" first-day-of-week="1" data-testid="c" />'
     ),
+    "otp": (
+        '<c-form.otp name="code" id="otp-code" length="4" label="Code" '
+        'variant="primary" size="sm" joined required disabled autofocus '
+        'form="verify" value="1234" pattern="[0-9]{4}" inputmode="numeric" '
+        'input_class="validator" class="mb-4" data-testid="o" />'
+    ),
 }
 
 # The bare component, and a page context naming every declared attribute with
@@ -72,6 +78,20 @@ PAGE_CONTEXT_LEAK = {
             "months": "leaked-months",
             "previous_icon": "leaked-previous-icon",
             "next_icon": "leaked-next-icon",
+            "class": "leaked-class",
+        },
+    ),
+    "otp": (
+        "<c-form.otp />",
+        {
+            "length": "leaked-length",
+            "label": "leaked-label",
+            "variant": "leaked-variant",
+            "size": "leaked-size",
+            "joined": "leaked-joined",
+            "pattern": "leaked-pattern",
+            "inputmode": "leaked-inputmode",
+            "input_class": "leaked-input-class",
             "class": "leaked-class",
         },
     ),
