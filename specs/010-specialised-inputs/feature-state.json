@@ -94,8 +94,18 @@
         },
         {
           "id": "T003",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_specialised_inputs.py -q before the composition row: 5 errors, the composition holds no filter",
+              "uv run pytest tests/test_specialised_inputs.py tests/test_filter.py tests/test_fieldset.py tests/test_gallery_annotations.py tests/test_gallery_lint.py -q: 498 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_specialised_inputs.py::TestFieldsetCompositionFilters"
+            ]
+          }
         }
       ]
     },

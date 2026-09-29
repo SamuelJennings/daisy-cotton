@@ -227,6 +227,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `<c-form.range>`: daisyUI's range, a native `<input type="range">` carrying `range`, `variant`,
   `size` and, when `vertical` is given, `range-vertical`. `min` and `max` are always emitted,
   defaulting to the browser's own `0` and `100`.
+- `<c-form.filter>`: daisyUI's filter, a `<div class="filter" role="radiogroup">` of radio buttons carrying
+  `btn`, written without a `<form>` so it can sit inside one. The first radio is the reset, carrying
+  `filter-reset`; it shows × and is named "Clear filter" through a hidden element, which `reset_label`
+  replaces. One radio follows for each entry of `options`, a value used as its own label or a
+  (value, label) pair, the shape of a Django `choices` list, and `value` checks the matching one. `variant`
+  and `size` become `btn-{variant}` and `btn-{size}` on every radio, and `label` names the group. `name`
+  (generated when empty), `required`, `disabled` and `form` land on every radio; `id`, `class` and every
+  other attribute land on the wrapper. Adds the `filter_options` template tag.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
