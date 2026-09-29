@@ -7,7 +7,9 @@ attributes reach the component the way they do in a real page.
 
 class TestToggle:
     def test_name_and_size_render_native_switch(self, cotton_render_string_soup):
-        soup = cotton_render_string_soup('<c-toggle name="dark_mode" size="lg" />')
+        soup = cotton_render_string_soup(
+            '<c-toggle name="dark_mode" size="lg" variant="primary" />'
+        )
 
         toggles = soup.find_all("input", attrs={"role": "switch"})
         assert len(toggles) == 1
@@ -15,6 +17,7 @@ class TestToggle:
         assert toggle["type"] == "checkbox"
         assert "toggle" in toggle["class"]
         assert "toggle-lg" in toggle["class"]
+        assert "toggle-primary" in toggle["class"]
         assert toggle["name"] == "dark_mode"
 
     def test_disabled_is_native(self, cotton_render_string_soup):

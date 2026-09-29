@@ -6,6 +6,9 @@ attributes and named slots reach the component the way they do in a real page.
 
 from html.parser import HTMLParser
 
+import pytest
+from django.forms.utils import ErrorList
+
 
 class _FirstTagAttrs(HTMLParser):
     """Collect the raw attribute list of the first ``<tag>`` start tag.
@@ -133,10 +136,25 @@ class TestFieldsetErrors:
         lines = wrapper.find_all("p")
         assert [line.get_text() for line in lines] == ["Required."]
 
-    def test_error_message_containing_markup_is_escaped(self, cotton_render_string):
-        html = cotton_render_string(
-            '<c-fieldset errors="Enter a <b>valid</b> value.">Body</c-fieldset>'
-        )
+    @pytest.mark.parametrize(
+        ("source", "context"),
+        [
+            ('<c-fieldset errors="Enter a <b>valid</b> value.">Body</c-fieldset>', {}),
+            (
+                '<c-fieldset :errors="errs">Body</c-fieldset>',
+                {"errs": ErrorList(["Enter a <b>valid</b> value."])},
+            ),
+            (
+                '<c-fieldset description="Enter a <b>valid</b> value.">Body</c-fieldset>',
+                {},
+            ),
+        ],
+        ids=["errors-string", "errors-list", "description"],
+    )
+    def test_markup_in_a_message_is_escaped(
+        self, cotton_render_string, source, context
+    ):
+        html = cotton_render_string(source, context)
 
         assert "<b>valid</b>" not in html
         assert "&lt;b&gt;valid&lt;/b&gt;" in html

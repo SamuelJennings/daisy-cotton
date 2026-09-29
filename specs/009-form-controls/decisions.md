@@ -110,3 +110,18 @@ The gallery's catalog registers a component under its file stem — `file_input`
 Mapping every `tests/test_form_field.py` test to a CHANGELOG example (SC-004) left two genuinely uncovered by the ten required cases: rich label content (a badge inside the label text) and a check-style control (checkbox/radio/toggle) that also carries help text. Neither is a new behaviour — `<c-label>`'s default slot already accepts markup, and `<c-fieldset>` already renders no `legend` unless given one — so each got the one extra before-and-after line the spec allows for an unmapped case, rather than a new component capability.
 
 **ADR:** none — a documentation-mapping choice, not a design change.
+
+## D10 — Code review applied
+
+The review approved with four medium and three low findings. Six were fixed directly, as test additions and wording, with no dispatch:
+
+- The wrapped input and select each gained a test that the modifiers land on the wrapper and not the control.
+- The select gained a start-and-end order test.
+- The fieldset's escaping test now covers a list of errors and the description as well as a string.
+- The toggle's colour is now asserted.
+- The fieldset's composition description reads as current state.
+- The fieldset's named slots are documented as taking inline markup only, because each is placed inside one line.
+
+The review's note on width went into the CHANGELOG: `form.field` made every control full width, and the new components do not. The seventh finding asked to reword two commit messages. It was declined: the pull request is squash-merged, so those messages do not reach main, and rewriting pushed history would cost a force-push for no lasting change.
+
+**ADR:** none — tests and documentation local to this feature.

@@ -199,7 +199,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Django `ErrorList` works) for one line per item. With `id`, the fieldset carries it once and the
   description and errors carry `<id>-description` and `<id>-errors`, so a control can name both in
   `aria-describedby`; without `id`, neither derived id is emitted. An empty `description` or
-  `errors` renders nothing.
+  `errors` renders nothing. Given as a named slot, either one is placed inside a single line, so it
+  takes inline markup only.
 - `<c-textarea>`: daisyUI's multi-line text box, a `<textarea>` carrying `textarea`, `variant`
   (the eight daisyUI colours), `size` (`xs`–`xl`) and `ghost`. The default slot becomes its value,
   exactly as written, with nothing added around it. Needs a `<c-label>`, an `aria-label` or an
@@ -241,7 +242,9 @@ bound field into those values is the project's job. See
 
 - `form.field` is removed, with no alias or stub: rendering `<c-form.field>` now raises
   `TemplateDoesNotExist` naming `form/field`. Everything it did is built from `<c-fieldset>`,
-  `<c-label>` and a control, shown below for every case its tests covered.
+  `<c-label>` and a control, shown below for every case its tests covered. `form.field` also
+  made every control full width; the new components keep daisyUI's default width, so add
+  `class="w-full"` where a field should fill its container.
 
   A labelled text input:
 

@@ -84,6 +84,21 @@ class TestInputUnwrapped:
 
 
 class TestInputWrapped:
+    def test_modifiers_land_on_the_wrapper_not_the_input(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup(
+            '<c-input variant="primary" size="lg" ghost>'
+            '<c-slot name="start"><span class="label">https://</span></c-slot>'
+            "</c-input>"
+        )
+
+        label = soup.find("label")
+        assert {"input", "input-primary", "input-lg", "input-ghost"} <= set(
+            label["class"]
+        )
+        assert soup.find("input").get("class") is None
+
     def test_start_and_end_wrap_the_input_in_order(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             "<c-input>"

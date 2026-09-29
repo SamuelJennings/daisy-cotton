@@ -60,6 +60,35 @@ class TestSelectUnwrapped:
 
 
 class TestSelectWrapped:
+    def test_modifiers_land_on_the_wrapper_not_the_select(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup(
+            '<c-select variant="primary" size="lg" ghost>'
+            '<c-slot name="start"><span class="label">Plan</span></c-slot>'
+            "<option>A</option>"
+            "</c-select>"
+        )
+
+        label = soup.find("label")
+        assert {"select", "select-primary", "select-lg", "select-ghost"} <= set(
+            label["class"]
+        )
+        assert soup.find("select").get("class") is None
+
+    def test_start_and_end_wrap_the_select_in_order(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup(
+            '<c-select name="plan">'
+            '<c-slot name="start"><span class="label">Plan</span></c-slot>'
+            '<c-slot name="end"><kbd class="kbd">P</kbd></c-slot>'
+            "<option>A</option>"
+            "</c-select>"
+        )
+
+        label = soup.find("label")
+        children = [c for c in label.children if getattr(c, "name", None)]
+        assert [c.name for c in children] == ["span", "select", "kbd"]
+
     def test_start_filled_wraps_the_select_in_order(self, cotton_render_string_soup):
         soup = cotton_render_string_soup(
             '<c-select name="plan">'
