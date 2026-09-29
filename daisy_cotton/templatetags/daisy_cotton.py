@@ -80,6 +80,32 @@ def unique_id(prefix: str) -> str:
 
 
 @register.simple_tag
+def count_range(value: object, default: int) -> range:
+    """Return ``range(n)`` for looping a template ``n`` times.
+
+    Args:
+        value: The count, as an integer or a numeric string. Anything that is
+            not a positive whole number is ignored.
+        default: The count to use when ``value`` is not a positive whole
+            number.
+
+    Returns:
+        ``range(n)`` where ``n`` is ``value`` as a positive integer, or
+        ``default`` when it is not one.
+
+    Example:
+        ``count_range("3", 6)`` -> ``range(0, 3)``
+        ``count_range("many", 6)`` -> ``range(0, 6)``
+    """
+    try:
+        count = int(str(value).strip())
+    except ValueError:
+        count = 0
+
+    return range(count if count > 0 else default)
+
+
+@register.simple_tag
 def filter_options(options: object, value: object) -> list[dict[str, object]]:
     """Return the radio options for a filter, one dict per entry.
 

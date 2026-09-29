@@ -13,6 +13,7 @@ import re
 import pytest
 
 from daisy_cotton.templatetags.daisy_cotton import (
+    count_range,
     filter_options,
     responsive,
     unique_id,
@@ -125,3 +126,34 @@ class TestFilterOptions:
             {"value": "draft", "label": "Draft", "checked": False},
             {"value": "live", "label": "Live", "checked": True},
         ]
+
+
+class TestCountRange:
+    def test_an_integer_gives_that_many_entries(self):
+        assert list(count_range(4, 6)) == [0, 1, 2, 3]
+
+    def test_a_numeric_string_gives_that_many_entries(self):
+        assert len(count_range("3", 6)) == 3
+
+    def test_a_string_with_surrounding_whitespace_counts(self):
+        assert len(count_range(" 2 ", 6)) == 2
+
+    def test_zero_gives_the_default(self):
+        assert len(count_range(0, 6)) == 6
+
+    def test_a_negative_number_gives_the_default(self):
+        assert len(count_range(-3, 6)) == 6
+
+    def test_a_negative_numeric_string_gives_the_default(self):
+        assert len(count_range("-3", 6)) == 6
+
+    @pytest.mark.parametrize("value", ["abc", "2.5", 2.5, True, [], object()])
+    def test_a_non_number_gives_the_default(self, value):
+        assert len(count_range(value, 6)) == 6
+
+    @pytest.mark.parametrize("value", ["", None])
+    def test_an_empty_value_gives_the_default(self, value):
+        assert len(count_range(value, 1)) == 1
+
+    def test_the_result_indexes_from_zero(self):
+        assert list(count_range(3, 1)) == [0, 1, 2]

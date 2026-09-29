@@ -26,3 +26,10 @@ Did: the fieldset composition gains the filter row (a nested fieldset with a leg
 Verified: the composition, fieldset, filter, gallery annotation and lint tests 498 passed; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: full verify, then the completion report.
 Watch: `docs/ROADMAP.md` line 110 lists which data-input components exist and is outside this story's files.
+
+## 2026-09-29T10:41Z · Implementer US2 · T004
+
+Did: `count_range(value, default)` in `daisy_cotton/templatetags/daisy_cotton.py`, tests first in `TestCountRange` (import failed first, the right reason). An integer or numeric string above zero gives that many entries; zero, a negative, a float, a bool, a non-number and an empty value give `default`.
+Verified: `uv run pytest tests/test_templatetags/test_daisy_cotton.py -q` 47 passed; changing `> 0` to `>= 0` failed nine of the new tests; pre-commit on the two files passed.
+Next: T005, `form/calendar.html` and its tests.
+Watch: the tag is shared with the OTP (US3), which passes `length` and 6.

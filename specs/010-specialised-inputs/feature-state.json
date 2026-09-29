@@ -119,8 +119,19 @@
       "tasks": [
         {
           "id": "T004",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_templatetags/test_daisy_cotton.py -q before the tag existed: ImportError, count_range missing",
+              "uv run pytest tests/test_templatetags/test_daisy_cotton.py -q: 47 passed",
+              "mutation count >= 0 for count > 0: 9 TestCountRange tests failed",
+              "uv run pre-commit run --files <changed files>: passed"
+            ],
+            "tests": [
+              "tests/test_templatetags/test_daisy_cotton.py::TestCountRange"
+            ]
+          }
         },
         {
           "id": "T005",
