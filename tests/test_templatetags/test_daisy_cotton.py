@@ -13,9 +13,9 @@ import re
 import pytest
 
 from daisy_cotton.templatetags.daisy_cotton import (
+    checked_value,
     count_range,
     filter_options,
-    checked_value,
     rating_items,
     responsive,
     unique_id,
