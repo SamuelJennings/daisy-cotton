@@ -2,7 +2,7 @@
   "feature": "009-form-controls",
   "branch": "009-form-controls",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "IMPLEMENT",
+  "state": "CONVERGE",
   "state_history": [
     {
       "state": "QUEUED",
@@ -23,6 +23,11 @@
       "state": "IMPLEMENT",
       "at": "2026-09-28T23:22:16Z",
       "note": "design review applied (D5); plan notification sent"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-29T00:36:36Z",
+      "note": "all six stories accepted"
     }
   ],
   "gates": {
@@ -352,7 +357,7 @@
   ],
   "budgets": {
     "converge_cycles": {
-      "used": 0,
+      "used": 1,
       "max": 2
     },
     "review_cycles": {
