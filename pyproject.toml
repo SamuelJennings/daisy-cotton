@@ -1,6 +1,6 @@
 [project]
 name = "daisy-cotton"
-version = "0.1.0"
+version = "0.1.1"
 description = "Base daisyUI-styled django-cotton components: buttons, inputs, cards, alerts and the rest of an application's furniture"
 authors = [
     { name = "Samuel Jennings", email = "samuel.scott.jennings@gmail.com" },
