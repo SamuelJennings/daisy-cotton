@@ -210,6 +210,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `<label>` carrying `select` and the modifiers, holding the start content, the `<select>` and the
   end content, in that order; `class` lands on whichever element carries `select`, and every other
   attribute lands on the `<select>` itself.
+- `<c-checkbox>`: daisyUI's checkbox, a native `<input type="checkbox">` carrying `checkbox`,
+  `variant` (the eight daisyUI colours) and `size` (`xs`–`xl`). `type` is written by the template
+  and not accepted as an attribute. Needs a `<c-label>`, an `aria-label` or an `aria-labelledby`
+  for a name; `checkbox` cannot invent one. Its indeterminate state can only be set from your own
+  script.
+- `<c-radio>`: daisyUI's radio, a native `<input type="radio">` carrying `radio`, `variant` and
+  `size` the same way `checkbox` does. Give every radio in a group the same `name` and group them
+  in a `<c-fieldset>` whose `legend` names the group.
+- `<c-toggle>`: daisyUI's switch, a native `<input type="checkbox" role="switch">` carrying
+  `toggle`, `variant` and `size` the same way `checkbox` does. Both `type` and `role` are written
+  by the template and not accepted as attributes.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
