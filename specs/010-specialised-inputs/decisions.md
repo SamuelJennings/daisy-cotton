@@ -84,7 +84,7 @@ FS-009 has no group component, so it settles nothing for the filter and the rati
 
 ## D3 — Where the hidden names go
 
-daisyUI's CSS constrains where visually hidden text can sit. The OTP counts its `<span>` children to size itself and draws each one as a box, so its name is a `<small class="sr-only">` after the input. The rating styles every descendant as an item, so its group name is an `aria-label` on the wrapper. The filter's reset keeps `aria-label="×"` because daisyUI draws a radio button's text from its `aria-label`, and takes its announced name from a hidden span through `aria-labelledby`, as the spec describes. The calendar's paging buttons are named by hidden text beside an `aria-hidden` icon, because an `aria-label` on the icon's `<i>` element is not allowed by ARIA. Research R2 and R6 give the CSS and the rule for each.
+daisyUI's CSS constrains where visually hidden text can sit. The OTP counts its `<span>` children to size itself and draws each one as a box, so its name is a `<small class="sr-only">` after the input. The rating styles every descendant as an item, so its group name is an `aria-label` on the wrapper. The filter's reset keeps `aria-label="×"` because daisyUI draws a radio button's text from its `aria-label`, and takes its announced name from a `hidden` span through `aria-labelledby`, as the spec describes. The calendar's paging buttons are named by hidden text beside an `aria-hidden` icon, because an `aria-label` on the icon's `<i>` element is not allowed by ARIA. Research R2 and R6 give the CSS and the rule for each.
 
 **ADR:** none — local to these four templates.
 
@@ -93,3 +93,18 @@ daisyUI's CSS constrains where visually hidden text can sit. The OTP counts its 
 The spec says `<c-icon>` draws the previous and next icons. `<c-icon>` takes a CSS class string and does no lookup (ADR 0001), and the calendar has to pass it something. `previous_icon` and `next_icon` default to `chevron-left` and `chevron-right`, the names a project's own `<c-icon>` override resolves, as the alert passes its variant name. With the bare `<c-icon>` a caller passes its icon classes, and the gallery example passes Bootstrap Icons classes, which the demo already loads. `icon` is the name the button, alert and menu already use for an icon's classes, so the two attributes follow it.
 
 **ADR:** none — follows ADR 0001 and the alert's precedent.
+
+## D5 — Design review applied
+
+The review approved the plan with no critical or high findings, four medium and six low. All were applied as plan, research and task edits:
+
+- The rating binds each item's value explicitly inside `blocktrans`, and whole values reach the plural count as numbers, because Django's `blocktrans count` rejects a string. The rating test asserts that every radio's name differs rather than that one exists.
+- The calendar's description says the paging icons need icon classes or a resolving `<c-icon>`, and the calendar's bare gallery preview is recorded as having empty paging buttons.
+- Cally is pinned to 0.9.2 in the demo and the README, and research R3 is checked against that version's source: its paging button has no name of its own, so the slotted text names it.
+- The filter's reset name is a `hidden` span, which drops the ordering rule and its test. The filter's bare preview is empty, since daisyUI hides the reset until an option is chosen, so its colours and sizes are shown in the composition.
+- The filter and rating descriptions say that `autofocus` on the group does nothing and that `required` cannot stop an empty submission once there is a reset or a clearable item. D2's choice to leave `autofocus` on the wrapper stands.
+- The OTP pattern's braces use `templatetag`, the read-only rating's name defaults the value to 0, and the browser check submits the filter, OTP and rating in one form.
+
+One finding asks that the spec's tag names match what ships. The `form.` names (D1) are raised with the maintainer at the walkthrough, where a rename is still cheap either way.
+
+**ADR:** none — plan and documentation edits local to this feature.

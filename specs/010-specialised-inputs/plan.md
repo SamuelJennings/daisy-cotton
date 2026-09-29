@@ -63,7 +63,7 @@ Added to `daisy_cotton/templatetags/daisy_cotton.py`, each a `@register.simple_t
 
 - `count_range(value, default)` returns `range(n)`, where `n` is `value` as a positive integer, or `default` when it is not one. Used as `{% count_range length 6 as boxes %}` for the OTP (`boxes|length` gives the digit count) and `{% count_range months 1 as offsets %}` for the calendar.
 - `filter_options(options, value)` returns one dict per entry: `{"value", "label", "checked"}`. A list or tuple of two is a (value, label) pair, anything else is its own label. `checked` compares `str(entry value)` with `str(value)` when `value` is not empty. A non-iterable or empty `options` gives an empty list.
-- `rating_items(max, half, value)` returns one dict per item: `{"value", "half", "whole", "checked"}`, in order. Whole ratings give values `"1"` to `str(max)`. Half ratings give `"0.5"`, `"1"`, `"1.5"` … `str(max)`, with `half` `1` or `2` alternating, and `whole` true on whole values. `checked` is true on the item whose numeric value equals `value`, compared as numbers, so `7`, `"7"` and `"7.0"` all match. A `value` that is empty, not a number, out of range or not a multiple of the step checks nothing (Edge Cases). `max` falls back to 5 as above.
+- `rating_items(max, half, value)` returns one dict per item: `{"value", "half", "whole", "checked"}`, in order. Whole values are ints (`1` to `max`), because `{% blocktrans count %}` raises unless its counter is a number. Half ratings give `"0.5"`, `1`, `"1.5"` … `max`, the half steps as strings, with `half` `1` or `2` alternating, and `whole` true on whole values. `checked` is true on the item whose numeric value equals `value`, compared as numbers, so `7`, `"7"` and `"7.0"` all match. A `value` that is empty, not a number, out of range or not a multiple of the step checks nothing (Edge Cases). `max` falls back to 5 as above.
 
 Tests in `tests/test_templatetags/test_daisy_cotton.py`, one class per tag.
 
@@ -73,16 +73,16 @@ Tests in `tests/test_templatetags/test_daisy_cotton.py`, one class per tag.
 
 ```
 <div class="filter {{ class }}" role="radiogroup"{% if label %} aria-label="{{ label }}"{% endif %} {{ attrs }}>
-  <span class="sr-only" id="{{ reset_id }}">{% if reset_label %}{{ reset_label }}{% else %}{% trans "Clear filter" %}{% endif %}</span>
+  <span hidden id="{{ reset_id }}">{% if reset_label %}{{ reset_label }}{% else %}{% trans "Clear filter" %}{% endif %}</span>
   <input type="radio" class="btn filter-reset {{ modifiers }}" name="{{ name or generated }}" value="" aria-label="×" aria-labelledby="{{ reset_id }}" {{ shared }}>
   {% for option in items %}<input type="radio" class="btn {{ modifiers }}" name="…" value="{{ option.value }}" aria-label="{{ option.label }}"{% if option.checked %} checked{% endif %} {{ shared }}>{% endfor %}
 </div>
 ```
 
 - `reset_id` comes from `{% unique_id "filter-reset" as reset_id %}`. `modifiers` is `btn-{variant}` and `btn-{size}` through `variation` (FR-012). `shared` is `required`, `disabled` and `form` when given (D2).
-- The hidden span comes first so daisyUI's gap rule is unaffected (research R2).
+- The name is a `hidden` span. An element referenced by `aria-labelledby` still names the reset when hidden, and a hidden element takes no part in daisyUI's layout rules, so its position does not matter.
 - The reset carries `value=""`, so choosing it submits the name with an empty value (US1-4). Nothing is checked unless `value` matches an option, as daisyUI's rules ask.
-- The description says: `name` is needed for anything submitted; give at least one option; `label` names the group, or leave it out when a fieldset legend names it; the reset shows "×" and is announced by `reset_label`; `:options` takes values or (value, label) pairs, such as a form field's `choices`; other button styles come from overriding the component. It names the fieldset entry for filters with options.
+- The description says: `name` is needed for anything submitted; give at least one option, and pass flat choices without a blank entry, since the reset already clears; `autofocus` on the group does nothing, so focus comes from the page's own markup; with the reset, `required` cannot stop an empty submission, so validate on the server; `label` names the group, or leave it out when a fieldset legend names it; the reset shows "×" and is announced by `reset_label`; `:options` takes values or (value, label) pairs, such as a form field's `choices`; other button styles come from overriding the component. It names the fieldset entry for filters with options.
 
 ### Calendar (US2)
 
@@ -101,8 +101,8 @@ Tests in `tests/test_templatetags/test_daisy_cotton.py`, one class per tag.
 - The paging content is a `<span>` carrying the slot, holding an `aria-hidden` `<c-icon>` and the visually hidden translatable name. Cally puts it inside its own button, so the button is named "Previous" or "Next" (FR-016, research R6). `<c-icon>` gets `only`, as the menu and dock do, so the calendar's own `class` never reaches the icon.
 - `previous_icon` and `next_icon` default to the names `chevron-left` and `chevron-right`, which a project's own `<c-icon>` resolves (ADR 0001). With the bare `<c-icon>` the caller passes icon classes, as the gallery composition does (D4).
 - `months` is typed `select['1','2','3']` with `default:"1"`, `range` a boolean.
-- The description puts first that the project loads Cally and nothing shows until it does, then how to load it, then the input-copying script's location (the README), then the fieldset entry for more examples.
-- `README.md` gets a "Calendar" usage section: the one-line module script tag, a `<c-form.calendar>` example, and a short script that copies the chosen date from the `change` event into a hidden input (FR-018, US2-7). The package ships none of it.
+- The description puts first that the project loads Cally and nothing shows until it does, then that the paging icons need icon classes through `previous_icon` and `next_icon` or a project `<c-icon>` that resolves names (with neither, the paging buttons show nothing but are still named), then how to load Cally, then the input-copying script's location (the README), then the fieldset entry for more examples.
+- `README.md` gets a "Calendar" usage section: the one-line module script tag for `cally@0.9.2` with a sentence that a project pins a version or hosts the file itself, a `<c-form.calendar>` example passing icon classes, and a short script that copies the chosen date from the `change` event into a hidden input (FR-018, US2-7). The package ships none of it.
 
 ### OTP (US3)
 
@@ -114,7 +114,7 @@ Tests in `tests/test_templatetags/test_daisy_cotton.py`, one class per tag.
 ```
 
 - `modifiers` are `otp-{variant}` and `otp-{size}` (FR-021).
-- The boxes are the label's first children, the input follows, and the hidden name is a `<small>` after the input, so daisyUI counts only the boxes (research R2, FR-022). The implementer confirms how the pattern's braces render and picks whichever template form outputs `[0-9]{6}` literally.
+- The boxes are the label's first children, the input follows, and the hidden name is a `<small>` after the input, so daisyUI counts only the boxes (research R2, FR-022). The braces are written with `{% templatetag openbrace %}` and `{% templatetag closebrace %}`, so the output is `[0-9]{6}` literally.
 - `pattern` and `inputmode` are declared so a project with letter codes can replace them without a duplicate attribute (spec decisions "The OTP defaults to six digits"). Empty `pattern` means digits only, exactly `length` of them.
 - `id`, `name`, `value`, `required`, `disabled`, `autofocus`, `form` and every other attribute reach the input through `{{ attrs }}` (FR-023, D2).
 - `length` is typed `select['4','5','6']` with `default:"6"`. The description says daisyUI styles four to six boxes (Edge Cases), that validation styling comes from adding `validator` through `input_class`, and names the fieldset entry for the disabled and labelled examples.
@@ -135,16 +135,16 @@ Interactive:
 Read-only:
 
 ```
-<div class="rating …same classes…" role="img" aria-label="{% blocktrans %}{{ value }} out of {{ max }}{% endblocktrans %}" {{ attrs }}>
+<div class="rating …same classes…" role="img" aria-label="{% blocktrans with score=value|default:0 total=max %}{{ score }} out of {{ total }}{% endblocktrans %}" {{ attrs }}>
   {% for item in items %}<div class="mask …"{% if item.checked %} aria-current="true"{% endif %}></div>{% endfor %}
 </div>
 ```
 
-- Each radio's `aria-label` is `{% blocktrans count counter=… %}{{ counter }} star{% plural %}{{ counter }} stars{% endblocktrans %}` on whole values and `{% blocktrans %}{{ value }} stars{% endblocktrans %}` on half values (research R7, FR-026).
+- Each radio's `aria-label` is `{% blocktrans count counter=item.value %}{{ counter }} star{% plural %}{{ counter }} stars{% endblocktrans %}` on whole values and `{% blocktrans with step=item.value %}{{ step }} stars{% endblocktrans %}` on half values (research R7, FR-026). The item is bound explicitly: a bare `{{ value }}` inside `blocktrans` would read the rating's own declared `value`.
 - `bg_class` is `bg-{variant}` through `variation`, `size_class` is `rating-{size}`, `shape_class` is `mask-{shape}` (FR-025).
 - `clearable` adds the hidden first radio, checked when no `value` is given (FR-027). It is not rendered when read-only.
-- The read-only items carry no `aria-label` (research R6). With no `value` the read-only name reads "0 out of `max`" and no item is current.
-- `shape` is typed `select['star','star-2','heart']` with `default:"star"`. The description says `name` is needed for anything submitted, `label` names the group unless a fieldset legend does, `readonly` shows a score and submits nothing, and names the fieldset entry for disabled and read-only examples.
+- The read-only items carry no `aria-label` (research R6). With no `value` the read-only name reads "0 out of `max`" (`value|default:0`) and no item is current.
+- `shape` is typed `select['star','star-2','heart']` with `default:"star"`. The description says `name` is needed for anything submitted, `autofocus` on the group does nothing, a `clearable` rating lets `required` pass empty so validate on the server, `label` names the group unless a fieldset legend does, `readonly` shows a score and submits nothing, and names the fieldset entry for disabled and read-only examples.
 
 ### Gallery entries (FR-003, FR-004)
 
@@ -159,11 +159,11 @@ The composed examples go in the fieldset entry's `@slot` composition (research R
 | US3 | A fieldset "Two-step verification" holding a labelled OTP, a four-digit joined OTP and a disabled OTP (US3-7). |
 | US4 | A fieldset "Your rating" holding a clearable rating, a half-star rating with a value, a disabled rating and a read-only rating with a value (US4-9). |
 
-The bare previews cover what the declared props reach through the gallery's controls: filter colours and sizes with only the reset showing, OTP lengths, colours, sizes and joined, rating shapes, sizes, colours, half, clearable and read-only, the calendar's range and month count.
+The bare previews cover what the declared props reach through the gallery's controls. The filter's bare preview is empty, since daisyUI hides the reset until an option is chosen, so its colours and sizes are shown by US1's composition row. The calendar's bare preview has empty paging buttons, since the bare `<c-icon>` resolves no names. The rest: OTP lengths, colours, sizes and joined, rating shapes, sizes, colours, half, clearable and read-only, the calendar's range and month count.
 
 ### Demo
 
-`demo/templates/django_cotton_gallery/_extra_head.html` adds `<script type="module" src="https://unpkg.com/cally"></script>` to the preview documents beside daisyUI and Alpine, with a comment saying the demo loads Cally so the calendar's entry works and the package does not (FR-018, research R3). US2.
+`demo/templates/django_cotton_gallery/_extra_head.html` adds a `<script type="module" src="https://unpkg.com/cally@0.9.2"></script>` to the preview documents beside daisyUI and Alpine, written with the same `document.write` form and split closing tag the other scripts use, with a comment saying the demo loads Cally so the calendar's entry works and the package does not (FR-018, research R3). US2.
 
 ### Documentation
 

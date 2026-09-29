@@ -17,8 +17,8 @@ Colour on a rating item is a background class. `bg-{variant}` for the eight sema
 
 ## R2. What daisyUI's CSS does with the markup
 
-- **Filter reset glyph.** `.filter input.filter-reset::after` sets `content: "×"`. `.btn:is([type=checkbox],[type=radio])[aria-label]::after` sets `content: attr(aria-label)` and is more specific (three classes/attributes against two and an element). So a reset with an `aria-label` shows that label, and one without shows "×". Keeping `aria-label="×"` shows the glyph under either rule, and the accessible name comes from `aria-labelledby`, which takes precedence (spec Clarifications). The option radios show their label the same way: each option carries its label as `aria-label`.
-- **Filter hiding.** daisyUI hides the unchecked options once one is checked and shows the reset only then. It selects `input` elements, so a visually hidden `<span>` inside the wrapper is untouched. `.filter>input:not(:last-child)` adds a gap after each input, so the span goes first, not last.
+- **Filter reset glyph.** `.filter input.filter-reset::after` sets `content: "×"`. `.btn:is([type=checkbox],[type=radio])[aria-label]::after` sets `content: attr(aria-label)` and is more specific (three classes/attributes against two and an element, both in the same daisyUI layer). So a reset with an `aria-label` shows that label, and one without shows "×". With `aria-label="×"` both rules give the glyph, whichever wins, and the accessible name comes from `aria-labelledby`, which takes precedence (spec Clarifications). The option radios show their label the same way: each option carries its label as `aria-label`.
+- **Filter hiding.** daisyUI hides the unchecked options once one is checked and shows the reset only then. It selects `input` elements, so a `hidden` `<span>` inside the wrapper is untouched, and a hidden element is out of layout, so `.filter>input:not(:last-child)`'s gap rule does not see it.
 - **OTP box count.** `.otp:has(>span:nth-child(n))` sets the width from the position of the last `<span>` child, for n up to 8, and `.otp>span` draws each box. Any extra `<span>` child is counted and drawn as a box. The visually hidden name therefore cannot be a `<span>`, and must come after the input so the boxes stay children 1 to `length`. A `<small class="sr-only">` after the input is not counted, is phrasing content (valid inside `<label>`), and is out of flow.
 - **OTP focus and disabled.** `.otp:focus-within` and `.otp:has(>input:disabled)` style the boxes from the input's state, so `disabled` has to be on the input for the disabled look.
 - **Rating descendants.** `.rating *` gives every descendant the item's background, size and 20% opacity. Nothing but items can sit inside the wrapper, so the group's name goes on the wrapper as `aria-label`, not as hidden text.
@@ -27,13 +27,13 @@ Colour on a rating item is a background class. `bg-{variant}` for the eight sema
 
 ## R3. Cally
 
-Cally is a set of web components (`calendar-date`, `calendar-range`, `calendar-month`), loaded as an ES module from its npm package. From its documentation and the markup daisyUI's calendar page uses:
+Cally is a set of web components (`calendar-date`, `calendar-range`, `calendar-month`), loaded as an ES module from its npm package. Checked against the source of `cally@0.9.2` (`dist/cally.js`), the version the demo and README pin:
 
 - The root reads `value`, `min`, `max`, `locale`, `months`, `first-day-of-week`, `page-by` and `today` as attributes. `months` sets how many months one "next" or "previous" step moves by and how many a range spans. Each `<calendar-month>` shows one month, and `offset="n"` shows the month n after the first.
-- The root has `previous` and `next` slots for the paging buttons' content. Cally puts the slotted content inside its own `<button>`, so the slotted content's text is the button's accessible name.
+- The root has `previous` and `next` slots for the paging buttons' content. Cally's button (`function At`) is `<button part="button previous"><slot name="previous">Previous</slot></button>` with no `aria-label` of its own, so the slotted content's text is the button's accessible name and replaces Cally's English default. `pageBy` defaults to `"months"`, which pages by the `months` count, and `<calendar-month>` takes a numeric `offset` (default 0).
 - A chosen date is read from the root's `value` in a `change` event. Copying it into a form input takes a few lines of script, which the documentation shows and the package does not ship.
 
-The demo loads Cally in the preview documents from `https://unpkg.com/cally` as a module, beside daisyUI, Tailwind and Alpine in `demo/templates/django_cotton_gallery/_extra_head.html`. The package loads nothing (spec FR-018).
+The demo loads Cally in the preview documents from `https://unpkg.com/cally@0.9.2` as a module, beside daisyUI, Tailwind and Alpine in `demo/templates/django_cotton_gallery/_extra_head.html`. The package loads nothing (spec FR-018).
 
 ## R4. Cotton and template behaviour this plan relies on
 
@@ -59,7 +59,7 @@ As FS-008 research R7 and FS-009 research R5: gallery 1.0.0 previews each compon
 
 ## R7. Pluralised and numeric strings
 
-Python's gettext only accepts an integer plural count. Whole rating values use `{% blocktrans count %}` ("1 star", "2 stars"). Half values (0.5, 1.5, …) use one non-plural translatable string with the number in it ("1.5 stars"), because plural rules for decimals differ by language and the integer-only count cannot express them. The read-only name "`value` out of `max`" is one `{% blocktrans %}` string.
+Python's gettext only accepts an integer plural count. Whole rating values use `{% blocktrans count %}` ("1 star", "2 stars"). Half values (0.5, 1.5, …) use one non-plural translatable string with the number in it ("1.5 stars"), because plural rules for decimals differ by language and the integer-only count cannot express them. The decimal is written with a point in every locale, which is acceptable for an accessible name. Django's `blocktrans count` raises `TemplateSyntaxError` unless the counter is a number (`django/templatetags/i18n.py`, `BlockTranslateNode.render`), so whole values reach it as ints. The read-only name "`value` out of `max`" is one `{% blocktrans %}` string.
 
 ## R8. The browser checks
 
@@ -68,4 +68,5 @@ As FS-009 research R8: Playwright and Chromium are available locally, CI has no 
 - Filter: tab into the group, arrow between options, the others hide once one is chosen, the reset is reachable and announced "Clear filter" while showing "×", a form submits the chosen value and an empty value after the reset.
 - OTP: typing and pasting a code fills the boxes, the focus indicator shows, the form submits the code.
 - Rating: the arrow keys change the value, the focused item is visibly marked through the mask (spec Edge Cases), a form submits the value, and the clearable rating submits an empty value.
-- Calendar: with Cally loaded, the paging buttons are named "Previous" and "Next", a keyboard user can page, move between days and choose one, with a visible focus indicator.
+- Calendar: with Cally loaded, the paging buttons are named "Previous" and "Next" and changing the slotted text changes the name, a keyboard user can page, move between days and choose one, with a visible focus indicator, and the two-month example shows consecutive months and pages by two.
+- One form holding a filter, an OTP and a rating submits all three values under their names (SC-005).
