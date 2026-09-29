@@ -112,8 +112,9 @@ def filter_options(options: object, value: object) -> list[dict[str, object]]:
     Args:
         options: An iterable whose entries are a bare value, used as its own
             label, or a list or tuple of two, a ``(value, label)`` pair such
-            as a Django field's ``choices``. Anything that is not iterable is
-            treated as empty.
+            as a Django field's ``choices``. A string, or anything that is not
+            iterable, is treated as empty, so ``options="a,b"`` written without
+            the colon renders no options rather than one per character.
         value: The value to check. Compared with each entry's value as a
             string, so ``2`` matches ``"2"``. ``None`` and ``""`` check
             nothing.
@@ -127,6 +128,8 @@ def filter_options(options: object, value: object) -> list[dict[str, object]]:
         ``[{"value": "Open", "label": "Open", "checked": False},
         {"value": "c", "label": "Closed", "checked": True}]``
     """
+    if isinstance(options, str):
+        return []
     try:
         entries = list(options)  # type: ignore[call-overload]
     except TypeError:
@@ -203,3 +206,24 @@ def rating_items(
         }
         for number, whole, half_class in steps
     ]
+
+
+@register.filter
+def checked_value(items: list[dict[str, object]]) -> object:
+    """Return the value of the checked item from ``rating_items``.
+
+    Args:
+        items: The list ``rating_items`` returned.
+
+    Returns:
+        The checked item's ``value``, or ``""`` when no item is checked,
+        such as for a value out of range, off the step or not a number.
+
+    Example:
+        ``checked_value(rating_items(5, False, "3"))`` -> ``3``
+    """
+    for item in items:
+        if item["checked"]:
+            return item["value"]
+
+    return ""

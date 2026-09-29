@@ -581,3 +581,33 @@ class TestRatingAttributeRouting:
         names = _attr_names_on(html, "div")
         for name in ("class", "role", "aria-label", "id"):
             assert names.count(name) == 1
+
+
+class TestRatingUnmatchedValue:
+    @pytest.mark.parametrize("value", ["9", "0", "abc", "2.5"])
+    def test_a_read_only_value_that_checks_nothing_reads_as_zero(
+        self, cotton_render_string_soup, value
+    ):
+        zero = cotton_render_string_soup('<c-form.rating readonly value="0" />')
+        soup = cotton_render_string_soup(f'<c-form.rating readonly value="{value}" />')
+
+        assert soup.div["aria-label"] == zero.div["aria-label"]
+
+    def test_a_read_only_value_that_matches_differs_from_zero(
+        self, cotton_render_string_soup
+    ):
+        zero = cotton_render_string_soup('<c-form.rating readonly value="0" />')
+        soup = cotton_render_string_soup('<c-form.rating readonly value="3" />')
+
+        assert soup.div["aria-label"] != zero.div["aria-label"]
+
+    @pytest.mark.parametrize(
+        "value", ['value="9"', 'value="0"', ':value="0"', 'value="abc"']
+    )
+    def test_clearable_checks_the_hidden_item_when_the_value_checks_nothing(
+        self, cotton_render_string_soup, value
+    ):
+        soup = cotton_render_string_soup(f"<c-form.rating clearable {value} />")
+
+        assert soup.find("input", class_="rating-hidden").has_attr("checked")
+        assert len(soup.find_all("input", checked=True)) == 1

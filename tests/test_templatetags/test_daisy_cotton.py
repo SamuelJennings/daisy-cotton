@@ -15,6 +15,7 @@ import pytest
 from daisy_cotton.templatetags.daisy_cotton import (
     count_range,
     filter_options,
+    checked_value,
     rating_items,
     responsive,
     unique_id,
@@ -114,7 +115,7 @@ class TestFilterOptions:
 
         assert not any(entry["checked"] for entry in result)
 
-    @pytest.mark.parametrize("options", [[], (), None, "", 5, object()])
+    @pytest.mark.parametrize("options", [[], (), None, "", "Open,Closed", 5, object()])
     def test_empty_none_and_non_iterable_options_give_no_options(self, options):
         assert filter_options(options, "x") == []
 
@@ -239,3 +240,15 @@ class TestRatingItems:
     def test_every_item_carries_the_documented_keys(self):
         for item in rating_items(2, True, 1):
             assert set(item) == {"value", "half", "whole", "checked"}
+
+
+class TestCheckedValue:
+    def test_gives_the_value_of_the_checked_item(self):
+        assert checked_value(rating_items(5, False, "3")) == 3
+
+    def test_gives_a_half_value(self):
+        assert checked_value(rating_items(5, True, "1.5")) == "1.5"
+
+    @pytest.mark.parametrize("value", ["", "9", "0", 0, "abc"])
+    def test_gives_an_empty_string_when_nothing_is_checked(self, value):
+        assert checked_value(rating_items(5, False, value)) == ""

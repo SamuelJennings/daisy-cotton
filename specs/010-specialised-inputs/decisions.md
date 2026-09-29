@@ -114,3 +114,14 @@ One finding asks that the spec's tag names match what ships. The `form.` names (
 With the specialised inputs in, R7 is delivered. The roadmap status step found R1 to R6 delivered as well, by the features before this one, with their status lines never updated. All seven now read as delivered, each brief rewritten to say what is true now, in the same change that completes the last of them. The cleanup pass renamed `rating_items`' first parameter from `max`, which shadowed a builtin behind a lint suppression, to `highest`.
 
 **ADR:** none — roadmap housekeeping and a parameter name.
+
+## D7 — Code review applied
+
+The review approved with two medium and four low findings, all fixed in one pass:
+
+- `filter_options` treats a string as empty, so `options="a,b"` written without the colon renders no options instead of one button per character. The prop description says to use `:options` and that grouped choices are not supported.
+- A test resolves each default accessible name through gettext (the filter reset, the calendar's paging names, the OTP, the rating's "No rating" and its read-only name), as the alert and loading tests do. Hard-coding any of them now fails.
+- A new `checked_value` filter gives the value of the rating item that is actually checked. The read-only name reads from it, so a value that checks nothing reads as zero, matching what is drawn. A clearable rating's hidden item is checked when no item is, not when `value` is falsy, so `value="9"` or `value="0"` leaves the rating cleared.
+- The three copies of the composition's unique-id test are one test.
+
+**ADR:** none — fixes and tests local to this feature.

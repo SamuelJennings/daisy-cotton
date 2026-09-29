@@ -12,6 +12,8 @@ from collections import Counter
 from pathlib import Path
 
 import pytest
+from django.template import base as template_base
+from django.utils import translation
 
 EVENT_HANDLER = re.compile(r"\son[a-z]+\s*=", re.IGNORECASE)
 FIELDSET_TEMPLATE = (
@@ -198,11 +200,6 @@ class TestFieldsetCompositionFilters:
             reset = group.find("input", class_="filter-reset")
             assert group.find(id=reset["aria-labelledby"]) is not None
 
-    def test_ids_are_unique_within_the_composition(self, composition):
-        ids = [element["id"] for element in composition.find_all(id=True)]
-
-        assert [id_ for id_, count in Counter(ids).items() if count > 1] == []
-
     def test_each_filter_has_its_own_name(self, filter_fieldset):
         names = []
         for group in filter_fieldset.find_all("div", class_="filter"):
@@ -330,11 +327,6 @@ class TestFieldsetCompositionOtps:
         assert all(names)
         assert len(names) == len(set(names))
 
-    def test_ids_are_unique_within_the_composition(self, composition):
-        ids = [element["id"] for element in composition.find_all(id=True)]
-
-        assert [id_ for id_, count in Counter(ids).items() if count > 1] == []
-
 
 class TestFieldsetCompositionRatings:
     @pytest.fixture
@@ -416,10 +408,52 @@ class TestFieldsetCompositionRatings:
         assert len(names) >= 3
         assert len(names) == len(set(names))
 
-    def test_ids_are_unique_within_the_composition(self, composition):
+
+class TestFieldsetCompositionIds:
+    def test_ids_are_unique_within_the_composition(self, cotton_render_string_soup):
+        composition = cotton_render_string_soup(_fieldset_composition())
         ids = [element["id"] for element in composition.find_all(id=True)]
 
         assert [id_ for id_, count in Counter(ids).items() if count > 1] == []
+
+
+TRANSLATED_NAMES = {
+    "filter reset": (
+        "<c-form.filter :options=\"['Open']\" />",
+        lambda soup: soup.find("span", hidden=True).get_text(),
+    ),
+    "calendar previous and next": (
+        "<c-form.calendar />",
+        lambda soup: " ".join(span.get_text() for span in soup.select("[slot] span")),
+    ),
+    "otp": ("<c-form.otp />", lambda soup: soup.find("small").get_text()),
+    "rating no rating": (
+        "<c-form.rating clearable />",
+        lambda soup: soup.find("input", class_="rating-hidden")["aria-label"],
+    ),
+}
+
+
+class TestSpecialisedInputsNamesAreTranslated:
+    @pytest.mark.parametrize(
+        "caller, name_of", TRANSLATED_NAMES.values(), ids=TRANSLATED_NAMES
+    )
+    def test_the_default_name_is_resolved_through_gettext(
+        self, cotton_render_string_soup, monkeypatch, caller, name_of
+    ):
+        monkeypatch.setattr(
+            template_base, "gettext_lazy", lambda message: f"[t]{message}[/t]"
+        )
+
+        assert "[t]" in name_of(cotton_render_string_soup(caller))
+
+    def test_the_read_only_rating_name_is_resolved_through_gettext(
+        self, cotton_render_string_soup, monkeypatch
+    ):
+        monkeypatch.setattr(translation, "gettext", lambda message: f"[t]{message}[/t]")
+        soup = cotton_render_string_soup('<c-form.rating readonly value="3" />')
+
+        assert "[t]" in soup.div["aria-label"]
 
 
 class TestDemoHeadLoadsCally:
