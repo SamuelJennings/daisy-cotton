@@ -20,7 +20,7 @@ from django.urls import reverse
 
 import daisy_cotton
 
-FOLDER_COMPONENT_ISSUE = "https://github.com/SamuelJennings/daisy-cotton/issues/96"
+FOLDER_COMPONENT_ISSUE = "https://github.com/django-mvp/daisy-cotton/issues/96"
 
 COTTON_DIR = Path(next(iter(daisy_cotton.__path__))).resolve() / "templates" / "cotton"
 

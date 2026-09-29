@@ -1,18 +1,18 @@
 # daisy-cotton
 
-[![Tests](https://github.com/SamuelJennings/daisy-cotton/actions/workflows/tests.yml/badge.svg)](https://github.com/SamuelJennings/daisy-cotton/actions/workflows/tests.yml) [![Coverage](https://codecov.io/gh/SamuelJennings/daisy-cotton/branch/main/graph/badge.svg)](https://codecov.io/gh/SamuelJennings/daisy-cotton) ![Python 3.12 | 3.13](https://img.shields.io/badge/python-3.12%20%7C%203.13-blue) ![Django 5.2 | 6.0 | 6.1](https://img.shields.io/badge/django-5.2%20%7C%206.0%20%7C%206.1-blue) [![License: MIT](https://img.shields.io/badge/license-MIT-green)](https://github.com/SamuelJennings/daisy-cotton/blob/main/LICENSE)
+[![Tests](https://github.com/django-mvp/daisy-cotton/actions/workflows/tests.yml/badge.svg)](https://github.com/django-mvp/daisy-cotton/actions/workflows/tests.yml) [![Coverage](https://codecov.io/gh/django-mvp/daisy-cotton/branch/main/graph/badge.svg)](https://codecov.io/gh/django-mvp/daisy-cotton) ![Python 3.12 | 3.13](https://img.shields.io/badge/python-3.12%20%7C%203.13-blue) ![Django 5.2 | 6.0 | 6.1](https://img.shields.io/badge/django-5.2%20%7C%206.0%20%7C%206.1-blue) [![License: MIT](https://img.shields.io/badge/license-MIT-green)](https://github.com/django-mvp/daisy-cotton/blob/main/LICENSE)
 
 Base daisyUI-styled django-cotton components: buttons, inputs, cards, alerts and the rest of an application's furniture
 
-Built on [daisyUI](https://daisyui.com/) and [django-cotton](https://django-cotton.com/). A project that wants daisyUI-styled Cotton components depends on this package directly: install it, add it to `INSTALLED_APPS`, and each `<c-name>` tag is ready to use. It carries no settings, no menus, no icon registry and no views of its own — see [Scope & philosophy](https://github.com/SamuelJennings/daisy-cotton#scope--philosophy).
+Built on [daisyUI](https://daisyui.com/) and [django-cotton](https://django-cotton.com/). A project that wants daisyUI-styled Cotton components depends on this package directly: install it, add it to `INSTALLED_APPS`, and each `<c-name>` tag is ready to use. It carries no settings, no menus, no icon registry and no views of its own — see [Scope & philosophy](https://github.com/django-mvp/daisy-cotton#scope--philosophy).
 
 ## Status
 
-Version 0.0.1, pre-1.0: names, attributes and the set of classes a component emits can change between minor versions. The [CHANGELOG](https://github.com/SamuelJennings/daisy-cotton/blob/main/CHANGELOG.md) is how a project finds out what has landed.
+Version 0.0.1, pre-1.0: names, attributes and the set of classes a component emits can change between minor versions. The [CHANGELOG](https://github.com/django-mvp/daisy-cotton/blob/main/CHANGELOG.md) is how a project finds out what has landed.
 
 Eighty-two components are built so far: `accordion`, `alert`, `avatar`, `badge`, `breadcrumbs`, `button`, `card`, `carousel`, `chat`, `collapse`, `countdown`, `diff`, `divider`, `dock`, `drawer`, `dropdown`, `fab`, `footer`, `form.calendar`, `form.checkbox`, `form.fieldset`, `form.file-input`, `form.filter`, `form.input`, `form.label`, `form.otp`, `form.radio`, `form.range`, `form.rating`, `form.select`, `form.textarea`, `form.toggle`, `hero`, `hover-3d`, `hover-gallery`, `icon`, `indicator`, `join`, `kbd`, `link`, `list`, `loading`, `mask`, `megamenu`, `menu`, `modal`, `navbar`, `progress`, `radial-progress`, `skeleton`, `stack`, `stat`, `status`, `steps`, `swap`, `table`, `tabs`, `text-rotate`, `timeline`, `toast`, `tooltip` and `mockup.*`. Pagination has no component: daisyUI builds it from `join` and `btn` and gives it no class of its own, so write it with those two. Aura has no component either: it only decorates another element, so wrap the component to highlight in a `<div class="aura">` with daisyUI's style and size classes. Each one is documented live in the component gallery (`python manage.py runserver` from a checkout). More land as the need arises.
 
-`<c-icon>` renders `name` as a literal CSS class string and resolves nothing itself — a project wanting name-based icon resolution provides its own override (see [docs/adr/0001](https://github.com/SamuelJennings/daisy-cotton/blob/main/docs/adr/0001-icon-is-an-extension-point.md)).
+`<c-icon>` renders `name` as a literal CSS class string and resolves nothing itself — a project wanting name-based icon resolution provides its own override (see [docs/adr/0001](https://github.com/django-mvp/daisy-cotton/blob/main/docs/adr/0001-icon-is-an-extension-point.md)).
 
 `<c-alert>` takes `variant` (info, success, warning, error), `soft`/`outline`/`dash` for style, and `horizontal`/`vertical` for direction, each accepting a breakpoint such as `sm`; a caller-given `role` replaces the default `role="alert"`, so `role="status"` gives a polite announcement instead of an interruption. Its icon and dismiss button are drawn by `<c-icon>` and `<c-button>`; the dismiss button's accessible name is the translatable "Dismiss" with its glyph hidden from assistive technology. `dismissible` and `delay` need [Alpine.js](https://alpinejs.dev/) on the page — this package doesn't ship or load it. Without Alpine, the alert still renders and reads fine, but the dismiss button does nothing and `delay` never fires.
 
@@ -116,16 +116,16 @@ For a range the same `value` is the two dates joined with a slash, such as `2026
 
 ## Prior art
 
-[labbhq/labb](https://github.com/labbhq/labb) is an actively maintained django-cotton + daisyUI 5 component library covering similar ground. It is a batteries-included framework — its own CLI, reactivity layer, icon system and project scaffolder — rather than a thin base layer, and daisy-cotton's purpose here is narrower: a dependency-free set of base primitives a project drops in alongside its own choices. See [docs/brainstorm.md](https://github.com/SamuelJennings/daisy-cotton/blob/main/docs/brainstorm.md) for the fuller reasoning.
+[labbhq/labb](https://github.com/labbhq/labb) is an actively maintained django-cotton + daisyUI 5 component library covering similar ground. It is a batteries-included framework — its own CLI, reactivity layer, icon system and project scaffolder — rather than a thin base layer, and daisy-cotton's purpose here is narrower: a dependency-free set of base primitives a project drops in alongside its own choices. See [docs/brainstorm.md](https://github.com/django-mvp/daisy-cotton/blob/main/docs/brainstorm.md) for the fuller reasoning.
 
 ## Contributing
 
-To set up a checkout, open the component gallery, run the checks or add a component, see [CONTRIBUTING](https://github.com/SamuelJennings/daisy-cotton/blob/main/CONTRIBUTING.md).
+To set up a checkout, open the component gallery, run the checks or add a component, see [CONTRIBUTING](https://github.com/django-mvp/daisy-cotton/blob/main/CONTRIBUTING.md).
 
 ## Changelog
 
-See [CHANGELOG.md](https://github.com/SamuelJennings/daisy-cotton/blob/main/CHANGELOG.md).
+See [CHANGELOG.md](https://github.com/django-mvp/daisy-cotton/blob/main/CHANGELOG.md).
 
 ## License
 
-MIT. See [LICENSE](https://github.com/SamuelJennings/daisy-cotton/blob/main/LICENSE).
+MIT. See [LICENSE](https://github.com/django-mvp/daisy-cotton/blob/main/LICENSE).
