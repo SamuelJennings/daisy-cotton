@@ -2,7 +2,7 @@
   "feature": "003-navigation-components",
   "branch": "003-navigation-components",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "PR_READY",
+  "state": "MERGED",
   "state_history": [
     {
       "state": "QUEUED",
@@ -53,6 +53,11 @@
       "state": "PR_READY",
       "at": "2026-09-26T21:17:57Z",
       "note": "walkthrough pending with the maintainer; pull request left as a draft"
+    },
+    {
+      "state": "MERGED",
+      "at": "2026-09-27T16:14:59Z",
+      "note": "PR #101 merged; no approving review found"
     }
   ],
   "gates": {
@@ -69,7 +74,7 @@
     },
     "merge": {
       "approved_by": null,
-      "at": null
+      "at": "2026-09-27T16:14:59Z"
     },
     "design_review": {
       "approved_by": "design-panel",
@@ -504,12 +509,12 @@
       "max": 1
     },
     "tokens": {
-      "used": 0,
+      "used": 22.07,
       "max": 120
     }
   },
   "pr": {
     "number": 101,
-    "draft": true
+    "draft": false
   }
 }

@@ -2,7 +2,7 @@
   "feature": "009-form-controls",
   "branch": "009-form-controls",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "PR_READY",
+  "state": "MERGED",
   "state_history": [
     {
       "state": "QUEUED",
@@ -58,6 +58,11 @@
       "state": "PR_READY",
       "at": "2026-09-29T08:44:54Z",
       "note": "walkthrough change T014 (form. namespace) verified: 1932 passed, lint 0/0, browser check unchanged"
+    },
+    {
+      "state": "MERGED",
+      "at": "2026-09-29T10:12:40Z",
+      "note": "PR #112 merged; approved by SamuelJennings"
     }
   ],
   "gates": {
@@ -73,8 +78,8 @@
       "at": "2026-09-28T23:22:04Z"
     },
     "merge": {
-      "approved_by": null,
-      "at": null
+      "approved_by": "SamuelJennings",
+      "at": "2026-09-29T10:12:32Z"
     },
     "design_review": {
       "approved_by": "design-panel",
@@ -91,6 +96,13 @@
         "REV-001..REV-004 medium: fixed with tests and documentation (D10)",
         "REV-005, REV-006 low: fixed (D10)",
         "REV-007 low: declined, squash merge (D10)"
+      ]
+    },
+    "walkthrough": {
+      "approved_by": "SamuelJennings",
+      "at": "2026-09-29T10:12:32Z",
+      "self_resolved": [
+        "Put every form component under a form. namespace (c-form.input, c-form.textarea, ...): done as T014, all ten templates moved to templates/cotton/form/, verified 1932 passed; approved on PR #112 at 2026-09-29T10:12:32Z"
       ]
     }
   },
@@ -426,7 +438,7 @@
       "max": 1
     },
     "tokens": {
-      "used": 0,
+      "used": 85.04,
       "max": 120
     }
   },
