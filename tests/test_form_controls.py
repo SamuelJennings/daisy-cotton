@@ -51,6 +51,10 @@ CALLER_STRINGS = {
     "checkbox": '<c-checkbox name="terms" variant="primary" size="sm" checked />',
     "radio": '<c-radio name="shipping" value="standard" variant="accent" />',
     "toggle": '<c-toggle name="dark_mode" variant="primary" size="lg" checked />',
+    "file_input": (
+        '<c-file-input name="resume" accept=".pdf" variant="primary" size="sm" ghost />'
+    ),
+    "range": '<c-range name="volume" value="40" variant="primary" size="sm" />',
 }
 
 # A bare control: no variant and no aria-invalid given, so neither may appear.
@@ -61,6 +65,8 @@ NO_OWN_INVALID_STATE = {
     "checkbox": '<c-checkbox name="terms" />',
     "radio": '<c-radio name="shipping" />',
     "toggle": '<c-toggle name="dark_mode" />',
+    "file_input": '<c-file-input name="resume" />',
+    "range": '<c-range name="volume" />',
 }
 
 # The bare component, and a page context naming every declared attribute with
@@ -137,6 +143,26 @@ PAGE_CONTEXT_LEAK = {
         {
             "variant": "leaked-variant",
             "size": "leaked-size",
+            "class": "leaked-class",
+        },
+    ),
+    "file_input": (
+        "<c-file-input />",
+        {
+            "variant": "leaked-variant",
+            "size": "leaked-size",
+            "ghost": "leaked-ghost",
+            "class": "leaked-class",
+        },
+    ),
+    "range": (
+        "<c-range />",
+        {
+            "variant": "leaked-variant",
+            "size": "leaked-size",
+            "vertical": "leaked-vertical",
+            "min": "leaked-min",
+            "max": "leaked-max",
             "class": "leaked-class",
         },
     ),

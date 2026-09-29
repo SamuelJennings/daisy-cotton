@@ -1,0 +1,12 @@
+{# @description daisyUI's range: a native slider. min and max are always emitted, once each, defaulting to the browser's own 0 and 100. A control still needs a c-label, an aria-label or an aria-labelledby for its accessible name. See the fieldset gallery entry for labelled, disabled and invalid examples. #}
+{# @prop variant:select['neutral','primary','secondary','accent','info','success','warning','error'] | description:"Colour variant." #}
+{# @prop size:select['xs','sm','md','lg','xl'] | description:"Range size." #}
+{# @prop vertical:boolean | description:"Draw the range as a vertical slider." #}
+{# @prop min:number | default:"0" | description:"Minimum value. Always emitted." #}
+{# @prop max:number | default:"100" | description:"Maximum value. Always emitted." #}
+{# @prop class:text | description:"Extra classes added to the range." #}
+{% load daisy_cotton %}
+<c-vars variant="" size="" vertical="" min="0" max="100" class="" />
+{# djlint:off #}
+<input type="range" min="{{ min }}" max="{{ max }}" class="range {% variation variant "range" "neutral,primary,secondary,accent,info,success,warning,error" %} {% variation size "range" "xs,sm,md,lg,xl" %}{% if vertical %} range-vertical{% endif %} {{ class }}" {{ attrs }}>
+{# djlint:on #}

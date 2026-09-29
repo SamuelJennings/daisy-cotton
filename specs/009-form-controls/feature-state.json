@@ -279,8 +279,24 @@
       "tasks": [
         {
           "id": "T010",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_file_input.py tests/test_range.py -q: 12 failed (TemplateDoesNotExist: cotton/file_input/index.html, cotton/range/index.html) before templates existed",
+              "uv run pytest tests/test_file_input.py tests/test_range.py tests/test_form_controls.py -q: 50 passed once they did",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings (71/79 clean)",
+              "uv run djlint daisy_cotton/templates/cotton/file_input.html daisy_cotton/templates/cotton/range.html --check: exit 0, 0 files would be updated",
+              "uv run pytest tests/test_file_input.py tests/test_range.py tests/test_form_controls.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py -q: 565 passed",
+              "uv run ruff check tests/test_file_input.py tests/test_range.py tests/test_form_controls.py: all checks passed",
+              "uv run ruff format --check on the same three files: clean"
+            ],
+            "tests": [
+              "tests/test_file_input.py::TestFileInput",
+              "tests/test_range.py::TestRange",
+              "tests/test_form_controls.py"
+            ]
+          }
         },
         {
           "id": "T011",
