@@ -151,14 +151,17 @@ def filter_options(options: object, value: object) -> list[dict[str, object]]:
 
 
 @register.simple_tag
-def rating_items(max: object, half: object, value: object) -> list[dict[str, object]]:  # noqa: A002
+def rating_items(
+    highest: object, half: object, value: object
+) -> list[dict[str, object]]:
     """Return the items of a rating, one dict per radio or read-only shape.
 
     Args:
-        max: The highest rating, as an integer or a numeric string. Anything
-            that is not a positive whole number gives five.
+        highest: The highest rating, the component's ``max``, as an integer
+            or a numeric string. Anything that is not a positive whole number
+            gives five.
         half: Truthy to give two items per whole value, one for each half
-            step, from 0.5 up to ``max``.
+            step, from 0.5 up to ``highest``.
         value: The rating to check, compared as a number, so ``7``, ``"7"``
             and ``"7.0"`` all match. Empty, not a number, out of range or off
             the step checks nothing.
@@ -177,7 +180,7 @@ def rating_items(max: object, half: object, value: object) -> list[dict[str, obj
         {"value": "1.5", "half": 1, "whole": False, "checked": True},
         {"value": 2, "half": 2, "whole": True, "checked": False}]``
     """
-    top = len(count_range(max, 5))
+    top = len(count_range(highest, 5))
     try:
         chosen = float(str(value).strip())
     except ValueError:

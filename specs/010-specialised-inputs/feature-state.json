@@ -2,7 +2,7 @@
   "feature": "010-specialised-inputs",
   "branch": "010-specialised-inputs",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "IMPLEMENT",
+  "state": "CONVERGE",
   "state_history": [
     {
       "state": "QUEUED",
@@ -23,6 +23,11 @@
       "state": "IMPLEMENT",
       "at": "2026-09-29T10:33:35Z",
       "note": "design review applied (D5); plan notification sent"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-29T10:56:17Z",
+      "note": "all four stories done"
     }
   ],
   "gates": {
@@ -281,7 +286,7 @@
   ],
   "budgets": {
     "converge_cycles": {
-      "used": 0,
+      "used": 1,
       "max": 2
     },
     "review_cycles": {

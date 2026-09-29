@@ -108,3 +108,9 @@ The review approved the plan with no critical or high findings, four medium and 
 One finding asks that the spec's tag names match what ships. The `form.` names (D1) are raised with the maintainer at the walkthrough, where a rename is still cheap either way.
 
 **ADR:** none — plan and documentation edits local to this feature.
+
+## D6 — The roadmap records every delivered group
+
+With the specialised inputs in, R7 is delivered. The roadmap status step found R1 to R6 delivered as well, by the features before this one, with their status lines never updated. All seven now read as delivered, each brief rewritten to say what is true now, in the same change that completes the last of them. The cleanup pass renamed `rating_items`' first parameter from `max`, which shadowed a builtin behind a lint suppression, to `highest`.
+
+**ADR:** none — roadmap housekeeping and a parameter name.
