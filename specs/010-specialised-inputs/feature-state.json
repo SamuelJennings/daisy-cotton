@@ -262,8 +262,19 @@
         },
         {
           "id": "T011",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_specialised_inputs.py -q -k Ratings before the composition row: 7 errors, the composition holds no rating",
+              "uv run pytest tests/test_specialised_inputs.py tests/test_rating.py tests/test_fieldset.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py -q: 668 passed",
+              "7 mutations of the composition row (clearable, half, disabled, read-only value, unique name, legend, accessible name): every one failed a new test",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_specialised_inputs.py::TestFieldsetCompositionRatings"
+            ]
+          }
         }
       ]
     }

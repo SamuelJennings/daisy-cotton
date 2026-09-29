@@ -75,3 +75,10 @@ Did: `form/rating.html` and `tests/test_rating.py` (73 tests, tests first: red o
 Verified: `uv run pytest tests/test_rating.py tests/test_specialised_inputs.py -q` 106 passed; fifteen mutations of the template each failed a new test; gallery, lint, render-all, declared-attribute and fieldset tests 749 passed; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
 Next: T011, the fieldset composition row, README and CHANGELOG.
 Watch: nothing but items sits inside `.rating`, so the group name is `aria-label` on the wrapper. Focus indicator and keyboard use (US4-8) are browser behaviour, covered by the walkthrough's browser check, not by these tests.
+
+## 2026-09-29T10:55Z · Implementer US4 · T011
+
+Did: the fieldset composition gains a nested "Your rating" fieldset holding a clearable rating, a half-star rating with a value, a disabled rating with a value and a read-only rating with a value, each interactive one with its own `name` and `label`; its `@slot` description names it. README count is Eighty-two with `form.rating` in the list. CHANGELOG `Added` bullet. The rating's annotations were written in T010. Tests first in `tests/test_specialised_inputs.py::TestFieldsetCompositionRatings`: red on the composition holding no rating. No page under `docs/` describes the rating or the fieldset composition, so none changed.
+Verified: the composition, rating, fieldset, gallery annotation, lint and render-all tests 668 passed; seven mutations of the row each failed a new test; `cotton_lint --warnings-as-errors` 0 errors 0 warnings.
+Next: full verify, then the completion report.
+Watch: the read-only rating in the composition takes no `label`, since its name is generated from its value; the browser check (T012) covers keyboard use and the focus indicator.

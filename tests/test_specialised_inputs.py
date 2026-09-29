@@ -336,6 +336,92 @@ class TestFieldsetCompositionOtps:
         assert [id_ for id_, count in Counter(ids).items() if count > 1] == []
 
 
+class TestFieldsetCompositionRatings:
+    @pytest.fixture
+    def composition(self, cotton_render_string_soup):
+        return cotton_render_string_soup(_fieldset_composition())
+
+    @pytest.fixture
+    def rating_fieldset(self, composition):
+        fieldsets = [
+            fieldset
+            for fieldset in composition.find_all("fieldset")
+            if fieldset.find("div", class_="rating")
+        ]
+        assert fieldsets, "the composition holds no rating"
+        return fieldsets[0]
+
+    def _interactive(self, rating_fieldset):
+        return [
+            group
+            for group in rating_fieldset.find_all("div", class_="rating")
+            if group.get("role") == "radiogroup"
+        ]
+
+    def _read_only(self, rating_fieldset):
+        return [
+            group
+            for group in rating_fieldset.find_all("div", class_="rating")
+            if group.get("role") == "img"
+        ]
+
+    def test_the_composition_holds_a_rating_row_in_its_own_fieldset(
+        self, rating_fieldset
+    ):
+        assert rating_fieldset.find("legend") is not None
+        assert len(rating_fieldset.find_all("div", class_="rating")) >= 4
+
+    def test_every_rating_has_an_accessible_name(self, rating_fieldset):
+        for group in rating_fieldset.find_all("div", class_="rating"):
+            assert group.get("aria-label")
+        for group in self._interactive(rating_fieldset):
+            for radio in group.find_all("input", type="radio"):
+                assert radio.get("aria-label")
+
+    def test_the_row_shows_a_clearable_rating(self, rating_fieldset):
+        assert any(
+            group.find("input", class_="rating-hidden")
+            for group in self._interactive(rating_fieldset)
+        )
+
+    def test_the_row_shows_a_half_star_rating_with_a_value(self, rating_fieldset):
+        halves = [
+            group
+            for group in self._interactive(rating_fieldset)
+            if "rating-half" in group["class"]
+        ]
+
+        assert halves
+        assert any(group.find("input", checked=True) for group in halves)
+
+    def test_the_row_shows_a_disabled_rating(self, rating_fieldset):
+        assert any(
+            all(radio.has_attr("disabled") for radio in group.find_all("input"))
+            for group in self._interactive(rating_fieldset)
+        )
+
+    def test_the_row_shows_a_read_only_rating_with_a_value(self, rating_fieldset):
+        read_only = self._read_only(rating_fieldset)
+
+        assert read_only
+        assert any(group.find(attrs={"aria-current": "true"}) for group in read_only)
+
+    def test_each_interactive_rating_has_its_own_name(self, rating_fieldset):
+        names = []
+        for group in self._interactive(rating_fieldset):
+            group_names = {radio["name"] for radio in group.find_all("input")}
+            assert len(group_names) == 1
+            names.extend(group_names)
+
+        assert len(names) >= 3
+        assert len(names) == len(set(names))
+
+    def test_ids_are_unique_within_the_composition(self, composition):
+        ids = [element["id"] for element in composition.find_all(id=True)]
+
+        assert [id_ for id_, count in Counter(ids).items() if count > 1] == []
+
+
 class TestDemoHeadLoadsCally:
     @pytest.fixture
     def head(self):

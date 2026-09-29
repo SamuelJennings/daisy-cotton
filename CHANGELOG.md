@@ -249,6 +249,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   is added to it. `pattern` and `inputmode` replace the defaults, `input_class` adds classes to the input (such as
   `validator`), and `id`, `name`, `value`, `required`, `disabled`, `autofocus`, `form` and every other attribute
   land on the input.
+- `<c-form.rating>`: daisyUI's rating, a `<div class="rating">` grouped as a radio group named by `label`, holding
+  `max` radios (five by default) that share `name` (generated when empty), with values 1 to `max`, each carrying
+  `mask`, `mask-{shape}` (`star`, `star-2` or `heart`) and `bg-{variant}`, and named "1 star" to "5 stars".
+  `size` becomes `rating-{size}` on the wrapper. `half` adds `rating-half` and two radios per whole value carrying
+  `mask-half-1` and `mask-half-2`, valued in steps of 0.5; `clearable` adds a first `rating-hidden` radio named
+  "No rating" with an empty value; `value` checks the matching radio. `readonly` renders `<div>` items instead, with
+  `aria-current="true"` on the one matching `value`, and the wrapper becomes an image named "3 out of 5". `name`,
+  `required`, `disabled` and `form` land on every radio; `id`, `class` and every other attribute land on the
+  wrapper. Adds the `rating_items` template tag.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is
