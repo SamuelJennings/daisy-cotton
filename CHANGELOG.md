@@ -227,6 +227,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `<c-form.range>`: daisyUI's range, a native `<input type="range">` carrying `range`, `variant`,
   `size` and, when `vertical` is given, `range-vertical`. `min` and `max` are always emitted,
   defaulting to the browser's own `0` and `100`.
+- `<c-form.filter>`: daisyUI's filter, a `<div class="filter" role="radiogroup">` of radio buttons carrying
+  `btn`, written without a `<form>` so it can sit inside one. The first radio is the reset, carrying
+  `filter-reset`; it shows × and is named "Clear filter" through a hidden element, which `reset_label`
+  replaces. One radio follows for each entry of `options`, a value used as its own label or a
+  (value, label) pair, the shape of a Django `choices` list, and `value` checks the matching one. `variant`
+  and `size` become `btn-{variant}` and `btn-{size}` on every radio, and `label` names the group. `name`
+  (generated when empty), `required`, `disabled` and `form` land on every radio; `id`, `class` and every
+  other attribute land on the wrapper. Adds the `filter_options` template tag.
+- `<c-form.calendar>`: daisyUI's calendar, Cally's `<calendar-date>` element, or `<calendar-range>` with `range`,
+  carrying `cally`. `months` above one writes the count on the root and adds one `<calendar-month>` for each,
+  the second onward with `offset`. `value`, `min`, `max`, `locale`, `first-day-of-week`, `id` and every other
+  attribute land on the root, and `class` is added to its own. The previous and next buttons are `<span>`
+  slots holding a `<c-icon>` and a visually hidden "Previous" or "Next", so each button is named; `previous_icon`
+  and `next_icon` set the icons. The package ships no script: the project loads Cally, and the README shows
+  how and how to copy a chosen date into a form input. Adds the `count_range` template tag.
+- `<c-form.otp>`: daisyUI's one-time code field, a `<label class="otp">` holding `length` empty `<span>` boxes
+  (six by default), then one text input with `maxlength`, a digits-only `pattern`, `inputmode="numeric"` and
+  `autocomplete="one-time-code"`, then a visually hidden `<small>` naming it "Verification code", or `label`.
+  `variant`, `size` and `joined` become `otp-{variant}`, `otp-{size}` and `otp-joined` on the label, and `class`
+  is added to it. `pattern` and `inputmode` replace the defaults, `input_class` adds classes to the input (such as
+  `validator`), and `id`, `name`, `value`, `required`, `disabled`, `autofocus`, `form` and every other attribute
+  land on the input.
+- `<c-form.rating>`: daisyUI's rating, a `<div class="rating">` grouped as a radio group named by `label`, holding
+  `max` radios (five by default) that share `name` (generated when empty), with values 1 to `max`, each carrying
+  `mask`, `mask-{shape}` (`star`, `star-2` or `heart`) and `bg-{variant}`, and named "1 star" to "5 stars".
+  `size` becomes `rating-{size}` on the wrapper. `half` adds `rating-half` and two radios per whole value carrying
+  `mask-half-1` and `mask-half-2`, valued in steps of 0.5; `clearable` adds a first `rating-hidden` radio named
+  "No rating" with an empty value; `value` checks the matching radio. `readonly` renders `<div>` items instead, with
+  `aria-current="true"` on the one matching `value`, and the wrapper becomes an image named "3 out of 5". `name`,
+  `required`, `disabled` and `form` land on every radio; `id`, `class` and every other attribute land on the
+  wrapper. Adds the `rating_items` template tag.
 
 `avatar` takes `src`/`placeholder` with a silhouette fallback; it resolves no settings-driven user
 lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript enhancement is

@@ -10,7 +10,7 @@ Built on [daisyUI](https://daisyui.com/) and [django-cotton](https://django-cott
 
 Version 0.0.1, pre-1.0: names, attributes and the set of classes a component emits can change between minor versions. The [CHANGELOG](https://github.com/SamuelJennings/daisy-cotton/blob/main/CHANGELOG.md) is how a project finds out what has landed.
 
-Seventy-eight components are built so far: `accordion`, `alert`, `avatar`, `badge`, `breadcrumbs`, `button`, `card`, `carousel`, `chat`, `collapse`, `countdown`, `diff`, `divider`, `dock`, `drawer`, `dropdown`, `fab`, `footer`, `form.checkbox`, `form.fieldset`, `form.file-input`, `form.input`, `form.label`, `form.radio`, `form.range`, `form.select`, `form.textarea`, `form.toggle`, `hero`, `hover-3d`, `hover-gallery`, `icon`, `indicator`, `join`, `kbd`, `link`, `list`, `loading`, `mask`, `megamenu`, `menu`, `modal`, `navbar`, `progress`, `radial-progress`, `skeleton`, `stack`, `stat`, `status`, `steps`, `swap`, `table`, `tabs`, `text-rotate`, `timeline`, `toast`, `tooltip` and `mockup.*`. Pagination has no component: daisyUI builds it from `join` and `btn` and gives it no class of its own, so write it with those two. Aura has no component either: it only decorates another element, so wrap the component to highlight in a `<div class="aura">` with daisyUI's style and size classes. Each one is documented live in the component gallery (`python manage.py runserver` from a checkout). More land as the need arises.
+Eighty-two components are built so far: `accordion`, `alert`, `avatar`, `badge`, `breadcrumbs`, `button`, `card`, `carousel`, `chat`, `collapse`, `countdown`, `diff`, `divider`, `dock`, `drawer`, `dropdown`, `fab`, `footer`, `form.calendar`, `form.checkbox`, `form.fieldset`, `form.file-input`, `form.filter`, `form.input`, `form.label`, `form.otp`, `form.radio`, `form.range`, `form.rating`, `form.select`, `form.textarea`, `form.toggle`, `hero`, `hover-3d`, `hover-gallery`, `icon`, `indicator`, `join`, `kbd`, `link`, `list`, `loading`, `mask`, `megamenu`, `menu`, `modal`, `navbar`, `progress`, `radial-progress`, `skeleton`, `stack`, `stat`, `status`, `steps`, `swap`, `table`, `tabs`, `text-rotate`, `timeline`, `toast`, `tooltip` and `mockup.*`. Pagination has no component: daisyUI builds it from `join` and `btn` and gives it no class of its own, so write it with those two. Aura has no component either: it only decorates another element, so wrap the component to highlight in a `<div class="aura">` with daisyUI's style and size classes. Each one is documented live in the component gallery (`python manage.py runserver` from a checkout). More land as the need arises.
 
 `<c-icon>` renders `name` as a literal CSS class string and resolves nothing itself — a project wanting name-based icon resolution provides its own override (see [docs/adr/0001](https://github.com/SamuelJennings/daisy-cotton/blob/main/docs/adr/0001-icon-is-an-extension-point.md)).
 
@@ -68,16 +68,43 @@ Each component is a Cotton tag named after its daisyUI component, configured thr
 
 Classes passed with `class` are added to the component's own, and any other attribute passes through to its root element.
 
+## Calendar
+
+`<c-form.calendar>` writes Cally's `<calendar-date>` element, or `<calendar-range>` with `range`, carrying daisyUI's `cally` class. It shows nothing until the project loads Cally, and this package does not. Add the module script to the page's head, pinning the version you have tested or hosting the file yourself:
+
+```html
+<script type="module" src="https://unpkg.com/cally@0.9.2"></script>
+```
+
+Cally's own attributes (`value`, `min`, `max`, `locale`, `first-day-of-week`) go on the tag and reach the calendar unchanged, `months="2"` shows two months side by side, and `class` is added to the calendar's own. The previous and next buttons hold an icon drawn by `<c-icon>` and a visually hidden name, so pass icon classes through `previous_icon` and `next_icon` unless your project's `<c-icon>` resolves names:
+
+```html
+<c-form.calendar id="delivery-calendar" min="2026-09-01" previous_icon="bi bi-chevron-left" next_icon="bi bi-chevron-right" />
+<input type="hidden" name="delivery_date" id="delivery-date">
+```
+
+Cally does not write to a form itself. Its `change` event carries the chosen date in the calendar's `value`, so a few lines of script copy it into the hidden input:
+
+```html
+<script>
+  document.getElementById("delivery-calendar").addEventListener("change", (event) => {
+    document.getElementById("delivery-date").value = event.target.value;
+  });
+</script>
+```
+
+For a range the same `value` is the two dates joined with a slash, such as `2026-09-01/2026-09-07`.
+
 ## Scope & philosophy
 
-**What this is.** One Cotton component for each base daisyUI component, and nothing else. A component that daisyUI builds out of other components, or a class that only modifies another component, gets no Cotton component of its own. Everything here is presentation: templates configured through attributes and themed by whatever daisyUI theme the project runs.
+**What this is.** One Cotton component for each base daisyUI component, and nothing else. A component that daisyUI builds out of other components, or a class that only modifies another component, gets no Cotton component of its own. The validator is one such class: add it to a control through its `class`, or to the OTP's input through `input_class`. Everything here is presentation: templates configured through attributes and themed by whatever daisyUI theme the project runs.
 
 **What this deliberately is not.**
 
 - **Not an application shell.** No settings, no menu system, no icon registry, no views.
 - **Not page-level layout.** The `hero` container ships, but composed hero sections (the heading, copy and calls to action inside it) and other page sections stay with the project, built from these components.
 - **Not a CSS framework.** daisyUI, its themes and Tailwind's preflight come from the project.
-- **Not a JavaScript layer.** The package ships no scripts. A project that wants behaviour daisyUI's CSS doesn't give, such as smarter dropdown placement, adds it by overriding the component.
+- **Not a JavaScript layer.** The package ships no scripts. A project that wants behaviour daisyUI's CSS doesn't give, such as smarter dropdown placement, adds it by overriding the component. The calendar is the one component that needs a script to show anything: it is drawn by [Cally](https://github.com/WickyNilliams/cally), which the project loads itself (see [Calendar](#calendar)).
 - **Not coupled to Django objects.** Components take plain values. Wiring one up to a form, a paginator or the messages framework is the project's job.
 - **Not shaped for any particular project.** Nothing here exists because one adopter needed it.
 

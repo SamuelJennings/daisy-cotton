@@ -1,0 +1,327 @@
+{
+  "feature": "010-specialised-inputs",
+  "branch": "010-specialised-inputs",
+  "repo": "SamuelJennings/daisy-cotton",
+  "state": "PR_READY",
+  "state_history": [
+    {
+      "state": "QUEUED",
+      "at": "2026-09-26T14:49:57Z",
+      "note": "specification merged in #26; issue graph built"
+    },
+    {
+      "state": "PLAN",
+      "at": "2026-09-29T10:24:16Z",
+      "note": "picked up from the queue; branch cut from origin/main cdce18f; verify green on base"
+    },
+    {
+      "state": "DESIGN_REVIEW",
+      "at": "2026-09-29T10:24:51Z",
+      "note": "plan, research and tasks committed; draft PR #113 open"
+    },
+    {
+      "state": "IMPLEMENT",
+      "at": "2026-09-29T10:33:35Z",
+      "note": "design review applied (D5); plan notification sent"
+    },
+    {
+      "state": "CONVERGE",
+      "at": "2026-09-29T10:56:17Z",
+      "note": "all four stories done"
+    },
+    {
+      "state": "REVIEW",
+      "at": "2026-09-29T10:57:50Z",
+      "note": "converged: roadmap, cleanup, ADR verdicts, story comments green"
+    },
+    {
+      "state": "PR_READY",
+      "at": "2026-09-29T11:07:23Z",
+      "note": "review applied (D7); PR ready; walkthrough sent"
+    }
+  ],
+  "gates": {
+    "spec": {
+      "approved_by": "SamuelJennings",
+      "at": "2026-09-26T14:49:57Z",
+      "self_resolved": [
+        "merge commit cc7473f, pull request #26"
+      ]
+    },
+    "plan": {
+      "approved_by": "notified",
+      "at": "2026-09-29T10:33:21Z"
+    },
+    "merge": {
+      "approved_by": null,
+      "at": null
+    },
+    "design_review": {
+      "approved_by": "design-panel",
+      "at": "2026-09-29T10:33:21Z",
+      "self_resolved": [
+        "DR-001..DR-004 medium: applied as plan/research/tasks edits (D5)",
+        "DR-005..DR-010 low: applied as plan/research/tasks edits, DR-008 carried to the walkthrough (D5)"
+      ]
+    },
+    "review": {
+      "approved_by": "review-panel",
+      "at": "2026-09-29T11:06:37Z",
+      "self_resolved": [
+        "REV-001, REV-002 medium: fixed with a tag guard, documentation and translation tests (D7)",
+        "REV-003..REV-006 low: fixed (D7)"
+      ]
+    }
+  },
+  "stories": [
+    {
+      "id": "US1",
+      "priority": "P1",
+      "issue": 91,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/010-specialised-inputs",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T001",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_templatetags/test_daisy_cotton.py -q: 32 passed",
+              "uv run pre-commit run --files daisy_cotton/templatetags/daisy_cotton.py tests/test_templatetags/test_daisy_cotton.py: passed"
+            ],
+            "tests": [
+              "tests/test_templatetags/test_daisy_cotton.py::TestFilterOptions"
+            ]
+          }
+        },
+        {
+          "id": "T002",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_filter.py tests/test_specialised_inputs.py -q: 41 passed",
+              "first run before the template existed: TemplateDoesNotExist cotton/form/filter/index.html (component missing)",
+              "12 template mutations (checked, aria-labelledby, group aria-label, variant, size, option name, role, reset value, reset_label, shared attributes, hidden, reset form): every one failed the new tests",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors, 0 warnings",
+              "uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_semantic_palette.py tests/test_gallery_links.py tests/test_demo.py -q: 755 passed, 17 skipped (skips pre-existing)"
+            ],
+            "tests": [
+              "tests/test_filter.py",
+              "tests/test_specialised_inputs.py::TestSpecialisedInputsNoScript",
+              "tests/test_specialised_inputs.py::TestSpecialisedInputsPageContextDoesNotLeak"
+            ]
+          }
+        },
+        {
+          "id": "T003",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_specialised_inputs.py -q before the composition row: 5 errors, the composition holds no filter",
+              "uv run pytest tests/test_specialised_inputs.py tests/test_filter.py tests/test_fieldset.py tests/test_gallery_annotations.py tests/test_gallery_lint.py -q: 498 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_specialised_inputs.py::TestFieldsetCompositionFilters"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US2",
+      "priority": "P2",
+      "issue": 92,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/010-specialised-inputs",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T004",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_templatetags/test_daisy_cotton.py -q before the tag existed: ImportError, count_range missing",
+              "uv run pytest tests/test_templatetags/test_daisy_cotton.py -q: 47 passed",
+              "mutation count >= 0 for count > 0: 9 TestCountRange tests failed",
+              "uv run pre-commit run --files <changed files>: passed"
+            ],
+            "tests": [
+              "tests/test_templatetags/test_daisy_cotton.py::TestCountRange"
+            ]
+          }
+        },
+        {
+          "id": "T005",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_calendar.py -q before the template existed: 30 failed, TemplateDoesNotExist cotton/form/calendar/index.html",
+              "uv run pytest tests/test_calendar.py tests/test_specialised_inputs.py -q: 40 passed",
+              "14 template mutations (root element, cally class, class merge, months attribute, offset, sr-only name, aria-hidden on both icons, icon routing, slot names, count_range input, attrs, months default, icon default): every one failed a new test",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors, 0 warnings",
+              "uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_semantic_palette.py tests/test_gallery_links.py tests/test_demo.py tests/test_class_attribute_merge.py -q: 768 passed, 17 skipped (skips pre-existing)",
+              "uv run pre-commit run --files <changed files>: passed"
+            ],
+            "tests": [
+              "tests/test_calendar.py",
+              "tests/test_specialised_inputs.py::TestSpecialisedInputsNoScript",
+              "tests/test_specialised_inputs.py::TestSpecialisedInputsPageContextDoesNotLeak"
+            ]
+          }
+        },
+        {
+          "id": "T006",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_specialised_inputs.py -q before the row and the head line: 3 failed, 5 errors (the composition holds no calendar; no Cally script in the demo head)",
+              "uv run pytest tests/test_specialised_inputs.py tests/test_calendar.py tests/test_fieldset.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_demo.py tests/test_gallery_links.py tests/test_semantic_palette.py -q: 745 passed, 17 skipped (skips pre-existing)",
+              "5 mutations (drop months=2, drop min and max, drop type=module, unsplit closing script tag, Cally before the preview-document check): each failed a new test",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_specialised_inputs.py::TestFieldsetCompositionCalendars",
+              "tests/test_specialised_inputs.py::TestDemoHeadLoadsCally"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US3",
+      "priority": "P2",
+      "issue": 93,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/010-specialised-inputs",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T007",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_otp.py -q before the template existed: failed, TemplateDoesNotExist cotton/form/otp/index.html",
+              "uv run pytest tests/test_otp.py tests/test_specialised_inputs.py -q: 52 passed",
+              "14 template mutations (name as span, name before input, joined, variant, size, default count, pattern, input_class, attrs on input, attrs dropped, class dropped, attrs on label, label text, fixed inputmode, autocomplete): every one failed a new test",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors, 0 warnings",
+              "uv run pytest tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_semantic_palette.py tests/test_gallery_links.py tests/test_demo.py tests/test_class_attribute_merge.py -q: 777 passed, 17 skipped (skips pre-existing)"
+            ],
+            "tests": [
+              "tests/test_otp.py",
+              "tests/test_specialised_inputs.py::TestSpecialisedInputsNoScript",
+              "tests/test_specialised_inputs.py::TestSpecialisedInputsPageContextDoesNotLeak"
+            ]
+          }
+        },
+        {
+          "id": "T008",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_specialised_inputs.py -q -k Otps before the composition row: 4 errors, the composition holds no OTP",
+              "uv run pytest tests/test_specialised_inputs.py tests/test_otp.py tests/test_fieldset.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py -q: 605 passed",
+              "5 mutations of the composition row (joined, four-digit length, disabled, unique name, legend): every one failed a new test",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_specialised_inputs.py::TestFieldsetCompositionOtps"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "US4",
+      "priority": "P3",
+      "issue": 94,
+      "worktree": "/home/sam/projects/samueljennings/daisy-cotton-wt/010-specialised-inputs",
+      "status": "done",
+      "replans": 0,
+      "tasks": [
+        {
+          "id": "T009",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_templatetags/test_daisy_cotton.py -q before rating_items existed: collection error, cannot import rating_items",
+              "uv run pytest tests/test_templatetags/test_daisy_cotton.py -q: 82 passed",
+              "5 mutations of rating_items (int values, half alternation, checked comparison, max fallback, whole flag): every one failed a new test",
+              "uv run ruff check daisy_cotton tests/test_templatetags: all checks passed"
+            ],
+            "tests": [
+              "tests/test_templatetags/test_daisy_cotton.py::TestRatingItems"
+            ]
+          }
+        },
+        {
+          "id": "T010",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_rating.py tests/test_specialised_inputs.py -q -k rating before the template existed: every rating test failed with TemplateDoesNotExist cotton/form/rating.html",
+              "uv run pytest tests/test_rating.py tests/test_specialised_inputs.py -q: 106 passed",
+              "15 mutations of form/rating.html (bare value in blocktrans count and with, value|default, checked hidden radio, radiogroup role, aria-current, img role, generated name, required, attrs on wrapper, rating-half, size class, half masks, rating-hidden mask, read-only total): every one failed a new test once a read-only max test was added",
+              "uv run pytest tests/test_rating.py tests/test_specialised_inputs.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py tests/test_declared_attributes.py tests/test_fieldset.py -q: 749 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_rating.py",
+              "tests/test_specialised_inputs.py::TestSpecialisedInputsNoScript",
+              "tests/test_specialised_inputs.py::TestSpecialisedInputsPageContextDoesNotLeak"
+            ]
+          }
+        },
+        {
+          "id": "T011",
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_specialised_inputs.py -q -k Ratings before the composition row: 7 errors, the composition holds no rating",
+              "uv run pytest tests/test_specialised_inputs.py tests/test_rating.py tests/test_fieldset.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py -q: 668 passed",
+              "7 mutations of the composition row (clearable, half, disabled, read-only value, unique name, legend, accessible name): every one failed a new test",
+              "uv run python manage.py cotton_lint --warnings-as-errors: 0 errors, 0 warnings"
+            ],
+            "tests": [
+              "tests/test_specialised_inputs.py::TestFieldsetCompositionRatings"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "budgets": {
+    "converge_cycles": {
+      "used": 1,
+      "max": 2
+    },
+    "review_cycles": {
+      "used": 1,
+      "max": 1
+    },
+    "design_review_cycles": {
+      "used": 1,
+      "max": 1
+    },
+    "tokens": {
+      "used": 0,
+      "max": 120
+    }
+  },
+  "pr": {
+    "number": 113,
+    "draft": false
+  }
+}
