@@ -58,6 +58,14 @@
         "DR-001..DR-004 medium: applied as plan/research/tasks edits (D5)",
         "DR-005..DR-010 low: applied as plan/research/tasks edits, DR-008 carried to the walkthrough (D5)"
       ]
+    },
+    "review": {
+      "approved_by": "review-panel",
+      "at": "2026-09-29T11:06:37Z",
+      "self_resolved": [
+        "REV-001, REV-002 medium: fixed with a tag guard, documentation and translation tests (D7)",
+        "REV-003..REV-006 low: fixed (D7)"
+      ]
     }
   },
   "stories": [
