@@ -77,3 +77,48 @@ def unique_id(prefix: str) -> str:
         ``unique_id("dropdown")`` -> ``"dropdown-3fa2b91c"``
     """
     return f"{prefix}-{uuid.uuid4().hex[:8]}"
+
+
+@register.simple_tag
+def filter_options(options: object, value: object) -> list[dict[str, object]]:
+    """Return the radio options for a filter, one dict per entry.
+
+    Args:
+        options: An iterable whose entries are a bare value, used as its own
+            label, or a list or tuple of two, a ``(value, label)`` pair such
+            as a Django field's ``choices``. Anything that is not iterable is
+            treated as empty.
+        value: The value to check. Compared with each entry's value as a
+            string, so ``2`` matches ``"2"``. ``None`` and ``""`` check
+            nothing.
+
+    Returns:
+        A list of ``{"value", "label", "checked"}`` dicts in the order given,
+        empty when ``options`` is empty or not iterable.
+
+    Example:
+        ``filter_options(["Open", ("c", "Closed")], "c")`` ->
+        ``[{"value": "Open", "label": "Open", "checked": False},
+        {"value": "c", "label": "Closed", "checked": True}]``
+    """
+    try:
+        entries = list(options)  # type: ignore[call-overload]
+    except TypeError:
+        return []
+
+    has_value = value is not None and value != ""
+    result = []
+    for entry in entries:
+        if isinstance(entry, list | tuple) and len(entry) == 2:
+            entry_value, label = entry
+        else:
+            entry_value = label = entry
+        result.append(
+            {
+                "value": entry_value,
+                "label": label,
+                "checked": has_value and str(entry_value) == str(value),
+            }
+        )
+
+    return result

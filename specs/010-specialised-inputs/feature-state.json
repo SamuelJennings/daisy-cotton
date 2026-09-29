@@ -61,8 +61,17 @@
       "tasks": [
         {
           "id": "T001",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_templatetags/test_daisy_cotton.py -q: 32 passed",
+              "uv run pre-commit run --files daisy_cotton/templatetags/daisy_cotton.py tests/test_templatetags/test_daisy_cotton.py: passed"
+            ],
+            "tests": [
+              "tests/test_templatetags/test_daisy_cotton.py::TestFilterOptions"
+            ]
+          }
         },
         {
           "id": "T002",
