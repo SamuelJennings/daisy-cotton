@@ -41,7 +41,7 @@ Ten new Cotton templates for daisyUI's data input group: `input`, `textarea`, `s
 | XI Agnostic | Gallery examples use neutral copy. | Pass |
 | XII Semantic palette | Colour only through validated `variant`, and `text-error` on the fieldset's error lines. The errors' wrapper carries the layout utility `grid`, as other packaged templates carry `flex` and `w-full`. | Pass |
 | XIII Attribute vocabulary | `variant`, `size`, `ghost` and `vertical` as daisyUI names them, merged `class`, the rest through `{{ attrs }}`. The wrapped input and select send `class` to the wrapper and every other attribute to the control (FR-009, spec Clarifications). `start` and `end` reuse the navbar's names. | Pass |
-| XIV Composition | Gallery examples compose `<c-label>`, `<c-fieldset>`, the controls, `<c-icon>` and `<c-kbd>`. The components themselves call no other component. | Pass |
+| XIV Composition | Gallery examples compose `<c-form.label>`, `<c-form.fieldset>`, the controls, `<c-icon>` and `<c-kbd>`. The components themselves call no other component. | Pass |
 | XV Gallery annotations | Every template annotated, fixed-value props typed `select[…]`, `cotton_lint --warnings-as-errors` clean. | Pass |
 
 ## Design
@@ -58,7 +58,7 @@ Shared rules, applied everywhere below:
 
 ### Text input (US1)
 
-`input.html` — `{% load daisy_cotton %}`, `<c-vars type="text" variant="" size="" ghost="" start="" end="" class="" />`.
+`form/input.html` — `{% load daisy_cotton %}`, `<c-vars type="text" variant="" size="" ghost="" start="" end="" class="" />`.
 
 ```
 {% if start or end %}<label class="input {% variation variant "input" "…eight…" %} {% variation size "input" "xs,sm,md,lg,xl" %}{% if ghost %} input-ghost{% endif %} {{ class }}">{{ start }}<input type="{{ type }}" {{ attrs }}>{{ end }}</label>{% else %}<input type="{{ type }}" class="input …same modifiers… {{ class }}" {{ attrs }}>{% endif %}
@@ -67,24 +67,24 @@ Shared rules, applied everywhere below:
 - Unwrapped, it is one `<input>` and composes inside a join (US1-5).
 - Wrapped, the `<label>` carries `input`, the modifiers and `class`. The inner `<input>` carries no class, as daisyUI writes it (research R2), and every other attribute (FR-008, FR-009).
 - `type` is typed `select[…]` with the text-like types `form.field` offered (`text`, `email`, `password`, `number`, `tel`, `url`, `search`, `date`, `time`, `datetime-local`, `month`, `week`, `color`), default `text`. The description says checkbox, radio, range and file have their own components and the input does not refuse those types (Edge Cases).
-- The description says: `size` is daisyUI's scale, not the native `size` attribute (research R6); a control needs `<c-label>`, `aria-label` or `aria-labelledby` for a name, and the component cannot invent one; start and end content goes inside the box, written as `<span class="label">` for daisyUI's inline label; it names the fieldset entry for labelled, wrapped, disabled and invalid examples.
+- The description says: `size` is daisyUI's scale, not the native `size` attribute (research R6); a control needs `<c-form.label>`, `aria-label` or `aria-labelledby` for a name, and the component cannot invent one; start and end content goes inside the box, written as `<span class="label">` for daisyUI's inline label; it names the fieldset entry for labelled, wrapped, disabled and invalid examples.
 
 ### Label (US2)
 
-`label.html` — `<c-vars text="" floating="" class="" />`.
+`form/label.html` — `<c-vars text="" floating="" class="" />`.
 
 ```
 {% if floating %}<label class="floating-label {{ class }}" {{ attrs }}>{{ slot }}<span>{{ text }}</span></label>{% else %}<label class="label {{ class }}" {{ attrs }}>{{ slot }}{{ text }}</label>{% endif %}
 ```
 
-- Above a control: `<c-label for="id_email" text="Email" />` renders `<label class="label" for="id_email">Email</label>` (US2-1). `for` passes through.
+- Above a control: `<c-form.label for="id_email" text="Email" />` renders `<label class="label" for="id_email">Email</label>` (US2-1). `for` passes through.
 - Around a control: the slot comes first, then the text, as daisyUI writes a checkbox and its text (research R2, US2-2).
 - Floating: the field first, then the `<span>` as a direct child (research R2, R3, US2-3).
 - The description says: the `for` id must match the control's `id` or it names nothing (Edge Cases); float a label only around an unwrapped input, textarea or select, and give the field a placeholder, since daisyUI floats the label while the field shows its placeholder (research R3, Edge Cases); `class="sr-only"` hides it visually and keeps the name; it names the fieldset entry for all three forms.
 
 ### Fieldset (US2)
 
-`fieldset.html` — `<c-vars legend="" description="" errors="" id="" class="" />`.
+`form/fieldset.html` — `<c-vars legend="" description="" errors="" id="" class="" />`.
 
 ```
 <fieldset class="fieldset {{ class }}"{% if id %} id="{{ id }}"{% endif %} {{ attrs }}>{% if legend %}<legend class="fieldset-legend">{{ legend }}</legend>{% endif %}{{ slot }}{% if description %}<p class="label"{% if id %} id="{{ id }}-description"{% endif %}>{{ description }}</p>{% endif %}{% if errors %}<div class="grid"{% if id %} id="{{ id }}-errors"{% endif %}>{% if errors == errors|stringformat:"s" %}<p class="label text-error">{{ errors }}</p>{% else %}{% for error in errors %}<p class="label text-error">{{ error }}</p>{% endfor %}{% endif %}</div>{% endif %}</fieldset>
@@ -94,24 +94,24 @@ Shared rules, applied everywhere below:
 - `id` is declared so the template can derive from it. It is emitted on the fieldset only when given, and never twice.
 - The derived ids are `<id>-description` and `<id>-errors`. The errors sit in one `<div class="grid">` carrying `<id>-errors`, so a control names every message with one id however many there are (FR-021). `grid` stacks the lines: daisyUI's `.label` is `inline-flex`, and only the fieldset's direct children are grid items, so without it the messages run together on one line. The div renders only when there are errors.
 - An empty string, an empty list and an absent value all render nothing (US2-7, Edge Cases).
-- The description states both derived ids, shows `aria-describedby="<id>-description <id>-errors"` on a control, says the legend names the group and not a control inside it (a fieldset holding one control still gives it a `<c-label>`), says a description or message containing HTML is escaped and the named slot takes markup, notes that daisyUI's description line does not wrap (research R3), says a named slot filled with whitespace only still renders its element, and names its own composition for every control.
+- The description states both derived ids, shows `aria-describedby="<id>-description <id>-errors"` on a control, says the legend names the group and not a control inside it (a fieldset holding one control still gives it a `<c-form.label>`), says a description or message containing HTML is escaped and the named slot takes markup, notes that daisyUI's description line does not wrap (research R3), says a named slot filled with whitespace only still renders its element, and names its own composition for every control.
 
 ### Textarea and select (US4)
 
-`textarea.html` — `{% load daisy_cotton %}`, `<c-vars variant="" size="" ghost="" class="" />`.
+`form/textarea.html` — `{% load daisy_cotton %}`, `<c-vars variant="" size="" ghost="" class="" />`.
 
 ```
 <textarea class="textarea …modifiers… {{ class }}" {{ attrs }}>{{ slot }}</textarea>
 ```
 
-`select.html` — `{% load daisy_cotton %}`, `<c-vars variant="" size="" ghost="" start="" end="" class="" />`. The input's two forms with `select` in place of `input`, and `<select {{ attrs }}>{{ slot }}</select>` in place of the `<input>` (FR-011).
+`form/select.html` — `{% load daisy_cotton %}`, `<c-vars variant="" size="" ghost="" start="" end="" class="" />`. The input's two forms with `select` in place of `input`, and `<select {{ attrs }}>{{ slot }}</select>` in place of the `<input>` (FR-011).
 
 - The textarea's value is the slot exactly as the caller wrote it (research R4), and its description says so.
 - The select's description says the slot holds its `<option>` elements, `size` is daisyUI's scale and not the native row count (research R6), and a floating label always sits in its floated position around a select (research R3).
 
 ### Checkbox, radio and toggle (US5)
 
-`checkbox.html`, `radio.html`, `toggle.html` — `{% load daisy_cotton %}`, `<c-vars variant="" size="" class="" />`.
+`form/checkbox.html`, `form/radio.html`, `form/toggle.html` — `{% load daisy_cotton %}`, `<c-vars variant="" size="" class="" />`.
 
 ```
 <input type="checkbox" class="checkbox …modifiers… {{ class }}" {{ attrs }}>
@@ -120,24 +120,24 @@ Shared rules, applied everywhere below:
 ```
 
 - `type`, and the toggle's `role="switch"`, are written by the template (FR-014, research R7). A caller passes neither: a second `type` or `role` would reach the element as a duplicate attribute, which the browser resolves to the first. Each description says so. Neither is declared, because a declared name the template does not read fails `tests/test_declared_attributes.py`.
-- The checkbox's description says its indeterminate state can only be set from the project's own script. The radio's says to give every radio in a group the same `name`, and to group them in a `<c-fieldset>` whose legend names the group. Each names the fieldset entry.
+- The checkbox's description says its indeterminate state can only be set from the project's own script. The radio's says to give every radio in a group the same `name`, and to group them in a `<c-form.fieldset>` whose legend names the group. Each names the fieldset entry.
 
 ### File input and range (US6)
 
-`file_input.html` — `{% load daisy_cotton %}`, `<c-vars variant="" size="" ghost="" class="" />`.
+`form/file_input.html` — `{% load daisy_cotton %}`, `<c-vars variant="" size="" ghost="" class="" />`.
 
 ```
 <input type="file" class="file-input …modifiers…{% if ghost %} file-input-ghost{% endif %} {{ class }}" {{ attrs }}>
 ```
 
-`range.html` — `{% load daisy_cotton %}`, `<c-vars variant="" size="" vertical="" min="0" max="100" class="" />`.
+`form/range.html` — `{% load daisy_cotton %}`, `<c-vars variant="" size="" vertical="" min="0" max="100" class="" />`.
 
 ```
 <input type="range" min="{{ min }}" max="{{ max }}" class="range …modifiers…{% if vertical %} range-vertical{% endif %} {{ class }}" {{ attrs }}>
 ```
 
 - `min` and `max` are declared with the browser's own defaults, so they are always emitted and never twice (FR-016). `value` and `step` pass through.
-- Cotton resolves `<c-file-input>` to `file_input.html` (research R4).
+- Cotton resolves `<c-form.file-input>` to `form/file_input.html` (research R4).
 
 ### Removing `form.field` (US3)
 
@@ -163,10 +163,10 @@ Every template carries `@description`, a `@prop` per `<c-vars>` name and `@slot`
 
 | Story | Adds to the composition |
 |---|---|
-| US2 | A `<c-fieldset id="account-email">` with a description and an error: `<c-label for>` above a required `<c-input type="email">` that is invalid and names both derived ids in `aria-describedby` (US2-8, US1-7). A floating `<c-label>` around a `<c-input placeholder>`. A labelled `<c-input type="url">` with `start` `<span class="label">https://</span>`. A `<c-input type="search" aria-label>` with a `<c-icon aria-hidden="true">` in `start` and a `<c-kbd>` in `end`. A labelled disabled `<c-input>`. |
-| US4 | A labelled `<c-textarea>`, an invalid one and a disabled one. A labelled `<c-select>`, a `<c-select>` whose `start` holds `<span class="label">` text that names it, a floating `<c-label>` around a `<c-select>`, an invalid select and a disabled one (US4-5). |
-| US5 | A `<c-fieldset legend>` holding three `<c-label>`-wrapped `<c-radio>`s sharing a `name`, one checked and one disabled, and one invalid radio (US2-8, US5-4). A `<c-label>`-wrapped checked `<c-checkbox>`, an invalid one and a disabled one. A `<c-label>`-wrapped checked `<c-toggle>`, an invalid one and a disabled one (US5-6). |
-| US6 | A labelled `<c-file-input>`, an invalid one and a disabled one. A labelled `<c-range>` with a value, a labelled vertical range, an invalid one and a disabled one (US6-5). |
+| US2 | A `<c-form.fieldset id="account-email">` with a description and an error: `<c-form.label for>` above a required `<c-form.input type="email">` that is invalid and names both derived ids in `aria-describedby` (US2-8, US1-7). A floating `<c-form.label>` around a `<c-form.input placeholder>`. A labelled `<c-form.input type="url">` with `start` `<span class="label">https://</span>`. A `<c-form.input type="search" aria-label>` with a `<c-icon aria-hidden="true">` in `start` and a `<c-kbd>` in `end`. A labelled disabled `<c-form.input>`. |
+| US4 | A labelled `<c-form.textarea>`, an invalid one and a disabled one. A labelled `<c-form.select>`, a `<c-form.select>` whose `start` holds `<span class="label">` text that names it, a floating `<c-form.label>` around a `<c-form.select>`, an invalid select and a disabled one (US4-5). |
+| US5 | A `<c-form.fieldset legend>` holding three `<c-form.label>`-wrapped `<c-form.radio>`s sharing a `name`, one checked and one disabled, and one invalid radio (US2-8, US5-4). A `<c-form.label>`-wrapped checked `<c-form.checkbox>`, an invalid one and a disabled one. A `<c-form.label>`-wrapped checked `<c-form.toggle>`, an invalid one and a disabled one (US5-6). |
+| US6 | A labelled `<c-form.file-input>`, an invalid one and a disabled one. A labelled `<c-form.range>` with a value, a labelled vertical range, an invalid one and a disabled one (US6-5). |
 
 Each control's `@description` names the fieldset entry as where its labelled, disabled and invalid examples are. The bare control previews carry only declared defaults and are unnamed by construction, as FS-008 D5 recorded for the progress: their descriptions tell the developer to type `aria-label` in the attributes field.
 
@@ -189,7 +189,7 @@ specs/009-form-controls/
 
 ```text
 daisy_cotton/templates/cotton/
-├── input.html                                  # new (US1)
+├── form/input.html                             # new (US1)
 ├── label.html, fieldset.html                   # new (US2)
 ├── textarea.html, select.html                  # new (US4)
 ├── checkbox.html, radio.html, toggle.html      # new (US5)
@@ -206,7 +206,7 @@ pyproject.toml                # new test modules in non-mirror-paths, the remove
 README.md, CHANGELOG.md
 ```
 
-**Structure Decision**: one flat template per daisyUI component, named after it, as every other component is (spec Clarifications, "No `form.` prefix").
+**Structure Decision**: one template per daisyUI component under `templates/cotton/form/`, named after it, so every form component is called as `<c-form.…>` (spec Clarifications, decisions "The `form.` namespace").
 
 ## Story order
 

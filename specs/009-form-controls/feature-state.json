@@ -2,7 +2,7 @@
   "feature": "009-form-controls",
   "branch": "009-form-controls",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "PR_READY",
+  "state": "IMPLEMENT",
   "state_history": [
     {
       "state": "QUEUED",
@@ -38,6 +38,11 @@
       "state": "PR_READY",
       "at": "2026-09-29T00:48:35Z",
       "note": "review applied (D10); browser check clean apart from the theme's error-colour contrast; pull request ready; walkthrough sent to the maintainer"
+    },
+    {
+      "state": "IMPLEMENT",
+      "at": "2026-09-29T07:06:31Z",
+      "note": "walkthrough: maintainer asked for the form components under a form. namespace (c-form.input, c-form.textarea, ...)"
     }
   ],
   "gates": {
@@ -370,6 +375,11 @@
               "tests/test_form_field_removed.py::TestFormFieldRemoved::test_rendering_raises_template_does_not_exist"
             ]
           }
+        },
+        {
+          "id": "T014",
+          "status": "todo",
+          "attempts": 0
         }
       ]
     }

@@ -6,15 +6,15 @@ Ambiguities in issue #18 that were resolved while writing the spec, with the rea
 
 `form.field` renders daisyUI's fieldset, label and one of seven controls from a single tag, switching markup on `type`. The README's first scope rule gives each base daisyUI component one Cotton component and nothing else, so a component that combines three of them has no place here. Keeping it as a convenience beside the new components would also go against tie-break 3 (fewer attributes) and tie-break 2 (leave composition to the project). The package is below 0.1.0, so the removal is acceptable with a CHANGELOG entry that shows the replacement for every case.
 
-## Labels come from `<c-label>`, in daisyUI's three shapes
+## Labels come from `<c-form.label>`, in daisyUI's three shapes
 
-daisyUI uses the `label` class in three places: a `<label>` above a control inside a fieldset, a `<label>` wrapping a checkbox and its text, and a `<span>` inside an input's box. It uses `floating-label` for the floating form. The first two and the floating form are all a `<label>` element, which is what ties text to a control for assistive technology (G3), so `<c-label>` covers them.
+daisyUI uses the `label` class in three places: a `<label>` above a control inside a fieldset, a `<label>` wrapping a checkbox and its text, and a `<span>` inside an input's box. It uses `floating-label` for the floating form. The first two and the floating form are all a `<label>` element, which is what ties text to a control for assistive technology (G3), so `<c-form.label>` covers them.
 
 The inline form is a `<span>`, not a `<label>`, and it sits inside the element that carries the `input` class. A `<label>` there would nest one label inside another, which is invalid. So the inline form is content in the input's `start` or `end` slot, and the documentation shows it written as daisyUI writes it.
 
 ## The legend does not stand in for a label
 
-daisyUI's simplest fieldset example puts a single input under a legend with no label. A legend names the group, not the control inside it, so a screen reader announces that input with no name. The documentation keeps the legend for groups (a radio set, an address) and gives every control its own `<c-label>`. This costs one more tag per field and is what G3 asks for.
+daisyUI's simplest fieldset example puts a single input under a legend with no label. A legend names the group, not the control inside it, so a screen reader announces that input with no name. The documentation keeps the legend for groups (a radio set, an address) and gives every control its own `<c-form.label>`. This costs one more tag per field and is what G3 asks for.
 
 ## Help text and errors belong to the fieldset
 
@@ -28,7 +28,7 @@ Linking the messages to the control needs an id on each message. The fieldset ca
 
 ## Attributes that do not carry over
 
-- `hide-label`: a visually hidden label is `class="sr-only"` on `<c-label>`, a Tailwind class the project already has.
+- `hide-label`: a visually hidden label is `class="sr-only"` on `<c-form.label>`, a Tailwind class the project already has.
 - `wrapper-class`: the fieldset is now its own component, so its `class` does this.
 - `prelabel` and `postlabel`: the `start` and `end` slots, which also take icons and keyboard hints.
 - The required asterisk: dropped. daisyUI has no such marker, and the control's `required` attribute is what assistive technology reads. A visible marker is text the project writes.
@@ -49,9 +49,9 @@ A toggle looks like an on-off switch, and assistive technology has a role for th
 
 daisyUI's rules say a range must have both. The browser's own defaults are 0 and 100, so emitting them when the caller gives none changes nothing a user sees and keeps the markup within daisyUI's rules.
 
-## No `form.` prefix
+## The `form.` namespace
 
-Every other component is named after its daisyUI component alone (`button`, `modal`). `form.field` was the only grouped name, and it is going. The new tags are `<c-input>`, `<c-select>` and so on. `<c-input>` takes daisyUI's own name for the text input.
+Every form component sits under `form.`, named after its daisyUI component: `<c-form.input>`, `<c-form.label>`, `<c-form.fieldset>` and so on. The maintainer asked for this at the walkthrough, so a project's form markup reads as one family and names such as `input` and `label` stay free for the project. The templates live in `templates/cotton/form/`, the directory `form.field` used.
 
 ## Priorities
 
@@ -59,7 +59,7 @@ Priorities reflect how many adopters need each component, and what must ship tog
 
 ## D1 — The spec still holds after FS-001 to FS-008
 
-Eight features were delivered after this spec landed. Read against their specs: FS-002 annotated `form.field`, which this feature removes, as its assumptions expected. FS-003 gave the navbar the `start` and `end` slots whose names this spec reuses, and FS-006 used the same names for the timeline. FS-004's join already describes an input joined with a button. FS-005 kept theme-controller as a class added to a checkbox, radio or toggle, which these controls take through `class`. FS-005, FS-006 and FS-008 use `label` as an accessible-name attribute on components that name themselves. The controls here take no such attribute, because the spec names them through `<c-label>`, `aria-label` or `aria-labelledby`. None of them changes a behaviour this spec describes.
+Eight features were delivered after this spec landed. Read against their specs: FS-002 annotated `form.field`, which this feature removes, as its assumptions expected. FS-003 gave the navbar the `start` and `end` slots whose names this spec reuses, and FS-006 used the same names for the timeline. FS-004's join already describes an input joined with a button. FS-005 kept theme-controller as a class added to a checkbox, radio or toggle, which these controls take through `class`. FS-005, FS-006 and FS-008 use `label` as an accessible-name attribute on components that name themselves. The controls here take no such attribute, because the spec names them through `<c-form.label>`, `aria-label` or `aria-labelledby`. None of them changes a behaviour this spec describes.
 
 **ADR:** none — a check made once for this feature.
 
@@ -95,7 +95,7 @@ As built, the composition's `account-email` fieldset held every control, so the 
 
 ## D7 — `<c-file_input>` inside gallery-scanned markup
 
-The gallery's catalog registers a component under its file stem — `file_input`, not `file-input` — and its unknown-component lint check compares a source tag against that literal set with no hyphen/underscore normalization, so `<c-file-input>` inside the fieldset's `@slot` composition read as a reference to a component that does not exist (3 errors, `cotton_lint --warnings-as-errors`), even though Cotton itself resolves the hyphen form to `file_input.html` at render time and `tests/test_file_input.py`/`tests/test_form_controls.py` use `<c-file-input>` freely. This is the same rule spec 008-feedback-components D6 recorded for `<c-radial_progress>` and spec 007-animated-display-components D10/D11 recorded for `<c-hover_gallery>`/`<c-hover_3d>`/`<c-text_rotate>`. The fieldset's composition is written `<c-file_input>` for this reason; the README and CHANGELOG still name it `file-input`, the display form the gallery and daisyUI's own naming use. `<c-range>` has no hyphen in its tag, so it needed no such rewrite.
+The gallery's catalog registers a component under its file stem — `file_input`, not `file-input` — and its unknown-component lint check compares a source tag against that literal set with no hyphen/underscore normalization, so `<c-form.file-input>` inside the fieldset's `@slot` composition read as a reference to a component that does not exist (3 errors, `cotton_lint --warnings-as-errors`), even though Cotton itself resolves the hyphen form to `file_input.html` at render time and `tests/test_file_input.py`/`tests/test_form_controls.py` use `<c-form.file-input>` freely. This is the same rule spec 008-feedback-components D6 recorded for `<c-radial_progress>` and spec 007-animated-display-components D10/D11 recorded for `<c-hover_gallery>`/`<c-hover_3d>`/`<c-text_rotate>`. The fieldset's composition is written `<c-file_input>` for this reason; the README and CHANGELOG still name it `file-input`, the display form the gallery and daisyUI's own naming use. `<c-form.range>` has no hyphen in its tag, so it needed no such rewrite.
 
 **ADR:** none — a lint tool's known-tags limitation, not a design choice; recorded so a future template composing with `file-input` in scanned markup does not rediscover it.
 
@@ -107,7 +107,7 @@ The gallery's catalog registers a component under its file stem — `file_input`
 
 ## D9 — Two `form.field` tests had no direct CHANGELOG example and got one extra line each
 
-Mapping every `tests/test_form_field.py` test to a CHANGELOG example (SC-004) left two genuinely uncovered by the ten required cases: rich label content (a badge inside the label text) and a check-style control (checkbox/radio/toggle) that also carries help text. Neither is a new behaviour — `<c-label>`'s default slot already accepts markup, and `<c-fieldset>` already renders no `legend` unless given one — so each got the one extra before-and-after line the spec allows for an unmapped case, rather than a new component capability.
+Mapping every `tests/test_form_field.py` test to a CHANGELOG example (SC-004) left two genuinely uncovered by the ten required cases: rich label content (a badge inside the label text) and a check-style control (checkbox/radio/toggle) that also carries help text. Neither is a new behaviour — `<c-form.label>`'s default slot already accepts markup, and `<c-form.fieldset>` already renders no `legend` unless given one — so each got the one extra before-and-after line the spec allows for an unmapped case, rather than a new component capability.
 
 **ADR:** none — a documentation-mapping choice, not a design change.
 
@@ -125,3 +125,9 @@ The review approved with four medium and three low findings. Six were fixed dire
 The review's note on width went into the CHANGELOG: `form.field` made every control full width, and the new components do not. The seventh finding asked to reword two commit messages. It was declined: the pull request is squash-merged, so those messages do not reach main, and rewriting pushed history would cost a force-push for no lasting change.
 
 **ADR:** none — tests and documentation local to this feature.
+
+## D11 — The form components move under `form.`
+
+At the walkthrough the maintainer asked for every form component to sit under a `form.` namespace (`<c-form.input>`, `<c-form.textarea>`). The spec's clarification and the naming decision now say so, and all ten templates move to `templates/cotton/form/`. Only the names change. Markup, attributes and slots stay as reviewed, so the change is a rename with its callers, and the flat names stop resolving.
+
+**ADR:** none — a naming ruling recorded in the spec and in "The `form.` namespace" above.
