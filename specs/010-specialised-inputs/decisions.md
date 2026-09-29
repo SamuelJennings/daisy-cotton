@@ -65,3 +65,31 @@ The OTP's root is a `<label>` and the rating's and filter's roots are `<div>` el
 ## Priorities
 
 Priorities reflect how many adopters need each component. The filter appears on list and search pages across most data applications (P1). The calendar and OTP are each needed by many applications, but on few pages, and the calendar also needs a third-party script (P2). The rating belongs to reviews and feedback, which fewer applications have (P3).
+
+## D1 — The spec read against FS-001 to FS-009, and the `form.` namespace
+
+Nine features were delivered after this spec landed. Read against their specs, one changes what this spec says. At FS-009's walkthrough the maintainer asked for every form component to sit under a `form.` namespace, so a project's form markup reads as one family, and FS-009's decisions record it ("The `form.` namespace", D11). This spec was written before that ruling and names `<c-filter>`, `<c-calendar>`, `<c-otp>` and `<c-rating>`. All four belong to the same daisyUI data-input group as FS-009's controls, and the spec itself describes them as building on those controls. So they are `<c-form.filter>`, `<c-form.calendar>`, `<c-form.otp>` and `<c-form.rating>`, with their templates in `templates/cotton/form/`. Only the names change. The calendar goes with the others because daisyUI files it in the same group and a project would look for it there.
+
+The other features change nothing here. FS-004's `<c-mask>` still names the mask classes `shape`. FS-005's swap still splits its wrapper and checkbox and takes `input_class`. FS-008's loading and FS-006's components still name themselves with `label`. FS-009 delivered the fieldset and legend this spec's filter, OTP and rating sit in, and settled the attribute rule D2 applies.
+
+**ADR:** none — the namespace ruling is already recorded in FS-009's decisions and applied here as written.
+
+## D2 — Which attributes reach the control
+
+The spec's clarification lists `id`, `name`, `value`, `required`, `disabled`, `autofocus` and `form` for the control and sends everything else to the wrapper, "where #18 settles a different list for the core controls, these components follow #18". FS-009 (#18) settled that for a single control `class` goes to the element carrying daisyUI's class and every other attribute goes to the control. The OTP is a single control, so it follows FS-009: `class` on the `<label class="otp">`, everything else on the `<input>`. Acceptance scenario US3-5's "any other attribute lands on the label" reads accordingly.
+
+FS-009 has no group component, so it settles nothing for the filter and the rating. For them the spec's own list stands, adjusted for a group of radios: `name`, `value`, `required`, `disabled` and `form` are declared and written on every radio (`value` checks the matching one), and everything else, `id` included, goes to the wrapper through `attrs`. An `id` cannot be repeated on every radio, and `aria-describedby` from a fieldset's description belongs on the group. `autofocus` is left to pass through to the wrapper rather than picking a radio for it, since which radio should take focus depends on the page.
+
+**ADR:** none — follows FS-009's rule and the spec's own clarification.
+
+## D3 — Where the hidden names go
+
+daisyUI's CSS constrains where visually hidden text can sit. The OTP counts its `<span>` children to size itself and draws each one as a box, so its name is a `<small class="sr-only">` after the input. The rating styles every descendant as an item, so its group name is an `aria-label` on the wrapper. The filter's reset keeps `aria-label="×"` because daisyUI draws a radio button's text from its `aria-label`, and takes its announced name from a hidden span through `aria-labelledby`, as the spec describes. The calendar's paging buttons are named by hidden text beside an `aria-hidden` icon, because an `aria-label` on the icon's `<i>` element is not allowed by ARIA. Research R2 and R6 give the CSS and the rule for each.
+
+**ADR:** none — local to these four templates.
+
+## D4 — The calendar's paging icons
+
+The spec says `<c-icon>` draws the previous and next icons. `<c-icon>` takes a CSS class string and does no lookup (ADR 0001), and the calendar has to pass it something. `previous_icon` and `next_icon` default to `chevron-left` and `chevron-right`, the names a project's own `<c-icon>` override resolves, as the alert passes its variant name. With the bare `<c-icon>` a caller passes its icon classes, and the gallery example passes Bootstrap Icons classes, which the demo already loads. `icon` is the name the button, alert and menu already use for an icon's classes, so the two attributes follow it.
+
+**ADR:** none — follows ADR 0001 and the alert's precedent.
