@@ -161,6 +161,16 @@ class TestButtonContextLeak:
         assert "Leaked" not in html
         assert "btn-primary" not in html
 
+    def test_icon_does_not_carry_a_class_given_to_the_button(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup(
+            '<c-button icon="bi bi-plus" class="w-full">Add</c-button>'
+        )
+
+        assert "w-full" in soup.button["class"]
+        assert "w-full" not in soup.button.find("i")["class"]
+
 
 class TestButtonVocabulary:
     @pytest.mark.parametrize(
