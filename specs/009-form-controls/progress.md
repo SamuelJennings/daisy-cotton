@@ -131,3 +131,8 @@ Watch: the field-with-errors and field-with-help-text CHANGELOG examples both pu
 
 Did: every FR and SC traced to an accepted story; SC-004 re-checked by rendering all twelve CHANGELOG examples (12 of 12, every control named); SC-005 by git grep (only the removal test). Cleanup pass over the feature diff: the ten templates are one element each with no shared machinery, and nothing was simplified further. No migrations. No decision meets the ADR bar (D1–D9 verdicted). Full verify and tamper-check on the whole feature diff: the one flag is the deletion of tests/test_form_field.py, which the specification requires.
 Next: code review.
+
+## 2026-09-29T00:47Z · Review
+
+Did: one reviewer: approve, 0 critical, 0 high, 4 medium, 3 low. Six fixed with tests and documentation, one declined (D10). Browser check on the running gallery: every control in the fieldset example named, the radio group named by its legend, the email field described by its help text and error, toggles exposed as switches, Space and arrow keys work, disabled controls skipped by Tab, wrapped controls show the focus ring on the wrapper. axe flags the contrast of daisyUI's light-theme error colour on the error line, which is the theme's colour and not this markup.
+Next: walkthrough.

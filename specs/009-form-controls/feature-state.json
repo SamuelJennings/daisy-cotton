@@ -58,6 +58,15 @@
         "DR-001..DR-003 medium: applied as plan/tasks edits (D5)",
         "DR-004..DR-006 low: applied as plan/tasks edits (D5)"
       ]
+    },
+    "review": {
+      "approved_by": "review-panel",
+      "at": "2026-09-29T00:47:06Z",
+      "self_resolved": [
+        "REV-001..REV-004 medium: fixed with tests and documentation (D10)",
+        "REV-005, REV-006 low: fixed (D10)",
+        "REV-007 low: declined, squash merge (D10)"
+      ]
     }
   },
   "stories": [
