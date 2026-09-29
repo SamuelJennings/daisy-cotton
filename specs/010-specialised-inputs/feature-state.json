@@ -2,7 +2,7 @@
   "feature": "010-specialised-inputs",
   "branch": "010-specialised-inputs",
   "repo": "SamuelJennings/daisy-cotton",
-  "state": "REVIEW",
+  "state": "PR_READY",
   "state_history": [
     {
       "state": "QUEUED",
@@ -33,6 +33,11 @@
       "state": "REVIEW",
       "at": "2026-09-29T10:57:50Z",
       "note": "converged: roadmap, cleanup, ADR verdicts, story comments green"
+    },
+    {
+      "state": "PR_READY",
+      "at": "2026-09-29T11:07:23Z",
+      "note": "review applied (D7); PR ready; walkthrough sent"
     }
   ],
   "gates": {
@@ -314,5 +319,9 @@
       "used": 0,
       "max": 120
     }
+  },
+  "pr": {
+    "number": 113,
+    "draft": false
   }
 }
