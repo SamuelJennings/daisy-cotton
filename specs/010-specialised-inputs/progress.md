@@ -12,3 +12,10 @@ Did: `filter_options(options, value)` in `daisy_cotton/templatetags/daisy_cotton
 Verified: `uv run pytest tests/test_templatetags/test_daisy_cotton.py -q` 32 passed; pre-commit on the two files passed.
 Next: T002, `form/filter.html` and its tests.
 Watch: a bare string passed as `options` iterates by character, as any iterable would.
+
+## 2026-09-29T10:37Z · Implementer US1 · T002
+
+Did: `form/filter.html` and `tests/test_filter.py` (38 tests, tests first: red on the missing component), plus `tests/test_specialised_inputs.py` started with the filter's no-script and page-context rows; both modules added to `[tool.forge.conformance] non-mirror-paths`. Wrote the template's annotations here rather than in T003, because the existing gallery annotation and lint tests fail on an unannotated template.
+Verified: `uv run pytest tests/test_filter.py tests/test_specialised_inputs.py -q` 41 passed; twelve mutations of the template each failed a new test; `cotton_lint --warnings-as-errors` 0 errors 0 warnings; the gallery, render-all, declared-attribute, palette, link and demo tests 755 passed, 17 skipped (pre-existing skips).
+Next: T003, fieldset composition row, README and CHANGELOG.
+Watch: the rendered reset's `aria-labelledby` target is a hidden span, so the reset's name does not depend on its position in the wrapper.

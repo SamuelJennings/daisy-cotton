@@ -191,6 +191,8 @@ non-mirror-paths = [
     "tests/test_file_input.py",
     "tests/test_range.py",
     "tests/test_form_field_removed.py",
+    "tests/test_filter.py",
+    "tests/test_specialised_inputs.py",
     "tests/test_gallery_annotations.py",
     "tests/test_gallery_lint.py",
     # Exercises the demo project's own URLs and settings, not a component
