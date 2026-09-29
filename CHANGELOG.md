@@ -232,9 +232,156 @@ lookup of its own. `dropdown` ships CSS-only daisyUI positioning; no JavaScript 
 included. `breadcrumbs.item`'s text-wrapping hook class is `daisy-cotton-breadcrumb-text`.
 
 Deliberately out of scope for now: anything coupled to Django's messages framework or
-`Paginator`, a generic content-section wrapper, and Django form/formset rendering beyond the
-single presentational `form.field`. See `docs/adr/0001-icon-is-an-extension-point.md` for the icon
-decision.
+`Paginator`, a generic content-section wrapper, and rendering a Django form or form field —
+components take plain values such as a name, a value and a list of error messages, and turning a
+bound field into those values is the project's job. See
+`docs/adr/0001-icon-is-an-extension-point.md` for the icon decision.
+
+### Removed
+
+- `form.field` is removed, with no alias or stub: rendering `<c-form.field>` now raises
+  `TemplateDoesNotExist` naming `form/field`. Everything it did is built from `<c-fieldset>`,
+  `<c-label>` and a control, shown below for every case its tests covered.
+
+  A labelled text input:
+
+  ```html
+  <!-- before -->
+  <c-form.field label="Email" type="email" name="email" id="id_email" />
+  <!-- after -->
+  <c-label for="id_email" text="Email" />
+  <c-input id="id_email" type="email" name="email" />
+  ```
+
+  Every other attribute (`id`, `value`, `disabled`, `required`, a bare `class`) reaches
+  `<c-input>` exactly as it reached `form.field`'s control. Rich label content — a badge, a link —
+  goes in `<c-label>`'s default slot, which comes before `text`, since `text` is a plain attribute:
+
+  ```html
+  <c-label for="id_email">Email <c-badge variant="success">Verified</c-badge></c-label>
+  ```
+
+  A textarea:
+
+  ```html
+  <!-- before -->
+  <c-form.field type="textarea" label="Bio" name="bio" rows="3">Hello</c-form.field>
+  <!-- after -->
+  <c-label for="id_bio" text="Bio" />
+  <c-textarea id="id_bio" name="bio" rows="3">Hello</c-textarea>
+  ```
+
+  An invalid textarea takes `variant="error" aria-invalid="true"` directly, the same way every
+  control shows its own invalid state rather than inheriting one.
+
+  A select:
+
+  ```html
+  <!-- before -->
+  <c-form.field type="select" label="Plan" name="plan"><option>Free</option></c-form.field>
+  <!-- after -->
+  <c-label for="id_plan" text="Plan" />
+  <c-select id="id_plan" name="plan"><option>Free</option></c-select>
+  ```
+
+  A file input:
+
+  ```html
+  <!-- before -->
+  <c-form.field type="file" label="Avatar" name="avatar" accept="image/*" />
+  <!-- after -->
+  <c-label for="id_avatar" text="Avatar" />
+  <c-file-input id="id_avatar" name="avatar" accept="image/*" />
+  ```
+
+  A checkbox:
+
+  ```html
+  <!-- before -->
+  <c-form.field type="checkbox" label="Remember me" name="remember" checked />
+  <!-- after -->
+  <c-label text="Remember me"><c-checkbox name="remember" checked /></c-label>
+  ```
+
+  A radio button:
+
+  ```html
+  <!-- before -->
+  <c-form.field type="radio" label="Standard" name="ship" value="std" />
+  <!-- after -->
+  <c-label text="Standard"><c-radio name="ship" value="std" /></c-label>
+  ```
+
+  A toggle:
+
+  ```html
+  <!-- before -->
+  <c-form.field type="toggle" label="Notify" name="notify" />
+  <!-- after -->
+  <c-label text="Notify"><c-toggle name="notify" /></c-label>
+  ```
+
+  A checkbox, radio or toggle that also needs help text or errors wraps in a `<c-fieldset
+  description="…">` around the labelled control, with no `legend`: the legend names a group, not a
+  single control.
+
+  ```html
+  <c-fieldset description="Applies from your next bill.">
+    <c-label text="Notify"><c-toggle name="notify" /></c-label>
+  </c-fieldset>
+  ```
+
+  A field with help text:
+
+  ```html
+  <!-- before -->
+  <c-form.field label="U" name="u" help-text="Digits only." />
+  <!-- after -->
+  <c-fieldset id="id_u" description="Digits only.">
+    <c-label for="id_u-input" text="U" />
+    <c-input id="id_u-input" name="u" aria-describedby="id_u-description" />
+  </c-fieldset>
+  ```
+
+  The named-slot form (`<c-slot name="help_text">`) becomes `<c-fieldset>`'s own `description`
+  slot.
+
+  A field with errors:
+
+  ```html
+  <!-- before -->
+  <c-form.field label="Email" name="email" errors="Invalid email." />
+  <!-- after -->
+  <c-fieldset id="id_email" errors="Invalid email.">
+    <c-label for="id_email-input" text="Email" />
+    <c-input id="id_email-input" name="email" type="email" variant="error"
+             aria-invalid="true" aria-describedby="id_email-errors" />
+  </c-fieldset>
+  ```
+
+  `errors` still takes a string or a list of strings (a Django `ErrorList` works) either way.
+
+  An input with `prelabel` and `postlabel`:
+
+  ```html
+  <!-- before -->
+  <c-form.field name="site" prelabel="https://" postlabel=".com" />
+  <!-- after -->
+  <c-input name="site">
+    <c-slot name="start"><span class="label">https://</span></c-slot>
+    <c-slot name="end"><span class="label">.com</span></c-slot>
+  </c-input>
+  ```
+
+  What has no direct replacement in an attribute:
+
+  - `hide-label` → `class="sr-only"` on the `<c-label>`.
+  - `wrapper-class` → `class` on the `<c-fieldset>`.
+  - `prelabel` → the control's `start` slot.
+  - `postlabel` → the control's `end` slot.
+  - The required asterisk `form.field` added after a label is dropped: the control's own
+    `required` attribute already tells assistive technology, and a project that wants a visible
+    marker writes it in the label text itself.
 
 ### Changed
 

@@ -107,7 +107,7 @@ Serves G1, G2 and G3. Out of scope: wiring toasts or alerts to Django's messages
 
 *multi-feature · advances G1, G2, G3*
 
-Calendar, checkbox, fieldset, file input, filter, label, radio, range, rating, select, text input, textarea, toggle, validator and OTP. `form.field` covers part of fieldset today. Each component ships accessible and shown in the gallery with its variants and states, as in the groups before it.
+Calendar, checkbox, fieldset, file input, filter, label, radio, range, rating, select, text input, textarea, toggle, validator and OTP. Checkbox, fieldset, file input, label, radio, range, select, text input, textarea and toggle exist. Each component ships accessible and shown in the gallery with its variants and states, as in the groups before it.
 
 Serves G1, G2 and G3. Out of scope: rendering Django forms or form fields, which is the project's job.
 

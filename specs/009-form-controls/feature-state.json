@@ -331,8 +331,21 @@
       "tasks": [
         {
           "id": "T012",
-          "status": "todo",
-          "attempts": 0
+          "status": "done",
+          "attempts": 1,
+          "evidence": {
+            "commands": [
+              "uv run pytest tests/test_form_field_removed.py -q: failed red (DID NOT RAISE TemplateDoesNotExist) before deletion, 1 passed after",
+              "uv run pytest tests/test_form_field_removed.py tests/test_gallery_annotations.py tests/test_gallery_lint.py tests/test_render_all.py -q: 510 passed",
+              "uv run python manage.py cotton_lint --warnings-as-errors: exit 0, 0 errors, 0 warnings, 71/78 clean",
+              "uv run ruff check tests/test_form_field_removed.py: all checks passed",
+              "uv run ruff format --check tests/test_form_field_removed.py: 1 file already formatted",
+              "git grep -n --untracked 'form\\.field|form/field' -- daisy_cotton/ demo/ tests/: only tests/test_form_field_removed.py"
+            ],
+            "tests": [
+              "tests/test_form_field_removed.py::TestFormFieldRemoved::test_rendering_raises_template_does_not_exist"
+            ]
+          }
         }
       ]
     }

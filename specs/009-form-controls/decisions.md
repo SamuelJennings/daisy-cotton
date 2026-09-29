@@ -98,3 +98,15 @@ As built, the composition's `account-email` fieldset held every control, so the 
 The gallery's catalog registers a component under its file stem — `file_input`, not `file-input` — and its unknown-component lint check compares a source tag against that literal set with no hyphen/underscore normalization, so `<c-file-input>` inside the fieldset's `@slot` composition read as a reference to a component that does not exist (3 errors, `cotton_lint --warnings-as-errors`), even though Cotton itself resolves the hyphen form to `file_input.html` at render time and `tests/test_file_input.py`/`tests/test_form_controls.py` use `<c-file-input>` freely. This is the same rule spec 008-feedback-components D6 recorded for `<c-radial_progress>` and spec 007-animated-display-components D10/D11 recorded for `<c-hover_gallery>`/`<c-hover_3d>`/`<c-text_rotate>`. The fieldset's composition is written `<c-file_input>` for this reason; the README and CHANGELOG still name it `file-input`, the display form the gallery and daisyUI's own naming use. `<c-range>` has no hyphen in its tag, so it needed no such rewrite.
 
 **ADR:** none — a lint tool's known-tags limitation, not a design choice; recorded so a future template composing with `file-input` in scanned markup does not rediscover it.
+
+## D8 — The removal test asserts against django-cotton's fallback path, not the primary one
+
+`<c-form.field />` compiles to `{% cotton form.field %}`, which django-cotton resolves by trying `cotton/form/field.html` and, on `TemplateDoesNotExist`, a fallback `cotton/form/field/index.html` — the second lookup is the one whose exception actually propagates, since the first is caught internally. Both paths contain `form/field`, so the test's `pytest.raises(..., match="form/field")` passes either way and does not need to name the fallback path specifically; recorded so a future edit to django-cotton's own fallback behaviour is understood as the reason this test's failure mode would change, not this package's.
+
+**ADR:** none — an upstream library's internal resolution order, not a design choice made here.
+
+## D9 — Two `form.field` tests had no direct CHANGELOG example and got one extra line each
+
+Mapping every `tests/test_form_field.py` test to a CHANGELOG example (SC-004) left two genuinely uncovered by the ten required cases: rich label content (a badge inside the label text) and a check-style control (checkbox/radio/toggle) that also carries help text. Neither is a new behaviour — `<c-label>`'s default slot already accepts markup, and `<c-fieldset>` already renders no `legend` unless given one — so each got the one extra before-and-after line the spec allows for an unmapped case, rather than a new component capability.
+
+**ADR:** none — a documentation-mapping choice, not a design change.

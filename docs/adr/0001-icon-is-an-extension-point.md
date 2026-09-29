@@ -17,10 +17,9 @@ library such as django-easy-icons — installs its own `templates/cotton/icon.ht
 `daisy_cotton` in `INSTALLED_APPS`, which Cotton resolves as a straight template-path shadow: the
 project's own component replaces this one everywhere, with no further wiring.
 
-Every other component in this package that renders an icon (`button`, `alert`, `card`, `dock.item`,
-`form.field`'s pre/post-label slots) calls `<c-icon name="..." />` exactly as
-it would call a richer, resolving version. A project's override is a drop-in replacement, not a
-fork of every caller.
+Every other component in this package that renders an icon (`button`, `alert`, `card`, `dock.item`)
+calls `<c-icon name="..." />` exactly as it would call a richer, resolving version. A project's
+override is a drop-in replacement, not a fork of every caller.
 
 ## Why
 
