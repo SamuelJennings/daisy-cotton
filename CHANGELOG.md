@@ -16,6 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   writes itself. daisyUI's sidebar that collapses to icons needs
   `side_class="is-drawer-close:overflow-visible"` there so tooltips on the icon rail aren't clipped.
 
+### Fixed
+
+- `divider`: the gallery offers `horizontal` and `vertical` as a choice of breakpoint, as it does
+  for `alert`, instead of a checkbox that could never set one.
+
 ## [v0.1.1] - 2026-09-29
 
 ### Fixed
