@@ -104,6 +104,36 @@ class TestDrawerStructure:
         )
 
 
+class TestDrawerSideClass:
+    def test_side_class_is_merged_into_the_side(self, cotton_render_string):
+        html = cotton_render_string(
+            '<c-drawer id="nav" side_class="is-drawer-close:overflow-visible" />'
+        )
+
+        side = next(
+            t for t in parse_tags(html) if "drawer-side" in t[2].get("class", "")
+        )
+        tag, names, attrs = side
+        assert names.count("class") == 1
+        assert attrs["class"].split() == [
+            "drawer-side",
+            "is-drawer-close:overflow-visible",
+        ]
+
+    def test_side_class_stays_off_the_root(self, cotton_render_string_soup):
+        soup = cotton_render_string_soup('<c-drawer id="nav" side_class="x-side" />')
+
+        assert "x-side" not in root(soup)["class"]
+        assert not root(soup).has_attr("side_class")
+
+    def test_without_it_the_side_carries_only_drawer_side(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup(DRAWER, {"side_class": "leaked"})
+
+        assert root(soup).find(class_="drawer-side")["class"] == ["drawer-side"]
+
+
 class TestDrawerModifiers:
     def test_open_takes_a_breakpoint(self, cotton_render_string_soup):
         soup = cotton_render_string_soup('<c-drawer id="nav" open="lg" />')
@@ -295,6 +325,12 @@ class TestDrawerAnnotations:
 
     def test_class_is_documented(self, drawer):
         assert "class" in {p.clean_name for p in drawer.props}
+
+    def test_side_class_is_documented(self, drawer):
+        prop = next(p for p in drawer.props if p.clean_name == "side_class")
+
+        assert prop.type == "text"
+        assert not prop.default
 
     def test_the_trigger_is_the_opener_for_the_demo_drawer(self, drawer):
         assert drawer.trigger == (
