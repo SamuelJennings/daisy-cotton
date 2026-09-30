@@ -8,7 +8,7 @@ Built on [daisyUI](https://daisyui.com/) and [django-cotton](https://django-cott
 
 ## Status
 
-Version 0.0.1, pre-1.0: names, attributes and the set of classes a component emits can change between minor versions. The [CHANGELOG](https://github.com/django-mvp/daisy-cotton/blob/main/CHANGELOG.md) is how a project finds out what has landed.
+Pre-1.0: names, attributes and the set of classes a component emits can change between minor versions. The [CHANGELOG](https://github.com/django-mvp/daisy-cotton/blob/main/CHANGELOG.md) is how a project finds out what has landed.
 
 Eighty-two components are built so far: `accordion`, `alert`, `avatar`, `badge`, `breadcrumbs`, `button`, `card`, `carousel`, `chat`, `collapse`, `countdown`, `diff`, `divider`, `dock`, `drawer`, `dropdown`, `fab`, `footer`, `form.calendar`, `form.checkbox`, `form.fieldset`, `form.file-input`, `form.filter`, `form.input`, `form.label`, `form.otp`, `form.radio`, `form.range`, `form.rating`, `form.select`, `form.textarea`, `form.toggle`, `hero`, `hover-3d`, `hover-gallery`, `icon`, `indicator`, `join`, `kbd`, `link`, `list`, `loading`, `mask`, `megamenu`, `menu`, `modal`, `navbar`, `progress`, `radial-progress`, `skeleton`, `stack`, `stat`, `status`, `steps`, `swap`, `table`, `tabs`, `text-rotate`, `timeline`, `toast`, `tooltip` and `mockup.*`. Pagination has no component: daisyUI builds it from `join` and `btn` and gives it no class of its own, so write it with those two. Aura has no component either: it only decorates another element, so wrap the component to highlight in a `<div class="aura">` with daisyUI's style and size classes. Each one is documented live in the component gallery (`python manage.py runserver` from a checkout). More land as the need arises.
 
