@@ -8,7 +8,7 @@
 {# @prop class:text | description:"Extra classes added to the divider." #}
 {# @slot — The divider label, for markup that text cannot hold. #}
 {# `horizontal` and `vertical` name the daisyUI modifier they emit, not the line's orientation. #}
-{# aria-orientation follows the layout at the narrowest width, because ARIA cannot change at a breakpoint (#123). #}
+{# aria-orientation follows the layout at the narrowest width, because ARIA cannot change at a breakpoint. #}
 {% load daisy_cotton %}
 <c-vars horizontal="" vertical="" variant="" placement="" text="" role="" class />
 <div class="divider {% variation variant 'divider' 'neutral,primary,secondary,accent,info,success,warning,error' %} {% responsive horizontal 'divider-horizontal' %} {% responsive vertical 'divider-vertical' %} {% variation placement 'divider' 'start,end' %} {{ class }}"
