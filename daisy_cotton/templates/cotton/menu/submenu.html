@@ -1,9 +1,10 @@
 {# @description A collapsible group of entries inside a menu, used inside menu. Nests inside itself for further levels. Attributes other than the ones below land on the list item. #}
-{# @prop text:text | description:"Label of the group, shown in the summary." #}
+{# @prop text:text | description:"Label of the group, shown in the summary. Fill the text slot instead for markup, such as a badge beside the label." #}
 {# @prop open:boolean | description:"Render the group expanded." #}
 {# @prop icon:text | description:"Icon shown before the label, passed as the name of the icon component." #}
 {# @prop class:text | description:"Extra classes added to the list item." #}
 {# @slot — The group's entries, as menu.item and menu.submenu components. #}
+{# @slot:text Inbox <c-badge size="sm">3</c-badge> — The summary's label as markup, after the icon, in place of the text attribute: a badge beside the label, or a label wrapped in a span a collapsing sidebar hides. #}
 <c-vars text open="" icon class />
 <li{% if class %} class="{{ class }}"{% endif %} {{ attrs }}>
   <details{% if open %} open{% endif %}>

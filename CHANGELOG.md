@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `menu.submenu`: the `text` slot, now documented in the gallery, puts markup in the group's
+  summary in place of the `text` attribute, such as a badge beside the label or a label a
+  collapsing sidebar hides.
+
 ## [v0.1.1] - 2026-09-29
 
 ### Fixed
