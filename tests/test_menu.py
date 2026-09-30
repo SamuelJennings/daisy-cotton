@@ -245,6 +245,22 @@ class TestMenuSubmenu:
         assert icon["class"][:2] == ["fa", "fa-plus"]
         assert icon["aria-hidden"] == "true"
 
+    def test_text_slot_puts_markup_in_the_summary_after_the_icon(
+        self, cotton_render_string_soup
+    ):
+        soup = cotton_render_string_soup(
+            '<c-menu.submenu icon="fa fa-book">'
+            '<c-slot name="text"><span class="is-drawer-close:hidden">Docs</span>'
+            '<span class="badge">3</span></c-slot>'
+            "<li>x</li></c-menu.submenu>"
+        )
+        summary = soup.summary
+        children = summary.find_all(recursive=False)
+        assert [child.name for child in children] == ["i", "span", "span"]
+        assert children[1]["class"] == ["is-drawer-close:hidden"]
+        assert children[2].text == "3"
+        assert soup.details.ul.li.text == "x"
+
     def test_class_and_attributes_land_on_the_list_item(
         self, cotton_render_string_soup
     ):
