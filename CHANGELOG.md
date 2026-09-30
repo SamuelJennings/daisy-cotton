@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `menu.submenu`: the `text` slot, now documented in the gallery, puts markup in the group's
   summary in place of the `text` attribute, such as a badge beside the label or a label a
   collapsing sidebar hides.
+- `drawer`: a `side_class` attribute adds classes to the `drawer-side` element, which the component
+  writes itself. daisyUI's sidebar that collapses to icons needs
+  `side_class="is-drawer-close:overflow-visible"` there so tooltips on the icon rail aren't clipped.
 
 ## [v0.1.1] - 2026-09-29
 
