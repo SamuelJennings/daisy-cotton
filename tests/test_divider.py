@@ -265,12 +265,11 @@ class TestDividerAnnotations:
         assert list(prop.options) == ["start", "end"]
 
     @pytest.mark.parametrize("name", ["horizontal", "vertical"])
-    def test_direction_props_are_toggles_that_name_the_breakpoint_form(
-        self, parsed, name
-    ):
+    def test_direction_props_offer_the_breakpoints(self, parsed, name):
         prop = next(p for p in parsed.props if p.clean_name == name)
 
-        assert prop.type == "boolean"
+        assert prop.type == "select"
+        assert list(prop.options) == ["sm", "md", "lg", "xl", "2xl"]
 
     def test_the_old_position_prop_is_gone(self, parsed):
         assert "position" not in {p.clean_name for p in parsed.props}
